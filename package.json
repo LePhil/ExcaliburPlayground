@@ -1,14 +1,11 @@
 {
   "name": "app",
   "productName": "App",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "",
   "license": "MIT",
-  "repository": "user/repo",
   "author": {
-    "name": "Excalibur.js Team",
-    "email": "",
-    "url": "https://github.com/excaliburjs"
+    "name": "Philipp Christen",
   },
   "scripts": {
     "test": "xo",
