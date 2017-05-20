@@ -1,6 +1,7 @@
 import * as ex from "excalibur";
 import {Player} from "./Player";
 import {FoodStation} from "./FoodStation";
+import {Food} from "./Item";
 
 import {Brick} from "./Brick";
 import {Paddle} from "./Paddle";
@@ -34,11 +35,11 @@ let player = new Player(500, 200, 50, 50, ex.Color.Yellow);
 game.input.pointers.primary.on("down", function (evt: PointerEvent) { player.goTo(evt); });
 game.add(player);
 
-let catFood = new FoodStation("CatFood", 100, 100, 20, 20, ex.Color.Red);
+let catFood = new FoodStation("CatFoodStation", 100, 100, 20, 20, ex.Color.Red, new Food("CatFood") );
 catFood.on("pointerdown", function(env) { catFood.handleClick(player); });
 game.add(catFood);
 
-let dogFood = new FoodStation("DogFood", 800, 300, 20, 20, ex.Color.Green);
+let dogFood = new FoodStation("DogFoodStation", 800, 300, 20, 20, ex.Color.Green, new Food("DogFood") );
 dogFood.on("pointerdown", function(env) { dogFood.handleClick(player); });
 game.add(dogFood);
 
