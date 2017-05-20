@@ -5,7 +5,7 @@
   "description": "",
   "license": "MIT",
   "author": {
-    "name": "Philipp Christen",
+    "name": "Philipp Christen"
   },
   "scripts": {
     "test": "xo",
