@@ -1,4 +1,5 @@
 import * as ex from "excalibur";
+import {Config} from "./Config";
 import {Player} from "./Player";
 import {FoodStation} from "./FoodStation";
 import {Food} from "./Item";
@@ -31,7 +32,11 @@ hello.fontSize = 50;
 hello.textAlign = ex.TextAlign.Center;
 game.add(hello);
 
-let player = new Player(500, 200, 50, 50, ex.Color.Yellow);
+let player = new Player(Config.PLAYER_STARTX,
+                        Config.PLAYER_STARTY,
+                        Config.PLAYER_WIDTH,
+                        Config.PLAYER_HEIGHT,
+                        ex.Color.Yellow);
 game.input.pointers.primary.on("down", function (evt: PointerEvent) { player.goTo(evt); });
 game.add(player);
 
