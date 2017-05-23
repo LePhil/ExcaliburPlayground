@@ -1,3 +1,4 @@
+/// <reference path="../bower_components/excalibur-tiled/dist/excalibur-tiled" />
 import * as ex from "excalibur";
 import {Config} from "./Config";
 import {Player} from "./Player";
@@ -14,8 +15,15 @@ console.log(x.greet());
 
 let game = new ex.Engine({ displayMode: ex.DisplayMode.FullScreen });
 
+// Create a new TiledResource loadable
+var map = new Extensions.Tiled.TiledResource("game/assets/desert.json");
+
+// Create a loader and reference the map
+var loader = new ex.Loader([map]);
+
+
 // create an asset loader
-let loader = new ex.Loader();
+// let loader = new ex.Loader();
 let resources = {
   /* include resources here */
   // txPlayer: new ex.Texture("assets/tex/player.png")
@@ -91,4 +99,15 @@ game.add(dogFood);
 //   }
 // }
 
-game.start();
+game.start(loader).then(function(){
+  // Process the data in the map as you like
+  map.data.tilesets.forEach(function(ts) {
+    console.log(ts.image, ts.imageTexture.isLoaded());
+  });
+
+  // get a Excalibur `TileMap` instance
+  var tm = map.getTileMap();
+
+  // draw the tile map
+  game.add(tm);
+});
