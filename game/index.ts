@@ -62,7 +62,12 @@ let spawner = new CustomerSpawner(500, 520, 200, 20, ex.Color.White);
 spawner.on("pointerdown", function(env) { spawner.handleClick(player); });
 game.add(spawner);
 spawner.spawn();
-spawner.spawn();
+
+
+let customerSpawner = new ex.Timer(function(){
+  spawner.spawn();
+}, 3000, true);
+game.add(customerSpawner);
 
 game.start(loader).then(function(){
   // Process the data in the map as you like
