@@ -4,8 +4,8 @@ export class Food {
   name: string;
   color: ex.Color;
 
-  constructor(name, color) {
-    this.name = name || "Food";
-    this.color = color || ex.Color.Red;
+  constructor(name = "Generic Food", color = ex.Color.Magenta) {
+    this.name = name;
+    this.color = color;
   }
 }

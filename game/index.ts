@@ -14,6 +14,8 @@ import {CustomerSpawner} from "./CustomerSpawner";
 let game = new ex.Engine({ displayMode: ex.DisplayMode.FullScreen });
 globals.game = game;
 
+globals.conf = Config;
+
 // Create a new TiledResource loadable
 var map = new Extensions.Tiled.TiledResource("game/assets/test.json");
 
@@ -34,28 +36,36 @@ for (let r in resources) {
 let inv = new Inventory(0, 0, 500, 50, ex.Color.White);
 game.add(inv);
 
-let player = new Player(Config.PLAYER_STARTX,
-                        Config.PLAYER_STARTY,
-                        Config.PLAYER_WIDTH,
-                        Config.PLAYER_HEIGHT,
-                        ex.Color.Yellow,
-                        inv);
+let player = new Player(ex.Color.Yellow, inv);
 game.input.pointers.primary.on("down", function (evt: PointerEvent) { player.goTo(evt); });
 game.add(player);
 
 
-let catFood = new FoodStation("CatFoodStation", 100, 100, 20, 20, ex.Color.Red, new Food("CatFood", ex.Color.Red) );
+let catFood = new FoodStation("CatFoodStation",
+                              100, 100, 20, 20,
+                              globals.conf.CATFOOD_COLOR,
+                              new Food(globals.conf.CATFOOD_NAME, globals.conf.CATFOOD_COLOR) );
+
 catFood.on("pointerdown", function(env) { catFood.handleClick(player); });
 game.add(catFood);
 
-let dogFood = new FoodStation("DogFoodStation", 800, 300, 20, 20, ex.Color.Green, new Food("DogFood", ex.Color.Green) );
+let dogFood = new FoodStation("DogFoodStation",
+                              800, 300, 20, 20,
+                              globals.conf.DOGFOOD_COLOR,
+                              new Food(globals.conf.DOGFOOD_NAME, globals.conf.DOGFOOD_COLOR) );
+
 dogFood.on("pointerdown", function(env) { dogFood.handleClick(player); });
 game.add(dogFood);
 
 let cassa = new Cassa(500, 500, 200, 20, ex.Color.Gray);
 game.add(cassa);
 
-let customer = new Customer(400, 400, 20, 20, ex.Color.Blue, new Food("CatFood", ex.Color.Green));
+let spawner = new CustomerSpawner(500, 520, 200, 20, ex.Color.White);
+game.add(spawner);
+spawner.spawn();
+spawner.spawn();
+
+let customer = new Customer(400, 400, 20, 20, new Food("CatFood", ex.Color.Green));
 game.add(customer);
 
 
