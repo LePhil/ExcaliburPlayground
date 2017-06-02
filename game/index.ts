@@ -7,7 +7,6 @@ import {FoodStation} from "./FoodStation";
 import {Food} from "./Item";
 import {Inventory} from "./Inventory";
 import {Customer} from "./Customer";
-import {Cassa} from "./Cassa";
 import {CustomerSpawner} from "./CustomerSpawner";
 
 
@@ -57,17 +56,11 @@ let dogFood = new FoodStation("DogFoodStation",
 dogFood.on("pointerdown", function(env) { dogFood.handleClick(player); });
 game.add(dogFood);
 
-let cassa = new Cassa(500, 500, 200, 20, ex.Color.Gray);
-game.add(cassa);
-
 let spawner = new CustomerSpawner(500, 520, 200, 20, ex.Color.White);
+spawner.on("pointerdown", function(env) { spawner.handleClick(player); });
 game.add(spawner);
 spawner.spawn();
 spawner.spawn();
-
-let customer = new Customer(400, 400, 20, 20, new Food("CatFood", ex.Color.Green));
-game.add(customer);
-
 
 game.start(loader).then(function(){
   // Process the data in the map as you like

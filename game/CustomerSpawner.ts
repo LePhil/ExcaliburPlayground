@@ -2,6 +2,7 @@ declare var globals: any;
 import * as ex from "excalibur";
 import {Customer} from "./Customer";
 import {Food} from "./Item";
+import {Player} from "./Player";
 
 export class CustomerSpawner extends ex.Actor {
   public queue:Customer[];
@@ -15,11 +16,9 @@ export class CustomerSpawner extends ex.Actor {
   }
 
   public spawn() {
-    let newPos = this.pos.x + this.queue.length * (globals.conf.CUSTOMER_WIDTH + 2)
-    let newCustomer = new Customer(newPos,
+    let newPosX = this.pos.x + this.queue.length * (globals.conf.CUSTOMER_WIDTH + 2)
+    let newCustomer = new Customer(newPosX,
                                    this.pos.y,
-                                   globals.conf.CUSTOMER_WIDTH,
-                                   globals.conf.CUSTOMER_HEIGHT,
                                    this.getRandomFood());
     this.queue.push(newCustomer);
     globals.game.add(newCustomer);
@@ -36,6 +35,18 @@ export class CustomerSpawner extends ex.Actor {
     }
   }
 
-
+  /**
+   * The player should move to the cassa, spend some time there (and do
+   * things), then be off on their merry way.
+   *
+   * @param  {ex.Actor} player [description]
+   */
+  public handleClick(player: Player) {
+    player.actions.moveTo(this.pos.x, this.pos.y, 200)
+                  .delay(1000)
+                  .callMethod(()=> {
+                    player.serveItems(this.queue);
+                  });
+  }
 
 }
