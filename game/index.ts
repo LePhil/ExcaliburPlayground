@@ -51,7 +51,9 @@ game.add(catFood);
 let dogFood = new FoodStation("DogFoodStation",
                               800, 300, 20, 20,
                               globals.conf.DOGFOOD_COLOR,
-                              new Food(globals.conf.DOGFOOD_NAME, globals.conf.DOGFOOD_COLOR) );
+                              new Food(globals.conf.DOGFOOD_NAME,
+                                       globals.conf.DOGFOOD_COLOR)
+                              );
 
 dogFood.on("pointerdown", function(env) { dogFood.handleClick(player); });
 game.add(dogFood);

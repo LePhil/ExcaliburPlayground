@@ -7,7 +7,8 @@ export class Customer extends ex.Actor {
   name: string;
 
   constructor(x, y, wants = new Food()) {
-    super(x, y,
+    super(globals.conf.DOOR_POS_X,
+          globals.conf.DOOR_POS_Y,
           globals.conf.CUSTOMER_WIDTH,
           globals.conf.CUSTOMER_HEIGHT,
           wants.color);
@@ -16,5 +17,14 @@ export class Customer extends ex.Actor {
     this.name = globals.conf.CUSTOMER_NAMES[Math.floor(Math.random()*globals.conf.CUSTOMER_NAMES.length)];
 
     this.collisionType = ex.CollisionType.Passive;
+
+    this.actions.moveTo(x, y, globals.conf.CUSTOMER_SPEED);
+  }
+
+  public leaveStore() {
+    this.actions.moveTo(
+      globals.conf.DOOR_POS_X,
+      globals.conf.DOOR_POS_Y,
+      200).callMethod( ()=> { this.kill(); } );
   }
 }

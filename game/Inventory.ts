@@ -42,9 +42,8 @@ export class Inventory extends ex.Actor {
       this.inventory.splice( this.inventory.indexOf(itemToRemove), 1 );
       itemToRemove.kill();
       return true;
-    } else {
-      return false;
     }
+    return false;
   }
 
 }

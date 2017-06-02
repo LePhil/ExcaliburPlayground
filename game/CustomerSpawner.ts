@@ -52,14 +52,7 @@ export class CustomerSpawner extends ex.Actor {
                     for (let customerToRemove of customersToRemove) {
                       this.queue.splice( this.queue.indexOf(customerToRemove), 1 );
 
-                      customerToRemove.actions.moveTo(
-                        globals.game.getDrawWidth()/2,
-                        globals.game.getDrawHeight(),
-                        200).callMethod(()=> {
-
-                        console.log("Bye bye " + customerToRemove.name);
-                        customerToRemove.kill();
-                      });
+                      customerToRemove.leaveStore();
                     }
                   });
   }

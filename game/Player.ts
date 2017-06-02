@@ -29,7 +29,7 @@ export class Player extends ex.Actor {
 
   public goTo(evt: PointerEvent) {
      // this.actions.clearActions();
-     this.actions.moveTo(evt.x, evt.y, 200).callMethod(()=> {
+     this.actions.moveTo(evt.x, evt.y, globals.conf.PLAYER_SPEED).callMethod(()=> {
        console.log("Done");
      });
   }
