@@ -4,6 +4,7 @@ import {Food} from "./Item";
 
 export class Customer extends ex.Actor {
   public wants:Food;
+  name: string;
 
   constructor(x, y, wants = new Food()) {
     super(x, y,
@@ -12,6 +13,7 @@ export class Customer extends ex.Actor {
           wants.color);
 
     this.wants = wants;
+    this.name = globals.conf.CUSTOMER_NAMES[Math.floor(Math.random()*globals.conf.CUSTOMER_NAMES.length)];
 
     this.collisionType = ex.CollisionType.Passive;
   }

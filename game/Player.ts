@@ -52,9 +52,6 @@ export class Player extends ex.Actor {
       }
     }
 
-    // remove all customers that were served
-    for (let cust of customersToRemove) {
-      cust.kill;
-    }
+    return customersToRemove;
   }
 }

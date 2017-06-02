@@ -42,10 +42,25 @@ export class CustomerSpawner extends ex.Actor {
    * @param  {ex.Actor} player [description]
    */
   public handleClick(player: Player) {
+    console.log( this.queue );
     player.actions.moveTo(this.pos.x, this.pos.y, 200)
                   .delay(1000)
                   .callMethod(()=> {
-                    player.serveItems(this.queue);
+                    let customersToRemove = player.serveItems(this.queue);
+
+                    // remove all customers that were served
+                    for (let customerToRemove of customersToRemove) {
+                      this.queue.splice( this.queue.indexOf(customerToRemove), 1 );
+
+                      customerToRemove.actions.moveTo(
+                        globals.game.getDrawWidth()/2,
+                        globals.game.getDrawHeight(),
+                        200).callMethod(()=> {
+
+                        console.log("Bye bye " + customerToRemove.name);
+                        customerToRemove.kill();
+                      });
+                    }
                   });
   }
 
