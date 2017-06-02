@@ -1,3 +1,4 @@
+declare var globals: any;
 import * as ex from "excalibur";
 import {Food} from "./Item";
 
@@ -9,12 +10,10 @@ class InventoryItem extends ex.Actor {
 
 export class Inventory extends ex.Actor {
   inventory: Food[];
-  game: any;
 
-  constructor(x, y, w, h, color, game) {
+  constructor(x, y, w, h, color) {
     super(x, y, w, h, color);
     this.inventory = new Array<Food>();
-    this.game = game;
   }
 
   public addItem(newItem: Food) {
@@ -26,7 +25,7 @@ export class Inventory extends ex.Actor {
     // document.getElementById("inventory").appendChild(element);
 
     let newActor = new InventoryItem(this.inventory.length*52, 0, 50, 50, newItem.color);
-    this.game.add(newActor);
+    globals.game.add(newActor);
   }
 
 }

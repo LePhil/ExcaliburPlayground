@@ -1,23 +1,21 @@
 /// <reference path="../bower_components/excalibur-tiled/dist/excalibur-tiled" />
+declare var globals: any;
 import * as ex from "excalibur";
 import {Config} from "./Config";
 import {Player} from "./Player";
 import {FoodStation} from "./FoodStation";
 import {Food} from "./Item";
 import {Inventory} from "./Inventory";
+import {Customer} from "./Customer";
+import {Cassa} from "./Cassa";
+import {CustomerSpawner} from "./CustomerSpawner";
 
-import {Brick} from "./Brick";
-import {Paddle} from "./Paddle";
-import {Ball} from "./Ball";
-import {Greeter} from "./greeter";
-
-let x = new Greeter("Welcome to Excalibur");
-console.log(x.greet());
 
 let game = new ex.Engine({ displayMode: ex.DisplayMode.FullScreen });
+globals.game = game;
 
 // Create a new TiledResource loadable
-var map = new Extensions.Tiled.TiledResource("game/assets/basement.json");
+var map = new Extensions.Tiled.TiledResource("game/assets/test.json");
 
 // Create a loader and reference the map
 var loader = new ex.Loader([map]);
@@ -33,15 +31,7 @@ for (let r in resources) {
   loader.addResource(resources[r]);
 }
 
-/*
-let hello = new ex.Label("Hello Electron", game.getDrawWidth() / 2, 100, "Segoe UI Light");
-hello.color = ex.Color.White;
-hello.fontSize = 50;
-hello.textAlign = ex.TextAlign.Center;
-game.add(hello);
-*/
-
-let inv = new Inventory(0, 0, 500, 50, ex.Color.White, game);
+let inv = new Inventory(0, 0, 500, 50, ex.Color.White);
 game.add(inv);
 
 let player = new Player(Config.PLAYER_STARTX,
@@ -62,50 +52,12 @@ let dogFood = new FoodStation("DogFoodStation", 800, 300, 20, 20, ex.Color.Green
 dogFood.on("pointerdown", function(env) { dogFood.handleClick(player); });
 game.add(dogFood);
 
-/*
-let paddle = new Paddle(150, game.getDrawHeight() - 40, 200, 20, ex.Color.Chartreuse);
-game.add(paddle);
+let cassa = new Cassa(500, 500, 200, 20, ex.Color.Gray);
+game.add(cassa);
 
-// Add a mouse move listener
-game.input.pointers.primary.on("move", function (evt: PointerEvent) {
-  paddle.pos.x = evt.x;
-});
+let customer = new Customer(400, 400, 20, 20, ex.Color.Blue, new Food("CatFood", ex.Color.Green));
+game.add(customer);
 
-// Create a ball
-let ball = new Ball(100, 300, 20, 20, ex.Color.Red);
-ball.vel.setTo(200, 200); // Set the velocity in pixels per second
-ball.on("exitviewport", function() {
-  alert("You lose!");
-});
-
-game.add(ball);
-
-// Build Bricks
-
-// Padding between bricks
-let padding = 20; // px
-let xoffset = 65; // x-offset
-let yoffset = 20; // y-offset
-let columns = 5;
-let rows = 3;
-
-// Individual brick width with padding factored in
-let brickColor = [ex.Color.Violet, ex.Color.Orange, ex.Color.Yellow];
-let brickWidth = game.getDrawWidth() / columns - padding - padding / columns; // px
-let brickHeight = 30; // px
-let bricks = [];
-
-for (let j = 0; j < rows; j++) {
-  for (let i = 0; i < columns; i++) {
-    let xPos = xoffset + i * (brickWidth + padding) + padding;
-    let yPos = yoffset + j * (brickHeight + padding) + padding;
-    let brick = new Brick(xPos, yPos, brickWidth, brickHeight, brickColor[j % brickColor.length]);
-
-    bricks.push(brick);
-    game.add(brick);
-  }
-}
-*/
 
 game.start(loader).then(function(){
   // Process the data in the map as you like
