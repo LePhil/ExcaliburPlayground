@@ -35,6 +35,13 @@ export class CustomerSpawner extends ex.Actor {
     }
   }
 
+  public adjustQueue() {
+    this.queue.forEach((cust, index) => {
+      let newPosX = this.pos.x + index * (globals.conf.CUSTOMER_WIDTH + 2)
+      cust.actions.moveTo(newPosX, this.pos.y, globals.conf.CUSTOMER_SPEED);
+    });
+  }
+
   /**
    * The player should move to the cassa, spend some time there (and do
    * things), then be off on their merry way.
@@ -54,6 +61,8 @@ export class CustomerSpawner extends ex.Actor {
 
                       customerToRemove.leaveStore();
                     }
+
+                    this.adjustQueue();
                   });
   }
 
