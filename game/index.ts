@@ -2,6 +2,7 @@
 declare var globals: any;
 import * as ex from "excalibur";
 import {Config} from "./Config";
+import {Resources} from "./Resources";
 import {Player} from "./Player";
 import {FoodStation} from "./FoodStation";
 import {Food} from "./Item";
@@ -14,6 +15,7 @@ let game = new ex.Engine({ displayMode: ex.DisplayMode.FullScreen });
 globals.game = game;
 
 globals.conf = Config;
+globals.resources = Resources;
 
 // Create a new TiledResource loadable
 var map = new Extensions.Tiled.TiledResource("game/assets/test.json");
@@ -30,6 +32,9 @@ let resources = {
 // queue resources for loading
 for (let r in resources) {
   loader.addResource(resources[r]);
+}
+for (let r in globals.resources) {
+  loader.addResource(globals.resources[r]);
 }
 
 let inv = new Inventory(0, 0, 500, 50, ex.Color.White);

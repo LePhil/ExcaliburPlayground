@@ -49,7 +49,6 @@ export class CustomerSpawner extends ex.Actor {
    * @param  {ex.Actor} player [description]
    */
   public handleClick(player: Player) {
-    console.log( this.queue );
     player.actions.moveTo(this.pos.x, this.pos.y, 200)
                   .delay(1000)
                   .callMethod(()=> {

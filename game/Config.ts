@@ -8,6 +8,8 @@ export class Config {
     static PLAYER_WIDTH    = 50;
     static PLAYER_HEIGHT   = 50;
 
+    static MonsterWalkFrameSpeed = 100;
+
     static STATION_DURATION = 1000;
 
     static CUSTOMER_WIDTH  = 20;
