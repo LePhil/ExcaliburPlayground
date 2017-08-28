@@ -1,6 +1,7 @@
 declare var globals: any;
 import * as ex from "excalibur";
 import {Food} from "./Item";
+import {FoodStation} from "./FoodStation";
 import {Inventory} from "./Inventory";
 import {Customer} from "./Customer";
 
@@ -37,57 +38,40 @@ export class Player extends ex.Actor {
   }
 
   onInitialize(engine: ex.Engine): void {
+      let spriteSheet = new ex.SpriteSheet(globals.resources.TexturePlayers, 7, 8, 128, 256);
       let downSpriteSheet = new ex.SpriteSheet(globals.resources.TextureMonsterDown, 14, 1, 96, 96);
       let rightSpriteSheet = new ex.SpriteSheet(globals.resources.TextureMonsterRight, 14, 1, 96, 96);
       let upSpriteSheet = new ex.SpriteSheet(globals.resources.TextureMonsterUp, 14, 1, 96, 96);
 
-      let walkDownAnim = downSpriteSheet.getAnimationByIndices(engine, [2, 3, 4, 5, 6, 7], globals.conf.MonsterWalkFrameSpeed);
-      walkDownAnim.scale.setTo(2, 2);
-      walkDownAnim.loop = true;
-      this.addDrawing("walkDown", walkDownAnim);
-
-      let walkUpAnim = upSpriteSheet.getAnimationByIndices(engine, [2, 3, 4, 5, 6, 7], globals.conf.MonsterWalkFrameSpeed);
-      walkUpAnim.scale.setTo(2, 2);
-      walkUpAnim.loop = true;
-      this.addDrawing("walkUp", walkUpAnim);
-
-      let walkRightAnim = rightSpriteSheet.getAnimationByIndices(engine, [2, 3, 4, 5, 6, 7], globals.conf.MonsterWalkFrameSpeed);
-      walkRightAnim.scale.setTo(2, 2);
+      let walkRightAnim = spriteSheet.getAnimationByIndices(engine, [11, 18], globals.conf.MonsterWalkFrameSpeed);
       walkRightAnim.loop = true;
+      walkRightAnim.scale.setTo(.5, .5);
       this.addDrawing("walkRight", walkRightAnim);
 
-      let walkLeftAnim = rightSpriteSheet.getAnimationByIndices(engine, [2, 3, 4, 5, 6, 7], globals.conf.MonsterWalkFrameSpeed);
-      walkLeftAnim.flipHorizontal = true;
-      walkLeftAnim.scale.setTo(2, 2);
+      let walkLeftAnim = spriteSheet.getAnimationByIndices(engine, [11, 18], globals.conf.MonsterWalkFrameSpeed);
       walkLeftAnim.loop = true;
+      walkLeftAnim.flipHorizontal = true;
+      walkLeftAnim.scale.setTo(.5, .5);
       this.addDrawing("walkLeft", walkLeftAnim);
 
-      let idleAnim = downSpriteSheet.getAnimationBetween(engine, 0, 2, 400);
+      let idleAnim = spriteSheet.getAnimationByIndices(engine, [5, 5], globals.conf.MonsterWalkFrameSpeed);
       idleAnim.loop = true;
-      idleAnim.scale.setTo(2, 2);
-      this.addDrawing("idleDown", idleAnim);
+      idleAnim.scale.setTo(.5, .5);
+      this.addDrawing("idle", idleAnim);
 
-      let idleUpAnim = upSpriteSheet.getAnimationBetween(engine, 0, 2, 400);
-      idleUpAnim.loop = true;
-      idleUpAnim.scale.setTo(2, 2);
-      this.addDrawing("idleUp", idleUpAnim);
+      let walkUpAnim = spriteSheet.getAnimationByIndices(engine, [19, 26], globals.conf.MonsterWalkFrameSpeed);
+      walkUpAnim.loop = true;
+      walkUpAnim.scale.setTo(.5, .5);
+      this.addDrawing("walkUp", walkUpAnim);
 
-      let idleRightAnim = rightSpriteSheet.getAnimationBetween(engine, 0, 2, 400);
-      idleRightAnim.scale.setTo(2, 2);
-      idleRightAnim.loop = true;
-      this.addDrawing("idleRight", idleRightAnim);
+      let pickUpSprite = spriteSheet.getSprite(12);
+      pickUpSprite.scale.setTo(.5, .5);
+      this.addDrawing("pickUp", pickUpSprite);
 
-      let idleLeftAnim = rightSpriteSheet.getAnimationBetween(engine, 0, 2, 400);
-      idleLeftAnim.flipHorizontal = true;
-      idleLeftAnim.scale.setTo(2, 2);
-      idleLeftAnim.loop = true;
-      this.addDrawing("idleLeft", idleLeftAnim);
+      // TODO: down anim not included
+      this.addDrawing("walkDown", idleAnim);
 
-      let sprite = globals.resources.TextureMonsterRight.asSprite().clone();
-      sprite.scale.setTo(2, 2);
-      this.addDrawing("idleRight", sprite);
-
-      this.setDrawing("idleDown");
+      this.setDrawing("idle");
   }
 
   public update(engine: ex.Engine, delta: number): void {
@@ -111,7 +95,7 @@ export class Player extends ex.Actor {
      }
 
      if (yMovement === 0 && xMovement === 0) {
-       this.setDrawing("idleDown");
+       this.setDrawing("idle");
      }
 
      this._lastPosX = this.pos.x;
@@ -122,8 +106,22 @@ export class Player extends ex.Actor {
   public goTo(evt: PointerEvent) {
      this.actions.moveTo(evt.x, evt.y, this._speed)
                  .callMethod(()=> {
-                   console.log("Done");
+                   // TODO ?
                  });
+  }
+
+  public sendToFoodStation(station: FoodStation) {
+    this.actions.moveTo(station.pos.x,
+                        station.pos.y,
+                        globals.conf.PLAYER_SPEED)
+                .callMethod(() => {
+                  this.setDrawing("pickUp");
+                })
+                .delay(globals.conf.STATION_DURATION)
+                .callMethod(()=> {
+                  this.receiveFood(station.getFood());
+                  this.setDrawing("idle");
+                });
   }
 
   public receiveFood(food: Food) {
