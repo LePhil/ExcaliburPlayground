@@ -4,6 +4,7 @@ import * as ex from "excalibur";
 import {Config} from "./Config";
 import {Resources} from "./Resources";
 import {Player} from "./Player";
+import {ElephantFoodStation} from "./ElephantFoodStation";
 import {FoodStation} from "./FoodStation";
 import {Food} from "./Item";
 import {Inventory} from "./Inventory";
@@ -36,6 +37,9 @@ for (let r in resources) {
 for (let r in globals.resources) {
   loader.addResource(globals.resources[r]);
 }
+
+let elephantFoodStation = new ElephantFoodStation(300, 300, 28, 41, new Food(globals.conf.ELEPHANTFOOD_NAME, globals.conf.ELEPHANTFOOD_COLOR));
+game.add(elephantFoodStation);
 
 let inv = new Inventory(0, 0, 500, 50, ex.Color.White);
 game.add(inv);

@@ -26,6 +26,9 @@ export class Config {
       "Polly"
     ];
 
+    static ELEPHANTFOOD_NAME  = "Elephant Food";
+    static ELEPHANTFOOD_COLOR = ex.Color.Yellow;
+
     static DOGFOOD_COLOR = ex.Color.Red;
     static CATFOOD_COLOR = ex.Color.Green;
     static DOGFOOD_NAME  = "Dog Food";

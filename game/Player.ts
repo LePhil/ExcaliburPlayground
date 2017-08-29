@@ -4,7 +4,7 @@ import {Food} from "./Item";
 import {FoodStation} from "./FoodStation";
 import {Inventory} from "./Inventory";
 import {Customer} from "./Customer";
-
+import {CustomerSpawner} from "./CustomerSpawner";
 
 const PLAYER_SPEED = 100;
 const enum PlayerMode {
@@ -28,6 +28,7 @@ export class Player extends ex.Actor {
           globals.conf.PLAYER_WIDTH,
           globals.conf.PLAYER_HEIGHT,
           color);
+
     this.inventory = inventory;
     this._speed =  globals.conf.PLAYER_SPEED;
 
@@ -54,10 +55,9 @@ export class Player extends ex.Actor {
       walkLeftAnim.scale.setTo(.5, .5);
       this.addDrawing("walkLeft", walkLeftAnim);
 
-      let idleAnim = spriteSheet.getAnimationByIndices(engine, [5, 5], globals.conf.MonsterWalkFrameSpeed);
-      idleAnim.loop = true;
-      idleAnim.scale.setTo(.5, .5);
-      this.addDrawing("idle", idleAnim);
+      let idleSprite = spriteSheet.getSprite(5);
+      idleSprite.scale.setTo(.5, .5);
+      this.addDrawing("idle", idleSprite);
 
       let walkUpAnim = spriteSheet.getAnimationByIndices(engine, [19, 26], globals.conf.MonsterWalkFrameSpeed);
       walkUpAnim.loop = true;
@@ -68,8 +68,8 @@ export class Player extends ex.Actor {
       pickUpSprite.scale.setTo(.5, .5);
       this.addDrawing("pickUp", pickUpSprite);
 
-      // TODO: down anim not included
-      this.addDrawing("walkDown", idleAnim);
+      // TODO: down anim not included in spritesheet :(
+      this.addDrawing("walkDown", idleSprite);
 
       this.setDrawing("idle");
   }
@@ -102,7 +102,6 @@ export class Player extends ex.Actor {
      this._lastPosY = this.pos.y;
   }
 
-
   public goTo(evt: PointerEvent) {
      this.actions.moveTo(evt.x, evt.y, this._speed)
                  .callMethod(()=> {
@@ -111,20 +110,30 @@ export class Player extends ex.Actor {
   }
 
   public sendToFoodStation(station: FoodStation) {
-    this.actions.moveTo(station.pos.x,
-                        station.pos.y,
-                        globals.conf.PLAYER_SPEED)
-                .callMethod(() => {
-                  this.setDrawing("pickUp");
-                })
-                .delay(globals.conf.STATION_DURATION)
-                .callMethod(()=> {
-                  this.receiveFood(station.getFood());
-                  this.setDrawing("idle");
-                });
+    this.actions
+    .moveTo(station.pos.x,
+            station.pos.y,
+            this._speed)
+    .callMethod(() => {
+      console.log("pickup");
+      this.setDrawing("pickUp");
+    })
+    .delay(globals.conf.STATION_DURATION)
+    .callMethod(()=> {
+      console.log("idle");
+      this.addFood(station.getFood());
+      this.setDrawing("idle");
+    });
   }
 
-  public receiveFood(food: Food) {
+  public sendToCassa(cassa: CustomerSpawner, callback: any) {
+    this.actions
+      .moveTo(cassa.pos.x, cassa.pos.y, 200)
+      .delay(1000)
+      .callMethod(callback);
+  }
+
+  public addFood(food: Food) {
     this.inventory.addItem(food);
   }
 
