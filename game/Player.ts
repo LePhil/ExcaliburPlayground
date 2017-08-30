@@ -22,12 +22,11 @@ export class Player extends ex.Actor {
 
   private _currentMode: PlayerMode = PlayerMode.Idle;
 
-  constructor(color, inventory: Inventory) {
+  constructor(inventory: Inventory) {
     super(globals.conf.PLAYER_STARTX,
           globals.conf.PLAYER_STARTY,
           globals.conf.PLAYER_WIDTH,
-          globals.conf.PLAYER_HEIGHT,
-          color);
+          globals.conf.PLAYER_HEIGHT);
 
     this.inventory = inventory;
     this._speed =  globals.conf.PLAYER_SPEED;

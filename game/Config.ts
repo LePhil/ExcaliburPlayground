@@ -28,6 +28,10 @@ export class Config {
 
     static ELEPHANTFOOD_NAME  = "Elephant Food";
     static ELEPHANTFOOD_COLOR = ex.Color.Yellow;
+    static ELEPHANTFOOD_WIDTH = 424;
+    static ELEPHANTFOOD_HEIGHT = 342;
+    static ELEPHANTFOOD_SCALE = .2;
+
 
     static DOGFOOD_COLOR = ex.Color.Red;
     static CATFOOD_COLOR = ex.Color.Green;

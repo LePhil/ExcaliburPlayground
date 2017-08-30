@@ -13,6 +13,10 @@ export class CustomerSpawner extends ex.Actor {
     this.collisionType = ex.CollisionType.Passive;
 
     this.queue = new Array<Customer>();
+
+    this.on("pointerdown", (event) => {
+      this.handleClick(globals.player);
+    });
   }
 
   public spawn() {

@@ -11,6 +11,10 @@ export class FoodStation extends ex.Actor {
     super(x, y, w, h, color);
     this.name = name;
     this.food = food;
+
+    this.on("pointerdown", (event) => {
+      this.handleClick(globals.player);
+    });
   }
 
   public handleClick(player: Player) {
