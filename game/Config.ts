@@ -30,7 +30,7 @@ export class Config {
     static ELEPHANTFOOD_COLOR = ex.Color.Yellow;
     static ELEPHANTFOOD_WIDTH = 424;
     static ELEPHANTFOOD_HEIGHT = 342;
-    static ELEPHANTFOOD_SCALE = .2;
+    static ELEPHANTFOOD_SCALE_STATION = .2;
 
 
     static DOGFOOD_COLOR = ex.Color.Red;
