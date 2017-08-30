@@ -5,6 +5,7 @@ import {Food} from "./Item";
 export class Customer extends ex.Actor {
   public wants:Food;
   name: string;
+  private _speed: number;
 
   private _lastPosX: number;
   private _lastPosY: number;
@@ -17,12 +18,16 @@ export class Customer extends ex.Actor {
           globals.conf.CUSTOMER_HEIGHT,
           wants.color);
 
+    this._speed = globals.conf.CUSTOMER_SPEED;
     this.wants = wants;
     this.name = globals.conf.CUSTOMER_NAMES[Math.floor(Math.random()*globals.conf.CUSTOMER_NAMES.length)];
 
     this.collisionType = ex.CollisionType.Passive;
 
-    this.actions.moveTo(x, y, globals.conf.CUSTOMER_SPEED);
+    this.actions
+      .moveTo(globals.conf.DOOR_POS_X, globals.conf.DOOR_POS_Y - 50, this._speed)
+      .moveTo(x, globals.conf.DOOR_POS_Y - 50, this._speed)
+      .moveTo(x, y, this._speed);
 
     this._lastPosX = this.pos.x;
     this._lastPosY = this.pos.y;

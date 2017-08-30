@@ -12,8 +12,8 @@ export class Config {
 
     static STATION_DURATION = 1000;
 
-    static CUSTOMER_WIDTH  = 20;
-    static CUSTOMER_HEIGHT = 20;
+    static CUSTOMER_WIDTH  = 128/2;
+    static CUSTOMER_HEIGHT = 256/2;
     static CUSTOMER_SPEED  = 200;
     static CUSTOMER_NAMES  = [
       "Thomas",
