@@ -41,13 +41,14 @@ for (let r in globals.resources) {
 let elephantFoodStation = new ElephantFoodStation(300, 300, new Food(globals.conf.ELEPHANTFOOD_NAME, globals.conf.ELEPHANTFOOD_COLOR));
 game.add(elephantFoodStation);
 
-let inv = new Inventory(0, 0, 500, 50, ex.Color.White);
+let inv = new Inventory();
 game.add(inv);
 
 let player = new Player(inv);
 globals.player = player;
-game.input.pointers.primary.on("down", function (evt: PointerEvent) { player.goTo(evt); });
 game.add(player);
+
+game.input.pointers.primary.on("down", function (evt: PointerEvent) { player.goTo(evt); });
 
 
 let catFood = new FoodStation("CatFoodStation",

@@ -27,6 +27,7 @@ export class ElephantFoodStation extends ex.Actor {
     let normalSprite = spriteSheet.getSprite(0);
     normalSprite.scale.setTo(globals.conf.ELEPHANTFOOD_SCALE_STATION, globals.conf.ELEPHANTFOOD_SCALE_STATION);
     this.addDrawing("normal", normalSprite);
+    this.setDrawing("normal");
   }
 
   public getFood() {

@@ -42,6 +42,20 @@ export class Config {
     static ELEPHANTFOOD_HEIGHT = 342;
     static ELEPHANTFOOD_SCALE_STATION = .2;
 
+    static INVENTORY = {
+      POS_X: 0,
+      POS_Y: 0,
+      COLOR: ex.Color.White,
+      SPACING: 2,
+      ITEMS: {
+        HEIGHT: 64,
+        WIDTH: 64,
+        SPRITE_WIDTH: 284,
+        SPRITE_HEIGHT: 284,
+        MAX: 6
+      }
+    };
+
 
     static DOGFOOD_COLOR = ex.Color.Red;
     static CATFOOD_COLOR = ex.Color.Green;
