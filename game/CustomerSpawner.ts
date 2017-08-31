@@ -64,7 +64,6 @@ export class CustomerSpawner extends ex.Actor {
   public handleClick(player: Player) {
     player.sendToCassa(this, () => {
       let customersToRemove = player.serveItems(this.queue);
-      let index = 0;
 
       // remove all customers that were served with a small delay
       customersToRemove.forEach((customerToRemove, index) => {
