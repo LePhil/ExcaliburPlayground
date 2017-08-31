@@ -19,6 +19,15 @@ export class CustomerSpawner extends ex.Actor {
     });
   }
 
+  onInitialize(engine: ex.Engine): void {
+    this.spawn();
+
+    let customerSpawner = new ex.Timer(() => {
+      this.spawn();
+    }, 3000, true);
+    engine.add(customerSpawner);
+  }
+
   public spawn() {
     let newPosX = this.pos.x + this.queue.length * (globals.conf.CUSTOMER_WIDTH + 2)
     let newCustomer = new Customer(newPosX,
@@ -55,15 +64,20 @@ export class CustomerSpawner extends ex.Actor {
   public handleClick(player: Player) {
     player.sendToCassa(this, () => {
       let customersToRemove = player.serveItems(this.queue);
+      let index = 0;
 
-      // remove all customers that were served
+      // remove all customers that were served with a small delay
       for (let customerToRemove of customersToRemove) {
-        this.queue.splice( this.queue.indexOf(customerToRemove), 1 );
+        setTimeout(() => {
+          this.queue.splice( this.queue.indexOf(customerToRemove), 1 );
 
-        customerToRemove.leaveStore();
+          customerToRemove.leaveStore();
+          this.adjustQueue();
+
+        }, index * 500);
+        index++;
       }
 
-      this.adjustQueue();
     });
   }
 }

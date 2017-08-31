@@ -38,33 +38,34 @@ export class Player extends ex.Actor {
   }
 
   onInitialize(engine: ex.Engine): void {
-      let spriteSheet = new ex.SpriteSheet(globals.resources.TexturePlayers, 7, 8, 128, 256);
-      let downSpriteSheet = new ex.SpriteSheet(globals.resources.TextureMonsterDown, 14, 1, 96, 96);
-      let rightSpriteSheet = new ex.SpriteSheet(globals.resources.TextureMonsterRight, 14, 1, 96, 96);
-      let upSpriteSheet = new ex.SpriteSheet(globals.resources.TextureMonsterUp, 14, 1, 96, 96);
+      let scale = globals.conf.SPRITE_SCALE;
+      let coords = globals.conf.PLAYER_COORDS;
+      let speed = globals.conf.SPRITE_ANIM_SPEED;
 
-      let walkRightAnim = spriteSheet.getAnimationByIndices(engine, [11, 18], globals.conf.MonsterWalkFrameSpeed);
+      let spriteSheet = new ex.SpriteSheet(globals.resources.TexturePlayers, 7, 8, 128, 256);
+
+      let walkRightAnim = spriteSheet.getAnimationByIndices(engine, coords.walkR, speed);
       walkRightAnim.loop = true;
-      walkRightAnim.scale.setTo(.5, .5);
+      walkRightAnim.scale.setTo(scale, scale);
       this.addDrawing("walkRight", walkRightAnim);
 
-      let walkLeftAnim = spriteSheet.getAnimationByIndices(engine, [11, 18], globals.conf.MonsterWalkFrameSpeed);
+      let walkLeftAnim = spriteSheet.getAnimationByIndices(engine, coords.walkR, speed);
       walkLeftAnim.loop = true;
       walkLeftAnim.flipHorizontal = true;
-      walkLeftAnim.scale.setTo(.5, .5);
+      walkLeftAnim.scale.setTo(scale, scale);
       this.addDrawing("walkLeft", walkLeftAnim);
 
-      let idleSprite = spriteSheet.getSprite(5);
-      idleSprite.scale.setTo(.5, .5);
+      let idleSprite = spriteSheet.getSprite(coords.idle);
+      idleSprite.scale.setTo(scale, scale);
       this.addDrawing("idle", idleSprite);
 
-      let walkUpAnim = spriteSheet.getAnimationByIndices(engine, [19, 26], globals.conf.MonsterWalkFrameSpeed);
+      let walkUpAnim = spriteSheet.getAnimationByIndices(engine, coords.walkUp, speed);
       walkUpAnim.loop = true;
-      walkUpAnim.scale.setTo(.5, .5);
+      walkUpAnim.scale.setTo(scale, scale);
       this.addDrawing("walkUp", walkUpAnim);
 
-      let pickUpSprite = spriteSheet.getSprite(12);
-      pickUpSprite.scale.setTo(.5, .5);
+      let pickUpSprite = spriteSheet.getSprite(coords.pick);
+      pickUpSprite.scale.setTo(scale, scale);
       this.addDrawing("pickUp", pickUpSprite);
 
       // TODO: down anim not included in spritesheet :(

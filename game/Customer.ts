@@ -34,43 +34,49 @@ export class Customer extends ex.Actor {
   }
 
   public leaveStore() {
-    this.actions.moveTo(
-      globals.conf.DOOR_POS_X,
-      globals.conf.DOOR_POS_Y,
-      200).callMethod( ()=> { this.kill(); } );
+    this.actions
+      .moveTo(
+        globals.conf.DOOR_POS_X,
+        globals.conf.DOOR_POS_Y,
+        this._speed)
+      .callMethod( () => { this.kill(); } );
   }
 
   onInitialize(engine: ex.Engine): void {
-      let spriteSheet = new ex.SpriteSheet(globals.resources.TexturePlayers, 7, 8, 128, 256);
+    let spriteSheet = new ex.SpriteSheet(globals.resources.TexturePlayers, 7, 8, 128, 256);
 
-      let walkRightAnim = spriteSheet.getAnimationByIndices(engine, [0, 7], globals.conf.MonsterWalkFrameSpeed);
-      walkRightAnim.loop = true;
-      walkRightAnim.scale.setTo(.5, .5);
-      this.addDrawing("walkRight", walkRightAnim);
+    let myType = globals.conf.CUSTOMER_TYPES[Math.floor(Math.random()*globals.conf.CUSTOMER_TYPES.length)];
+    let scale = globals.conf.SPRITE_SCALE;
+    let speed = globals.conf.SPRITE_ANIM_SPEED;
 
-      let walkLeftAnim = spriteSheet.getAnimationByIndices(engine, [0, 7], globals.conf.MonsterWalkFrameSpeed);
-      walkLeftAnim.loop = true;
-      walkLeftAnim.flipHorizontal = true;
-      walkLeftAnim.scale.setTo(.5, .5);
-      this.addDrawing("walkLeft", walkLeftAnim);
+    let walkRightAnim = spriteSheet.getAnimationByIndices(engine, myType.coords.walkR, speed);
+    walkRightAnim.loop = true;
+    walkRightAnim.scale.setTo(scale, scale);
+    this.addDrawing("walkRight", walkRightAnim);
 
-      let idleSprite = spriteSheet.getSprite(28);
-      idleSprite.scale.setTo(.5, .5);
-      this.addDrawing("idle", idleSprite);
+    let walkLeftAnim = spriteSheet.getAnimationByIndices(engine, myType.coords.walkR, speed);
+    walkLeftAnim.loop = true;
+    walkLeftAnim.flipHorizontal = true;
+    walkLeftAnim.scale.setTo(scale, scale);
+    this.addDrawing("walkLeft", walkLeftAnim);
 
-      let walkUpAnim = spriteSheet.getAnimationByIndices(engine, [8, 15], globals.conf.MonsterWalkFrameSpeed);
-      walkUpAnim.loop = true;
-      walkUpAnim.scale.setTo(.5, .5);
-      this.addDrawing("walkUp", walkUpAnim);
+    let idleSprite = spriteSheet.getSprite(myType.coords.idle);
+    idleSprite.scale.setTo(scale, scale);
+    this.addDrawing("idle", idleSprite);
 
-      let pickUpSprite = spriteSheet.getSprite(1);
-      pickUpSprite.scale.setTo(.5, .5);
-      this.addDrawing("pickUp", pickUpSprite);
+    let walkUpAnim = spriteSheet.getAnimationByIndices(engine, myType.coords.walkUp, speed);
+    walkUpAnim.loop = true;
+    walkUpAnim.scale.setTo(scale, scale);
+    this.addDrawing("walkUp", walkUpAnim);
 
-      // TODO: down anim not included in spritesheet :(
-      this.addDrawing("walkDown", idleSprite);
+    let pickUpSprite = spriteSheet.getSprite(myType.coords.pick);
+    pickUpSprite.scale.setTo(scale, scale);
+    this.addDrawing("pickUp", pickUpSprite);
 
-      this.setDrawing("idle");
+    // TODO: down anim not included in spritesheet :(
+    this.addDrawing("walkDown", idleSprite);
+
+    this.setDrawing("idle");
   }
 
   public update(engine: ex.Engine, delta: number): void {
