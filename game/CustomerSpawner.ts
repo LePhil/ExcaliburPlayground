@@ -67,16 +67,14 @@ export class CustomerSpawner extends ex.Actor {
       let index = 0;
 
       // remove all customers that were served with a small delay
-      for (let customerToRemove of customersToRemove) {
+      customersToRemove.forEach((customerToRemove, index) => {
         setTimeout(() => {
           this.queue.splice( this.queue.indexOf(customerToRemove), 1 );
-
           customerToRemove.leaveStore();
           this.adjustQueue();
 
         }, index * 500);
-        index++;
-      }
+      });
 
     });
   }
