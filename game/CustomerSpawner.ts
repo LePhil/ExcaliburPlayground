@@ -6,6 +6,7 @@ import {Player} from "./Player";
 
 export class CustomerSpawner extends ex.Actor {
   public queue:Customer[];
+  private _customerSpawner;
 
   constructor(x, y, w, h, color) {
     super(x, y, w, h, color);
@@ -22,10 +23,11 @@ export class CustomerSpawner extends ex.Actor {
   onInitialize(engine: ex.Engine): void {
     this.spawn();
 
-    let customerSpawner = new ex.Timer(() => {
+    this._customerSpawner = new ex.Timer(() => {
       this.spawn();
-    }, 3000, true);
-    engine.add(customerSpawner);
+    }, globals.conf.GAME.SPAWN_TIME, true);
+
+    engine.add(this._customerSpawner);
   }
 
   public spawn() {
@@ -38,13 +40,13 @@ export class CustomerSpawner extends ex.Actor {
   }
 
   private getRandomFood():Food {
-    let foods = ["cat", "dog"];
+    let foods = ["elephant", "rabbit"];
     let randomFood = foods[Math.floor(Math.random()*foods.length)];
 
-    if (randomFood === "cat") {
-      return new Food(globals.conf.CATFOOD_NAME, globals.conf.CATFOOD_COLOR);
+    if (randomFood === "elephant") {
+      return new Food(globals.conf.ELEPHANTFOOD_NAME, globals.conf.ELEPHANTFOOD_COLOR);
     } else {
-      return new Food(globals.conf.DOGFOOD_NAME, globals.conf.DOGFOOD_COLOR);
+      return new Food(globals.conf.RABBITFOOD_NAME, globals.conf.RABBITFOOD_COLOR);
     }
   }
 
@@ -71,7 +73,6 @@ export class CustomerSpawner extends ex.Actor {
           this.queue.splice( this.queue.indexOf(customerToRemove), 1 );
           customerToRemove.leaveStore();
           this.adjustQueue();
-
         }, index * 500);
       });
 

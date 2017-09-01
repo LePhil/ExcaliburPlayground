@@ -2,24 +2,28 @@ declare var globals: any;
 import * as ex from "excalibur";
 import {Food} from "./Item";
 
-abstract class FoodInventoryWithPicture extends ex.Actor {
-  private item:Food;
+abstract class InventoryItem extends ex.Actor {
+  private _item:Food;
+  private _inv:Inventory;
 
-  constructor(x, y, item:Food) {
+  constructor(x, y, item:Food, inv: Inventory) {
     super(x, y, globals.conf.INVENTORY.ITEMS.WIDTH, globals.conf.INVENTORY.ITEMS.HEIGHT);
-    this.item = item;
+    this._item = item;
+    this._inv = inv;
+
+    this.on("pointerdown", (event) => {
+      this._inv.removeItem(this);
+    });
   }
 
-  // just debugging...
   public draw(ctx: CanvasRenderingContext2D, delta: number) {
-
     super.draw(ctx, delta);
 
-    ctx.fillStyle = 'rgb(200,0,0)';
-    // TODO: why is the square so big?
-    ctx.fillRect(0, 0, globals.conf.INVENTORY.ITEMS.WIDTH, globals.conf.INVENTORY.ITEMS.HEIGHT);
+    if(globals.conf.GAME.DEBUG) {
+      ctx.fillStyle = 'rgb(200,0,0)';
+      ctx.fillRect(this.pos.x, this.pos.y, globals.conf.INVENTORY.ITEMS.WIDTH, globals.conf.INVENTORY.ITEMS.HEIGHT);
+    }
   }
-
 
   abstract getTextureIndex(): number;
 
@@ -37,25 +41,16 @@ abstract class FoodInventoryWithPicture extends ex.Actor {
   }
 
   public getItem() {
-    return this.item;
+    return this._item;
   }
 }
 
-class ElephantFoodInventory extends FoodInventoryWithPicture {
+class ElephantInventoryItem extends InventoryItem {
   getTextureIndex() { return 8; }
 }
 
-class InventoryItem extends ex.Actor {
-  item:Food;
-
-  constructor(x, y, w, h, item:Food) {
-    super(x, y, w, h, item.color);
-    this.item = item;
-  }
-
-  public getItem() {
-    return this.item;
-  }
+class RabbitInventoryItem extends InventoryItem {
+  getTextureIndex() { return 6; }
 }
 
 export class Inventory extends ex.Actor {
@@ -85,11 +80,13 @@ export class Inventory extends ex.Actor {
     let pos_x = c.POS_X + this.inventory.length * (c.ITEMS.WIDTH + c.SPACING);
     let pos_y = c.POS_Y;
 
+    //TODO: *really* lazy
     if ( newItem.name === globals.conf.ELEPHANTFOOD_NAME) {
-      newActor = new ElephantFoodInventory(pos_x, pos_y, newItem);
-    } else {
-      newActor = new InventoryItem(pos_x, pos_y, 50, 50, newItem);
+      newActor = new ElephantInventoryItem(pos_x, pos_y, newItem, this);
+    } else if ( newItem.name === globals.conf.RABBITFOOD_NAME ) {
+      newActor = new RabbitInventoryItem(pos_x, pos_y, newItem, this);
     }
+
     this.inventory.push(newActor);
     globals.game.add(newActor);
   }
@@ -104,11 +101,20 @@ export class Inventory extends ex.Actor {
     }
 
     if (itemToRemove) {
-      this.inventory.splice( this.inventory.indexOf(itemToRemove), 1 );
-      itemToRemove.kill();
+      this.removeItem(itemToRemove);
       return true;
     }
     return false;
+  }
+
+  public removeItem(itemToRemove: InventoryItem) {
+    this.inventory.splice( this.inventory.indexOf(itemToRemove), 1 );
+    itemToRemove.kill();
+
+    // Update remaining items' positions ("float" to the left)
+    this.inventory.forEach((item, index) => {
+      item.pos.x = globals.conf.INVENTORY.POS_X + index * (globals.conf.INVENTORY.ITEMS.WIDTH + globals.conf.INVENTORY.SPACING);
+    });
   }
 
 }
