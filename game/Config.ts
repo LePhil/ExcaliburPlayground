@@ -72,7 +72,11 @@ export class Config {
     HEIGHT: 768,  // defined by electron wrapper
     DEBUG: false,
     SPAWN_TIME: 5000,
-    LEVEL_TIME: 60*1000
+    LEVEL_TIME: 60*1000,
+    UI: {
+      BUTTON_WIDTH: 190,
+      BUTTON_HEIGHT: 49
+    }
   };
 
   static DOOR_POS_X = Config.GAME.WIDTH / 2;

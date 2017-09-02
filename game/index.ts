@@ -13,10 +13,11 @@ import {Inventory} from "./Inventory";
 import {Customer} from "./Customer";
 import {CustomerSpawner} from "./CustomerSpawner";
 
+import {MainMenu} from "./MainMenu";
+
 
 let game = new ex.Engine({ displayMode: ex.DisplayMode.FullScreen });
 globals.game = game;
-
 globals.conf = Config;
 globals.resources = Resources;
 
@@ -56,6 +57,9 @@ game.add(player);
 game.input.pointers.primary.on("down", (evt: PointerEvent) => {
   player.goTo(evt);
 });
+
+let mainMenu = new MainMenu();
+game.add(mainMenu);
 
 let spawner = new CustomerSpawner(500, 520, 200, 20, ex.Color.White);
 game.add(spawner);
