@@ -13,56 +13,48 @@ import {Inventory} from "./Inventory";
 import {Customer} from "./Customer";
 import {CustomerSpawner} from "./CustomerSpawner";
 
+import {Storage} from "./Storage";
 import {MainMenu} from "./MainMenu";
-
 
 let game = new ex.Engine({ displayMode: ex.DisplayMode.FullScreen });
 globals.game = game;
 globals.conf = Config;
 globals.resources = Resources;
+globals.storage = new Storage();
+
+let menu = new MainMenu();
+game.add(menu);
 
 // Create a new TiledResource loadable
 var map = new Extensions.Tiled.TiledResource("game/assets/test.json");
 
-// Create a loader and reference the map
 var loader = new ex.Loader([map]);
 
-// create an asset loader
-let resources = {
-  /* include resources here */
-  // txPlayer: new ex.Texture("assets/tex/player.png")
-};
-
-// queue resources for loading
-for (let r in resources) {
-  loader.addResource(resources[r]);
-}
 for (let r in globals.resources) {
   loader.addResource(globals.resources[r]);
 }
 
-let elephantFoodStation = new ElephantFoodStation(300, 300, new Food(globals.conf.ELEPHANTFOOD_NAME, globals.conf.ELEPHANTFOOD_COLOR));
-game.add(elephantFoodStation);
+globals.startGame = () => {
+  let elephantFoodStation = new ElephantFoodStation(300, 300, new Food(globals.conf.ELEPHANTFOOD_NAME, globals.conf.ELEPHANTFOOD_COLOR));
+  game.add(elephantFoodStation);
 
-let rabbitFoodStation = new RabbitFoodStation(600, 300, new Food(globals.conf.RABBITFOOD_NAME, globals.conf.RABBITFOOD_COLOR));
-game.add(rabbitFoodStation);
+  let rabbitFoodStation = new RabbitFoodStation(600, 300, new Food(globals.conf.RABBITFOOD_NAME, globals.conf.RABBITFOOD_COLOR));
+  game.add(rabbitFoodStation);
 
-let inv = new Inventory();
-game.add(inv);
+  let inv = new Inventory();
+  game.add(inv);
 
-let player = new Player(inv);
-globals.player = player;
-game.add(player);
+  let player = new Player(inv);
+  globals.player = player;
+  game.add(player);
 
-game.input.pointers.primary.on("down", (evt: PointerEvent) => {
+  game.input.pointers.primary.on("down", (evt: PointerEvent) => {
   player.goTo(evt);
-});
+  });
 
-let mainMenu = new MainMenu();
-game.add(mainMenu);
-
-let spawner = new CustomerSpawner(500, 520, 200, 20, ex.Color.White);
-game.add(spawner);
+  let spawner = new CustomerSpawner(500, 520, 200, 20, ex.Color.White);
+  game.add(spawner);
+};
 
 game.start(loader).then(function(){
   // Process the data in the map as you like

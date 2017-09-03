@@ -16,6 +16,11 @@ export class Resources {
 
     static OptionBtn           = new ex.Texture("game/assets/ui/btn_option.png");
     static OptionBtnHover      = new ex.Texture("game/assets/ui/btn_option_hover.png");
+    static BackBtn             = new ex.Texture("game/assets/ui/btn_back.png");
+    static BackBtnHover        = new ex.Texture("game/assets/ui/btn_back_hover.png");
     static StartBtn            = new ex.Texture("game/assets/ui/btn_start.png");
     static StartBtnHover       = new ex.Texture("game/assets/ui/btn_start_hover.png");
+    static ChangePlayerBtn     = new ex.Texture("game/assets/ui/btn_changeplayer.png");
+    static ChangePlayerBtnHover= new ex.Texture("game/assets/ui/btn_changeplayer_hover.png");
+
 }

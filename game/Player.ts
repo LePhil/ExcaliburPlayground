@@ -38,75 +38,80 @@ export class Player extends ex.Actor {
   }
 
   onInitialize(engine: ex.Engine): void {
-      let scale = globals.conf.SPRITE_SCALE;
-      let coords = globals.conf.PLAYER_COORDS;
-      let speed = globals.conf.SPRITE_ANIM_SPEED;
+    let playerTypeIndex = 0;
+    if ( globals.storage.get("playerColor") ) {
+      playerTypeIndex = globals.conf.PLAYER_TYPES.indexOf(globals.conf.PLAYER_TYPES.filter( type => type.color === globals.storage.get("playerColor") )[0]);
+    }
 
-      let spriteSheet = new ex.SpriteSheet(globals.resources.TexturePlayers, 7, 8, 128, 256);
+    let scale = globals.conf.SPRITE_SCALE;
+    let coords = globals.conf.PLAYER_TYPES[playerTypeIndex].coords;
+    let speed = globals.conf.SPRITE_ANIM_SPEED;
 
-      let walkRightAnim = spriteSheet.getAnimationByIndices(engine, coords.walkR, speed);
-      walkRightAnim.loop = true;
-      walkRightAnim.scale.setTo(scale, scale);
-      this.addDrawing("walkRight", walkRightAnim);
+    let spriteSheet = new ex.SpriteSheet(globals.resources.TexturePlayers, 7, 8, 128, 256);
 
-      let walkLeftAnim = spriteSheet.getAnimationByIndices(engine, coords.walkR, speed);
-      walkLeftAnim.loop = true;
-      walkLeftAnim.flipHorizontal = true;
-      walkLeftAnim.scale.setTo(scale, scale);
-      this.addDrawing("walkLeft", walkLeftAnim);
+    let walkRightAnim = spriteSheet.getAnimationByIndices(engine, coords.walkR, speed);
+    walkRightAnim.loop = true;
+    walkRightAnim.scale.setTo(scale, scale);
+    this.addDrawing("walkRight", walkRightAnim);
 
-      let idleSprite = spriteSheet.getSprite(coords.idle);
-      idleSprite.scale.setTo(scale, scale);
-      this.addDrawing("idle", idleSprite);
+    let walkLeftAnim = spriteSheet.getAnimationByIndices(engine, coords.walkR, speed);
+    walkLeftAnim.loop = true;
+    walkLeftAnim.flipHorizontal = true;
+    walkLeftAnim.scale.setTo(scale, scale);
+    this.addDrawing("walkLeft", walkLeftAnim);
 
-      let walkUpAnim = spriteSheet.getAnimationByIndices(engine, coords.walkUp, speed);
-      walkUpAnim.loop = true;
-      walkUpAnim.scale.setTo(scale, scale);
-      this.addDrawing("walkUp", walkUpAnim);
+    let idleSprite = spriteSheet.getSprite(coords.idle);
+    idleSprite.scale.setTo(scale, scale);
+    this.addDrawing("idle", idleSprite);
 
-      let pickUpSprite = spriteSheet.getSprite(coords.pick);
-      pickUpSprite.scale.setTo(scale, scale);
-      this.addDrawing("pickUp", pickUpSprite);
+    let walkUpAnim = spriteSheet.getAnimationByIndices(engine, coords.walkUp, speed);
+    walkUpAnim.loop = true;
+    walkUpAnim.scale.setTo(scale, scale);
+    this.addDrawing("walkUp", walkUpAnim);
 
-      // TODO: down anim not included in spritesheet :(
-      this.addDrawing("walkDown", idleSprite);
+    let pickUpSprite = spriteSheet.getSprite(coords.pick);
+    pickUpSprite.scale.setTo(scale, scale);
+    this.addDrawing("pickUp", pickUpSprite);
 
-      this.setDrawing("idle");
+    // TODO: down anim not included in spritesheet :(
+    this.addDrawing("walkDown", idleSprite);
+
+    this.setDrawing("idle");
   }
 
   public update(engine: ex.Engine, delta: number): void {
-     super.update(engine, delta);
+   super.update(engine, delta);
 
-     let xMovement = this._lastPosX - this.pos.x;
-     let yMovement = this._lastPosY - this.pos.y
+   let xMovement = this._lastPosX - this.pos.x;
+   let yMovement = this._lastPosY - this.pos.y
 
-     if (Math.abs(xMovement) > Math.abs(yMovement) ) {
-       if (xMovement > 0) {
-         this.setDrawing("walkLeft");
-       } else if (xMovement < 0) {
-         this.setDrawing("walkRight");
-       }
-     } else {
-       if (yMovement > 0) {
-         this.setDrawing("walkUp");
-       } else if (yMovement < 0) {
-         this.setDrawing("walkDown");
-       }
+   if (Math.abs(xMovement) > Math.abs(yMovement) ) {
+     if (xMovement > 0) {
+       this.setDrawing("walkLeft");
+     } else if (xMovement < 0) {
+       this.setDrawing("walkRight");
      }
-
-     if (yMovement === 0 && xMovement === 0) {
-       this.setDrawing("idle");
+   } else {
+     if (yMovement > 0) {
+       this.setDrawing("walkUp");
+     } else if (yMovement < 0) {
+       this.setDrawing("walkDown");
      }
+   }
 
-     this._lastPosX = this.pos.x;
-     this._lastPosY = this.pos.y;
+   if (yMovement === 0 && xMovement === 0) {
+     this.setDrawing("idle");
+   }
+
+   this._lastPosX = this.pos.x;
+   this._lastPosY = this.pos.y;
   }
 
   public goTo(evt: PointerEvent) {
-     this.actions.moveTo(evt.x, evt.y, this._speed)
-                 .callMethod(()=> {
-                   // TODO ?
-                 });
+   this.actions.moveTo(evt.x, evt.y, this._speed)
+               .callMethod(()=> {
+                 // TODO ?
+               });
   }
 
   public sendToFoodStation(station: FoodStation) {

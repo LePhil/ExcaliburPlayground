@@ -45,7 +45,7 @@ export class Customer extends ex.Actor {
   onInitialize(engine: ex.Engine): void {
     let spriteSheet = new ex.SpriteSheet(globals.resources.TexturePlayers, 7, 8, 128, 256);
 
-    let myType = globals.conf.CUSTOMER_TYPES[Math.floor(Math.random()*globals.conf.CUSTOMER_TYPES.length)];
+    let myType = globals.conf.PLAYER_TYPES[Math.floor(Math.random()*globals.conf.PLAYER_TYPES.length)];
     let scale = globals.conf.SPRITE_SCALE;
     let speed = globals.conf.SPRITE_ANIM_SPEED;
 

@@ -9,7 +9,6 @@ export class Config {
   static PLAYER_STARTY   = 200;
   static PLAYER_WIDTH    = 50;
   static PLAYER_HEIGHT   = 50;
-  static PLAYER_COORDS   =    {walkR: [11,18], walkUp: [19,26], idle:  5, pick: 12};
 
   static SPRITE_SCALE    = .5;
   static SPRITE_ANIM_SPEED = 100;
@@ -19,7 +18,8 @@ export class Config {
   static CUSTOMER_WIDTH  = 128/2;
   static CUSTOMER_HEIGHT = 256/2;
   static CUSTOMER_SPEED  = 200;
-  static CUSTOMER_TYPES  = [
+  static PLAYER_TYPES  = [
+    {color: "green",  coords: {walkR: [11,18], walkUp: [19,26], idle:  5, pick: 12} },
     {color: "yellow", coords: {walkR: [29,36], walkUp: [30,37], idle: 16, pick: 30} },
     {color: "grey",   coords: {walkR: [ 0, 7], walkUp: [ 8,15], idle: 28, pick:  1} },
     {color: "red",    coords: {walkR: [44,51], walkUp: [ 4,52], idle: 38, pick: 45} },
