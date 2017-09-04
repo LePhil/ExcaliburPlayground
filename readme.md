@@ -1,1 +1,6 @@
-Just trying out some things.
+# Install
+
+* npm install
+* npm start
+
+Done!

@@ -23,4 +23,9 @@ export class Resources {
     static ChangePlayerBtn     = new ex.Texture("game/assets/ui/btn_changeplayer.png");
     static ChangePlayerBtnHover= new ex.Texture("game/assets/ui/btn_changeplayer_hover.png");
 
+    static Level1_1_Btn        = new ex.Texture("game/assets/ui/1-1.png");
+    static Level1_1_BtnHover   = new ex.Texture("game/assets/ui/1-1_hover.png");
+    static Level1_2_Btn        = new ex.Texture("game/assets/ui/1-2.png");
+    static Level1_2_BtnHover   = new ex.Texture("game/assets/ui/1-2_hover.png");
+
 }

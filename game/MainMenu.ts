@@ -2,10 +2,15 @@ declare var globals: any;
 import * as ex from "excalibur";
 
 export class MainMenu extends ex.UIActor {
+
+  private _level1Button: ex.UIActor;
+  private _level2Button: ex.UIActor;
+
   private _startButton: ex.UIActor;
   private _optionsButton: ex.UIActor;
   private _backButton: ex.UIActor;
   private _changePlayerButton: ex.UIActor;
+
   private _playerPreview: PlayerPreview;
 
   constructor() {
@@ -19,6 +24,20 @@ export class MainMenu extends ex.UIActor {
     let pos1_y = globals.conf.GAME.HEIGHT / 2 - globals.conf.GAME.UI.BUTTON_HEIGHT;
     let pos2_x = globals.conf.GAME.WIDTH / 2 - globals.conf.GAME.UI.BUTTON_WIDTH / 2;
     let pos2_y = globals.conf.GAME.HEIGHT / 2 + globals.conf.GAME.UI.BUTTON_HEIGHT;
+
+    this._level1Button  = new MenuButton(
+      globals.resources.Level1_1_Btn.asSprite(),
+      globals.resources.Level1_1_BtnHover.asSprite(),
+      () => {this.startGame()},
+      200, 200, 100, 100
+    );
+
+    this._level2Button  = new MenuButton(
+      globals.resources.Level1_2_Btn.asSprite(),
+      globals.resources.Level1_2_BtnHover.asSprite(),
+      () => {this.startGame()},
+      200, 600, 100, 100
+    );
 
     this._startButton   = new MenuButton(
       globals.resources.StartBtn.asSprite(),
@@ -48,6 +67,8 @@ export class MainMenu extends ex.UIActor {
       pos2_x, pos2_y
     );
 
+    globals.game.add(this._level1Button);
+    globals.game.add(this._level2Button);
     globals.game.add(this._startButton);
     globals.game.add(this._optionsButton);
     globals.game.add(this._backButton);
@@ -62,6 +83,8 @@ export class MainMenu extends ex.UIActor {
   public startGame() {
     if ( !this._startButton.visible ) { return; }
 
+    this._level1Button.visible = false;
+    this._level2Button.visible = false;
     this._startButton.visible = false;
     this._optionsButton.visible = false;
     this._backButton.visible = false;
@@ -73,6 +96,8 @@ export class MainMenu extends ex.UIActor {
   public openOptions() {
     if ( !this._optionsButton.visible ) { return; }
 
+    this._level1Button.visible = false;
+    this._level2Button.visible = false;
     this._startButton.visible = false;
     this._optionsButton.visible = false;
     this._backButton.visible = true;
@@ -85,6 +110,8 @@ export class MainMenu extends ex.UIActor {
   public back() {
     if ( !this._backButton.visible ) { return; }
 
+    this._level1Button.visible = true;
+    this._level2Button.visible = true;
     this._startButton.visible = true;
     this._optionsButton.visible = true;
     this._backButton.visible = false;
@@ -100,8 +127,8 @@ export class MainMenu extends ex.UIActor {
 }
 
 class MenuButton extends ex.UIActor {
-  constructor(sprite: ex.Sprite, hoverSprite: ex.Sprite, public action: () => void, x: number, y: number) {
-    super(x, y, globals.conf.GAME.UI.BUTTON_WIDTH, globals.conf.GAME.UI.BUTTON_HEIGHT);
+  constructor(sprite: ex.Sprite, hoverSprite: ex.Sprite, public action: () => void, x: number, y: number, w = globals.conf.GAME.UI.BUTTON_WIDTH, h = globals.conf.GAME.UI.BUTTON_HEIGHT) {
+    super(x, y, w, h);
 
     this.off("pointerup", this.action);
     this.on("pointerup", this.action);
