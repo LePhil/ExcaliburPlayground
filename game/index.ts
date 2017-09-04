@@ -7,6 +7,7 @@ import {Player} from "./Player";
 // TODO: inheritance yo
 import {RabbitFoodStation} from "./RabbitFoodStation";
 import {ElephantFoodStation} from "./ElephantFoodStation";
+import {Blob} from "./Blob";
 import {FoodStation} from "./FoodStation";
 import {Food} from "./Item";
 import {Inventory} from "./Inventory";
@@ -54,6 +55,9 @@ globals.startGame = () => {
 
   let spawner = new CustomerSpawner(500, 520, 200, 20, ex.Color.White);
   game.add(spawner);
+
+  let blob = new Blob(550, 50);
+  game.add(blob);
 };
 
 game.start(loader).then(function(){

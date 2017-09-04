@@ -81,4 +81,11 @@ export class Config {
 
   static DOOR_POS_X = Config.GAME.WIDTH / 2;
   static DOOR_POS_Y = Config.GAME.HEIGHT;
+
+  static BLOB = {
+    WIDTH: 57,
+    HEIGHT: 34,
+    SPEED: 200,
+    ANIM_SPEED: 100
+  };
 }

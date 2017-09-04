@@ -6,21 +6,12 @@ import {Inventory} from "./Inventory";
 import {Customer} from "./Customer";
 import {CustomerSpawner} from "./CustomerSpawner";
 
-const PLAYER_SPEED = 100;
-const enum PlayerMode {
-   Idle,
-   Walking,
-   Working
-}
-
 export class Player extends ex.Actor {
   inventory: Inventory;
   private _speed: number;
 
   private _lastPosX: number;
   private _lastPosY: number;
-
-  private _currentMode: PlayerMode = PlayerMode.Idle;
 
   constructor(inventory: Inventory) {
     super(globals.conf.PLAYER_STARTX,

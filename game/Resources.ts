@@ -7,6 +7,7 @@ export class Resources {
     static TextureInventory    = new ex.Texture("game/assets/textures/animals/inventory.png");
     static TextureRabbit       = new ex.Texture("game/assets/textures/animals/rabbit.png");
     static TextureElephant     = new ex.Texture("game/assets/textures/animals/elephant.png");
+    static TextureBlob         = new ex.Texture("game/assets/textures/animals/sprite_blob_pink.png");
 
     static TextureMonsterDown  = new ex.Texture("game/assets/textures/minotaurv2.png");
     static TextureMonsterRight = new ex.Texture("game/assets/textures/minotaurv2right.png");
