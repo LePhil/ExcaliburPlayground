@@ -6,6 +6,7 @@ export class Customer extends ex.Actor {
   public wants:Food;
   name: string;
   private _speed: number;
+  private _hasDecided: boolean;
   private _thinkBubble: ThinkBubble;
 
   private _lastPosX: number;
@@ -22,6 +23,7 @@ export class Customer extends ex.Actor {
     this._speed = globals.conf.CUSTOMER_SPEED;
     this.wants = wants;
     this.name = globals.conf.CUSTOMER_NAMES[Math.floor(Math.random()*globals.conf.CUSTOMER_NAMES.length)];
+    this._hasDecided = false;
 
     this.collisionType = ex.CollisionType.Passive;
 
@@ -32,6 +34,7 @@ export class Customer extends ex.Actor {
       .callMethod(() => {
         this._thinkBubble = new ThinkBubble(this.pos.x + globals.conf.CUSTOMER.THINKBUBBLE.OFFSET_X, this.pos.y - globals.conf.CUSTOMER.THINKBUBBLE.OFFSET_X, this.wants);
         globals.game.add(this._thinkBubble);
+        this._hasDecided = true;
       });
 
     this._lastPosX = this.pos.x;
@@ -108,6 +111,12 @@ export class Customer extends ex.Actor {
 
      if (yMovement === 0 && xMovement === 0) {
        this.setDrawing("idle");
+     } else {
+       id (this._hasDecided) {
+         // update thinkBubble's position if not standing still, if it exists
+         this._thinkBubble.pos.x = this.pos.x;
+         this._thinkBubble.pos.y = this.pos.y;
+       }
      }
 
      this._lastPosX = this.pos.x;
