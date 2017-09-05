@@ -6,6 +6,7 @@ export class Customer extends ex.Actor {
   public wants:Food;
   name: string;
   private _speed: number;
+  private _thinkBubble: ThinkBubble;
 
   private _lastPosX: number;
   private _lastPosY: number;
@@ -27,13 +28,19 @@ export class Customer extends ex.Actor {
     this.actions
       .moveTo(globals.conf.DOOR_POS_X, globals.conf.DOOR_POS_Y - 50, this._speed)
       .moveTo(x, globals.conf.DOOR_POS_Y - 50, this._speed)
-      .moveTo(x, y, this._speed);
+      .moveTo(x, y, this._speed)
+      .callMethod(() => {
+        this._thinkBubble = new ThinkBubble(this.pos.x + globals.conf.CUSTOMER.THINKBUBBLE.OFFSET_X, this.pos.y - globals.conf.CUSTOMER.THINKBUBBLE.OFFSET_X, this.wants);
+        globals.game.add(this._thinkBubble);
+      });
 
     this._lastPosX = this.pos.x;
     this._lastPosY = this.pos.y;
   }
 
   public leaveStore() {
+    this._thinkBubble.kill();
+
     this.actions
       .moveTo(
         globals.conf.DOOR_POS_X,
@@ -105,5 +112,31 @@ export class Customer extends ex.Actor {
 
      this._lastPosX = this.pos.x;
      this._lastPosY = this.pos.y;
+  }
+}
+
+class ThinkBubble extends ex.UIActor {
+  private _wants: Food;
+  constructor(x, y, wants: Food) {
+    super(x, y, globals.conf.CUSTOMER.THINKBUBBLE.WIDTH, globals.conf.CUSTOMER.THINKBUBBLE.HEIGHT);
+    this._wants = wants;
+  }
+
+  onInitialize(engine: ex.Engine): void {
+    let spriteSheet = new ex.SpriteSheet(globals.resources.TextureBubbles, 2, 7, globals.conf.CUSTOMER.THINKBUBBLE.SPRITE.WIDTH, globals.conf.CUSTOMER.THINKBUBBLE.SPRITE.HEIGHT);
+
+    // TODO: ugly ugly ugly
+    let spriteIndex = 0;
+    if (this._wants.name === globals.conf.ELEPHANTFOOD_NAME) {
+      spriteIndex = 4;
+    } else if (this._wants.name === globals.conf.RABBITFOOD_NAME) {
+      spriteIndex = 10;
+    }
+
+    let _sprite = spriteSheet.getSprite( spriteIndex );
+    let _scale = globals.conf.CUSTOMER.THINKBUBBLE.HEIGHT / globals.conf.CUSTOMER.THINKBUBBLE.SPRITE.HEIGHT;
+    _sprite.scale.setTo(_scale, _scale);
+    this.addDrawing("normal", _sprite);
+    this.setDrawing("normal");
   }
 }

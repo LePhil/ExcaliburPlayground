@@ -13,6 +13,8 @@ export class Resources {
     static TextureMonsterRight = new ex.Texture("game/assets/textures/minotaurv2right.png");
     static TextureMonsterUp    = new ex.Texture("game/assets/textures/minotaurv2back.png");
 
+    static TextureBubbles      = new ex.Texture("game/assets/textures/animals/bubbles.png");
+
     static ImgButton           = new ex.Texture("game/assets/ui/blue_button00.png");
 
     static OptionBtn           = new ex.Texture("game/assets/ui/btn_option.png");

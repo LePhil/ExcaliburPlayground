@@ -25,6 +25,18 @@ export class Config {
     {color: "red",    coords: {walkR: [44,51], walkUp: [ 4,52], idle: 38, pick: 45} },
     {color: "blue",   coords: {walkR: [33,40], walkUp: [24,41], idle: 27, pick: 34} }
   ];
+  static CUSTOMER = {
+    THINKBUBBLE: {
+      WIDTH: 30,
+      HEIGHT: 30,
+      OFFSET_X: 20,
+      OFFSET_Y: 20,
+      SPRITE: {
+        WIDTH: 284,
+        HEIGHT: 285
+      }
+    }
+  };
   static CUSTOMER_NAMES  = [
     "Thomas",
     "Gimli",

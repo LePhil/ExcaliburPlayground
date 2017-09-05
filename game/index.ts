@@ -49,9 +49,10 @@ globals.startGame = () => {
   globals.player = player;
   game.add(player);
 
-  game.input.pointers.primary.on("down", (evt: PointerEvent) => {
-  player.goTo(evt);
-  });
+  // player moves wherever is clicked - TODO: how to cancel this on "real" targets?
+  //game.input.pointers.primary.on("down", (evt: PointerEvent) => {
+  //  player.goTo(evt);
+  //});
 
   let spawner = new CustomerSpawner(500, 520, 200, 20, ex.Color.White);
   game.add(spawner);
