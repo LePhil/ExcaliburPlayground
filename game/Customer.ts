@@ -123,6 +123,7 @@ class ThinkBubble extends ex.UIActor {
   }
 
   onInitialize(engine: ex.Engine): void {
+    super.onInitialize(engine);
     let spriteSheet = new ex.SpriteSheet(globals.resources.TextureBubbles, 2, 7, globals.conf.CUSTOMER.THINKBUBBLE.SPRITE.WIDTH, globals.conf.CUSTOMER.THINKBUBBLE.SPRITE.HEIGHT);
 
     // TODO: ugly ugly ugly
