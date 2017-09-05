@@ -112,15 +112,19 @@ export class Customer extends ex.Actor {
      if (yMovement === 0 && xMovement === 0) {
        this.setDrawing("idle");
      } else {
-       id (this._hasDecided) {
-         // update thinkBubble's position if not standing still, if it exists
-         this._thinkBubble.pos.x = this.pos.x;
-         this._thinkBubble.pos.y = this.pos.y;
-       }
+       this._updateChildren();
      }
 
      this._lastPosX = this.pos.x;
      this._lastPosY = this.pos.y;
+  }
+
+  private _updateChildren() {
+    if (this._hasDecided) {
+      // update thinkBubble's position if not standing still, if it exists
+      this._thinkBubble.pos.x = this.pos.x;
+      this._thinkBubble.pos.y = this.pos.y;
+    }
   }
 }
 
