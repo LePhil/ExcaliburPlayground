@@ -30,11 +30,14 @@ export class Customer extends AbstractPlayer {
         this._thinkBubble = new ThinkBubble(this.pos.x + globals.conf.CUSTOMER.THINKBUBBLE.OFFSET_X, this.pos.y - globals.conf.CUSTOMER.THINKBUBBLE.OFFSET_X, this.wants);
         globals.game.add(this._thinkBubble);
         this._hasDecided = true;
+        // TODO: maybe wait with deciding for a bit
+        // TODO: POINTS OR MONEY IN EXCHANGE FOR GOODS!
+        // TODO: longer waiting = less points or money 
       });
   }
 
   /**
-   * Remove the thinkBubble, move to the door and die.
+   * Remove the thinkBubble, do the KA-CHING and move to the door and die.
    */
   public leaveStore():void {
     if(this._thinkBubble) {

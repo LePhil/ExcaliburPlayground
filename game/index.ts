@@ -35,6 +35,8 @@ for (let r in globals.resources) {
   loader.addResource(globals.resources[r]);
 }
 
+// TODO: levels
+// TODO: time limit on a single game run
 globals.startGame = () => {
   let elephantFoodStation = new ElephantFoodStation(300, 300, new Food(globals.conf.ELEPHANTFOOD_NAME, globals.conf.ELEPHANTFOOD_COLOR));
   game.add(elephantFoodStation);

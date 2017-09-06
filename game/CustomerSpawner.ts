@@ -4,6 +4,7 @@ import {Customer} from "./Customer";
 import {Food} from "./Item";
 import {Player} from "./Player";
 
+// TODO: is that really the best name?
 export class CustomerSpawner extends ex.Actor {
   public queue:Customer[];
   private _customerSpawner;
@@ -23,6 +24,7 @@ export class CustomerSpawner extends ex.Actor {
   onInitialize(engine: ex.Engine): void {
     this.spawn();
 
+    // TODO: don't just spawn infinite customers, ok?
     this._customerSpawner = new ex.Timer(() => {
       this.spawn();
     }, globals.conf.GAME.SPAWN_TIME, true);
@@ -43,6 +45,7 @@ export class CustomerSpawner extends ex.Actor {
     let foods = ["elephant", "rabbit"];
     let randomFood = foods[Math.floor(Math.random()*foods.length)];
 
+    // TODO: it's so ugly I can barely look at it!
     if (randomFood === "elephant") {
       return new Food(globals.conf.ELEPHANTFOOD_NAME, globals.conf.ELEPHANTFOOD_COLOR);
     } else {

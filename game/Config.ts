@@ -49,6 +49,7 @@ export class Config {
     "Polly"
   ];
 
+  // TODO: create complete food object(s)
   static ELEPHANTFOOD_NAME  = "Elephant Food";
   static ELEPHANTFOOD_COLOR = ex.Color.Yellow;
   static ELEPHANTFOOD_WIDTH = 424;

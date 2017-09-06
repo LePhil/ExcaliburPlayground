@@ -16,6 +16,8 @@ export class Blob extends ex.Actor {
       this.kill();
     });
 
+    // TODO: nicer pattern, points/event on capture
+    // TODO: disappear after X seconds again
     this.actions
       .moveTo(0  , 0  , this._speed)
       .delay(500)
