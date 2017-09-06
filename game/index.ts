@@ -16,6 +16,7 @@ import {CustomerSpawner} from "./CustomerSpawner";
 
 import {Storage} from "./Storage";
 import {MainMenu} from "./MainMenu";
+import {Timer} from "./Timer";
 
 let game = new ex.Engine({ displayMode: ex.DisplayMode.FullScreen });
 globals.game = game;
@@ -61,6 +62,9 @@ globals.startGame = () => {
 
   let blob = new Blob(550, 50);
   game.add(blob);
+
+  let timer = new Timer(700, 30, 500);
+  game.add(timer);
 };
 
 game.start(loader).then(function(){

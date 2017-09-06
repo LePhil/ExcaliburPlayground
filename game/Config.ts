@@ -96,10 +96,51 @@ export class Config {
   static DOOR_POS_X = Config.GAME.WIDTH / 2;
   static DOOR_POS_Y = Config.GAME.HEIGHT;
 
+  static TIMER = {
+    WIDTH: 200,
+    HEIGHT: 40
+  };
+
   static BLOB = {
     WIDTH: 57,
     HEIGHT: 34,
     SPEED: 200,
     ANIM_SPEED: 100
   };
+
+  static HUD = {
+    hud_0:                  {x: 230, y: 0, w: 30, h: 38},
+    hud_1:                  {x: 196, y: 41, w: 26, h: 37},
+    hud_2:                  {x: 55, y: 98, w: 32, h: 38},
+    hud_3:                  {x: 239, y: 80, w: 28, h: 38},
+    hud_4:                  {x: 238, y: 122, w: 29, h: 38},
+    hud_5:                  {x: 238, y: 162, w: 28, h: 38},
+    hud_6:                  {x: 230, y: 40, w: 30, h: 38},
+    hud_7:                  {x: 226, y: 206, w: 32, h: 39},
+    hud_8:                  {x: 192, y: 206, w: 32, h: 40},
+    hud_9:                  {x: 196, y: 0, w: 32, h: 39},
+    hud_coins:              {x: 55, y: 0, w: 47, h: 47},
+    hud_gem_blue:           {x: 104, y: 0, w: 46, h: 36},
+    hud_gem_green:          {x: 98, y: 185, w: 46, h: 36},
+    hud_gem_red:            {x: 98, y: 147, w: 46, h: 36},
+    hud_gem_yellow:         {x: 98, y: 223, w: 46, h: 36},
+    hud_heartEmpty:         {x: 0, y: 47, w: 53, h: 45},
+    hud_heartFull:          {x: 0, y: 94, w: 53, h: 45},
+    hud_heartHalf:          {x: 0, y: 0, w: 53, h: 45},
+    hud_keyBlue:            {x: 146, y: 147, w: 44, h: 40},
+    hud_keyBlue_disabled:   {x: 150, y: 38, w: 44, h: 40},
+    hud_keyGreem_disabled:  {x: 104, y: 38, w: 44, h: 40},
+    hud_keyGreen:           {x: 192, y: 122, w: 44, h: 40},
+    hud_keyRed:             {x: 193, y: 80, w: 44, h: 40},
+    hud_keyRed_disabled:    {x: 192, y: 164, w: 44, h: 40},
+    hud_keyYellow:          {x: 146, y: 189, w: 44, h: 40},
+    hud_keyYellow_disabled: {x: 147, y: 80, w: 44, h: 40},
+    hud_p1:                 {x: 55, y: 49, w: 47, h: 47},
+    hud_p1Alt:              {x: 0, y: 141, w: 47, h: 47},
+    hud_p2:                 {x: 49, y: 141, w: 47, h: 47},
+    hud_p2Alt:              {x: 0, y: 190, w: 47, h: 47},
+    hud_p3:                 {x: 49, y: 190, w: 47, h: 47},
+    hud_p3Alt:              {x: 98, y: 98, w: 47, h: 47},
+    hud_x:                  {x: 0, y: 239, w: 30, h: 28}
+  }
 }
