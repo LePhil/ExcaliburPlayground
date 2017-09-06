@@ -41,12 +41,41 @@ export class Customer extends AbstractPlayer {
       this._thinkBubble.kill();
     }
 
+    this._moneymoneymoney();
+
     this.actions
       .moveTo(
         globals.conf.DOOR_POS_X,
         globals.conf.DOOR_POS_Y,
         this._speed)
       .callMethod( () => { this.kill(); } );
+  }
+
+  private _moneymoneymoney():void {
+    let emitter = new ex.ParticleEmitter(this.pos.x, this.pos.y, 0, 0);
+    emitter.emitterType = ex.EmitterType.Circle;
+    emitter.radius = 34;
+    emitter.minVel = 41;
+    emitter.maxVel = 42;
+    emitter.minAngle = 3.6;
+    emitter.maxAngle = 5.9;
+    emitter.isEmitting = true;
+    emitter.emitRate = 10;
+    emitter.opacity = 0.4;
+    emitter.fadeFlag = true;
+    emitter.particleLife = 869;
+    emitter.maxSize = 8;
+    emitter.minSize = 6;
+    emitter.acceleration = new ex.Vector(0, 0);
+    emitter.beginColor = ex.Color.Yellow;
+    emitter.endColor = ex.Color.Yellow;
+
+    emitter.isEmitting = true;
+    globals.game.add(emitter);
+
+    setTimeout(() => {
+      emitter.kill();
+    }, 500);
   }
 
   _getPlayerColorIndex ():number {
@@ -58,7 +87,7 @@ export class Customer extends AbstractPlayer {
     if (this._hasDecided) {
       // update thinkBubble's position if not standing still, if it exists
       this._thinkBubble.pos.x = this.pos.x + globals.conf.CUSTOMER.THINKBUBBLE.OFFSET_X;
-      this._thinkBubble.pos.y = this.pos.y + globals.conf.CUSTOMER.THINKBUBBLE.OFFSET_Y;
+      this._thinkBubble.pos.y = this.pos.y - globals.conf.CUSTOMER.THINKBUBBLE.OFFSET_Y;
     }
   }
 }
