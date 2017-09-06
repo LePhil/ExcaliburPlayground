@@ -17,6 +17,7 @@ import {CustomerSpawner} from "./CustomerSpawner";
 import {Storage} from "./Storage";
 import {MainMenu} from "./MainMenu";
 import {Timer} from "./Timer";
+import {ScoreCounter} from "./ScoreCounter";
 
 let game = new ex.Engine({ displayMode: ex.DisplayMode.FullScreen });
 globals.game = game;
@@ -48,7 +49,10 @@ globals.startGame = () => {
   let inv = new Inventory();
   game.add(inv);
 
-  let player = new Player(inv);
+  let scoreCounter = new ScoreCounter(300, 30);
+  game.add(scoreCounter);
+
+  let player = new Player(inv, scoreCounter);
   globals.player = player;
   game.add(player);
 

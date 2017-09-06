@@ -6,18 +6,21 @@ import {Inventory} from "./Inventory";
 import {Customer} from "./Customer";
 import {CustomerSpawner} from "./CustomerSpawner";
 import {AbstractPlayer} from "./AbstractPlayer";
+import {ScoreCounter} from "./ScoreCounter";
 
 export class Player extends AbstractPlayer {
   inventory: Inventory;
   private _isBusy:boolean;
+  private _scoreCounter:ScoreCounter;
 
-  constructor(inventory: Inventory) {
+  constructor(inventory: Inventory, scoreCounter: ScoreCounter) {
     super(globals.conf.PLAYER_STARTX,
           globals.conf.PLAYER_STARTY,
           globals.conf.PLAYER_WIDTH,
           globals.conf.PLAYER_HEIGHT);
 
-    this.inventory = inventory;;
+    this.inventory = inventory;
+    this._scoreCounter = scoreCounter;
     this.collisionType = ex.CollisionType.Active;
     this._isBusy = false;
   }
@@ -41,21 +44,19 @@ export class Player extends AbstractPlayer {
 
   public sendToFoodStation(station: FoodStation) {
     this.actions
-    .moveTo(station.pos.x,
-            station.pos.y,
-            this._speed)
-    .callMethod(() => {
-      this._isBusy = true;
-      console.log("pickup");
-      this.setDrawing("pickUp");
-    })
-    .delay(globals.conf.STATION_DURATION)
-    .callMethod(()=> {
-      console.log("idle");
-      this.addFood(station.getFood());
-      this._isBusy = false;
-      this.setDrawing("idle");
-    });
+      .moveTo(station.pos.x,
+              station.pos.y,
+              this._speed)
+      .callMethod(() => {
+        this._isBusy = true;
+        this.setDrawing("pickUp");
+      })
+      .delay(globals.conf.STATION_DURATION)
+      .callMethod(()=> {
+        this.addFood(station.getFood());
+        this._isBusy = false;
+        this.setDrawing("idle");
+      });
   }
 
   public sendToCassa(cassa: CustomerSpawner, callback: any) {
@@ -82,6 +83,9 @@ export class Player extends AbstractPlayer {
         customersToRemove.push(cust);
       }
     }
+
+    // TODO: probably smarter to move scoring to customer, as the waiting time/wish factors in on the reward...
+    this._scoreCounter.updateScore( customersToRemove.length * globals.conf.SCORE.VALUE_OF_SERVING );
 
     return customersToRemove;
   }

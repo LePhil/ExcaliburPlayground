@@ -142,5 +142,9 @@ export class Config {
     hud_p3:                 {x: 49, y: 190, w: 47, h: 47},
     hud_p3Alt:              {x: 98, y: 98, w: 47, h: 47},
     hud_x:                  {x: 0, y: 239, w: 30, h: 28}
-  }
+  };
+  static SCORE = {
+    NROFDIGITS: 3,
+    VALUE_OF_SERVING: 20
+  };
 }
