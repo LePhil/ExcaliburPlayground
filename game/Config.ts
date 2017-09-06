@@ -25,6 +25,7 @@ export class Config {
     {color: "red",    coords: {walkR: [44,51], walkUp: [ 4,52], idle: 38, pick: 45} },
     {color: "blue",   coords: {walkR: [33,40], walkUp: [24,41], idle: 27, pick: 34} }
   ];
+  static PLAYER_TYPE_INITIAL_INDEX = 0;
   static CUSTOMER = {
     THINKBUBBLE: {
       WIDTH: 30,

@@ -5,13 +5,10 @@ import {FoodStation} from "./FoodStation";
 import {Inventory} from "./Inventory";
 import {Customer} from "./Customer";
 import {CustomerSpawner} from "./CustomerSpawner";
+import {AbstractPlayer} from "./AbstractPlayer";
 
-export class Player extends ex.Actor {
+export class Player extends AbstractPlayer {
   inventory: Inventory;
-  private _speed: number;
-
-  private _lastPosX: number;
-  private _lastPosY: number;
 
   constructor(inventory: Inventory) {
     super(globals.conf.PLAYER_STARTX,
@@ -19,84 +16,19 @@ export class Player extends ex.Actor {
           globals.conf.PLAYER_WIDTH,
           globals.conf.PLAYER_HEIGHT);
 
-    this.inventory = inventory;
-    this._speed =  globals.conf.PLAYER_SPEED;
-
-    this._lastPosX = this.pos.x;
-    this._lastPosY = this.pos.y;
-
+    this.inventory = inventory;;
     this.collisionType = ex.CollisionType.Active;
   }
 
-  onInitialize(engine: ex.Engine): void {
-    let playerTypeIndex = 0;
+  _getPlayerColorIndex ():number {
     if ( globals.storage.get("playerColor") ) {
-      playerTypeIndex = globals.conf.PLAYER_TYPES.indexOf(globals.conf.PLAYER_TYPES.filter( type => type.color === globals.storage.get("playerColor") )[0]);
+      return globals.conf.PLAYER_TYPES.indexOf(globals.conf.PLAYER_TYPES.filter( type => type.color === globals.storage.get("playerColor") )[0]);
+    } else {
+      return globals.conf.PLAYER_TYPE_INITIAL_INDEX; //start with green guy if no color was chosen
     }
-
-    let scale = globals.conf.SPRITE_SCALE;
-    let coords = globals.conf.PLAYER_TYPES[playerTypeIndex].coords;
-    let speed = globals.conf.SPRITE_ANIM_SPEED;
-
-    let spriteSheet = new ex.SpriteSheet(globals.resources.TexturePlayers, 7, 8, 128, 256);
-
-    let walkRightAnim = spriteSheet.getAnimationByIndices(engine, coords.walkR, speed);
-    walkRightAnim.loop = true;
-    walkRightAnim.scale.setTo(scale, scale);
-    this.addDrawing("walkRight", walkRightAnim);
-
-    let walkLeftAnim = spriteSheet.getAnimationByIndices(engine, coords.walkR, speed);
-    walkLeftAnim.loop = true;
-    walkLeftAnim.flipHorizontal = true;
-    walkLeftAnim.scale.setTo(scale, scale);
-    this.addDrawing("walkLeft", walkLeftAnim);
-
-    let idleSprite = spriteSheet.getSprite(coords.idle);
-    idleSprite.scale.setTo(scale, scale);
-    this.addDrawing("idle", idleSprite);
-
-    let walkUpAnim = spriteSheet.getAnimationByIndices(engine, coords.walkUp, speed);
-    walkUpAnim.loop = true;
-    walkUpAnim.scale.setTo(scale, scale);
-    this.addDrawing("walkUp", walkUpAnim);
-
-    let pickUpSprite = spriteSheet.getSprite(coords.pick);
-    pickUpSprite.scale.setTo(scale, scale);
-    this.addDrawing("pickUp", pickUpSprite);
-
-    // TODO: down anim not included in spritesheet :(
-    this.addDrawing("walkDown", idleSprite);
-
-    this.setDrawing("idle");
   }
 
-  public update(engine: ex.Engine, delta: number): void {
-   super.update(engine, delta);
-
-   let xMovement = this._lastPosX - this.pos.x;
-   let yMovement = this._lastPosY - this.pos.y
-
-   if (Math.abs(xMovement) > Math.abs(yMovement) ) {
-     if (xMovement > 0) {
-       this.setDrawing("walkLeft");
-     } else if (xMovement < 0) {
-       this.setDrawing("walkRight");
-     }
-   } else {
-     if (yMovement > 0) {
-       this.setDrawing("walkUp");
-     } else if (yMovement < 0) {
-       this.setDrawing("walkDown");
-     }
-   }
-
-   if (yMovement === 0 && xMovement === 0) {
-     this.setDrawing("idle");
-   }
-
-   this._lastPosX = this.pos.x;
-   this._lastPosY = this.pos.y;
-  }
+  _updateChildren():void {}
 
   public goTo(evt: PointerEvent) {
    this.actions.moveTo(evt.x, evt.y, this._speed)
