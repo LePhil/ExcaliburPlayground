@@ -78,7 +78,7 @@ export abstract class AbstractPlayer extends ex.Actor {
      }
 
      if (yMovement === 0 && xMovement === 0) {
-       this.setDrawing("idle");
+       this._handleIdlePlayer();
      } else {
        this._updateChildren();
      }
@@ -90,4 +90,6 @@ export abstract class AbstractPlayer extends ex.Actor {
   abstract _getPlayerColorIndex ():number
 
   abstract _updateChildren():void
+
+  abstract _handleIdlePlayer():void
 }

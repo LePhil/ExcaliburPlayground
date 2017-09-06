@@ -90,6 +90,10 @@ export class Customer extends AbstractPlayer {
       this._thinkBubble.pos.y = this.pos.y - globals.conf.CUSTOMER.THINKBUBBLE.OFFSET_Y;
     }
   }
+
+  _handleIdlePlayer():void {
+    this.setDrawing("idle");
+  }
 }
 
 class ThinkBubble extends ex.UIActor {

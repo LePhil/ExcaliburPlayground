@@ -9,6 +9,7 @@ import {AbstractPlayer} from "./AbstractPlayer";
 
 export class Player extends AbstractPlayer {
   inventory: Inventory;
+  private _isBusy:boolean;
 
   constructor(inventory: Inventory) {
     super(globals.conf.PLAYER_STARTX,
@@ -18,6 +19,7 @@ export class Player extends AbstractPlayer {
 
     this.inventory = inventory;;
     this.collisionType = ex.CollisionType.Active;
+    this._isBusy = false;
   }
 
   _getPlayerColorIndex ():number {
@@ -43,6 +45,7 @@ export class Player extends AbstractPlayer {
             station.pos.y,
             this._speed)
     .callMethod(() => {
+      this._isBusy = true;
       console.log("pickup");
       this.setDrawing("pickUp");
     })
@@ -50,6 +53,7 @@ export class Player extends AbstractPlayer {
     .callMethod(()=> {
       console.log("idle");
       this.addFood(station.getFood());
+      this._isBusy = false;
       this.setDrawing("idle");
     });
   }
@@ -80,5 +84,11 @@ export class Player extends AbstractPlayer {
     }
 
     return customersToRemove;
+  }
+
+  _handleIdlePlayer():void {
+    if(!this._isBusy) {
+      this.setDrawing("idle");
+    }
   }
 }
