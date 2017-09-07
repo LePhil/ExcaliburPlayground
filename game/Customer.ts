@@ -42,10 +42,8 @@ export class Customer extends AbstractPlayer {
   private _decideOnProduct():void {
     this._thinkBubble = new ThinkBubble(this.pos.x + globals.conf.CUSTOMER.THINKBUBBLE.OFFSET_X, this.pos.y - globals.conf.CUSTOMER.THINKBUBBLE.OFFSET_X, this.wants);
     globals.game.add(this._thinkBubble);
-    this._hasDecided = true;
     // TODO: maybe wait with deciding for a bit
-    // TODO: POINTS OR MONEY IN EXCHANGE FOR GOODS!
-    // TODO: longer waiting = less points or money
+    this._hasDecided = true;
 
     this._patienceDecreaseTimer = new ex.Timer(() => {
       this._patience -= globals.conf.CUSTOMER.PATIENCE_DELTA;

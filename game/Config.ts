@@ -39,7 +39,8 @@ export class Config {
     },
     INITIAL_PATIENCE: 100,
     PATIENCE_DELTA: 5,
-    PATIENCE_DECREASE_INTERVAL: 1000
+    PATIENCE_DECREASE_INTERVAL: 1000,
+    QUEUE_LENGTH: 5
   };
   static CUSTOMER_NAMES  = [
     "Thomas",
@@ -108,7 +109,8 @@ export class Config {
     WIDTH: 57,
     HEIGHT: 34,
     SPEED: 200,
-    ANIM_SPEED: 100
+    ANIM_SPEED: 100,
+    LIFETIME: 7
   };
 
   static HUD = {

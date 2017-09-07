@@ -17,7 +17,6 @@ export class Blob extends ex.Actor {
     });
 
     // TODO: nicer pattern, points/event on capture
-    // TODO: disappear after X seconds again
     this.actions
       .moveTo(0  , 0  , this._speed)
       .delay(500)
@@ -37,5 +36,12 @@ export class Blob extends ex.Actor {
     this.addDrawing("walk", walkAnim);
 
     this.setDrawing("walk");
+
+    // Remove Blob after X seconds
+    let blobRemovalTimer = new ex.Timer(() => {
+      this.kill();
+    }, globals.conf.BLOB.LIFETIME * 1000, true);
+
+    engine.add(blobRemovalTimer);
   }
 }

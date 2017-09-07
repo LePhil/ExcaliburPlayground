@@ -24,7 +24,6 @@ export class CustomerSpawner extends ex.Actor {
   onInitialize(engine: ex.Engine): void {
     this.spawn();
 
-    // TODO: don't just spawn infinite customers, ok?
     this._customerSpawnerTimer = new ex.Timer(() => {
       this.spawn();
     }, globals.conf.GAME.SPAWN_TIME, true);
@@ -33,6 +32,10 @@ export class CustomerSpawner extends ex.Actor {
   }
 
   public spawn() {
+    if (this.queue.length >= globals.conf.CUSTOMER.QUEUE_LENGTH) {
+      return;
+    }
+
     let newPosX = this.pos.x + this.queue.length * (globals.conf.CUSTOMER_WIDTH + 2)
     let newCustomer = new Customer(newPosX,
                                    this.pos.y,
