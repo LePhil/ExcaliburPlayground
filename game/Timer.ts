@@ -24,7 +24,7 @@ export class Timer extends ex.UIActor {
     for(let i = 0; i < ("" + this._time).length; i++ ) {
       let digit = new Digit(this.pos.x + i * xOffset, this.pos.y);
       this._digits.push( digit );
-      globals.game.add( digit );
+      this.scene.add( digit );
     }
 
     // TODO: best name is best.
@@ -55,6 +55,7 @@ export class Timer extends ex.UIActor {
 
   private _endGame():void {
     //TODO - what if the timer runs out?
+    globals.endScreen();
   }
 }
 

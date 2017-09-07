@@ -42,7 +42,7 @@ export class CustomerSpawner extends ex.Actor {
                                    this.getRandomFood(),
                                    this);
     this.queue.push(newCustomer);
-    globals.game.add(newCustomer);
+    this.scene.add(newCustomer);
   }
 
   private getRandomFood():Food {

@@ -1,7 +1,7 @@
 declare var globals: any;
 import * as ex from "excalibur";
 
-export class MainMenu extends ex.UIActor {
+export class MainMenu extends ex.Scene {
 
   private _level1Button: ex.UIActor;
   private _level2Button: ex.UIActor;
@@ -13,12 +13,8 @@ export class MainMenu extends ex.UIActor {
 
   private _playerPreview: PlayerPreview;
 
-  constructor() {
-    super();
-  }
-
-  public onInitialize(engine: ex.Engine) {
-    super.onInitialize(engine);
+  constructor(engine: ex.Engine) {
+    super(engine);
 
     let pos1_x = globals.conf.GAME.WIDTH / 2 - globals.conf.GAME.UI.BUTTON_WIDTH / 2;
     let pos1_y = globals.conf.GAME.HEIGHT / 2 - globals.conf.GAME.UI.BUTTON_HEIGHT;
@@ -68,28 +64,43 @@ export class MainMenu extends ex.UIActor {
       pos2_x, pos2_y
     );
 
-    globals.game.add(this._level1Button);
-    globals.game.add(this._level2Button);
-    globals.game.add(this._startButton);
-    globals.game.add(this._optionsButton);
-    globals.game.add(this._backButton);
-    globals.game.add(this._changePlayerButton);
+    this.add(this._level1Button);
+    this.add(this._level2Button);
+    this.add(this._startButton);
+    this.add(this._optionsButton);
+    this.add(this._backButton);
+    this.add(this._changePlayerButton);
+  }
 
+  // start-up logic, called once
+  onInitialize(engine: ex.Engine) {
+    //super.onInitialize(engine);
+    console.log("init!");
+  }
+
+  // each time the scene is activated by Engine.goToScene
+  onActivate () {
+    console.log("activated");
+    this._level1Button.visible = true;
+    this._level2Button.visible = true;
     this._startButton.visible = true;
     this._optionsButton.visible = true;
     this._backButton.visible = false;
     this._changePlayerButton.visible = false;
   }
-
-  public startGame() {
-    if ( !this._startButton.visible ) { return; }
-
+  // each time the scene is deactivated by Engine.goToScene
+  onDeactivate () {
+    console.log("deactivated");
     this._level1Button.visible = false;
     this._level2Button.visible = false;
     this._startButton.visible = false;
     this._optionsButton.visible = false;
     this._backButton.visible = false;
     this._changePlayerButton.visible = false;
+  }
+
+  public startGame() {
+    if ( !this._startButton.visible ) { return; }
 
     globals.startGame();
   }
@@ -105,7 +116,7 @@ export class MainMenu extends ex.UIActor {
     this._changePlayerButton.visible = true;
 
     this._playerPreview = new PlayerPreview(100, 100);
-    globals.game.add(this._playerPreview);
+    this.add(this._playerPreview);
   }
 
   public back() {

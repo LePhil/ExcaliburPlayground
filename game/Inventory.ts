@@ -88,7 +88,7 @@ export class Inventory extends ex.Actor {
     }
 
     this.inventory.push(newActor);
-    globals.game.add(newActor);
+    this.scene.add(newActor);
   }
 
   public checkAndRemoveItem(itemToCheck: Food) {

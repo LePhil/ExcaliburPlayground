@@ -41,7 +41,7 @@ export class Customer extends AbstractPlayer {
 
   private _decideOnProduct():void {
     this._thinkBubble = new ThinkBubble(this.pos.x + globals.conf.CUSTOMER.THINKBUBBLE.OFFSET_X, this.pos.y - globals.conf.CUSTOMER.THINKBUBBLE.OFFSET_X, this.wants);
-    globals.game.add(this._thinkBubble);
+    this.scene.add(this._thinkBubble);
     // TODO: maybe wait with deciding for a bit
     this._hasDecided = true;
 
@@ -52,7 +52,7 @@ export class Customer extends AbstractPlayer {
       }
     }, globals.conf.CUSTOMER.PATIENCE_DECREASE_INTERVAL, true);
 
-    globals.game.add(this._patienceDecreaseTimer);
+    this.scene.add(this._patienceDecreaseTimer);
   }
 
   /**
@@ -106,7 +106,7 @@ export class Customer extends AbstractPlayer {
     emitter.endColor = ex.Color.Yellow;
 
     emitter.isEmitting = true;
-    globals.game.add(emitter);
+    this.scene.add(emitter);
 
     setTimeout(() => {
       emitter.kill();

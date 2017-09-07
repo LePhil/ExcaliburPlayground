@@ -27,7 +27,7 @@ export class ScoreCounter extends ex.UIActor {
     for(let i = 0; i < globals.conf.SCORE.NROFDIGITS; i++ ) {
       let digit = new Digit(this.pos.x + (i+1) * xOffset, this.pos.y);
       this._digits.push( digit );
-      globals.game.add( digit );
+      this.scene.add( digit );
     }
 
     this._updateDigits()
