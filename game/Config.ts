@@ -36,7 +36,10 @@ export class Config {
         WIDTH: 284,
         HEIGHT: 285
       }
-    }
+    },
+    INITIAL_PATIENCE: 100,
+    PATIENCE_DELTA: 5,
+    PATIENCE_DECREASE_INTERVAL: 1000
   };
   static CUSTOMER_NAMES  = [
     "Thomas",

@@ -2,14 +2,20 @@ declare var globals: any;
 import * as ex from "excalibur";
 import {Food} from "./Item";
 import {AbstractPlayer} from "./AbstractPlayer";
+import {ScoreCounter} from "./ScoreCounter";
+import {CustomerSpawner} from "./CustomerSpawner";
 
 export class Customer extends AbstractPlayer {
   public wants:Food;
   public name: string;
   private _hasDecided: boolean;
   private _thinkBubble: ThinkBubble;
+  private _scoreCounter: ScoreCounter;
+  private _customerSpawner: CustomerSpawner;
+  private _patience: number;
+  private _patienceDecreaseTimer: ex.Timer;
 
-  constructor(x, y, wants = new Food()) {
+  constructor(x, y, wants = new Food(), customerSpawner: CustomerSpawner) {
     super(globals.conf.DOOR_POS_X,
           globals.conf.DOOR_POS_Y,
           globals.conf.CUSTOMER_WIDTH,
@@ -19,6 +25,10 @@ export class Customer extends AbstractPlayer {
     this.wants = wants;
     this.name = globals.conf.CUSTOMER_NAMES[Math.floor(Math.random()*globals.conf.CUSTOMER_NAMES.length)];
     this._hasDecided = false;
+    // TODO: maybe via events..
+    this._scoreCounter = globals.scoreCounter;
+    this._customerSpawner = customerSpawner;
+    this._patience = globals.conf.CUSTOMER.INITIAL_PATIENCE;
 
     this.collisionType = ex.CollisionType.Passive;
 
@@ -26,22 +36,37 @@ export class Customer extends AbstractPlayer {
       .moveTo(globals.conf.DOOR_POS_X, globals.conf.DOOR_POS_Y - 50, this._speed)
       .moveTo(x, globals.conf.DOOR_POS_Y - 50, this._speed)
       .moveTo(x, y, this._speed)
-      .callMethod(() => {
-        this._thinkBubble = new ThinkBubble(this.pos.x + globals.conf.CUSTOMER.THINKBUBBLE.OFFSET_X, this.pos.y - globals.conf.CUSTOMER.THINKBUBBLE.OFFSET_X, this.wants);
-        globals.game.add(this._thinkBubble);
-        this._hasDecided = true;
-        // TODO: maybe wait with deciding for a bit
-        // TODO: POINTS OR MONEY IN EXCHANGE FOR GOODS!
-        // TODO: longer waiting = less points or money 
-      });
+      .callMethod(this._decideOnProduct);
+  }
+
+  private _decideOnProduct():void {
+    this._thinkBubble = new ThinkBubble(this.pos.x + globals.conf.CUSTOMER.THINKBUBBLE.OFFSET_X, this.pos.y - globals.conf.CUSTOMER.THINKBUBBLE.OFFSET_X, this.wants);
+    globals.game.add(this._thinkBubble);
+    this._hasDecided = true;
+    // TODO: maybe wait with deciding for a bit
+    // TODO: POINTS OR MONEY IN EXCHANGE FOR GOODS!
+    // TODO: longer waiting = less points or money
+
+    this._patienceDecreaseTimer = new ex.Timer(() => {
+      this._patience -= globals.conf.CUSTOMER.PATIENCE_DELTA;
+      if (this._patience <= 0) {
+        this._customerSpawner.ranOutOfPatience(this);
+      }
+    }, globals.conf.CUSTOMER.PATIENCE_DECREASE_INTERVAL, true);
+
+    globals.game.add(this._patienceDecreaseTimer);
   }
 
   /**
-   * Remove the thinkBubble, do the KA-CHING and move to the door and die.
+   * Remove the thinkBubble/timer, do the KA-CHING and move to the door and die.
    */
   public leaveStore():void {
-    if(this._thinkBubble) {
+    if (this._thinkBubble) {
       this._thinkBubble.kill();
+    }
+
+    if (this._patienceDecreaseTimer) {
+      this._patienceDecreaseTimer.cancel();
     }
 
     this._moneymoneymoney();
@@ -51,10 +76,19 @@ export class Customer extends AbstractPlayer {
         globals.conf.DOOR_POS_X,
         globals.conf.DOOR_POS_Y,
         this._speed)
-      .callMethod( () => { this.kill(); } );
+      .callMethod( this.kill );
   }
 
   private _moneymoneymoney():void {
+    if(this._patience === 0) {
+      return;
+    }
+
+    // earned score per customer depends on the patience they had left
+    this._scoreCounter.updateScore( globals.conf.SCORE.VALUE_OF_SERVING * this._patience / globals.conf.CUSTOMER.INITIAL_PATIENCE );
+
+    // Some fancy KA-CHING stuff
+    // TODO: sound?
     let emitter = new ex.ParticleEmitter(this.pos.x, this.pos.y, 0, 0);
     emitter.emitterType = ex.EmitterType.Circle;
     emitter.radius = 34;

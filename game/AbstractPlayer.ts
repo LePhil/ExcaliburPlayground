@@ -58,33 +58,33 @@ export abstract class AbstractPlayer extends ex.Actor {
   }
 
   public update(engine: ex.Engine, delta: number): void {
-     super.update(engine, delta);
+    super.update(engine, delta);
 
-     let xMovement = this._lastPosX - this.pos.x;
-     let yMovement = this._lastPosY - this.pos.y
+    let xMovement = this._lastPosX - this.pos.x;
+    let yMovement = this._lastPosY - this.pos.y
 
-     if (Math.abs(xMovement) > Math.abs(yMovement) ) {
-       if (xMovement > 0) {
-         this.setDrawing("walkLeft");
-       } else if (xMovement < 0) {
-         this.setDrawing("walkRight");
-       }
-     } else {
-       if (yMovement > 0) {
-         this.setDrawing("walkUp");
-       } else if (yMovement < 0) {
-         this.setDrawing("walkDown");
-       }
-     }
+    if (Math.abs(xMovement) > Math.abs(yMovement) ) {
+      if (xMovement > 0) {
+        this.setDrawing("walkLeft");
+      } else if (xMovement < 0) {
+        this.setDrawing("walkRight");
+      }
+    } else {
+      if (yMovement > 0) {
+        this.setDrawing("walkUp");
+      } else if (yMovement < 0) {
+        this.setDrawing("walkDown");
+      }
+    }
 
-     if (yMovement === 0 && xMovement === 0) {
-       this._handleIdlePlayer();
-     } else {
-       this._updateChildren();
-     }
+    if (yMovement === 0 && xMovement === 0) {
+      this._handleIdlePlayer();
+    } else {
+      this._updateChildren();
+    }
 
-     this._lastPosX = this.pos.x;
-     this._lastPosY = this.pos.y;
+    this._lastPosX = this.pos.x;
+    this._lastPosY = this.pos.y;
   }
 
   abstract _getPlayerColorIndex ():number

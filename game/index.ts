@@ -50,9 +50,10 @@ globals.startGame = () => {
   game.add(inv);
 
   let scoreCounter = new ScoreCounter(300, 30);
+  globals.scoreCounter = scoreCounter;
   game.add(scoreCounter);
 
-  let player = new Player(inv, scoreCounter);
+  let player = new Player(inv);
   globals.player = player;
   game.add(player);
 

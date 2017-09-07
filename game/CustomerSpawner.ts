@@ -7,7 +7,7 @@ import {Player} from "./Player";
 // TODO: is that really the best name?
 export class CustomerSpawner extends ex.Actor {
   public queue:Customer[];
-  private _customerSpawner;
+  private _customerSpawnerTimer: ex.Timer;
 
   constructor(x, y, w, h, color) {
     super(x, y, w, h, color);
@@ -25,18 +25,19 @@ export class CustomerSpawner extends ex.Actor {
     this.spawn();
 
     // TODO: don't just spawn infinite customers, ok?
-    this._customerSpawner = new ex.Timer(() => {
+    this._customerSpawnerTimer = new ex.Timer(() => {
       this.spawn();
     }, globals.conf.GAME.SPAWN_TIME, true);
 
-    engine.add(this._customerSpawner);
+    engine.add(this._customerSpawnerTimer);
   }
 
   public spawn() {
     let newPosX = this.pos.x + this.queue.length * (globals.conf.CUSTOMER_WIDTH + 2)
     let newCustomer = new Customer(newPosX,
                                    this.pos.y,
-                                   this.getRandomFood());
+                                   this.getRandomFood(),
+                                   this);
     this.queue.push(newCustomer);
     globals.game.add(newCustomer);
   }
@@ -73,12 +74,20 @@ export class CustomerSpawner extends ex.Actor {
       // remove all customers that were served with a small delay
       customersToRemove.forEach((customerToRemove, index) => {
         setTimeout(() => {
-          this.queue.splice( this.queue.indexOf(customerToRemove), 1 );
-          customerToRemove.leaveStore();
-          this.adjustQueue();
+          this._removeFromQueue(customerToRemove);
         }, index * 500);
       });
 
     });
+  }
+
+  private _removeFromQueue(customerToRemove: Customer):void {
+    this.queue.splice( this.queue.indexOf(customerToRemove), 1 );
+    customerToRemove.leaveStore();
+    this.adjustQueue();
+  }
+
+  public ranOutOfPatience(customer: Customer):void {
+    this._removeFromQueue(customer);
   }
 }
