@@ -74,13 +74,10 @@ export class MainMenu extends ex.Scene {
 
   // start-up logic, called once
   onInitialize(engine: ex.Engine) {
-    //super.onInitialize(engine);
-    console.log("init!");
   }
 
   // each time the scene is activated by Engine.goToScene
   onActivate () {
-    console.log("activated");
     this._level1Button.visible = true;
     this._level2Button.visible = true;
     this._startButton.visible = true;
@@ -90,7 +87,6 @@ export class MainMenu extends ex.Scene {
   }
   // each time the scene is deactivated by Engine.goToScene
   onDeactivate () {
-    console.log("deactivated");
     this._level1Button.visible = false;
     this._level2Button.visible = false;
     this._startButton.visible = false;
@@ -108,12 +104,16 @@ export class MainMenu extends ex.Scene {
   public openOptions() {
     if ( !this._optionsButton.visible ) { return; }
 
-    this._level1Button.visible = false;
-    this._level2Button.visible = false;
-    this._startButton.visible = false;
-    this._optionsButton.visible = false;
-    this._backButton.visible = true;
-    this._changePlayerButton.visible = true;
+    // Hacky fix (TODO?) - option and changePlayer buttons are on top of each other
+    // --> click triggers both. Have to delay enabling option button a tiny bit...
+    setTimeout(() => {
+      this._level1Button.visible = false;
+      this._level2Button.visible = false;
+      this._startButton.visible = false;
+      this._optionsButton.visible = false;
+      this._backButton.visible = true;
+      this._changePlayerButton.visible = true;
+    }, 0);
 
     this._playerPreview = new PlayerPreview(100, 100);
     this.add(this._playerPreview);
@@ -174,6 +174,17 @@ class PlayerPreview extends ex.Actor {
       this._currentPlayerTypeIndex = 0;
     }
 
+    let scale = globals.conf.SPRITE_SCALE;
+    let spriteSheet = new ex.SpriteSheet(globals.resources.TexturePlayers, 7, 8, 128, 256);
+
+    this._playerTypes.forEach((type) => {
+      let sprite = spriteSheet.getSprite(type.coords.idle);
+      sprite.scale.setTo(scale, scale);
+      this.addDrawing(type.color, sprite);
+    });
+
+    this.setDrawing(this._playerTypes[this._currentPlayerTypeIndex].color);
+
     this.collisionType = ex.CollisionType.PreventCollision;
   }
 
@@ -187,18 +198,5 @@ class PlayerPreview extends ex.Actor {
     let newPlayerColor = this._playerTypes[this._currentPlayerTypeIndex].color;
     this.setDrawing(newPlayerColor);
     globals.storage.set("playerColor", newPlayerColor);
-  }
-
-  onInitialize(engine: ex.Engine): void {
-      let scale = globals.conf.SPRITE_SCALE;
-      let spriteSheet = new ex.SpriteSheet(globals.resources.TexturePlayers, 7, 8, 128, 256);
-
-      this._playerTypes.forEach((type) => {
-        let sprite = spriteSheet.getSprite(type.coords.idle);
-        sprite.scale.setTo(scale, scale);
-        this.addDrawing(type.color, sprite);
-      });
-
-      this.setDrawing(this._playerTypes[this._currentPlayerTypeIndex].color);
   }
 }

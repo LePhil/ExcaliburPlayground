@@ -24,7 +24,6 @@ let endScreen = new EndGameScreen();
 endScene.add(endScreen);
 game.add("end", endScene);
 
-// TODO: menu/endscreen/game as custom scenes, override onActivate to make game replayable!
 let gameScene = new LevelScene(game);
 
 game.add("game", gameScene);

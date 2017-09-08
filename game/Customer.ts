@@ -121,9 +121,12 @@ export class Customer extends AbstractPlayer {
     }, 500);
   }
 
-  _getPlayerColorIndex ():number {
-    // TODO: maybe disallow chosen player color for customers?
-    return Math.floor(Math.random()*globals.conf.PLAYER_TYPES.length);
+  getPlayerColor ():string {
+    // Disallow chosen player color for customers
+    let availablePlayers = globals.conf.PLAYER_TYPES.filter( type => type.color !== globals.currentLevelOptions.playerColor );
+    let randomIndex = Math.floor(Math.random()*availablePlayers.length);
+
+    return availablePlayers[randomIndex].color;
   }
 
   _updateChildren():void {

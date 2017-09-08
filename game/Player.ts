@@ -22,12 +22,14 @@ export class Player extends AbstractPlayer {
     this._isBusy = false;
   }
 
-  _getPlayerColorIndex ():number {
+  getPlayerColor ():string {
+    let playerColor = globals.conf.PLAYER_TYPE_INITIAL_COLOR; //start with green guy if no color was chosen
+
     if ( globals.storage.get("playerColor") ) {
-      return globals.conf.PLAYER_TYPES.indexOf(globals.conf.PLAYER_TYPES.filter( type => type.color === globals.storage.get("playerColor") )[0]);
-    } else {
-      return globals.conf.PLAYER_TYPE_INITIAL_INDEX; //start with green guy if no color was chosen
+      playerColor = globals.storage.get("playerColor");
     }
+    
+    return playerColor;
   }
 
   _updateChildren():void {}

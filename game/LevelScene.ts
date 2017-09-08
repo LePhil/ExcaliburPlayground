@@ -14,6 +14,8 @@ import {Food} from "./Item";
 import {Customer} from "./Customer";
 
 export class LevelScene extends ex.Scene {
+  // crude object to represent some major properties of the level
+  public levelOptions:object;
 
   private _player:Player;
   private _timer:Timer;
@@ -22,6 +24,8 @@ export class LevelScene extends ex.Scene {
 
   constructor(engine: ex.Engine) {
     super(engine);
+
+    globals.currentLevelOptions = {};
 
     let elephantFoodStation = new ElephantFoodStation(300, 300, new Food(globals.conf.ELEPHANTFOOD_NAME, globals.conf.ELEPHANTFOOD_COLOR));
     this.add(elephantFoodStation);
@@ -32,7 +36,6 @@ export class LevelScene extends ex.Scene {
     let inv = new Inventory();
     this.add(inv);
 
-    // TODO: necessary? Maybe public on scene + then access via this.scene.XXX in other actors?
     this._scoreCounter = new ScoreCounter(300, 30);
     globals.scoreCounter = this._scoreCounter;
     this.add(this._scoreCounter);
@@ -52,21 +55,21 @@ export class LevelScene extends ex.Scene {
     let blob = new Blob(550, 50);
     this.add(blob);
 
-    this._timer = new Timer(700, 30, 10);
+    this._timer = new Timer(700, 30, globals.conf.GAME.LEVEL_TIME_S);
     this.add(this._timer);
   }
 
   onInitialize(engine: ex.Engine) {
+    globals.currentLevelOptions.playerColor = this._player.getPlayerColor();
   }
 
-  // TODO: reset game state, e.g. position of player, timer counter, points, etc.
   onActivate () {
     this._player.resetState();
     this._timer.resetState();
     this._scoreCounter.resetState();
     this._customerSpawner.resetState();
   }
-  
+
 
   onDeactivate () {
   }

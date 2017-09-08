@@ -1,7 +1,8 @@
 declare var globals: any;
 import * as ex from "excalibur";
+import {Digit} from "./Digit";
 
-// TODO: extract digits + digit-changing-logic from here and Timer to Parent class...
+// TODO: extract digit-changing-logic from here and Timer to Parent class...
 export class ScoreCounter extends ex.UIActor {
   private _score:number;
   private _digits:Array<Digit>;
@@ -21,11 +22,8 @@ export class ScoreCounter extends ex.UIActor {
     this.addDrawing("coin", sprite);
     this.setDrawing("coin");
 
-    // TODO to config as DigitWidth
-    let xOffset = 50;
-
     for(let i = 0; i < globals.conf.SCORE.NROFDIGITS; i++ ) {
-      let digit = new Digit(this.pos.x + (i+1) * xOffset, this.pos.y);
+      let digit = new Digit(this.pos.x + (i+1) * globals.conf.DIGIT_WIDTH, this.pos.y);
       this._digits.push( digit );
       this.scene.add( digit );
     }
@@ -38,13 +36,16 @@ export class ScoreCounter extends ex.UIActor {
   }
 
   public updateScore(points:number):void {
-    // TODO make sure it's not longer than the maximum amount of digits now!
     this._score += points;
+    
+    // Make sure it's not longer than the maximum amount of digits - if so, make it into a bunch of 9s
+    if (("" + this._score).length > this._digits.length) {
+      this._score = +(Array(this._digits.length+1).join("9"));
+    }
     this._updateDigits();
   }
 
   private _updateDigits():void {
-
     // Left-Pad with zeros.
     let pad = Array(this._digits.length+1).join("0");
     let timeString = pad.substring(0, pad.length - (""+this._score).length) + this._score;
@@ -57,23 +58,5 @@ export class ScoreCounter extends ex.UIActor {
   public resetState():void {
     this._score = 0;
     this._updateDigits();
-  }
-}
-
-class Digit extends ex.UIActor {
-  constructor(x, y) {
-    super(x, y);
-  }
-
-  onInitialize(engine: ex.Engine): void {
-    super.onInitialize(engine);
-
-    for(let i = 0; i <= 9; i++) {
-      let conf = globals.conf.HUD["hud_" + i];
-      let sprite = new ex.Sprite(globals.resources.HUDSpriteSheet, conf.x, conf.y, conf.w, conf.h);
-      this.addDrawing(""+i, sprite);
-    }
-
-    this.setDrawing("0");
   }
 }

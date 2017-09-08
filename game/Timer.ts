@@ -1,5 +1,6 @@
 declare var globals: any;
 import * as ex from "excalibur";
+import {Digit} from "./Digit";
 
 export class Timer extends ex.UIActor {
   private _count:number;
@@ -20,10 +21,8 @@ export class Timer extends ex.UIActor {
   onInitialize(engine: ex.Engine): void {
     super.onInitialize(engine);
 
-    let xOffset = 50;
-
     for(let i = 0; i < ("" + this._time).length; i++ ) {
-      let digit = new Digit(this.pos.x + i * xOffset, this.pos.y);
+      let digit = new Digit(this.pos.x + i * globals.conf.DIGIT_WIDTH, this.pos.y);
       this._digits.push( digit );
       this.scene.add( digit );
     }
@@ -62,23 +61,5 @@ export class Timer extends ex.UIActor {
     this._updateDigits();
 
     this.scene.add(this._timer);
-  }
-}
-
-class Digit extends ex.UIActor {
-  constructor(x, y) {
-    super(x, y);
-  }
-
-  onInitialize(engine: ex.Engine): void {
-    super.onInitialize(engine);
-
-    for(let i = 0; i <= 9; i++) {
-      let conf = globals.conf.HUD["hud_" + i];
-      let sprite = new ex.Sprite(globals.resources.HUDSpriteSheet, conf.x, conf.y, conf.w, conf.h);
-      this.addDrawing(""+i, sprite);
-    }
-
-    this.setDrawing("0");
   }
 }

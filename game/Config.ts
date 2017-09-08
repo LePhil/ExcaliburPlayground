@@ -25,7 +25,7 @@ export class Config {
     {color: "red",    coords: {walkR: [44,51], walkUp: [ 4,52], idle: 38, pick: 45} },
     {color: "blue",   coords: {walkR: [33,40], walkUp: [24,41], idle: 27, pick: 34} }
   ];
-  static PLAYER_TYPE_INITIAL_INDEX = 0;
+  static PLAYER_TYPE_INITIAL_COLOR = "green";
   static CUSTOMER = {
     THINKBUBBLE: {
       WIDTH: 30,
@@ -89,8 +89,8 @@ export class Config {
     WIDTH: 1024,  // defined by electron wrapper
     HEIGHT: 768,  // defined by electron wrapper
     DEBUG: false,
-    SPAWN_TIME: 5000,
-    LEVEL_TIME: 60*1000,
+    SPAWN_TIME_S: 5,
+    LEVEL_TIME_S: 60,
     UI: {
       BUTTON_WIDTH: 190,
       BUTTON_HEIGHT: 49
@@ -148,6 +148,7 @@ export class Config {
     hud_p3Alt:              {x: 98, y: 98, w: 47, h: 47},
     hud_x:                  {x: 0, y: 239, w: 30, h: 28}
   };
+  static DIGIT_WIDTH = 50;
   static SCORE = {
     NROFDIGITS: 3,
     VALUE_OF_SERVING: 20

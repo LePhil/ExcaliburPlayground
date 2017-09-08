@@ -26,7 +26,7 @@ export class CustomerSpawner extends ex.Actor {
 
     this._customerSpawnerTimer = new ex.Timer(() => {
       this.spawn();
-    }, globals.conf.GAME.SPAWN_TIME, true);
+    }, globals.conf.GAME.SPAWN_TIME_S * 1000, true);
 
     engine.add(this._customerSpawnerTimer);
   }
