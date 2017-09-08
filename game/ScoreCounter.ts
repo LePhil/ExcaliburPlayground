@@ -42,6 +42,9 @@ export class ScoreCounter extends ex.UIActor {
     if (("" + this._score).length > this._digits.length) {
       this._score = +(Array(this._digits.length+1).join("9"));
     }
+
+    globals.currentLevelOptions.score = this._score;
+    
     this._updateDigits();
   }
 

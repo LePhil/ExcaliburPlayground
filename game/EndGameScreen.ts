@@ -1,9 +1,11 @@
 declare var globals: any;
 import * as ex from "excalibur";
+import {Digit} from "./Digit";
 
 export class EndGameScreen extends ex.UIActor {
 
   private _goToStartButton: ex.UIActor;
+  private _digits:Array<Digit>;
 
   public onInitialize(engine: ex.Engine) {
     super.onInitialize(engine);
@@ -18,11 +20,27 @@ export class EndGameScreen extends ex.UIActor {
       pos_x, pos_y
     );
 
+    // TODO: once it's a scene, we have to re-creat digit array because it can be larger...
+    this._digits = new Array<Digit>();
+
+    let score = globals.currentLevelOptions.score;
+    let digitStartX = pos_x - 100;
+    for(let i = 0; i < (""+score).length; i++) {
+      let newDigit = new Digit(digitStartX + i*globals.conf.DIGIT_WIDTH, pos_y - 100, +(""+score)[i]);
+      this._digits.push(newDigit);
+      this.add(newDigit);
+    }
+
+    //TODO: make into a scene, use onactivate to reset digits!
+
     this.add(this._goToStartButton);
   }
 
   private _goToStart():any {
     globals.startMenu();
+    this._digits.forEach((digit) => {
+      digit.setDrawing("0");
+    });
   }
 }
 

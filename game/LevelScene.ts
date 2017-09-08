@@ -60,6 +60,8 @@ export class LevelScene extends ex.Scene {
   }
 
   onInitialize(engine: ex.Engine) {
+    globals.currentLevelOptions = {};
+    globals.currentLevelOptions.score = 0;
     globals.currentLevelOptions.playerColor = this._player.getPlayerColor();
   }
 
@@ -69,7 +71,6 @@ export class LevelScene extends ex.Scene {
     this._scoreCounter.resetState();
     this._customerSpawner.resetState();
   }
-
 
   onDeactivate () {
   }
