@@ -117,4 +117,11 @@ export class Inventory extends ex.Actor {
     });
   }
 
+  public resetState():void {
+    this.inventory.forEach((item) => {
+      item.kill();
+    });
+    this.inventory = new Array<InventoryItem>();
+  }
+
 }

@@ -89,4 +89,11 @@ export class Player extends AbstractPlayer {
       this.setDrawing("idle");
     }
   }
+
+  public resetState():void {
+    this.inventory.resetState();
+    this.actions.clearActions();
+    this.pos.x = globals.conf.PLAYER_STARTX;
+    this.pos.y = globals.conf.PLAYER_STARTY;
+  }
 }

@@ -55,6 +55,14 @@ export class Customer extends AbstractPlayer {
     this.scene.add(this._patienceDecreaseTimer);
   }
 
+  public kill():void {
+    // Because thinkBubble was added to scene we have to go and kill it. (TODO - maybe look into that... y u no "this.add()"?)
+    if(this._thinkBubble) {
+      this._thinkBubble.kill();
+    }
+    super.kill();
+  }
+
   /**
    * Remove the thinkBubble/timer, do the KA-CHING and move to the door and die.
    */

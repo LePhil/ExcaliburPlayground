@@ -3,19 +3,10 @@ declare var globals: any;
 import * as ex from "excalibur";
 import {Config} from "./Config";
 import {Resources} from "./Resources";
-import {Player} from "./Player";
-// TODO: inheritance yo
-import {RabbitFoodStation} from "./RabbitFoodStation";
-import {ElephantFoodStation} from "./ElephantFoodStation";
-import {Blob} from "./Blob";
-import {FoodStation} from "./FoodStation";
-import {Food} from "./Item";
-import {Inventory} from "./Inventory";
-import {Customer} from "./Customer";
-import {CustomerSpawner} from "./CustomerSpawner";
 
 import {Storage} from "./Storage";
 import {MainMenu} from "./MainMenu";
+import {LevelScene} from "./LevelScene";
 import {EndGameScreen} from "./EndGameScreen";
 import {Timer} from "./Timer";
 import {ScoreCounter} from "./ScoreCounter";
@@ -34,37 +25,8 @@ endScene.add(endScreen);
 game.add("end", endScene);
 
 // TODO: menu/endscreen/game as custom scenes, override onActivate to make game replayable!
-let gameScene = new ex.Scene();
-let elephantFoodStation = new ElephantFoodStation(300, 300, new Food(globals.conf.ELEPHANTFOOD_NAME, globals.conf.ELEPHANTFOOD_COLOR));
-gameScene.add(elephantFoodStation);
+let gameScene = new LevelScene(game);
 
-let rabbitFoodStation = new RabbitFoodStation(600, 300, new Food(globals.conf.RABBITFOOD_NAME, globals.conf.RABBITFOOD_COLOR));
-gameScene.add(rabbitFoodStation);
-
-let inv = new Inventory();
-gameScene.add(inv);
-
-let scoreCounter = new ScoreCounter(300, 30);
-globals.scoreCounter = scoreCounter;
-gameScene.add(scoreCounter);
-
-let player = new Player(inv);
-globals.player = player;
-gameScene.add(player);
-
-// player moves wherever is clicked - TODO: how to cancel this on "real" targets?
-//game.input.pointers.primary.on("down", (evt: PointerEvent) => {
-//  player.goTo(evt);
-//});
-
-let spawner = new CustomerSpawner(500, 520, 200, 20, ex.Color.White);
-gameScene.add(spawner);
-
-let blob = new Blob(550, 50);
-gameScene.add(blob);
-
-let timer = new Timer(700, 30, 10);
-gameScene.add(timer);
 game.add("game", gameScene);
 
 globals.startMenu = () => {

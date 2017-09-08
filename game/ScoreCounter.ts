@@ -33,6 +33,10 @@ export class ScoreCounter extends ex.UIActor {
     this._updateDigits()
   }
 
+  public getScore():number {
+    return this._score;
+  }
+
   public updateScore(points:number):void {
     // TODO make sure it's not longer than the maximum amount of digits now!
     this._score += points;
@@ -48,6 +52,11 @@ export class ScoreCounter extends ex.UIActor {
     this._digits.forEach((digit, i) => {
       digit.setDrawing( ""+timeString[i] );
     });
+  }
+
+  public resetState():void {
+    this._score = 0;
+    this._updateDigits();
   }
 }
 

@@ -5,6 +5,7 @@ export class Timer extends ex.UIActor {
   private _count:number;
   private _digits:Array<Digit>;
   private _time:number;
+  private _timer:ex.Timer;
 
   constructor(x, y, time:number) {
     super(x, y,
@@ -26,13 +27,6 @@ export class Timer extends ex.UIActor {
       this._digits.push( digit );
       this.scene.add( digit );
     }
-
-    // TODO: best name is best.
-    let timerTimer = new ex.Timer(() => {
-      this._updateDigits()
-    }, 1000, true);
-
-    engine.add(timerTimer);
   }
 
   // TODO: should only update digits, nothing more - remove endgame stuff
@@ -54,8 +48,20 @@ export class Timer extends ex.UIActor {
   }
 
   private _endGame():void {
-    //TODO - what if the timer runs out?
     globals.endScreen();
+  }
+
+  public resetState():void {
+    this._count = 0;
+    this.scene.cancelTimer(this._timer);
+    this._timer = new ex.Timer(() => {
+      this._updateDigits()
+    }, 1000, true);
+
+    // Force redraw
+    this._updateDigits();
+
+    this.scene.add(this._timer);
   }
 }
 

@@ -93,4 +93,12 @@ export class CustomerSpawner extends ex.Actor {
   public ranOutOfPatience(customer: Customer):void {
     this._removeFromQueue(customer);
   }
+
+  public resetState():void {
+    this.queue.forEach((customer) => {
+      customer.kill();
+    })
+
+    this.queue = new Array<Customer>();
+  }
 }
