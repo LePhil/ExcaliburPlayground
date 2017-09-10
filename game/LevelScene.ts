@@ -12,6 +12,7 @@ import {Blob} from "./Blob";
 import {FoodStation} from "./FoodStation";
 import {Food} from "./Item";
 import {Customer} from "./Customer";
+import {LevelMap} from "./LevelMap";
 
 export class LevelScene extends ex.Scene {
   // crude object to represent some major properties of the level
@@ -24,6 +25,8 @@ export class LevelScene extends ex.Scene {
 
   constructor(engine: ex.Engine) {
     super(engine);
+
+    this.add(new LevelMap("Map_00"));
 
     globals.currentLevelOptions = {};
 

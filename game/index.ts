@@ -1,4 +1,3 @@
-/// <reference path="../bower_components/excalibur-tiled/dist/excalibur-tiled" />
 declare var globals: any;
 import * as ex from "excalibur";
 import {Config} from "./Config";
@@ -41,10 +40,7 @@ globals.startGame = () => {
   game.goToScene("game");
 };
 
-// Create a new TiledResource loadable
-var map = new Extensions.Tiled.TiledResource("game/assets/test.json");
-
-var loader = new ex.Loader([map]);
+let loader = new ex.Loader();
 
 for (let r in globals.resources) {
   loader.addResource(globals.resources[r]);
@@ -52,16 +48,5 @@ for (let r in globals.resources) {
 
 
 game.start(loader).then(function(){
-  // Process the data in the map as you like
-  map.data.tilesets.forEach(function(ts) {
-    console.log(ts.image, ts.imageTexture.isLoaded());
-  });
-
-  // get a Excalibur `TileMap` instance
-  var tm = map.getTileMap();
-
-  // draw the tile map
-  gameScene.add(tm);
-
   globals.startMenu();
 });

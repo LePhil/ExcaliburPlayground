@@ -20,7 +20,7 @@ export class EndGameScreen extends ex.UIActor {
       pos_x, pos_y
     );
 
-    // TODO: once it's a scene, we have to re-creat digit array because it can be larger...
+    // TODO: once it's a scene, we have to re-create digit array because it can be larger...
     this._digits = new Array<Digit>();
 
     let score = globals.currentLevelOptions.score;

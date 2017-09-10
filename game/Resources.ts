@@ -32,4 +32,6 @@ export class Resources {
     static Level1_2_BtnHover   = new ex.Texture("game/assets/ui/1-2_hover.png");
 
     static HUDSpriteSheet      = new ex.Texture("game/assets/ui/hud_spritesheet.png");
+
+    static Map_00              = new ex.Texture("game/assets/textures/map_00.png");
 }

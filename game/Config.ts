@@ -153,4 +153,14 @@ export class Config {
     NROFDIGITS: 3,
     VALUE_OF_SERVING: 20
   };
+
+  static MAPS = {
+    LEVELS: [
+      "Map_00" 
+    ],
+    X: 0,
+    Y: 0,
+    W: 840,
+    H: 560
+  };
 }
