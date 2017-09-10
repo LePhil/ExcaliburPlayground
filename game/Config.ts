@@ -329,13 +329,19 @@ export class Config {
     VALUE_OF_SERVING: 20
   };
 
-  static MAPS = {
-    LEVELS: [
-      "Map_00" 
-    ],
-    X: 0,
-    Y: 0,
-    W: 840,
-    H: 560
+  static DOOR = {
+    X: 555,
+    Y: 555
   };
+
+  static MAPS = [
+    {
+      NAME: "Map_00",
+      IMG: "Map_00",
+      W: 840,
+      H: 560,
+      DOOR_X: 800,
+      DOOR_Y: 595
+    }
+  ];
 }

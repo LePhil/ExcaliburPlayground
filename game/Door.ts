@@ -9,8 +9,8 @@ export class Door extends ex.Actor {
 
     constructor(x, y, isOpen = false) {
         super(x, y,
-            70,
-            140);
+            globals.conf.TILES.door_openMid.w,
+            2 * globals.conf.TILES.door_openMid.w);
 
         this._open = isOpen;
     }
@@ -18,9 +18,10 @@ export class Door extends ex.Actor {
     onInitialize(engine: ex.Engine): void {
         let conf = globals.conf.TILES;
         let tex  = globals.resources.TextureTiles;
+        let s = conf.door_openTop.w;
 
-        this._top = new ex.Actor(0, 0, 70, 70);
-        this._mid = new ex.Actor(0, 0 + 70, 70, 70);
+        this._top = new ex.Actor(-s/2, -s/2, s, s);
+        this._mid = new ex.Actor(-s/2,  s/2, s, s);
 
         
         this._top.addDrawing("open",   new ex.Sprite(tex, conf.door_openTop.x, conf.door_openTop.y, conf.door_openTop.w, conf.door_openTop.h))
@@ -33,6 +34,11 @@ export class Door extends ex.Actor {
         this.add(this._mid);
 
         this._updateChildren();
+
+        // TODO: open only when ready or when start signal was given or when user clicked on it... or something like that.
+        setTimeout(() => {
+            this.open();
+        }, 500);
     }
 
     private _updateChildren():void {

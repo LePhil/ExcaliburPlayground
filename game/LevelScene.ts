@@ -27,10 +27,13 @@ export class LevelScene extends ex.Scene {
   constructor(engine: ex.Engine) {
     super(engine);
 
-    this.add(new LevelMap("Map_00"));
+    let conf = globals.conf.MAPS[0];
 
-    this.add(new Door(555, 555));
+    this.add(new LevelMap(conf));
 
+    this.add(new Door(conf.DOOR_X, conf.DOOR_Y));
+
+    //TODO merge this with map conf
     globals.currentLevelOptions = {};
 
     let elephantFoodStation = new ElephantFoodStation(300, 300, new Food(globals.conf.ELEPHANTFOOD_NAME, globals.conf.ELEPHANTFOOD_COLOR));
@@ -58,8 +61,7 @@ export class LevelScene extends ex.Scene {
     this._customerSpawner = new CustomerSpawner(500, 520, 200, 20, ex.Color.White);
     this.add(this._customerSpawner);
 
-    let blob = new Blob(550, 50);
-    this.add(blob);
+    this.add(new Blob(550, 50));
 
     this._timer = new Timer(700, 30, globals.conf.GAME.LEVEL_TIME_S);
     this.add(this._timer);
