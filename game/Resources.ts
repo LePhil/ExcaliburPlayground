@@ -9,10 +9,6 @@ export class Resources {
     static TextureElephant     = new ex.Texture("game/assets/textures/animals/elephant.png");
     static TextureBlob         = new ex.Texture("game/assets/textures/animals/sprite_blob_pink.png");
 
-    static TextureMonsterDown  = new ex.Texture("game/assets/textures/minotaurv2.png");
-    static TextureMonsterRight = new ex.Texture("game/assets/textures/minotaurv2right.png");
-    static TextureMonsterUp    = new ex.Texture("game/assets/textures/minotaurv2back.png");
-
     static TextureBubbles      = new ex.Texture("game/assets/textures/animals/bubbles.png");
 
     static ImgButton           = new ex.Texture("game/assets/ui/blue_button00.png");
@@ -32,6 +28,7 @@ export class Resources {
     static Level1_2_BtnHover   = new ex.Texture("game/assets/ui/1-2_hover.png");
 
     static HUDSpriteSheet      = new ex.Texture("game/assets/ui/hud_spritesheet.png");
+    static TextureTiles        = new ex.Texture("game/assets/textures/tiles_spritesheet.png");
 
     static Map_00              = new ex.Texture("game/assets/textures/map_00.png");
 }

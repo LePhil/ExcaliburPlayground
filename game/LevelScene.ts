@@ -13,6 +13,7 @@ import {FoodStation} from "./FoodStation";
 import {Food} from "./Item";
 import {Customer} from "./Customer";
 import {LevelMap} from "./LevelMap";
+import {Door} from "./Door";
 
 export class LevelScene extends ex.Scene {
   // crude object to represent some major properties of the level
@@ -27,6 +28,8 @@ export class LevelScene extends ex.Scene {
     super(engine);
 
     this.add(new LevelMap("Map_00"));
+
+    this.add(new Door(555, 555));
 
     globals.currentLevelOptions = {};
 
