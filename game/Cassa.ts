@@ -70,4 +70,15 @@ export class Cassa extends ex.Actor {
 
     this._setup();
   }
+
+  public isQueueFull():boolean {
+    return this.queue.length >= globals.conf.CUSTOMER.QUEUE_LENGTH;
+  }
+
+  public getLastPositionInQueue():ex.Vector {
+    return new ex.Vector(
+        this.pos.x + this.queue.length * (globals.conf.CUSTOMER_WIDTH + 2),
+        this.pos.y + globals.conf.CUSTOMER_HEIGHT
+    );
+  }
 }

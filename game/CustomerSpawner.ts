@@ -37,13 +37,13 @@ export class CustomerSpawner extends ex.Actor {
       return;
     }
 
-    let newPosX = this.pos.x + this.queue.length * (globals.conf.CUSTOMER_WIDTH + 2)
-    let newCustomer = new Customer(newPosX,
+    let newPosX = this.pos.x + this.queue.length * (globals.conf.CUSTOMER_WIDTH + 2);
+    /*let newCustomer = new Customer(newPosX,
                                    this.pos.y,
                                    this.getRandomFood(),
                                    this);
     this.queue.push(newCustomer);
-    this.scene.add(newCustomer);
+    this.scene.add(newCustomer);*/
   }
 
   private getRandomFood():Food {

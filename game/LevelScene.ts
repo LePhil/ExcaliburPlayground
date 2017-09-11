@@ -24,6 +24,8 @@ export class LevelScene extends ex.Scene {
   private _timer:Timer;
   private _scoreCounter:ScoreCounter;
   private _customerSpawner:CustomerSpawner;
+  private _door:Door;
+  private _cassa:Cassa;
 
   constructor(engine: ex.Engine) {
     super(engine);
@@ -32,9 +34,11 @@ export class LevelScene extends ex.Scene {
 
     this.add(new LevelMap(conf));
 
-    this.add(new Door(conf.DOOR_X, conf.DOOR_Y));
+    this._cassa = new Cassa(250, 500);
+    this.add(this._cassa);
 
-    this.add(new Cassa(250, 500));
+    this._door = new Door(conf.DOOR_X, conf.DOOR_Y, this._cassa);
+    this.add(this._door);
 
     //TODO merge this with map conf
     globals.currentLevelOptions = {};
@@ -61,8 +65,8 @@ export class LevelScene extends ex.Scene {
     //  player.goTo(evt);
     //});
 
-    this._customerSpawner = new CustomerSpawner(500, 520, 200, 20, ex.Color.White);
-    this.add(this._customerSpawner);
+    //this._customerSpawner = new CustomerSpawner(500, 520, 200, 20, ex.Color.White);
+    //this.add(this._customerSpawner);
 
     this.add(new Blob(550, 50));
 
@@ -80,9 +84,10 @@ export class LevelScene extends ex.Scene {
     this._player.resetState();
     this._timer.resetState();
     this._scoreCounter.resetState();
-    this._customerSpawner.resetState();
   }
-
+  
   onDeactivate () {
+    this._door.close();
+    this._cassa.resetState();
   }
 }

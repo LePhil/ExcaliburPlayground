@@ -1,63 +1,72 @@
 declare var globals: any;
 import * as ex from "excalibur";
-import {Food} from "./Item";
-import {AbstractPlayer} from "./AbstractPlayer";
-import {ScoreCounter} from "./ScoreCounter";
-import {CustomerSpawner} from "./CustomerSpawner";
+import { Food } from "./Item";
+import { AbstractPlayer } from "./AbstractPlayer";
+import { ScoreCounter } from "./ScoreCounter";
+import { Cassa } from "./Cassa";
 
 export class Customer extends AbstractPlayer {
-  public wants:Food;
+  public wants: Food;
   public name: string;
   private _hasDecided: boolean;
   private _thinkBubble: ThinkBubble;
   private _scoreCounter: ScoreCounter;
-  private _customerSpawner: CustomerSpawner;
+  private _cassa: Cassa;
   private _patience: number;
   private _patienceDecreaseTimer: ex.Timer;
 
-  constructor(x, y, wants = new Food(), customerSpawner: CustomerSpawner) {
-    super(globals.conf.DOOR_POS_X,
-          globals.conf.DOOR_POS_Y,
-          globals.conf.CUSTOMER_WIDTH,
-          globals.conf.CUSTOMER_HEIGHT,
-          globals.conf.CUSTOMER_SPEED);
+  constructor(x, y, cassa: Cassa) {
+    super(x, y,
+      globals.conf.CUSTOMER_WIDTH,
+      globals.conf.CUSTOMER_HEIGHT,
+      globals.conf.CUSTOMER_SPEED);
 
-    this.wants = wants;
-    this.name = globals.conf.CUSTOMER_NAMES[Math.floor(Math.random()*globals.conf.CUSTOMER_NAMES.length)];
+    this.name = globals.conf.CUSTOMER_NAMES[Math.floor(Math.random() * globals.conf.CUSTOMER_NAMES.length)];
     this._hasDecided = false;
     // TODO: maybe via events..
     this._scoreCounter = globals.scoreCounter;
-    this._customerSpawner = customerSpawner;
+
+    this._cassa = cassa;
+
     this._patience = globals.conf.CUSTOMER.INITIAL_PATIENCE;
 
     this.collisionType = ex.CollisionType.Passive;
 
+    let goal = this._cassa.getLastPositionInQueue();
     this.actions
-      .moveTo(globals.conf.DOOR_POS_X, globals.conf.DOOR_POS_Y - 50, this._speed)
-      .moveTo(x, globals.conf.DOOR_POS_Y - 50, this._speed)
-      .moveTo(x, y, this._speed)
-      .callMethod(this._decideOnProduct);
+      .moveTo(goal.x, goal.y, this._speed)
+      .callMethod(() => {
+        // Leave Queue if it's full
+        if (this._cassa.isQueueFull()) {
+          this._cassa.ranOutOfPatience(this);
+        } else {
+          this._decideOnProduct();
+        }
+      });
   }
 
-  private _decideOnProduct():void {
+  private _decideOnProduct(): void {
     this._thinkBubble = new ThinkBubble(this.pos.x + globals.conf.CUSTOMER.THINKBUBBLE.OFFSET_X, this.pos.y - globals.conf.CUSTOMER.THINKBUBBLE.OFFSET_X, this.wants);
     this.scene.add(this._thinkBubble);
+
     // TODO: maybe wait with deciding for a bit
+    this.wants = this._getRandomFood();
     this._hasDecided = true;
 
+    // TODO: have to remove the timer!
     this._patienceDecreaseTimer = new ex.Timer(() => {
       this._patience -= globals.conf.CUSTOMER.PATIENCE_DELTA;
       if (this._patience <= 0) {
-        this._customerSpawner.ranOutOfPatience(this);
+        this._cassa.ranOutOfPatience(this);
       }
     }, globals.conf.CUSTOMER.PATIENCE_DECREASE_INTERVAL, true);
 
     this.scene.add(this._patienceDecreaseTimer);
   }
 
-  public kill():void {
+  public kill(): void {
     // Because thinkBubble was added to scene we have to go and kill it. (TODO - maybe look into that... y u no "this.add()"?)
-    if(this._thinkBubble) {
+    if (this._thinkBubble) {
       this._thinkBubble.kill();
     }
     super.kill();
@@ -66,7 +75,7 @@ export class Customer extends AbstractPlayer {
   /**
    * Remove the thinkBubble/timer, do the KA-CHING and move to the door and die.
    */
-  public leaveStore():void {
+  public leaveStore(): void {
     if (this._thinkBubble) {
       this._thinkBubble.kill();
     }
@@ -79,19 +88,19 @@ export class Customer extends AbstractPlayer {
 
     this.actions
       .moveTo(
-        globals.conf.DOOR_POS_X,
-        globals.conf.DOOR_POS_Y,
-        this._speed)
-      .callMethod( this.kill );
+      globals.conf.DOOR_POS_X,
+      globals.conf.DOOR_POS_Y,
+      this._speed)
+      .callMethod(this.kill);
   }
 
-  private _moneymoneymoney():void {
-    if(this._patience === 0) {
+  private _moneymoneymoney(): void {
+    if (this._patience === 0) {
       return;
     }
 
     // earned score per customer depends on the patience they had left
-    this._scoreCounter.updateScore( globals.conf.SCORE.VALUE_OF_SERVING * this._patience / globals.conf.CUSTOMER.INITIAL_PATIENCE );
+    this._scoreCounter.updateScore(globals.conf.SCORE.VALUE_OF_SERVING * this._patience / globals.conf.CUSTOMER.INITIAL_PATIENCE);
 
     // Some fancy KA-CHING stuff
     // TODO: sound?
@@ -121,15 +130,15 @@ export class Customer extends AbstractPlayer {
     }, 500);
   }
 
-  getPlayerColor ():string {
+  getPlayerColor(): string {
     // Disallow chosen player color for customers
-    let availablePlayers = globals.conf.PLAYER_TYPES.filter( type => type.color !== globals.currentLevelOptions.playerColor );
-    let randomIndex = Math.floor(Math.random()*availablePlayers.length);
+    let availablePlayers = globals.conf.PLAYER_TYPES.filter(type => type.color !== globals.currentLevelOptions.playerColor);
+    let randomIndex = Math.floor(Math.random() * availablePlayers.length);
 
     return availablePlayers[randomIndex].color;
   }
 
-  _updateChildren():void {
+  _updateChildren(): void {
     if (this._hasDecided) {
       // update thinkBubble's position if not standing still, if it exists
       this._thinkBubble.pos.x = this.pos.x + globals.conf.CUSTOMER.THINKBUBBLE.OFFSET_X;
@@ -137,8 +146,20 @@ export class Customer extends AbstractPlayer {
     }
   }
 
-  _handleIdlePlayer():void {
+  _handleIdlePlayer(): void {
     this.setDrawing("idle");
+  }
+
+  private _getRandomFood(): Food {
+    let foods = ["elephant", "rabbit"];
+    let randomFood = foods[Math.floor(Math.random() * foods.length)];
+
+    // TODO: it's so ugly I can barely look at it!
+    if (randomFood === "elephant") {
+      return new Food(globals.conf.ELEPHANTFOOD_NAME, globals.conf.ELEPHANTFOOD_COLOR);
+    } else {
+      return new Food(globals.conf.RABBITFOOD_NAME, globals.conf.RABBITFOOD_COLOR);
+    }
   }
 }
 
@@ -161,7 +182,7 @@ class ThinkBubble extends ex.UIActor {
       spriteIndex = 10;
     }
 
-    let _sprite = spriteSheet.getSprite( spriteIndex );
+    let _sprite = spriteSheet.getSprite(spriteIndex);
     let _scale = globals.conf.CUSTOMER.THINKBUBBLE.HEIGHT / globals.conf.CUSTOMER.THINKBUBBLE.SPRITE.HEIGHT;
     _sprite.scale.setTo(_scale, _scale);
     this.addDrawing("normal", _sprite);

@@ -1,5 +1,7 @@
 declare var globals: any;
 import * as ex from "excalibur";
+import {Customer} from "./Customer";
+import {Cassa} from "./Cassa";
 
 export class Door extends ex.Actor {
     private _open:boolean;
@@ -7,12 +9,19 @@ export class Door extends ex.Actor {
     private _top:ex.Actor;
     private _mid:ex.Actor;
 
-    constructor(x, y, isOpen = false) {
+    private _cassa:Cassa;
+    private _customerSpawnerTimer: ex.Timer;
+
+    constructor(x, y, cassa:Cassa, isOpen = false) {
         super(x, y,
             globals.conf.TILES.door_openMid.w,
             2 * globals.conf.TILES.door_openMid.w);
 
+        this._cassa = cassa;
         this._open = isOpen;
+
+        // Open on click
+        this.on("pointerdown", this.open);
     }
 
     onInitialize(engine: ex.Engine): void {
@@ -34,11 +43,6 @@ export class Door extends ex.Actor {
         this.add(this._mid);
 
         this._updateChildren();
-
-        // TODO: open only when ready or when start signal was given or when user clicked on it... or something like that.
-        setTimeout(() => {
-            this.open();
-        }, 500);
     }
 
     private _updateChildren():void {
@@ -48,14 +52,26 @@ export class Door extends ex.Actor {
 
     public close():void {
         this.setState(false);
+        this._customerSpawnerTimer.cancel();
     }
 
     public open():void {
         this.setState(true);
+        this._customerSpawnerTimer = new ex.Timer(() => {
+            this.spawn();
+        }, globals.conf.GAME.SPAWN_TIME_S * 1000, true);
+        this.scene.add(this._customerSpawnerTimer);
     }
 
     public setState(isOpen:boolean):void {
         this._open = isOpen;
         this._updateChildren();
+    }
+
+    public spawn():void {
+        let newCustomer = new Customer(
+            this.pos.x,
+            this.pos.y,
+            this._cassa);
     }
 }
