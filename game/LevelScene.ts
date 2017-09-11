@@ -14,6 +14,7 @@ import {Food} from "./Item";
 import {Customer} from "./Customer";
 import {LevelMap} from "./LevelMap";
 import {Door} from "./Door";
+import {Cassa} from "./Cassa";
 
 export class LevelScene extends ex.Scene {
   // crude object to represent some major properties of the level
@@ -32,6 +33,8 @@ export class LevelScene extends ex.Scene {
     this.add(new LevelMap(conf));
 
     this.add(new Door(conf.DOOR_X, conf.DOOR_Y));
+
+    this.add(new Cassa(250, 500));
 
     //TODO merge this with map conf
     globals.currentLevelOptions = {};

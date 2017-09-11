@@ -4,6 +4,9 @@ import {Customer} from "./Customer";
 import {Food} from "./Item";
 import {Player} from "./Player";
 
+// TODO: move spawning logic to Door
+// TODO: create Cassa that handles the queueing
+
 // TODO: is that really the best name?
 export class CustomerSpawner extends ex.Actor {
   public queue:Customer[];
@@ -11,8 +14,6 @@ export class CustomerSpawner extends ex.Actor {
 
   constructor(x, y, w, h, color) {
     super(x, y, w, h, color);
-
-    this.collisionType = ex.CollisionType.Passive;
 
     this.queue = new Array<Customer>();
 

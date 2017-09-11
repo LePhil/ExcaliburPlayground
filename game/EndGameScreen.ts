@@ -2,6 +2,7 @@ declare var globals: any;
 import * as ex from "excalibur";
 import {Digit} from "./Digit";
 
+// TODO: this should be a scene...
 export class EndGameScreen extends ex.UIActor {
 
   private _goToStartButton: ex.UIActor;

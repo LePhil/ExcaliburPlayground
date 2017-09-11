@@ -321,7 +321,7 @@ export class Config {
     tochLit2:               {x:72, y: 144, w: 70, h: 70},
     torch:                  {x:72, y: 72, w: 70, h: 70},
     window:                 {x:72, y: 0, w: 70, h: 70}
-  }
+  };
 
   static DIGIT_WIDTH = 50;
   static SCORE = {
@@ -332,6 +332,11 @@ export class Config {
   static DOOR = {
     X: 555,
     Y: 555
+  };  
+
+  static CASSA = {
+    W: 70,
+    H: 70
   };
 
   static MAPS = [
