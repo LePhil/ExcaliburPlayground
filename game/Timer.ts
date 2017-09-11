@@ -28,15 +28,7 @@ export class Timer extends ex.UIActor {
     }
   }
 
-  // TODO: should only update digits, nothing more - remove endgame stuff
   private _updateDigits():void {
-    this._count++;
-
-    if(this._count >= this._time) {
-      this._endGame();
-      this._count = this._time;
-    }
-
     // Left-Pad with zeros.
     let pad = Array(this._digits.length+1).join("0");
     let timeString = pad.substring(0, pad.length - (""+this._count).length) + this._count;
@@ -54,7 +46,14 @@ export class Timer extends ex.UIActor {
     this._count = 0;
     this.scene.cancelTimer(this._timer);
     this._timer = new ex.Timer(() => {
-      this._updateDigits()
+      this._count++;
+      
+      if(this._count >= this._time) {
+        this._endGame();
+        this._count = this._time;
+      }
+      
+      this._updateDigits();
     }, 1000, true);
 
     // Force redraw
