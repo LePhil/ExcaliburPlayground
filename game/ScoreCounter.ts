@@ -54,7 +54,7 @@ export class ScoreCounter extends ex.UIActor {
     let timeString = pad.substring(0, pad.length - (""+this._score).length) + this._score;
 
     this._digits.forEach((digit, i) => {
-      digit.setDrawing( ""+timeString[i] );
+      digit.setDigit(+timeString[i]);
     });
   }
 

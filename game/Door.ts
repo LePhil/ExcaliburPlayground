@@ -20,7 +20,6 @@ export class Door extends ex.Actor {
         this._cassa = cassa;
         this._open = isOpen;
 
-        // Open on click
         this.on("pointerdown", this.open);
     }
 
@@ -57,10 +56,15 @@ export class Door extends ex.Actor {
 
     public open():void {
         this.setState(true);
-        this._customerSpawnerTimer = new ex.Timer(() => {
-            this.spawn();
-        }, globals.conf.GAME.SPAWN_TIME_S * 1000, true);
-        this.scene.add(this._customerSpawnerTimer);
+
+        // Only add one timer. Otherwise multi-click is possible and it is NOT hilarious.
+        if (!this._customerSpawnerTimer) {
+            this._customerSpawnerTimer = new ex.Timer(() => {
+                this.spawn();
+            }, globals.conf.GAME.SPAWN_TIME_S * 1000, true);
+            
+            this.scene.add(this._customerSpawnerTimer);
+        }
     }
 
     public setState(isOpen:boolean):void {
@@ -73,5 +77,6 @@ export class Door extends ex.Actor {
             this.pos.x,
             this.pos.y,
             this._cassa);
+        this.scene.add(newCustomer);
     }
 }

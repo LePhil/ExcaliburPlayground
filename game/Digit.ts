@@ -12,8 +12,10 @@ export class Digit extends ex.UIActor {
             this.addDrawing(""+i, sprite);
         }
     
-        this.setDrawing(""+initialDigit);
+        this.setDigit(initialDigit);
     }
 
-    //TODO: setDrawing should probably be handled in here..
+    public setDigit(digit: number) {
+        this.setDrawing(""+digit);
+    }
 }

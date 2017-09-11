@@ -9,6 +9,7 @@ export class Customer extends AbstractPlayer {
   public wants: Food;
   public name: string;
   private _hasDecided: boolean;
+  private _hasReceivedItem: boolean;
   private _thinkBubble: ThinkBubble;
   private _scoreCounter: ScoreCounter;
   private _cassa: Cassa;
@@ -23,6 +24,8 @@ export class Customer extends AbstractPlayer {
 
     this.name = globals.conf.CUSTOMER_NAMES[Math.floor(Math.random() * globals.conf.CUSTOMER_NAMES.length)];
     this._hasDecided = false;
+    this._hasReceivedItem = false;
+
     // TODO: maybe via events..
     this._scoreCounter = globals.scoreCounter;
 
@@ -33,32 +36,34 @@ export class Customer extends AbstractPlayer {
     this.collisionType = ex.CollisionType.Passive;
 
     let goal = this._cassa.getLastPositionInQueue();
+
     this.actions
       .moveTo(goal.x, goal.y, this._speed)
       .callMethod(() => {
         // Leave Queue if it's full
-        if (this._cassa.isQueueFull()) {
-          this._cassa.ranOutOfPatience(this);
-        } else {
+        if (this._cassa.addToQueue(this)) {
           this._decideOnProduct();
+        } else {
+          this.leaveStore();
         }
       });
   }
 
   private _decideOnProduct(): void {
-    this._thinkBubble = new ThinkBubble(this.pos.x + globals.conf.CUSTOMER.THINKBUBBLE.OFFSET_X, this.pos.y - globals.conf.CUSTOMER.THINKBUBBLE.OFFSET_X, this.wants);
-    this.scene.add(this._thinkBubble);
-
     // TODO: maybe wait with deciding for a bit
     this.wants = this._getRandomFood();
     this._hasDecided = true;
 
-    // TODO: have to remove the timer!
+    this._thinkBubble = new ThinkBubble(this.pos.x + globals.conf.CUSTOMER.THINKBUBBLE.OFFSET_X, this.pos.y - globals.conf.CUSTOMER.THINKBUBBLE.OFFSET_X, this.wants);
+    this.scene.add(this._thinkBubble);
+
     this._patienceDecreaseTimer = new ex.Timer(() => {
       this._patience -= globals.conf.CUSTOMER.PATIENCE_DELTA;
       if (this._patience <= 0) {
         this._cassa.ranOutOfPatience(this);
+        this.leaveStore();
       }
+      // TODO: indicate running out of patience, e.g. red sparkles? ("anger")
     }, globals.conf.CUSTOMER.PATIENCE_DECREASE_INTERVAL, true);
 
     this.scene.add(this._patienceDecreaseTimer);
@@ -69,7 +74,19 @@ export class Customer extends AbstractPlayer {
     if (this._thinkBubble) {
       this._thinkBubble.kill();
     }
+    if (this._patienceDecreaseTimer) {
+      this._patienceDecreaseTimer.cancel();
+    }
     super.kill();
+  }
+
+  public giveItem():void {
+    this._hasReceivedItem = true;
+    this.leaveStore();
+  }
+
+  public moveInQueue(goal:ex.Vector):void {
+    this.actions.moveTo(goal.x, goal.y, this._speed);
   }
 
   /**
@@ -84,7 +101,9 @@ export class Customer extends AbstractPlayer {
       this._patienceDecreaseTimer.cancel();
     }
 
-    this._moneymoneymoney();
+    if (this._hasReceivedItem) {
+      this._moneymoneymoney();
+    }
 
     this.actions
       .moveTo(

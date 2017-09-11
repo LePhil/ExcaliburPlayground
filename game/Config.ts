@@ -90,7 +90,7 @@ export class Config {
     HEIGHT: 768,  // defined by electron wrapper
     DEBUG: false,
     SPAWN_TIME_S: 3,
-    LEVEL_TIME_S: 20,
+    LEVEL_TIME_S: 999,
     UI: {
       BUTTON_WIDTH: 190,
       BUTTON_HEIGHT: 49

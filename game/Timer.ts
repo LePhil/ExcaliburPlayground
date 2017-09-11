@@ -42,7 +42,7 @@ export class Timer extends ex.UIActor {
     let timeString = pad.substring(0, pad.length - (""+this._count).length) + this._count;
 
     this._digits.forEach((digit, i) => {
-      digit.setDrawing( ""+timeString[i] );
+      digit.setDigit(+timeString[i]);
     });
   }
 

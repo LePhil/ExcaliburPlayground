@@ -2,7 +2,6 @@ declare var globals: any;
 import * as ex from "excalibur";
 import {Player} from "./Player";
 import {Inventory} from "./Inventory";
-import {CustomerSpawner} from "./CustomerSpawner";
 import {Timer} from "./Timer";
 import {ScoreCounter} from "./ScoreCounter";
 // TODO: inheritance yo
@@ -23,7 +22,6 @@ export class LevelScene extends ex.Scene {
   private _player:Player;
   private _timer:Timer;
   private _scoreCounter:ScoreCounter;
-  private _customerSpawner:CustomerSpawner;
   private _door:Door;
   private _cassa:Cassa;
 
@@ -64,9 +62,6 @@ export class LevelScene extends ex.Scene {
     //game.input.pointers.primary.on("down", (evt: PointerEvent) => {
     //  player.goTo(evt);
     //});
-
-    //this._customerSpawner = new CustomerSpawner(500, 520, 200, 20, ex.Color.White);
-    //this.add(this._customerSpawner);
 
     this.add(new Blob(550, 50));
 

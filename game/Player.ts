@@ -4,7 +4,7 @@ import {Food} from "./Item";
 import {FoodStation} from "./FoodStation";
 import {Inventory} from "./Inventory";
 import {Customer} from "./Customer";
-import {CustomerSpawner} from "./CustomerSpawner";
+import {Cassa} from "./Cassa";
 import {AbstractPlayer} from "./AbstractPlayer";
 
 export class Player extends AbstractPlayer {
@@ -58,7 +58,7 @@ export class Player extends AbstractPlayer {
       });
   }
 
-  public sendToCassa(cassa: CustomerSpawner, callback: any) {
+  public sendToCassa(cassa: Cassa, callback: any) {
     this.actions
       .moveTo(cassa.pos.x, cassa.pos.y, 200)
       .delay(1000)
