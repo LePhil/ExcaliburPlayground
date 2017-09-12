@@ -6,7 +6,7 @@ import {Resources} from "./Resources";
 import {Storage} from "./Storage";
 import {MainMenu} from "./MainMenu";
 import {LevelScene} from "./LevelScene";
-import {EndGameScreen} from "./EndGameScreen";
+import {EndGameScene} from "./EndGameScene";
 import {Timer} from "./Timer";
 import {ScoreCounter} from "./ScoreCounter";
 
@@ -17,15 +17,8 @@ globals.resources = Resources;
 globals.storage = new Storage();
 
 game.add("menu", new MainMenu(game));
-
-let endScene = new ex.Scene();
-let endScreen = new EndGameScreen();
-endScene.add(endScreen);
-game.add("end", endScene);
-
-let gameScene = new LevelScene(game);
-
-game.add("game", gameScene);
+game.add("end", new EndGameScene());
+game.add("game", new LevelScene(game));
 
 globals.startMenu = () => {
   game.goToScene("menu");

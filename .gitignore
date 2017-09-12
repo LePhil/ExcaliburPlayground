@@ -3,3 +3,5 @@ bower_components
 /dist
 game/*.js
 game/*.map
+game/*/*.js
+game/*/*.map

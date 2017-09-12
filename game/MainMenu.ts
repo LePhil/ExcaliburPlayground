@@ -1,5 +1,6 @@
 declare var globals: any;
 import * as ex from "excalibur";
+import {Button} from "./ui/Button";
 
 export class MainMenu extends ex.Scene {
 
@@ -22,42 +23,42 @@ export class MainMenu extends ex.Scene {
     let pos2_y = globals.conf.GAME.HEIGHT / 2 + globals.conf.GAME.UI.BUTTON_HEIGHT;
 
     // TODO: yeah no...
-    this._level1Button  = new MenuButton(
+    this._level1Button  = new Button(
       globals.resources.Level1_1_Btn.asSprite(),
       globals.resources.Level1_1_BtnHover.asSprite(),
       () => {this.startGame()},
       200, 200, 100, 100
     );
 
-    this._level2Button  = new MenuButton(
+    this._level2Button  = new Button(
       globals.resources.Level1_2_Btn.asSprite(),
       globals.resources.Level1_2_BtnHover.asSprite(),
       () => {this.startGame()},
       200, 600, 100, 100
     );
 
-    this._startButton   = new MenuButton(
+    this._startButton   = new Button(
       globals.resources.StartBtn.asSprite(),
       globals.resources.StartBtnHover.asSprite(),
       () => {this.startGame()},
       pos1_x, pos1_y
     );
 
-    this._optionsButton = new MenuButton(
+    this._optionsButton = new Button(
       globals.resources.OptionBtn.asSprite(),
       globals.resources.OptionBtnHover.asSprite(),
       () => {this.openOptions()},
       pos2_x, pos2_y
     );
 
-    this._backButton = new MenuButton(
+    this._backButton = new Button(
       globals.resources.BackBtn.asSprite(),
       globals.resources.BackBtnHover.asSprite(),
       () => {this.back()},
       pos1_x, pos1_y
     );
 
-    this._changePlayerButton = new MenuButton(
+    this._changePlayerButton = new Button(
       globals.resources.ChangePlayerBtn.asSprite(),
       globals.resources.ChangePlayerBtnHover.asSprite(),
       () => {this.changePlayer()},
@@ -135,27 +136,6 @@ export class MainMenu extends ex.Scene {
     if ( !this._changePlayerButton.visible ) { return; }
 
     this._playerPreview.changePlayer();
-  }
-}
-
-class MenuButton extends ex.UIActor {
-  constructor(sprite: ex.Sprite, hoverSprite: ex.Sprite, public action: () => void, x: number, y: number, w = globals.conf.GAME.UI.BUTTON_WIDTH, h = globals.conf.GAME.UI.BUTTON_HEIGHT) {
-    super(x, y, w, h);
-
-    this.off("pointerup", this.action);
-    this.on("pointerup", this.action);
-
-    this.addDrawing("normal", sprite);
-    this.addDrawing("hover", hoverSprite);
-    this.setDrawing("normal");
-
-    this.on("pointerdown", (event) => {
-      this.setDrawing("hover");
-    });
-
-    this.on("pointerup", (event) => {
-      this.setDrawing("normal");
-    });
   }
 }
 
