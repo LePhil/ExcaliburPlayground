@@ -15,6 +15,7 @@ export class Customer extends AbstractPlayer {
   private _cassa: Cassa;
   private _patience: number;
   private _patienceDecreaseTimer: ex.Timer;
+  private _patienceIndicator: PatienceIndicator;
 
   constructor(x, y, cassa: Cassa) {
     super(x, y,
@@ -32,29 +33,32 @@ export class Customer extends AbstractPlayer {
     this._cassa = cassa;
 
     this._patience = globals.conf.CUSTOMER.INITIAL_PATIENCE;
-
+    
     this.collisionType = ex.CollisionType.Passive;
-
+    
     let goal = this._cassa.getLastPositionInQueue();
-
+    
     this.actions
-      .moveTo(goal.x, goal.y, this._speed)
-      .callMethod(() => {
-        // Leave Queue if it's full
-        if (this._cassa.addToQueue(this)) {
-          this._decideOnProduct();
-        } else {
-          this.leaveStore();
-        }
-      });
+    .moveTo(goal.x, goal.y, this._speed)
+    .callMethod(() => {
+      // Leave Queue if it's full
+      if (this._cassa.addToQueue(this)) {
+        this._decideOnProduct();
+      } else {
+        this.leaveStore();
+      }
+    });
   }
-
+  
   private _decideOnProduct(): void {
     // TODO: maybe wait with deciding for a bit
     this.wants = this._getRandomFood();
     this._hasDecided = true;
-
+    
+    this._patienceIndicator = new PatienceIndicator(this.pos.x, this.pos.y, this._patience);
     this._thinkBubble = new ThinkBubble(this.pos.x + globals.conf.CUSTOMER.THINKBUBBLE.OFFSET_X, this.pos.y - globals.conf.CUSTOMER.THINKBUBBLE.OFFSET_X, this.wants);
+
+    this.scene.add(this._patienceIndicator);
     this.scene.add(this._thinkBubble);
 
     this._patienceDecreaseTimer = new ex.Timer(() => {
@@ -62,8 +66,9 @@ export class Customer extends AbstractPlayer {
       if (this._patience <= 0) {
         this._cassa.ranOutOfPatience(this);
         this.leaveStore();
+      } else {
+        this._patienceIndicator.setPatience(this._patience);
       }
-      // TODO: indicate running out of patience, e.g. red sparkles? ("anger")
     }, globals.conf.CUSTOMER.PATIENCE_DECREASE_INTERVAL, true);
 
     this.scene.add(this._patienceDecreaseTimer);
@@ -76,6 +81,9 @@ export class Customer extends AbstractPlayer {
     }
     if (this._patienceDecreaseTimer) {
       this._patienceDecreaseTimer.cancel();
+    }
+    if (this._patienceIndicator) {
+      this._patienceIndicator.kill();
     }
     super.kill();
   }
@@ -163,6 +171,10 @@ export class Customer extends AbstractPlayer {
       this._thinkBubble.pos.x = this.pos.x + globals.conf.CUSTOMER.THINKBUBBLE.OFFSET_X;
       this._thinkBubble.pos.y = this.pos.y - globals.conf.CUSTOMER.THINKBUBBLE.OFFSET_Y;
     }
+
+    if(this._patienceIndicator) {
+      this._patienceIndicator.pos = this.pos;
+    }
   }
 
   _handleIdlePlayer(): void {
@@ -206,5 +218,43 @@ class ThinkBubble extends ex.UIActor {
     _sprite.scale.setTo(_scale, _scale);
     this.addDrawing("normal", _sprite);
     this.setDrawing("normal");
+  }
+}
+
+class PatienceIndicator extends ex.UIActor {
+  private _patience: number;
+  private _patienceInitial: number;
+  private _colors: any;
+
+  constructor(x, y, initialPatience: number) {
+    super(x, y, 20, 5);
+
+    this._patience = initialPatience;
+    this._patienceInitial = initialPatience;
+
+    this._setColor();
+  }
+
+  public setPatience(patience:number) {
+    this._patience = patience;
+  }
+
+  public update(engine: ex.Engine, delta: number): void {
+    super.update(engine, delta);
+
+    this._setColor();
+  }
+
+  private _setColor():void {
+    // 50%+ Green
+    // 25%+ Orange
+    //  0%+ Red
+    if (this._patience >= this._patienceInitial/2) {
+      this.color = ex.Color.Green;
+    } else if (this._patience >= this._patienceInitial/4) {
+      this.color = ex.Color.Orange;
+    } else {
+      this.color = ex.Color.Red;
+    }
   }
 }

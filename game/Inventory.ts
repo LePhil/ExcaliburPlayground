@@ -63,8 +63,7 @@ export class Inventory extends ex.Actor {
     super(inv.POS_X,
           inv.POS_Y,
           inv.ITEMS.WIDTH * inv.ITEMS.MAX + ((inv.ITEMS.MAX - 1) * inv.SPACING),
-          inv.ITEMS.HEIGHT,
-          inv.COLOR);
+          inv.ITEMS.HEIGHT);
 
     this.inventory = new Array<InventoryItem>();
     this._maxItems = inv.ITEMS.MAX;
