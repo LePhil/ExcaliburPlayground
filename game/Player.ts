@@ -35,10 +35,11 @@ export class Player extends AbstractPlayer {
   _updateChildren():void {}
 
   public goTo(evt: PointerEvent) {
-   this.actions.moveTo(evt.x, evt.y, this._speed)
-               .callMethod(()=> {
-                 // TODO ?
-               });
+   this.actions
+    .moveTo(evt.x, evt.y, this._speed)
+    .callMethod(()=> {
+      // ...
+    });
   }
 
   public sendToFoodStation(station: FoodStation) {
@@ -50,7 +51,7 @@ export class Player extends AbstractPlayer {
         this._isBusy = true;
         this.setDrawing("pickUp");
       })
-      .delay(globals.conf.STATION_DURATION)
+      .delay(station.getDuration())
       .callMethod(()=> {
         this.addFood(station.getFood());
         this._isBusy = false;

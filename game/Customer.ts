@@ -182,15 +182,10 @@ export class Customer extends AbstractPlayer {
   }
 
   private _getRandomFood(): Food {
-    let foods = ["elephant", "rabbit"];
+    let foods = globals.currentLevelOptions.setup.FOODS;
     let randomFood = foods[Math.floor(Math.random() * foods.length)];
 
-    // TODO: it's so ugly I can barely look at it!
-    if (randomFood === "elephant") {
-      return new Food(globals.conf.ELEPHANTFOOD_NAME, globals.conf.ELEPHANTFOOD_COLOR);
-    } else {
-      return new Food(globals.conf.RABBITFOOD_NAME, globals.conf.RABBITFOOD_COLOR);
-    }
+    return new Food(randomFood);
   }
 }
 
@@ -203,21 +198,16 @@ class ThinkBubble extends ex.UIActor {
 
   onInitialize(engine: ex.Engine): void {
     super.onInitialize(engine);
-    let spriteSheet = new ex.SpriteSheet(globals.resources.TextureBubbles, 2, 7, globals.conf.CUSTOMER.THINKBUBBLE.SPRITE.WIDTH, globals.conf.CUSTOMER.THINKBUBBLE.SPRITE.HEIGHT);
 
-    // TODO: ugly ugly ugly
-    let spriteIndex = 0;
-    if (this._wants.name === globals.conf.ELEPHANTFOOD_NAME) {
-      spriteIndex = 4;
-    } else if (this._wants.name === globals.conf.RABBITFOOD_NAME) {
-      spriteIndex = 10;
-    }
+    let conf = globals.conf.CUSTOMER.THINKBUBBLE.SPRITE[this._wants.name];
+    let tex = globals.resources.TextureBubbles;
+    let sprite = new ex.Sprite(tex, conf.x, conf.y, conf.w, conf.h);
 
-    let _sprite = spriteSheet.getSprite(spriteIndex);
-    let _scale = globals.conf.CUSTOMER.THINKBUBBLE.HEIGHT / globals.conf.CUSTOMER.THINKBUBBLE.SPRITE.HEIGHT;
-    _sprite.scale.setTo(_scale, _scale);
-    this.addDrawing("normal", _sprite);
-    this.setDrawing("normal");
+    let scale_x = globals.conf.CUSTOMER.THINKBUBBLE.WIDTH  / conf.w;
+    let scale_y = globals.conf.CUSTOMER.THINKBUBBLE.HEIGHT / conf.h;
+
+    sprite.scale.setTo(scale_x, scale_y);
+    this.addDrawing( sprite );
   }
 }
 

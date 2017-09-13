@@ -2,8 +2,6 @@ declare var globals: any;
 import * as ex from "excalibur";
 
 export class Config {
-
-
   static PLAYER_SPEED    = 200;
   static PLAYER_STARTX   = 500;
   static PLAYER_STARTY   = 200;
@@ -33,8 +31,16 @@ export class Config {
       OFFSET_X: 20,
       OFFSET_Y: 20,
       SPRITE: {
-        WIDTH: 284,
-        HEIGHT: 285
+        giraffe:    {x: 0,    y: 0,     w: 284, h: 285},
+        monkey:     {x: 0,    y: 1148,  w: 284, h: 285},
+        panda:      {x: 286,  y: 287,   w: 284, h: 285},
+        parrot:     {x: 286,  y: 0,     w: 284, h: 285},
+        penguin:    {x: 0,    y: 1722,  w: 284, h: 285},
+        rabbit:     {x: 0,    y: 1435,  w: 284, h: 285},
+        hippo:      {x: 286,  y: 574,   w: 284, h: 285},
+        pig:        {x: 0,    y: 861,   w: 284, h: 285},
+        elephant:   {x: 0,    y: 574,   w: 284, h: 285},
+        snake:      {x: 0,    y: 287,   w: 284, h: 285}
       }
     },
     INITIAL_PATIENCE: 100,
@@ -42,6 +48,7 @@ export class Config {
     PATIENCE_DECREASE_INTERVAL: 1000,
     QUEUE_LENGTH: 5
   };
+
   static CUSTOMER_NAMES  = [
     "Thomas",
     "Gimli",
@@ -57,30 +64,17 @@ export class Config {
     CONF: {
       SCALE: 0.2
     },
-    elephant: {x: 0, y: 0, w: 424, h: 342},
-    giraffe:  {x: 0, y: 963, w: 382, h: 370},
-    hippo:    {x: 0, y: 1642, w: 333, h: 344},
-    monkey:   {x: 0, y: 344, w: 392, h: 284},
-    panda:    {x: 0, y: 630, w: 392, h: 331},
-    parrot:   {x: 361, y: 1335, w: 284, h: 284},
-    penguin:  {x: 335, y: 1642, w: 284, h: 284},
-    pig:      {x: 0, y: 1335, w: 359, h: 305},
-    rabbit:   {x: 394, y: 344, w: 284, h: 414},
-    snake:    {x: 384, y: 963, w: 284, h: 334}
+    rabbit:   {x: 394, y: 344,  w: 284, h: 414, duration:  500},
+    elephant: {x: 0,   y: 0,    w: 424, h: 342, duration:  500},
+    giraffe:  {x: 0,   y: 963,  w: 382, h: 370, duration: 1000},
+    hippo:    {x: 0,   y: 1642, w: 333, h: 344, duration: 1000},
+    monkey:   {x: 0,   y: 344,  w: 392, h: 284, duration: 1000},
+    panda:    {x: 0,   y: 630,  w: 392, h: 331, duration: 1000},
+    parrot:   {x: 361, y: 1335, w: 284, h: 284, duration: 1000},
+    penguin:  {x: 335, y: 1642, w: 284, h: 284, duration: 2000},
+    pig:      {x: 0,   y: 1335, w: 359, h: 305, duration: 2000},
+    snake:    {x: 384, y: 963,  w: 284, h: 334, duration: 2000}
   };
-
-  // TODO: create complete food object(s)
-  static ELEPHANTFOOD_NAME  = "Elephant Food";
-  static ELEPHANTFOOD_COLOR = ex.Color.Yellow;
-  static ELEPHANTFOOD_WIDTH = 424;
-  static ELEPHANTFOOD_HEIGHT = 342;
-  static ELEPHANTFOOD_SCALE_STATION = .2;
-
-  static RABBITFOOD_NAME  = "Rabbit Food";
-  static RABBITFOOD_COLOR = ex.Color.Orange;
-  static RABBITFOOD_WIDTH = 284;
-  static RABBITFOOD_HEIGHT = 414;
-  static RABBITFOOD_SCALE_STATION = .2;
 
   static INVENTORY = {
     POS_X: 32,
@@ -90,16 +84,34 @@ export class Config {
     ITEMS: {
       HEIGHT: 64,
       WIDTH: 64,
-      SPRITE_WIDTH: 284,
-      SPRITE_HEIGHT: 284,
       MAX: 6
+    },
+    SPRITE: {      
+      elephant: {x: 0,    y: 1145,  w: 284, h: 284},
+      giraffe:  {x: 286,  y: 859,   w: 284, h: 284},
+      hippo:    {x: 0,    y: 0,     w: 285, h: 285},
+      monkey:   {x: 0,    y: 1717,  w: 284, h: 284},
+      panda:    {x: 0,    y: 1431,  w: 284, h: 284},
+      parrot:   {x: 286,  y: 1145,  w: 284, h: 284},
+      penguin:  {x: 286,  y: 573,   w: 284, h: 284},
+      pig:      {x: 0,    y: 287,   w: 285, h: 284},
+      rabbit:   {x: 0,    y: 859,   w: 284, h: 284},
+      snake:    {x: 0,    y: 573,   w: 284, h: 284}
     }
   };
 
-  static DOGFOOD_COLOR = ex.Color.Red;
-  static CATFOOD_COLOR = ex.Color.Green;
-  static DOGFOOD_NAME  = "Dog Food";
-  static CATFOOD_NAME  = "Cat Food";
+  static FOODS = [
+    "elephant",
+    "giraffe",
+    "hippo",
+    "monkey",
+    "panda",
+    "parrot",
+    "penguin",
+    "pig",
+    "rabbit",
+    "snake"
+  ];
 
   static GAME = {
     WIDTH: 1024,  // defined by electron wrapper
@@ -362,7 +374,8 @@ export class Config {
       W: 840,
       H: 560,
       DOOR_X: 800,
-      DOOR_Y: 595
+      DOOR_Y: 595,
+      FOODS: ["rabbit", "elephant", "giraffe"]
     }
   ];
 }

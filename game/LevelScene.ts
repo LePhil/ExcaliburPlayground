@@ -25,18 +25,16 @@ export class LevelScene extends ex.Scene {
   constructor(engine: ex.Engine) {
     super(engine);
 
-    let conf = globals.conf.MAPS[0];
+    // LEVELS! \o/
+    globals.currentLevelOptions = this._gatherLevelOptions();
 
-    this.add(new LevelMap(conf));
+    this.add(new LevelMap(globals.currentLevelOptions.setup));
 
     this._cassa = new Cassa(250, 500);
     this.add(this._cassa);
 
-    this._door = new Door(conf.DOOR_X, conf.DOOR_Y, this._cassa);
+    this._door = new Door(globals.currentLevelOptions.setup.DOOR_X, globals.currentLevelOptions.setup.DOOR_Y, this._cassa);
     this.add(this._door);
-
-    //TODO merge this with map conf
-    globals.currentLevelOptions = {};
 
     // Food Stations
     this.add(new FoodStation(700, 500, "giraffe"));
@@ -66,7 +64,7 @@ export class LevelScene extends ex.Scene {
   }
 
   onInitialize(engine: ex.Engine) {
-    globals.currentLevelOptions = {};
+    globals.currentLevelOptions = this._gatherLevelOptions();
     globals.currentLevelOptions.score = 0;
     globals.currentLevelOptions.playerColor = this._player.getPlayerColor();
   }
@@ -80,5 +78,10 @@ export class LevelScene extends ex.Scene {
   onDeactivate () {
     this._door.close();
     this._cassa.resetState();
+  }
+
+  private _gatherLevelOptions():any {
+    let conf = globals.conf.MAPS[0];
+    return {setup: conf};
   }
 }

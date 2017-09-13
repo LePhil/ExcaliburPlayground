@@ -2,13 +2,14 @@ declare var globals: any;
 import * as ex from "excalibur";
 import {Food} from "./Food";
 
-abstract class InventoryItem extends ex.Actor {
-  private _item:Food;
+class InventoryItem extends ex.Actor {
   private _inv:Inventory;
+  private _type:string;
 
-  constructor(x, y, item:Food, inv: Inventory) {
+  constructor(x, y, type: string, inv: Inventory) {
     super(x, y, globals.conf.INVENTORY.ITEMS.WIDTH, globals.conf.INVENTORY.ITEMS.HEIGHT);
-    this._item = item;
+
+    this._type = type;
     this._inv = inv;
 
     this.on("pointerdown", (event) => {
@@ -25,32 +26,21 @@ abstract class InventoryItem extends ex.Actor {
     }
   }
 
-  abstract getTextureIndex(): number;
-
   onInitialize(engine: ex.Engine): void {
+    let conf = globals.conf.INVENTORY.SPRITE[this._type];
+    let tex = globals.resources.TextureInventory;
+    let sprite = new ex.Sprite(tex, conf.x, conf.y, conf.w, conf.h);
 
-    let spriteSheet = new ex.SpriteSheet(globals.resources.TextureInventory, 2, 7, globals.conf.INVENTORY.ITEMS.SPRITE_WIDTH, globals.conf.INVENTORY.ITEMS.SPRITE_HEIGHT);
-    let normalSprite = spriteSheet.getSprite(this.getTextureIndex());
+    let scale_x = globals.conf.INVENTORY.ITEMS.WIDTH  / conf.w;
+    let scale_y = globals.conf.INVENTORY.ITEMS.HEIGHT / conf.h;
 
-    let scale_x = globals.conf.INVENTORY.ITEMS.WIDTH  / globals.conf.INVENTORY.ITEMS.SPRITE_WIDTH;
-    let scale_y = globals.conf.INVENTORY.ITEMS.HEIGHT / globals.conf.INVENTORY.ITEMS.SPRITE_HEIGHT;
-    normalSprite.scale.setTo(scale_x, scale_y);
-
-    this.addDrawing("normal", normalSprite);
-    this.setDrawing("normal");
+    sprite.scale.setTo(globals.conf.STATIONS.CONF.SCALE, globals.conf.STATIONS.CONF.SCALE);
+    this.addDrawing( sprite );
   }
 
-  public getItem() {
-    return this._item;
+  public getType() {
+    return this._type;
   }
-}
-
-class ElephantInventoryItem extends InventoryItem {
-  getTextureIndex() { return 8; }
-}
-
-class RabbitInventoryItem extends InventoryItem {
-  getTextureIndex() { return 6; }
 }
 
 export class Inventory extends ex.Actor {
@@ -74,28 +64,22 @@ export class Inventory extends ex.Actor {
       return;
     }
 
-    let newActor;
     let c = globals.conf.INVENTORY;
-    let pos_x = c.POS_X + this.inventory.length * (c.ITEMS.WIDTH + c.SPACING);
-    let pos_y = c.POS_Y;
+    let pos_x = this.pos.x + this.inventory.length * (c.ITEMS.WIDTH + c.SPACING);
+    let pos_y = this.pos.y;
 
-    //TODO: *really* lazy
-    if ( newItem.name === globals.conf.ELEPHANTFOOD_NAME) {
-      newActor = new ElephantInventoryItem(pos_x, pos_y, newItem, this);
-    } else if ( newItem.name === globals.conf.RABBITFOOD_NAME ) {
-      newActor = new RabbitInventoryItem(pos_x, pos_y, newItem, this);
-    }
+    let newActor = new InventoryItem(pos_x, pos_y, newItem.name, this);
 
     this.inventory.push(newActor);
-    this.scene.add(newActor);
+    this.add(newActor);
   }
 
   public checkAndRemoveItem(itemToCheck: Food) {
     let itemToRemove = null;
 
-    for (let myItem of this.inventory) {
-      if (myItem.getItem().name === itemToCheck.name) { // Lazy, should do it via inheritance (TODO)
-        itemToRemove = myItem;
+    for (let inventoryItem of this.inventory) {
+      if (inventoryItem.getType() === itemToCheck.name) {
+        itemToRemove = inventoryItem;
       }
     }
 

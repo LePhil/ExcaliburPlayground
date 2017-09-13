@@ -6,15 +6,18 @@ import {Food} from "./Food";
 export class FoodStation extends ex.Actor {
   private _food: Food;
   private _type: string;
+  private _duration: number;
 
   constructor(x: number, y: number, type: string) {
-    let w = globals.conf.RABBITFOOD_WIDTH * globals.conf.RABBITFOOD_SCALE_STATION;
-    let h = globals.conf.RABBITFOOD_HEIGHT * globals.conf.RABBITFOOD_SCALE_STATION;
+    let conf = globals.conf.STATIONS[type];
+    let scale = globals.conf.STATIONS.CONF.SCALE;
+    let w = conf.w * scale;
+    let h = conf.h * scale;
 
     super(x, y, w, h);
 
     this._type = type;
-
+    this._duration = conf.duration;
     this._food = new Food(this._type, ex.Color.Red);
 
     this.on("pointerdown", (event) => {
@@ -30,7 +33,11 @@ export class FoodStation extends ex.Actor {
     this.addDrawing( sprite );
   }
 
-  public getFood() {
+  public getFood():Food {
     return this._food;
+  }
+
+  public getDuration():number {
+    return this._duration;
   }
 }
