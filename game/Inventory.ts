@@ -1,6 +1,6 @@
 declare var globals: any;
 import * as ex from "excalibur";
-import {Food} from "./Item";
+import {Food} from "./Food";
 
 abstract class InventoryItem extends ex.Actor {
   private _item:Food;

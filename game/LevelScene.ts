@@ -4,12 +4,9 @@ import {Player} from "./Player";
 import {Inventory} from "./Inventory";
 import {Timer} from "./Timer";
 import {ScoreCounter} from "./ScoreCounter";
-// TODO: inheritance yo
-import {RabbitFoodStation} from "./RabbitFoodStation";
-import {ElephantFoodStation} from "./ElephantFoodStation";
 import {Blob} from "./Blob";
 import {FoodStation} from "./FoodStation";
-import {Food} from "./Item";
+import {Food} from "./Food";
 import {Customer} from "./Customer";
 import {LevelMap} from "./LevelMap";
 import {Door} from "./Door";
@@ -41,11 +38,10 @@ export class LevelScene extends ex.Scene {
     //TODO merge this with map conf
     globals.currentLevelOptions = {};
 
-    let elephantFoodStation = new ElephantFoodStation(300, 300, new Food(globals.conf.ELEPHANTFOOD_NAME, globals.conf.ELEPHANTFOOD_COLOR));
-    this.add(elephantFoodStation);
-
-    let rabbitFoodStation = new RabbitFoodStation(600, 300, new Food(globals.conf.RABBITFOOD_NAME, globals.conf.RABBITFOOD_COLOR));
-    this.add(rabbitFoodStation);
+    // Food Stations
+    this.add(new FoodStation(700, 500, "giraffe"));
+    this.add(new FoodStation(300, 300, "elephant"));
+    this.add(new FoodStation(600, 300, "rabbit"));
 
     let inv = new Inventory();
     this.add(inv);

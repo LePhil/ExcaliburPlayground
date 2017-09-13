@@ -53,6 +53,22 @@ export class Config {
     "Polly"
   ];
 
+  static STATIONS = {
+    CONF: {
+      SCALE: 0.2
+    },
+    elephant: {x: 0, y: 0, w: 424, h: 342},
+    giraffe:  {x: 0, y: 963, w: 382, h: 370},
+    hippo:    {x: 0, y: 1642, w: 333, h: 344},
+    monkey:   {x: 0, y: 344, w: 392, h: 284},
+    panda:    {x: 0, y: 630, w: 392, h: 331},
+    parrot:   {x: 361, y: 1335, w: 284, h: 284},
+    penguin:  {x: 335, y: 1642, w: 284, h: 284},
+    pig:      {x: 0, y: 1335, w: 359, h: 305},
+    rabbit:   {x: 394, y: 344, w: 284, h: 414},
+    snake:    {x: 384, y: 963, w: 284, h: 334}
+  };
+
   // TODO: create complete food object(s)
   static ELEPHANTFOOD_NAME  = "Elephant Food";
   static ELEPHANTFOOD_COLOR = ex.Color.Yellow;

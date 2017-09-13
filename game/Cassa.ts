@@ -1,7 +1,7 @@
 declare var globals: any;
 import * as ex from "excalibur";
 import {Customer} from "./Customer";
-import {Food} from "./Item";
+import {Food} from "./Food";
 import {Player} from "./Player";
 
 export class Cassa extends ex.Actor {

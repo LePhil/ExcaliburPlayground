@@ -1,6 +1,6 @@
 declare var globals: any;
 import * as ex from "excalibur";
-import {Food} from "./Item";
+import {Food} from "./Food";
 import {FoodStation} from "./FoodStation";
 import {Inventory} from "./Inventory";
 import {Customer} from "./Customer";
