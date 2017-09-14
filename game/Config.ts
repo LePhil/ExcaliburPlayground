@@ -379,4 +379,20 @@ export class Config {
       FOODS: ["rabbit", "elephant", "giraffe"]
     }
   ];
+
+  static MEDALS = {
+    W: 44,
+    H:  152 / 2,
+    TYPES: {
+      circle_gold: 1,
+      circle_silver: 0,
+      circle_copper: 3,
+      sun_gold: 2,
+      sun_silver: 6,
+      x_silver: 4,
+      x_copper: 7,
+      star_silver: 8,
+      star_copper: 5
+    }
+  };
 }

@@ -2,6 +2,7 @@ declare var globals: any;
 import * as ex from "excalibur";
 import {Digit} from "./Digit";
 import {Button} from "./ui/Button";
+import {Medal} from "./ui/Medal";
 
 export class EndGameScene extends ex.Scene {
 
@@ -49,6 +50,8 @@ export class EndGameScene extends ex.Scene {
       this._digits.push(newDigit);
       this.add(newDigit);
     }
+
+    this.add( new Medal(200, 200, "sun_silver") );
   }
 
   onDeactivate () {}
