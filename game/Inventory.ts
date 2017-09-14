@@ -92,7 +92,7 @@ export class Inventory extends ex.Actor {
 
   public removeItem(itemToRemove: InventoryItem) {
     this.inventory.splice( this.inventory.indexOf(itemToRemove), 1 );
-    itemToRemove.kill();
+    this.remove(itemToRemove);
 
     // Update remaining items' positions ("float" to the left)
     this.inventory.forEach((item, index) => {
@@ -102,7 +102,7 @@ export class Inventory extends ex.Actor {
 
   public resetState():void {
     this.inventory.forEach((item) => {
-      item.kill();
+      this.remove(item);
     });
     this.inventory = new Array<InventoryItem>();
   }
