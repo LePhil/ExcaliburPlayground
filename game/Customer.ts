@@ -17,12 +17,17 @@ export class Customer extends AbstractPlayer {
   private _patience: number;
   private _patienceDecreaseTimer: ex.Timer;
   private _patienceIndicator: PatienceIndicator;
+  private _initialX:number;
+  private _initialY:number;
 
   constructor(x, y, cassa: Cassa) {
     super(x, y,
       globals.conf.CUSTOMER_WIDTH,
       globals.conf.CUSTOMER_HEIGHT,
       globals.conf.CUSTOMER_SPEED);
+
+    this._initialX = x;
+    this._initialY = y;
 
     this.name = globals.conf.CUSTOMER_NAMES[Math.floor(Math.random() * globals.conf.CUSTOMER_NAMES.length)];
     this._hasDecided = false;
@@ -115,10 +120,7 @@ export class Customer extends AbstractPlayer {
     }
 
     this.actions
-      .moveTo(
-      globals.conf.DOOR_POS_X,
-      globals.conf.DOOR_POS_Y,
-      this._speed)
+      .moveTo(this._initialX, this._initialY, this._speed)
       .callMethod(this.kill);
   }
 

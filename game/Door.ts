@@ -9,16 +9,18 @@ export class Door extends ex.Actor {
     private _top:ex.Actor;
     private _mid:ex.Actor;
 
+    private _spawnTime: number;
     private _cassa:Cassa;
     private _customerSpawnerTimer: ex.Timer;
 
-    constructor(x, y, cassa:Cassa, isOpen = false) {
+    constructor(x, y, cassa:Cassa, spawnTime: number) {
         super(x, y,
-            globals.conf.TILES.door_openMid.w,
-            2 * globals.conf.TILES.door_openMid.w);
+            globals.conf.DOOR.W,
+            globals.conf.DOOR.H);
 
         this._cassa = cassa;
-        this._open = isOpen;
+        this._open = false;
+        this._spawnTime = spawnTime;
 
         this.on("pointerdown", this.open);
     }
@@ -60,7 +62,7 @@ export class Door extends ex.Actor {
         if (!this._customerSpawnerTimer) {
             this._customerSpawnerTimer = new ex.Timer(() => {
                 this.spawn();
-            }, globals.conf.GAME.SPAWN_TIME_S * 1000, true);
+            }, this._spawnTime * 1000, true);
             
             this.scene.add(this._customerSpawnerTimer);
         }

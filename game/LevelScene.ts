@@ -34,7 +34,7 @@ export class LevelScene extends ex.Scene {
     this._cassa = new Cassa(setup.CASSA.X, setup.CASSA.Y);
     this.add(this._cassa);
 
-    this._door = new Door(setup.DOOR.X, setup.DOOR.Y, this._cassa);
+    this._door = new Door(setup.DOOR.X, setup.DOOR.Y, this._cassa, setup.DOOR.SPAWN_TIME_S);
     this.add(this._door);
 
     // Food Stations
@@ -45,7 +45,7 @@ export class LevelScene extends ex.Scene {
     let inv = new Inventory();
     this.add(inv);
 
-    this._scoreCounter = new ScoreCounter(300, 30);
+    this._scoreCounter = new ScoreCounter();
     globals.scoreCounter = this._scoreCounter;
     this.add(this._scoreCounter);
 

@@ -117,15 +117,11 @@ export class Config {
     WIDTH: 1024,  // defined by electron wrapper
     HEIGHT: 768,  // defined by electron wrapper
     DEBUG: false,
-    SPAWN_TIME_S: 3,
     UI: {
       BUTTON_WIDTH: 190,
       BUTTON_HEIGHT: 49
     }
   };
-
-  static DOOR_POS_X = Config.GAME.WIDTH / 2;
-  static DOOR_POS_Y = Config.GAME.HEIGHT;
 
   static TIMER = {
     WIDTH: 200,
@@ -359,34 +355,9 @@ export class Config {
     VALUE_OF_SERVING: 20
   };
 
-  static DOOR = {
-    X: 555,
-    Y: 555
-  };  
-
-  static CASSA = {
-    W: 70,
-    H: 70
-  };
-
-  static MAPS = [
-    {
-      NAME: "Map_00",
-      IMG: "Map_00",
-      W: 840,
-      H: 560,
-      CASSA: {X: 250, Y: 500},
-      DOOR: {X: 800, Y: 595},
-      FOODS: ["rabbit", "elephant", "giraffe"],
-      STATION_PLACEMENTS: [
-        {X: 700, Y: 500, T: "rabbit"},
-        {X: 300, Y: 300, T: "elephant"},
-        {X: 600, Y: 300, T: "giraffe"}
-      ],
-      BLOB: true,
-      DURATION_S: 999
-    }
-  ];
+  static DOOR =         { W: 70, H: 140 };  
+  static CASSA =        { W: 70, H: 70 };
+  static SCORECOUNTER = { X: 300, Y: 30 };
 
   static MEDALS = {
     W: 44,
@@ -403,4 +374,23 @@ export class Config {
       star_copper: 5
     }
   };
+
+  static MAPS = [
+    {
+      NAME: "Map_00",
+      IMG: "Map_00",
+      W: 840,
+      H: 560,
+      CASSA: {X: 250, Y: 500},
+      DOOR:  {X: 800, Y: 595, SPAWN_TIME_S: 5},
+      FOODS: ["rabbit", "elephant", "giraffe"],
+      STATION_PLACEMENTS: [
+        {X: 700, Y: 500, T: "rabbit"},
+        {X: 300, Y: 300, T: "elephant"},
+        {X: 600, Y: 300, T: "giraffe"}
+      ],
+      BLOB: true,
+      DURATION_S: 999
+    }
+  ];
 }

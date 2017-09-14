@@ -7,8 +7,8 @@ export class ScoreCounter extends ex.UIActor {
   private _score:number;
   private _digits:Array<Digit>;
 
-  constructor(x, y) {
-    super(x, y);
+  constructor() {
+    super(globals.conf.SCORECOUNTER.X, globals.conf.SCORECOUNTER.Y);
 
     this._score = 0;
     this._digits = [];
