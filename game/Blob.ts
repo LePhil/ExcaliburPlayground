@@ -1,8 +1,11 @@
 declare var globals: any;
 import * as ex from "excalibur";
+import { ScoreCounter } from "./ScoreCounter";
+import { MoneyEffect } from "./Effects";
 
 export class Blob extends ex.Actor {
   private _speed: number;
+  private _scoreCounter: ScoreCounter;
 
   constructor(x, y) {
     super(x, y,
@@ -10,10 +13,15 @@ export class Blob extends ex.Actor {
           globals.conf.BLOB.HEIGHT);
 
     this._speed = globals.conf.BLOB.SPEED;
+    this._scoreCounter = globals.scoreCounter;
+
     this.collisionType = ex.CollisionType.Passive;
 
     this.on("pointerdown", (event) => {
       this.kill();
+      this._scoreCounter.updateScore(globals.conf.BLOB.WORTH);
+
+      this.scene.add(new MoneyEffect(this.pos.x, this.pos.y));
     });
 
     // TODO: nicer pattern, points/event on capture

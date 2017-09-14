@@ -138,7 +138,8 @@ export class Config {
     HEIGHT: 34,
     SPEED: 200,
     ANIM_SPEED: 100,
-    LIFETIME: 7
+    LIFETIME: 7,
+    WORTH: 50
   };
 
   static HUD = {
