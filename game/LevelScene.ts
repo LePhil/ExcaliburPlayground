@@ -27,19 +27,20 @@ export class LevelScene extends ex.Scene {
 
     // LEVELS! \o/
     globals.currentLevelOptions = this._gatherLevelOptions();
+    let setup = this._gatherLevelOptions().setup;
 
-    this.add(new LevelMap(globals.currentLevelOptions.setup));
+    this.add( new LevelMap(setup) );
 
-    this._cassa = new Cassa(250, 500);
+    this._cassa = new Cassa(setup.CASSA.X, setup.CASSA.Y);
     this.add(this._cassa);
 
-    this._door = new Door(globals.currentLevelOptions.setup.DOOR_X, globals.currentLevelOptions.setup.DOOR_Y, this._cassa);
+    this._door = new Door(setup.DOOR.X, setup.DOOR.Y, this._cassa);
     this.add(this._door);
 
     // Food Stations
-    this.add(new FoodStation(700, 500, "giraffe"));
-    this.add(new FoodStation(300, 300, "elephant"));
-    this.add(new FoodStation(600, 300, "rabbit"));
+    setup.STATION_PLACEMENTS.forEach(placement => {
+      this.add(new FoodStation(placement.X, placement.Y, placement.T));
+    });
 
     let inv = new Inventory();
     this.add(inv);
@@ -52,14 +53,11 @@ export class LevelScene extends ex.Scene {
     globals.player = this._player;
     this.add(this._player);
 
-    // player moves wherever is clicked - TODO: how to cancel this on "real" targets?
-    //game.input.pointers.primary.on("down", (evt: PointerEvent) => {
-    //  player.goTo(evt);
-    //});
+    if (setup.BLOB) {
+      this.add(new Blob(550, 50));
+    }
 
-    this.add(new Blob(550, 50));
-
-    this._timer = new Timer(700, 30, globals.conf.GAME.LEVEL_TIME_S);
+    this._timer = new Timer(setup.DURATION_S);
     this.add(this._timer);
   }
 

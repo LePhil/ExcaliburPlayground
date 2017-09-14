@@ -118,7 +118,6 @@ export class Config {
     HEIGHT: 768,  // defined by electron wrapper
     DEBUG: false,
     SPAWN_TIME_S: 3,
-    LEVEL_TIME_S: 999,
     UI: {
       BUTTON_WIDTH: 190,
       BUTTON_HEIGHT: 49
@@ -130,7 +129,9 @@ export class Config {
 
   static TIMER = {
     WIDTH: 200,
-    HEIGHT: 40
+    HEIGHT: 40,
+    X: 700,
+    Y: 30
   };
 
   static BLOB = {
@@ -374,9 +375,16 @@ export class Config {
       IMG: "Map_00",
       W: 840,
       H: 560,
-      DOOR_X: 800,
-      DOOR_Y: 595,
-      FOODS: ["rabbit", "elephant", "giraffe"]
+      CASSA: {X: 250, Y: 500},
+      DOOR: {X: 800, Y: 595},
+      FOODS: ["rabbit", "elephant", "giraffe"],
+      STATION_PLACEMENTS: [
+        {X: 700, Y: 500, T: "rabbit"},
+        {X: 300, Y: 300, T: "elephant"},
+        {X: 600, Y: 300, T: "giraffe"}
+      ],
+      BLOB: true,
+      DURATION_S: 999
     }
   ];
 
