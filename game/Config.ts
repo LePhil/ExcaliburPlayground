@@ -1,6 +1,11 @@
 declare var globals: any;
 import * as ex from "excalibur";
 
+enum ActionType {
+  Move = "move",
+  Talk = "talk"
+};
+
 export class Config {
   static PLAYER_SPEED    = 200;
   static PLAYER_STARTX   = 500;
@@ -375,9 +380,15 @@ export class Config {
     }
   };
 
+  static LEVEL_TYPES = {
+    NORMAL: "normal",   // Normal time management
+    CUTSCENE: "cutscene"  // For some story
+  };
+
   static MAPS = [
     {
       NAME: "Map_00",
+      TYPE: Config.LEVEL_TYPES.NORMAL,
       IMG: "Map_00",
       W: 840,
       H: 560,
@@ -391,6 +402,26 @@ export class Config {
       ],
       BLOB: true,
       DURATION_S: 999
+    },
+    {
+      NAME: "Map_01",
+      TYPE: Config.LEVEL_TYPES.CUTSCENE,
+      IMG: "Map_00",
+      W: 840,
+      H: 560,
+      LOCATIONS: [
+        {Name: "player_entry", X: 800, Y: 595},
+        {Name: "player_main",  X: 600, Y: 600}
+      ],
+      CHARACTERS: [
+        {Id: "player", Name: "Player", Color: "green"}
+      ],
+      SCRIPT: [
+        {T: 5,  S: "player", A: ActionType.Move, O: {from: "player_entry", to: "player_main"} },
+        {T: 10, S: "player", A: ActionType.Talk, O: {text: "Hi!"} }
+      ]
     }
   ];
+
+  static ActionType = ActionType;
 }

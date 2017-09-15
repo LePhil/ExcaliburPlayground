@@ -7,6 +7,7 @@ import {Storage} from "./Storage";
 import {MainMenu} from "./MainMenu";
 import {LevelScene} from "./LevelScene";
 import {EndGameScene} from "./EndGameScene";
+import {CutsceneScene} from "./CutsceneScene";
 import {Timer} from "./Timer";
 import {ScoreCounter} from "./ScoreCounter";
 
@@ -18,7 +19,9 @@ globals.storage = new Storage();
 
 game.add("menu", new MainMenu(game));
 game.add("end", new EndGameScene());
+
 game.add("game", new LevelScene(game));
+game.add("cutScene", new CutsceneScene(game));
 
 globals.startMenu = () => {
   game.goToScene("menu");
@@ -31,6 +34,10 @@ globals.endScreen = () => {
 // TODO: levels
 globals.startGame = () => {
   game.goToScene("game");
+};
+
+globals.startCutscene = () => {
+  game.goToScene("cutScene");
 };
 
 let loader = new ex.Loader();

@@ -26,7 +26,7 @@ export class MainMenu extends ex.Scene {
     this._level1Button  = new Button(
       globals.resources.Level1_1_Btn.asSprite(),
       globals.resources.Level1_1_BtnHover.asSprite(),
-      () => {this.startGame()},
+      () => {this.startCutscene()},
       200, 200, 100, 100
     );
 
@@ -100,6 +100,11 @@ export class MainMenu extends ex.Scene {
     if ( !this._startButton.visible ) { return; }
 
     globals.startGame();
+  }
+
+  public startCutscene() {
+    if ( !this._level1Button.visible ) { return; }
+    globals.startCutscene();    
   }
 
   public openOptions() {
