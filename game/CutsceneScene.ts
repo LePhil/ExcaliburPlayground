@@ -3,12 +3,11 @@ import * as ex from "excalibur";
 import {AbstractPlayer} from "./AbstractPlayer";
 import {LevelMap} from "./LevelMap";
 
+// TODO: Silly name is silly.
 export class CutsceneScene extends ex.Scene {
   public levelOptions:object;
 
-  private locations;
-  private characters;
-  private actions;
+  private director:Director;
 
   constructor(engine: ex.Engine) {
     super(engine);
@@ -17,35 +16,35 @@ export class CutsceneScene extends ex.Scene {
 
     this.add( new LevelMap(setup) );
 
-    this.locations = {};
+    let locations = {};
     setup.LOCATIONS.forEach(locationSetup => {
-        this.locations[locationSetup.Name] = new Location(locationSetup.X, locationSetup.Y);
+        locations[locationSetup.Name] = new Location(locationSetup.X, locationSetup.Y);
     });
 
-    this.characters = {};
+    let characters = {};
     setup.CHARACTERS.forEach(characterSetup => {
-        this.characters[characterSetup.Id] = new Character(characterSetup.Name, characterSetup.Color);
+        characters[characterSetup.Id] = new Character(characterSetup.Name, characterSetup.Color);
     });
 
-    this.actions = [];
+    let actions = [];
     setup.SCRIPT.forEach(action => {
         // make sure the character exists...
-        if (!this.characters[action.S]) {
+        if (!characters[action.S]) {
             console.warn(`Character ${action.S} doesn't exist!`);
             return;
         }
-        this.actions.push( new Action(action.T, this.characters[action.S], action.A, action.O) );
+        actions.push( new Action(action.T, characters[action.S], action.A, action.O) );
     });
+
+    this.director = new Director(locations, characters, actions);
+    this.add(this.director);
   }
 
   onInitialize(engine: ex.Engine) {
   }
 
   onActivate () {
-    // TODO: time delay
-    this.actions.forEach(action => {
-        action.execute();
-    });
+    this.director.startScript();
   }
   
   onDeactivate () {
@@ -130,5 +129,26 @@ class Location {
     constructor(x: number, y: number) {
         this.x = x;
         this.y = y;
+    }
+}
+
+class Director extends ex.Actor {
+    private _locations:any;
+    private _characters:any;
+    private _actions:any;
+
+    constructor(locations, characters, actions) {
+        super(0,0, globals.conf.GAME.WIDTH, globals.conf.GAME.HEIGHT);
+
+        this._locations = locations;
+        this._characters = characters;
+        this._actions = actions;
+    }
+
+    startScript():void {
+        // TODO: time delay
+        this._actions.forEach(action => {
+            action.execute();
+        });
     }
 }
