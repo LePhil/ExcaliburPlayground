@@ -5,54 +5,57 @@ import {LevelMap} from "./LevelMap";
 
 // TODO: Silly name is silly.
 export class CutsceneScene extends ex.Scene {
-  public levelOptions:object;
+    public levelOptions:object;
 
-  private director:Director;
+    private director:Director;
 
-  constructor(engine: ex.Engine) {
-    super(engine);
+    constructor(engine: ex.Engine) {
+        super(engine);
 
-    let setup = this._gatherLevelOptions();
+        let setup = this._gatherLevelOptions();
 
-    this.add( new LevelMap(setup) );
+        this.add( new LevelMap(setup) );
 
-    let locations = {};
-    setup.LOCATIONS.forEach(locationSetup => {
-        locations[locationSetup.Name] = new Location(locationSetup.X, locationSetup.Y);
-    });
+        let locations = {};
+        setup.LOCATIONS.forEach(locationSetup => {
+            locations[locationSetup.Name] = new Location(locationSetup.X, locationSetup.Y);
+        });
 
-    let characters = {};
-    setup.CHARACTERS.forEach(characterSetup => {
-        characters[characterSetup.Id] = new Character(characterSetup.Name, characterSetup.Color);
-    });
+        let characters = {};
+        setup.CHARACTERS.forEach(characterSetup => {
+            characters[characterSetup.Id] = new Character(characterSetup.Name, characterSetup.Color);
+        });
 
-    let actions = [];
-    setup.SCRIPT.forEach(action => {
-        // make sure the character exists...
-        if (!characters[action.S]) {
-            console.warn(`Character ${action.S} doesn't exist!`);
-            return;
-        }
-        actions.push( new Action(action.T, characters[action.S], action.A, action.O) );
-    });
+        let actions = [];
+        setup.SCRIPT.forEach(action => {
+            // make sure the character exists
+            if (!characters[action.S]) {
+                console.warn(`Character ${action.S} doesn't exist!`);
+                return;
+            }
+            actions.push( new Action(action.T, characters[action.S], action.A, action.O) );
+        });
 
-    this.director = new Director(locations, characters, actions);
-    this.add(this.director);
-  }
+        this.director = new Director(locations, characters, actions);
+        this.add(this.director);
 
-  onInitialize(engine: ex.Engine) {
-  }
+        // TODO: handle Escape button to skip scene!
+    }
 
-  onActivate () {
-    this.director.startScript();
-  }
-  
-  onDeactivate () {
-  }
+    onInitialize(engine: ex.Engine) {
+    }
 
-  private _gatherLevelOptions():any {
-    return globals.conf.MAPS[1];
-  }
+    onActivate () {
+        this.director.startScript();
+    }
+
+    onDeactivate () {
+        // TODO: reset scene
+    }
+
+    private _gatherLevelOptions():any {
+        return globals.conf.MAPS[1];
+    }
 }
 
 
@@ -104,7 +107,7 @@ class Action {
     private options: any;
 
     constructor(timepoint: number, subject: Character, type: ActionType, options:any) {
-        this.timepoint = timepoint;
+        this.timepoint = timepoint * 1000;
         this.subject = subject;
         this.type = type;
         this.options = options;
@@ -119,6 +122,9 @@ class Action {
                 this.subject.talk(this.options.text);
                 break;
         }
+    }
+    public getTimepoint():number {
+        return this.timepoint;
     }
 }
 
@@ -135,7 +141,7 @@ class Location {
 class Director extends ex.Actor {
     private _locations:any;
     private _characters:any;
-    private _actions:any;
+    private _actions:Array<Action>;
 
     constructor(locations, characters, actions) {
         super(0,0, globals.conf.GAME.WIDTH, globals.conf.GAME.HEIGHT);
@@ -146,9 +152,16 @@ class Director extends ex.Actor {
     }
 
     startScript():void {
-        // TODO: time delay
+        let deltaT = 0;
+
         this._actions.forEach(action => {
-            action.execute();
+            this.actions
+                .delay( action.getTimepoint() - deltaT )
+                .callMethod( () => {
+                    action.execute();
+                } );
+
+            deltaT = action.getTimepoint();
         });
     }
 }
