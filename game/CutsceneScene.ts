@@ -23,7 +23,12 @@ export class CutsceneScene extends ex.Scene {
 
         let characters = {};
         setup.CHARACTERS.forEach(characterSetup => {
-            characters[characterSetup.Id] = new Character(characterSetup.Name, characterSetup.Color);
+            // make sure the spawn location exists
+            if (!locations[characterSetup.Initial]) {
+                console.warn(`Location ${characterSetup.Initial} doesn't exist!`);
+                return;
+            }
+            characters[characterSetup.Id] = new Character(locations[characterSetup.Initial], characterSetup.Name, characterSetup.Color, locations);
         });
 
         let actions = [];
@@ -58,7 +63,6 @@ export class CutsceneScene extends ex.Scene {
     }
 }
 
-
 class FakePlayer extends AbstractPlayer {
     getPlayerColor ():string {
         let playerColor = globals.conf.PLAYER_TYPE_INITIAL_COLOR; //start with green guy if no color was chosen
@@ -79,15 +83,31 @@ class FakePlayer extends AbstractPlayer {
     }
 }
 
-class Character {
+class Character extends ex.Actor {
     private name: string;
+    private _locations:any;
+    private _speed: number;
 
-    constructor(name: string, color: string) {
+    constructor(initialLocation: Location,
+                name: string,
+                color: string,
+                locations: any) {
+        super(initialLocation.x, initialLocation.y, 20, 20, ex.Color.Green);
         this.name = name;
+        this._locations = locations;
+        this._speed = 100;
     }
 
-    move(from: string, to: string) {
-        console.log(`${this.name} moves from ${from} to ${to}`);        
+    move(to: string) {
+        console.log(`${this.name} moves to ${to}`);
+
+        if (!this._locations[to]) {
+            console.warn(`Location ${to} doesn't exist!`);
+            return;
+        }
+
+        let to_loc:Location = this._locations[to];
+        this.actions.moveTo(to_loc.x, to_loc.y, this._speed);
     }
 
     talk(text: string) {
@@ -116,7 +136,7 @@ class Action {
     public execute():void {
         switch (this.type) {
             case ActionType.Move:
-                this.subject.move(this.options.from, this.options.to);
+                this.subject.move(this.options.to);
                 break;
             case ActionType.Talk:
                 this.subject.talk(this.options.text);
@@ -153,6 +173,11 @@ class Director extends ex.Actor {
 
     startScript():void {
         let deltaT = 0;
+
+        // Tiny hack - loop over object's keys and access it 
+        Object.keys(this._characters).forEach(char => {
+            this.add(this._characters[char]);
+        });
 
         this._actions.forEach(action => {
             this.actions

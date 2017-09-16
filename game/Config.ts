@@ -414,11 +414,12 @@ export class Config {
         {Name: "player_main",  X: 600, Y: 600}
       ],
       CHARACTERS: [
-        {Id: "player", Name: "Player", Color: "green"}
+        {Id: "player", Name: "Player", Color: "green", Initial: "player_entry"}
       ],
       SCRIPT: [
-        {T: 5,  S: "player", A: ActionType.Move, O: {from: "player_entry", to: "player_main"} },
-        {T: 10, S: "player", A: ActionType.Talk, O: {text: "Hi!"} }
+        {T: 5,  S: "player", A: ActionType.Move, O: {to: "player_main"} },
+        {T: 10, S: "player", A: ActionType.Talk, O: {text: "Hi!"} },
+        {T: 13, S: "player", A: ActionType.Talk, O: {text: "My name is Har-As!"} }
       ]
     }
   ];
