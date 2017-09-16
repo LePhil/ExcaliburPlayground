@@ -43,8 +43,14 @@ export class CutsceneScene extends ex.Scene {
 
         this.director = new Director(locations, characters, actions);
         this.add(this.director);
+    }
 
-        // TODO: handle Escape button to skip scene!
+    update(engine: ex.Engine, delta: number) {
+        super.update(engine, delta);
+        
+        if ( engine.input.keyboard.wasReleased(ex.Input.Keys.Esc) ) {
+            globals.startMenu();
+        }
     }
 
     onInitialize(engine: ex.Engine) {
@@ -87,6 +93,7 @@ class Character extends ex.Actor {
     private name: string;
     private _locations:any;
     private _speed: number;
+    private _label:ex.Label;
 
     constructor(initialLocation: Location,
                 name: string,
@@ -110,8 +117,27 @@ class Character extends ex.Actor {
         this.actions.moveTo(to_loc.x, to_loc.y, this._speed);
     }
 
-    talk(text: string) {
+    talk(text: string, duration = 0) {
         console.log(`${this.name}: "${text}"`);
+
+        // TODO: for now with labels, later maybe with bigger containers for text. Maybe even html?
+
+        if(this._label) {
+           this.remove(this._label); 
+        }
+
+        let label = new ex.Label(text, 20, 0, "16px Arial");
+        this.add(label);
+        this._label = label;
+
+        if (duration > 0) {
+            // if a manual (and def. optional) duration was set, remove text after said duration
+            // otherwise, the label stays until the next one comes along!
+            setTimeout(() => {
+                this.remove(this._label);
+                this._label = null;
+            }, duration * 1000);
+        }
     }
 }
 
@@ -139,7 +165,7 @@ class Action {
                 this.subject.move(this.options.to);
                 break;
             case ActionType.Talk:
-                this.subject.talk(this.options.text);
+                this.subject.talk(this.options.text, this.options.duration);
                 break;
         }
     }
