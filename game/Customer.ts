@@ -2,7 +2,7 @@ declare var globals: any;
 import * as ex from "excalibur";
 import { Food } from "./Food";
 import { AbstractPlayer } from "./AbstractPlayer";
-import { ScoreCounter } from "./ScoreCounter";
+import { ScoreCounter } from "./Timer";
 import { Cassa } from "./Cassa";
 import { MoneyEffect } from "./Effects";
 

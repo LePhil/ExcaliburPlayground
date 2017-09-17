@@ -8,8 +8,6 @@ import {MainMenu} from "./MainMenu";
 import {LevelScene} from "./LevelScene";
 import {EndGameScene} from "./EndGameScene";
 import {CutsceneScene} from "./CutsceneScene";
-import {Timer} from "./Timer";
-import {ScoreCounter} from "./ScoreCounter";
 
 let game = new ex.Engine({ displayMode: ex.DisplayMode.FullScreen });
 globals.game = game;

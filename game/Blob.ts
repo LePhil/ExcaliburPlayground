@@ -1,6 +1,6 @@
 declare var globals: any;
 import * as ex from "excalibur";
-import { ScoreCounter } from "./ScoreCounter";
+import { ScoreCounter } from "./Timer";
 import { MoneyEffect } from "./Effects";
 
 export class Blob extends ex.Actor {

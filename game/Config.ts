@@ -347,15 +347,15 @@ export class Config {
 
   static DIGIT_WIDTH = 50;
   static SCORE = {
-    NROFDIGITS: 3,
     VALUE_OF_SERVING: 20
   };
 
   static DOOR =         { W: 70,  H: 140 };  
   static CASSA =        { W: 70,  H: 70 };
-  static SCORECOUNTER = { X: 480, Y: 40 };
+  static SCORECOUNTER = { X: 480, Y: 40, NROFDIGITS: 3};
   static TIMER =        { X: 730, Y: 40,
-    CLOCK: {W: 47, H: 47, OFFSET_X: 70, OFFSET_Y: 5}
+    CLOCK: {W: 47, H: 47, OFFSET_X: 70, OFFSET_Y: 5},
+    NROFDIGITS: 3
   };
 
   static MEDALS = {
