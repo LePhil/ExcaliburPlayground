@@ -130,7 +130,8 @@ export class Config {
     WIDTH: 200,
     HEIGHT: 40,
     X: 770,
-    Y: 30
+    Y: 30,
+    CLOCK: {W: 47, H: 47, OFFSET_X: 70, OFFSET_Y: 0}
   };
 
   static BLOB = {

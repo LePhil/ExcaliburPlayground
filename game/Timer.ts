@@ -22,8 +22,17 @@ export class Timer extends ex.UIActor {
   onInitialize(engine: ex.Engine): void {
     super.onInitialize(engine);
 
+    let conf = globals.conf.TIMER;
+    let sprite = globals.resources.ImgClock.asSprite();
+    let scaleX = conf.CLOCK.W / 70;
+    let scaleY = conf.CLOCK.H / 70;
+    sprite.scale.setTo(scaleX, scaleY);
+    this.addDrawing(sprite);
+
     for(let i = 0; i < ("" + this._time).length; i++ ) {
-      let digit = new Digit(this.pos.x + i * globals.conf.DIGIT_WIDTH, this.pos.y);
+      let xPos = this.pos.x + conf.CLOCK.OFFSET_X + i * globals.conf.DIGIT_WIDTH;
+      let yPos = this.pos.y + conf.CLOCK.OFFSET_Y;
+      let digit = new Digit(xPos, yPos);
       this._digits.push( digit );
       this.scene.add( digit );
     }

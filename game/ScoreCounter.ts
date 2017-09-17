@@ -19,11 +19,12 @@ export class ScoreCounter extends ex.UIActor {
 
     let conf = globals.conf.HUD.hud_coins;
     let sprite = new ex.Sprite(globals.resources.HUDSpriteSheet, conf.x, conf.y, conf.w, conf.h);
-    this.addDrawing("coin", sprite);
-    this.setDrawing("coin");
+    this.addDrawing(sprite);
 
     for(let i = 0; i < globals.conf.SCORE.NROFDIGITS; i++ ) {
-      let digit = new Digit(this.pos.x + (i+1) * globals.conf.DIGIT_WIDTH, this.pos.y);
+      let xPos = this.pos.x + globals.conf.TIMER.CLOCK.OFFSET_X + i * globals.conf.DIGIT_WIDTH;
+      let yPos = this.pos.y + globals.conf.TIMER.CLOCK.OFFSET_Y;
+      let digit = new Digit(xPos, yPos);
       this._digits.push( digit );
       this.scene.add( digit );
     }

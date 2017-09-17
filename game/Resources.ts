@@ -13,6 +13,7 @@ export class Resources {
     static TextureBubbles       = new ex.Texture("game/assets/textures/animals/bubbles.png");
 
     static ImgButton            = new ex.Texture("game/assets/ui/blue_button00.png");
+    static ImgClock             = new ex.Texture("game/assets/ui/clock.png");
 
     static OptionBtn            = new ex.Texture("game/assets/ui/btn_option.png");
     static OptionBtnHover       = new ex.Texture("game/assets/ui/btn_option_hover.png");
