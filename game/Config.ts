@@ -354,11 +354,7 @@ export class Config {
   static DOOR =         { W: 70,  H: 140 };  
   static CASSA =        { W: 70,  H: 70 };
   static SCORECOUNTER = { X: 480, Y: 40 };
-  static TIMER = {
-    WIDTH: 200,
-    HEIGHT: 40,
-    X: 730,
-    Y: 40,
+  static TIMER =        { X: 730, Y: 40,
     CLOCK: {W: 47, H: 47, OFFSET_X: 70, OFFSET_Y: 5}
   };
 

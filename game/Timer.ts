@@ -9,10 +9,7 @@ export class Timer extends ex.UIActor {
   private _timer:ex.Timer;
 
   constructor(time:number) {
-    super(globals.conf.TIMER.X,
-          globals.conf.TIMER.Y,
-          globals.conf.TIMER.WIDTH,
-          globals.conf.TIMER.HEIGHT);
+    super(globals.conf.TIMER.X, globals.conf.TIMER.Y);
 
     this._count = 0;
     this._time = time;
