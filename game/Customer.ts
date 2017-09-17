@@ -22,14 +22,14 @@ export class Customer extends AbstractPlayer {
 
   constructor(x, y, cassa: Cassa) {
     super(x, y,
-      globals.conf.CUSTOMER_WIDTH,
-      globals.conf.CUSTOMER_HEIGHT,
-      globals.conf.CUSTOMER_SPEED);
+      globals.conf.CUSTOMER.WIDTH,
+      globals.conf.CUSTOMER.HEIGHT,
+      globals.conf.CUSTOMER.SPEED);
 
     this._initialX = x;
     this._initialY = y;
 
-    this.name = globals.conf.CUSTOMER_NAMES[Math.floor(Math.random() * globals.conf.CUSTOMER_NAMES.length)];
+    this.name = globals.conf.CUSTOMER.NAMES[Math.floor(Math.random() * globals.conf.CUSTOMER.NAMES.length)];
     this._hasDecided = false;
     this._hasReceivedItem = false;
 
@@ -138,7 +138,7 @@ export class Customer extends AbstractPlayer {
 
   getPlayerColor(): string {
     // Disallow chosen player color for customers
-    let availablePlayers = globals.conf.PLAYER_TYPES.filter(type => type.color !== globals.currentLevelOptions.playerColor);
+    let availablePlayers = globals.conf.PLAYER.TYPES.filter(type => type.color !== globals.currentLevelOptions.playerColor);
     let randomIndex = Math.floor(Math.random() * availablePlayers.length);
 
     return availablePlayers[randomIndex].color;

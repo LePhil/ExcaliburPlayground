@@ -29,7 +29,7 @@ export class Cassa extends ex.Actor {
         this.queue.forEach((cust, index) => {
             setTimeout(() => {
                 cust.moveInQueue(new ex.Vector(
-                    this.pos.x + (index+1) * (globals.conf.CUSTOMER_WIDTH + 2),
+                    this.pos.x + (index+1) * (globals.conf.CUSTOMER.WIDTH + 2),
                     this.pos.y - this.getHeight() / 2
                 ));
             }, index * 200);
@@ -84,7 +84,7 @@ export class Cassa extends ex.Actor {
 
     public getLastPositionInQueue():ex.Vector {
         return new ex.Vector(
-            this.pos.x + (this.queue.length + 1) * (globals.conf.CUSTOMER_WIDTH + 2),
+            this.pos.x + (this.queue.length + 1) * (globals.conf.CUSTOMER.WIDTH + 2),
             this.pos.y - this.getHeight() / 2
         );
     }

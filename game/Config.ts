@@ -7,29 +7,38 @@ enum ActionType {
 };
 
 export class Config {
-  static PLAYER_SPEED    = 200;
-  static PLAYER_STARTX   = 500;
-  static PLAYER_STARTY   = 200;
-  static PLAYER_WIDTH    = 50;
-  static PLAYER_HEIGHT   = 50;
+  static PLAYER = {
+    STARTX: 500,
+    STARTY: 200,
+    WIDTH: 50,
+    HEIGHT: 50,
+    SPEED: 200,
+    INITIAL_TYPE: "green",
+    TYPES: [
+      {color: "green",  coords: {walkR: [11,18], walkUp: [19,26], idle:  5, pick: 12} },
+      {color: "yellow", coords: {walkR: [29,36], walkUp: [30,37], idle: 16, pick: 30} },
+      {color: "grey",   coords: {walkR: [ 0, 7], walkUp: [ 8,15], idle: 28, pick:  1} },
+      {color: "red",    coords: {walkR: [44,51], walkUp: [ 4,52], idle: 38, pick: 45} },
+      {color: "blue",   coords: {walkR: [33,40], walkUp: [24,41], idle: 27, pick: 34} }
+    ],
+    SPRITE_SCALE: .5,
+    SPRITE_ANIM_SPEED: 100
+  };
 
-  static SPRITE_SCALE    = .5;
-  static SPRITE_ANIM_SPEED = 100;
-
-  static STATION_DURATION = 1000;
-
-  static CUSTOMER_WIDTH  = 128/2;
-  static CUSTOMER_HEIGHT = 256/2;
-  static CUSTOMER_SPEED  = 200;
-  static PLAYER_TYPES  = [
-    {color: "green",  coords: {walkR: [11,18], walkUp: [19,26], idle:  5, pick: 12} },
-    {color: "yellow", coords: {walkR: [29,36], walkUp: [30,37], idle: 16, pick: 30} },
-    {color: "grey",   coords: {walkR: [ 0, 7], walkUp: [ 8,15], idle: 28, pick:  1} },
-    {color: "red",    coords: {walkR: [44,51], walkUp: [ 4,52], idle: 38, pick: 45} },
-    {color: "blue",   coords: {walkR: [33,40], walkUp: [24,41], idle: 27, pick: 34} }
-  ];
-  static PLAYER_TYPE_INITIAL_COLOR = "green";
   static CUSTOMER = {
+    WIDTH: 128/2,
+    HEIGHT: 256/2,
+    SPEED: 200,
+    NAMES: [
+      "Thomas",
+      "Gimli",
+      "James",
+      "Mr. Man",
+      "Albert",
+      "Stephanie",
+      "Frieda",
+      "Polly"
+    ],
     THINKBUBBLE: {
       WIDTH: 30,
       HEIGHT: 30,
@@ -53,17 +62,6 @@ export class Config {
     PATIENCE_DECREASE_INTERVAL: 1000,
     QUEUE_LENGTH: 5
   };
-
-  static CUSTOMER_NAMES  = [
-    "Thomas",
-    "Gimli",
-    "James",
-    "Mr. Man",
-    "Albert",
-    "Stephanie",
-    "Frieda",
-    "Polly"
-  ];
 
   static STATIONS = {
     CONF: {
@@ -131,7 +129,7 @@ export class Config {
   static TIMER = {
     WIDTH: 200,
     HEIGHT: 40,
-    X: 700,
+    X: 770,
     Y: 30
   };
 
@@ -362,7 +360,7 @@ export class Config {
 
   static DOOR =         { W: 70, H: 140 };  
   static CASSA =        { W: 70, H: 70 };
-  static SCORECOUNTER = { X: 300, Y: 30 };
+  static SCORECOUNTER = { X: 500, Y: 30 };
 
   static MEDALS = {
     W: 44,

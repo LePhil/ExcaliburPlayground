@@ -7,11 +7,11 @@ export abstract class AbstractPlayer extends ex.Actor {
   private _lastPosY: number;
   private _characterColor: string;
 
-  constructor(x = globals.conf.PLAYER_STARTX,
-              y = globals.conf.PLAYER_STARTY,
-              w = globals.conf.PLAYER_WIDTH,
-              h = globals.conf.PLAYER_HEIGHT,
-              s = globals.conf.PLAYER_SPEED) {
+  constructor(x = globals.conf.PLAYER.STARTX,
+              y = globals.conf.PLAYER.STARTY,
+              w = globals.conf.PLAYER.WIDTH,
+              h = globals.conf.PLAYER.HEIGHT,
+              s = globals.conf.PLAYER.SPEED) {
     super(x, y, w, h);
 
     this._speed = s;
@@ -24,10 +24,10 @@ export abstract class AbstractPlayer extends ex.Actor {
     let spriteSheet = new ex.SpriteSheet(globals.resources.TexturePlayers, 7, 8, 128, 256);
 
     let playerColor = this.getPlayerColor();
-    let colorIndex = globals.conf.PLAYER_TYPES.indexOf(globals.conf.PLAYER_TYPES.filter( type => type.color === playerColor )[0]);
-    let scale = globals.conf.SPRITE_SCALE;
-    let speed = globals.conf.SPRITE_ANIM_SPEED;
-    let coords = globals.conf.PLAYER_TYPES[colorIndex].coords;
+    let colorIndex = globals.conf.PLAYER.TYPES.indexOf(globals.conf.PLAYER.TYPES.filter( type => type.color === playerColor )[0]);
+    let scale = globals.conf.PLAYER.SPRITE_SCALE;
+    let speed = globals.conf.PLAYER.SPRITE_ANIM_SPEED;
+    let coords = globals.conf.PLAYER.TYPES[colorIndex].coords;
 
     let walkRightAnim = spriteSheet.getAnimationByIndices(engine, coords.walkR, speed);
     walkRightAnim.loop = true;

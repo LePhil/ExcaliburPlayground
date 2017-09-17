@@ -47,7 +47,7 @@ export class CutsceneScene extends ex.Scene {
 
     update(engine: ex.Engine, delta: number) {
         super.update(engine, delta);
-        
+
         if ( engine.input.keyboard.wasReleased(ex.Input.Keys.Esc) ) {
             globals.startMenu();
         }
@@ -71,7 +71,7 @@ export class CutsceneScene extends ex.Scene {
 
 class FakePlayer extends AbstractPlayer {
     getPlayerColor ():string {
-        let playerColor = globals.conf.PLAYER_TYPE_INITIAL_COLOR; //start with green guy if no color was chosen
+        let playerColor = globals.conf.PLAYER.INITIAL_TYPE; //start with green guy if no color was chosen
 
         if ( globals.storage.get("playerColor") ) {
             playerColor = globals.storage.get("playerColor");

@@ -149,9 +149,12 @@ class PlayerPreview extends ex.Actor {
   private _currentPlayerTypeIndex:number;
 
   constructor(x,y) {
-    super(x, y, globals.conf.PLAYER_WIDTH, globals.conf.PLAYER_HEIGHT);
+    super(x,
+          y,
+          globals.conf.PLAYER.WIDTH,
+          globals.conf.PLAYER.HEIGHT);
 
-    this._playerTypes = globals.conf.PLAYER_TYPES;
+    this._playerTypes = globals.conf.PLAYER.TYPES;
 
     if ( globals.storage.get("playerColor") ) {
       this._currentPlayerTypeIndex = this._playerTypes.indexOf(this._playerTypes.filter( type => type.color === globals.storage.get("playerColor") )[0]);
@@ -159,7 +162,7 @@ class PlayerPreview extends ex.Actor {
       this._currentPlayerTypeIndex = 0;
     }
 
-    let scale = globals.conf.SPRITE_SCALE;
+    let scale = globals.conf.PLAYER.SPRITE_SCALE;
     let spriteSheet = new ex.SpriteSheet(globals.resources.TexturePlayers, 7, 8, 128, 256);
 
     this._playerTypes.forEach((type) => {

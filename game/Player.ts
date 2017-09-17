@@ -12,10 +12,10 @@ export class Player extends AbstractPlayer {
   private _isBusy:boolean;
 
   constructor(inventory: Inventory) {
-    super(globals.conf.PLAYER_STARTX,
-          globals.conf.PLAYER_STARTY,
-          globals.conf.PLAYER_WIDTH,
-          globals.conf.PLAYER_HEIGHT);
+    super(globals.conf.PLAYER.STARTX,
+          globals.conf.PLAYER.STARTY,
+          globals.conf.PLAYER.WIDTH,
+          globals.conf.PLAYER.HEIGHT);
 
     this.inventory = inventory;
     this.collisionType = ex.CollisionType.Active;
@@ -23,7 +23,7 @@ export class Player extends AbstractPlayer {
   }
 
   getPlayerColor ():string {
-    let playerColor = globals.conf.PLAYER_TYPE_INITIAL_COLOR; //start with green guy if no color was chosen
+    let playerColor = globals.conf.PLAYER.INITIAL_TYPE; //start with green guy if no color was chosen
 
     if ( globals.storage.get("playerColor") ) {
       playerColor = globals.storage.get("playerColor");
@@ -60,6 +60,7 @@ export class Player extends AbstractPlayer {
   }
 
   public sendToCassa(cassa: Cassa, callback: any) {
+    // TODO: delay still necessary?
     this.actions
       .moveTo(cassa.pos.x, cassa.pos.y, 200)
       .delay(1000)
@@ -96,7 +97,7 @@ export class Player extends AbstractPlayer {
   public resetState():void {
     this.inventory.resetState();
     this.actions.clearActions();
-    this.pos.x = globals.conf.PLAYER_STARTX;
-    this.pos.y = globals.conf.PLAYER_STARTY;
+    this.pos.x = globals.conf.PLAYER.STARTX;
+    this.pos.y = globals.conf.PLAYER.STARTY;
   }
 }
