@@ -3,8 +3,7 @@ import * as ex from "excalibur";
 import {AbstractPlayer} from "./AbstractPlayer";
 import {LevelMap} from "./LevelMap";
 
-// TODO: Silly name is silly.
-export class CutsceneScene extends ex.Scene {
+export class Cutscene extends ex.Scene {
     public levelOptions:object;
 
     private director:Director;
@@ -69,55 +68,32 @@ export class CutsceneScene extends ex.Scene {
     }
 }
 
-class FakePlayer extends AbstractPlayer {
-    getPlayerColor ():string {
-        let playerColor = globals.conf.PLAYER.INITIAL_TYPE; //start with green guy if no color was chosen
-
-        if ( globals.storage.get("playerColor") ) {
-            playerColor = globals.storage.get("playerColor");
-        }
-        
-        return playerColor;
-    }
-
-    _updateChildren():void {
-
-    }
-
-    _handleIdlePlayer():void {
-
-    }
-}
-
-class Character extends ex.Actor {
+class Character extends AbstractPlayer {
     private name: string;
     private _locations:any;
-    private _speed: number;
     private _label:ex.Label;
 
     constructor(initialLocation: Location,
                 name: string,
                 color: string,
                 locations: any) {
-        super(initialLocation.x, initialLocation.y, 20, 20, ex.Color.Green);
+        super(initialLocation.x, initialLocation.y);
         this.name = name;
         this._locations = locations;
-        this._speed = 100;
     }
 
-    move(to: string) {
-        console.log(`${this.name} moves to ${to}`);
-
+    action_move(to: string) {
+        
         if (!this._locations[to]) {
             console.warn(`Location ${to} doesn't exist!`);
             return;
         }
-
         let to_loc:Location = this._locations[to];
+        console.log(`${this.name} moves to ${to_loc.x} / ${to_loc.y}`);
         this.actions.moveTo(to_loc.x, to_loc.y, this._speed);
     }
 
-    talk(text: string, duration = 0) {
+    action_talk(text: string, duration = 0) {
         console.log(`${this.name}: "${text}"`);
 
         // TODO: for now with labels, later maybe with bigger containers for text. Maybe even html?
@@ -126,7 +102,8 @@ class Character extends ex.Actor {
            this.remove(this._label); 
         }
 
-        let label = new ex.Label(text, 20, 0, "16px Arial");
+        let label = new ex.Label(text, 20, 0);        
+        label.fontSize = 24;
         this.add(label);
         this._label = label;
 
@@ -138,6 +115,22 @@ class Character extends ex.Actor {
                 this._label = null;
             }, duration * 1000);
         }
+    }
+
+    getPlayerColor(): string {
+        let playerColor = globals.conf.PLAYER.INITIAL_TYPE; //start with green guy if no color was chosen
+        
+        if ( globals.storage.get("playerColor") ) {
+            playerColor = globals.storage.get("playerColor");
+        }
+        
+        return playerColor;
+    }
+
+    _updateChildren(): void {}
+
+    _handleIdlePlayer(): void {
+        this.setDrawing("idle");
     }
 }
 
@@ -162,10 +155,10 @@ class Action {
     public execute():void {
         switch (this.type) {
             case ActionType.Move:
-                this.subject.move(this.options.to);
+                this.subject.action_move(this.options.to);
                 break;
             case ActionType.Talk:
-                this.subject.talk(this.options.text, this.options.duration);
+                this.subject.action_talk(this.options.text, this.options.duration);
                 break;
         }
     }

@@ -7,7 +7,7 @@ import {Storage} from "./Storage";
 import {MainMenu} from "./MainMenu";
 import {LevelScene} from "./LevelScene";
 import {EndGameScene} from "./EndGameScene";
-import {CutsceneScene} from "./CutsceneScene";
+import {Cutscene} from "./Cutscene";
 
 let game = new ex.Engine({ displayMode: ex.DisplayMode.FullScreen });
 globals.game = game;
@@ -19,7 +19,7 @@ game.add("menu", new MainMenu(game));
 game.add("end", new EndGameScene());
 
 game.add("game", new LevelScene(game));
-game.add("cutScene", new CutsceneScene(game));
+game.add("cutScene", new Cutscene(game));
 
 globals.startMenu = () => {
   game.goToScene("menu");
