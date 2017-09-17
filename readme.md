@@ -7,6 +7,6 @@ Done!
 
 
 # Currently open:
-* unify Timer and ScoreCounter
 * finish CutScene stuff (animations, props, ...)
 * Sound
+* Re-do buttons with Labels. Images are not a solution!
