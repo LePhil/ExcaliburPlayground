@@ -126,14 +126,6 @@ export class Config {
     }
   };
 
-  static TIMER = {
-    WIDTH: 200,
-    HEIGHT: 40,
-    X: 770,
-    Y: 30,
-    CLOCK: {W: 47, H: 47, OFFSET_X: 70, OFFSET_Y: 0}
-  };
-
   static BLOB = {
     WIDTH: 57,
     HEIGHT: 34,
@@ -359,9 +351,16 @@ export class Config {
     VALUE_OF_SERVING: 20
   };
 
-  static DOOR =         { W: 70, H: 140 };  
-  static CASSA =        { W: 70, H: 70 };
-  static SCORECOUNTER = { X: 500, Y: 30 };
+  static DOOR =         { W: 70,  H: 140 };  
+  static CASSA =        { W: 70,  H: 70 };
+  static SCORECOUNTER = { X: 480, Y: 40 };
+  static TIMER = {
+    WIDTH: 200,
+    HEIGHT: 40,
+    X: 730,
+    Y: 40,
+    CLOCK: {W: 47, H: 47, OFFSET_X: 70, OFFSET_Y: 5}
+  };
 
   static MEDALS = {
     W: 44,
