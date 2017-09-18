@@ -46,6 +46,7 @@ class InventoryItem extends ex.Actor {
 export class Inventory extends ex.Actor {
   inventory: InventoryItem[];
   private _maxItems: number;
+  private _slots:Array<InventorySlot>;
 
   constructor() {
     let conf = globals.conf.INVENTORY;
@@ -57,6 +58,7 @@ export class Inventory extends ex.Actor {
 
     this.inventory = new Array<InventoryItem>();
     this._maxItems = conf.ITEMS.MAX;
+    this._slots = [];
   }
 
   onInitialize(engine: ex.Engine): void {
@@ -67,11 +69,14 @@ export class Inventory extends ex.Actor {
     for(let i = 0; i < this._maxItems; i++) {
       let xPos = this.pos.x + i * (conf.ITEMS.WIDTH + conf.SPACING) - conf.ITEMS.WIDTH / 2;
       let yPos = this.pos.y - conf.ITEMS.HEIGHT / 2;
-      this.add(new InventorySlot(xPos, yPos));
+      let slot = new InventorySlot(xPos, yPos);
+      this.add(slot);
+      this._slots.push(slot);
     }
   }
 
   public addItem(newItem: Food) {
+    console.log(this.inventory.length, this._maxItems);
     if ( this.inventory.length >= this._maxItems) {
       return;
     }
@@ -112,13 +117,27 @@ export class Inventory extends ex.Actor {
     });
   }
 
+  // TODO: use this on init to keep it DRY
   public resetState():void {
     this.inventory.forEach((item) => {
       this.remove(item);
     });
     this.inventory = new Array<InventoryItem>();
+
+    /*
+    this._slots.forEach((slot) => {
+      this.remove(slot);
+    });
+    this._slots = [];
+    */
+
+    this._maxItems = globals.conf.INVENTORY.ITEMS.MAX;
   }
 
+  public changeSlotNumber(count:number):void {
+    this._maxItems = count;
+    //TODO: add/remove slots accordingly
+  }
 }
 
 class InventorySlot extends ex.UIActor {
