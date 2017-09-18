@@ -10,6 +10,7 @@ import {Customer} from "./Customer";
 import {LevelMap} from "./LevelMap";
 import {Door} from "./Door";
 import {Cassa} from "./Cassa";
+import {Tool} from "./Tools";
 
 export class LevelScene extends ex.Scene {
   // crude object to represent some major properties of the level
@@ -61,6 +62,10 @@ export class LevelScene extends ex.Scene {
         this.add(this._blob);
       }, ex.Util.randomIntInRange(0, setup.DURATION_S*1000/2));
     }
+
+    this.add(new Tool(200, 200, "cup"));
+    this.add(new Tool(200, 250, "hammer"));
+    this.add(new Tool(200, 300, "bone"));
 
     this._timer = new Timer(setup.DURATION_S);
     this.add(this._timer);

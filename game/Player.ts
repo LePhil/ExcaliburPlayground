@@ -6,6 +6,7 @@ import {Inventory} from "./Inventory";
 import {Customer} from "./Customer";
 import {Cassa} from "./Cassa";
 import {AbstractPlayer} from "./AbstractPlayer";
+import {Tool} from "./Tools";
 
 export class Player extends AbstractPlayer {
   inventory: Inventory;
@@ -32,14 +33,29 @@ export class Player extends AbstractPlayer {
     return playerColor;
   }
 
+  /**
+   * Ain't got no kids!
+   */
   _updateChildren():void {}
 
+  // TODO: very similar to sendToFoodStation...
+  public pickupTool(tool: Tool, callback: any) {
+    this.actions
+      .moveTo(tool.pos.x, tool.pos.y, this._speed)
+      .callMethod(() => {
+        this._isBusy = true;
+        this.setDrawing("pickUp");
+      })
+      .delay(500)
+      .callMethod(()=> {
+        this._isBusy = false;
+        this.setDrawing("idle");
+        callback();
+      });
+  }
+  
   public goTo(evt: PointerEvent) {
-   this.actions
-    .moveTo(evt.x, evt.y, this._speed)
-    .callMethod(()=> {
-      // ...
-    });
+   this.actions.moveTo(evt.x, evt.y, this._speed);
   }
 
   public sendToFoodStation(station: FoodStation) {
@@ -71,6 +87,10 @@ export class Player extends AbstractPlayer {
     this.inventory.addItem(food);
   }
 
+  public addTool(type: string) {
+    this.inventory.addTool(type);
+  }
+
   /**
    * Serve items to a customer if applicable
    * @param  {Customer[]} customerQueue
@@ -86,6 +106,16 @@ export class Player extends AbstractPlayer {
     }
 
     return customersToRemove;
+  }
+
+  public adjustSpeed(adjustment: number, duration: number) {
+    let originalSpeed = this._speed;
+    this._speed *= adjustment;
+
+    setTimeout(() => {
+      this._speed = originalSpeed;
+    }, duration*1000);
+
   }
 
   _handleIdlePlayer():void {

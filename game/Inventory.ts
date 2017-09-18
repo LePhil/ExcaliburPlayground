@@ -3,8 +3,8 @@ import * as ex from "excalibur";
 import {Food} from "./Food";
 
 class InventoryItem extends ex.Actor {
-  private _inv:Inventory;
-  private _type:string;
+  _inv:Inventory;
+  _type:string;
 
   constructor(x, y, type: string, inv: Inventory) {
     super(x, y, globals.conf.INVENTORY.ITEMS.WIDTH, globals.conf.INVENTORY.ITEMS.HEIGHT);
@@ -43,6 +43,22 @@ class InventoryItem extends ex.Actor {
   }
 }
 
+class InventoryToolItem extends InventoryItem {
+  // e.g. wrench to fix Station
+
+  onInitialize(engine: ex.Engine): void {
+    let conf = globals.conf.ITEMS[this._type];
+    let tex = globals.resources.ItemSpriteSheet;
+    let sprite = new ex.Sprite(tex, conf.x, conf.y, conf.w, conf.h);
+
+    let scale_x = globals.conf.INVENTORY.ITEMS.WIDTH  / conf.w;
+    let scale_y = globals.conf.INVENTORY.ITEMS.HEIGHT / conf.h;
+
+    sprite.scale.setTo(globals.conf.STATIONS.CONF.SCALE, globals.conf.STATIONS.CONF.SCALE);
+    this.addDrawing( sprite );
+  }
+}
+
 export class Inventory extends ex.Actor {
   inventory: InventoryItem[];
   private _maxItems: number;
@@ -76,7 +92,6 @@ export class Inventory extends ex.Actor {
   }
 
   public addItem(newItem: Food) {
-    console.log(this.inventory.length, this._maxItems);
     if ( this.inventory.length >= this._maxItems) {
       return;
     }
@@ -86,6 +101,22 @@ export class Inventory extends ex.Actor {
     let pos_y = this.pos.y;
 
     let newActor = new InventoryItem(pos_x, pos_y, newItem.name, this);
+
+    this.inventory.push(newActor);
+    this.add(newActor);
+  }
+
+  // TODO: many similarities with addItem
+  public addTool(type: string) {
+    if ( this.inventory.length >= this._maxItems) {
+      return;
+    }
+    
+    let c = globals.conf.INVENTORY;
+    let pos_x = this.pos.x + this.inventory.length * (c.ITEMS.WIDTH + c.SPACING);
+    let pos_y = this.pos.y;
+    
+    let newActor = new InventoryToolItem(pos_x, pos_y, type, this);
 
     this.inventory.push(newActor);
     this.add(newActor);
