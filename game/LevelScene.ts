@@ -20,6 +20,7 @@ export class LevelScene extends ex.Scene {
   private _scoreCounter:ScoreCounter;
   private _door:Door;
   private _cassa:Cassa;
+  private _blob:Blob;
 
   constructor(engine: ex.Engine) {
     super(engine);
@@ -55,7 +56,9 @@ export class LevelScene extends ex.Scene {
     // Add a blob after a random time, the latest at half of the game time is over
     if (setup.BLOB) {
       setTimeout(() => {
-        this.add(new Blob(600, 600));
+        // TODO: random spawn position for blob (or bia level setup)
+        this._blob = new Blob(600, 600);
+        this.add(this._blob);
       }, ex.Util.randomIntInRange(0, setup.DURATION_S*1000/2));
     }
 
@@ -77,10 +80,19 @@ export class LevelScene extends ex.Scene {
   onDeactivate () {
     this._door.close();
     this._cassa.resetState();
+    if(this._blob) { this._blob.kill(); }
   }
 
   private _gatherLevelOptions():any {
     let conf = globals.conf.MAPS[0];
     return {setup: conf};
+  }
+
+  update(engine: ex.Engine, delta: number) {
+    super.update(engine, delta);
+
+    if ( engine.input.keyboard.wasReleased(ex.Input.Keys.Esc) ) {
+      globals.startMenu();
+    }
   }
 }

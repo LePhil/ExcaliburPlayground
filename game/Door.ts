@@ -52,7 +52,9 @@ export class Door extends ex.Actor {
 
     public close():void {
         this.setState(false);
-        this._customerSpawnerTimer.cancel();
+        if(this._customerSpawnerTimer) {
+            this._customerSpawnerTimer.cancel();
+        }
     }
 
     public open():void {
