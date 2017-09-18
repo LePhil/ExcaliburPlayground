@@ -52,8 +52,11 @@ export class LevelScene extends ex.Scene {
     globals.player = this._player;
     this.add(this._player);
 
+    // Add a blob after a random time, the latest at half of the game time is over
     if (setup.BLOB) {
-      this.add(new Blob(550, 50));
+      setTimeout(() => {
+        this.add(new Blob(600, 600));
+      }, ex.Util.randomIntInRange(0, setup.DURATION_S*1000/2));
     }
 
     this._timer = new Timer(setup.DURATION_S);
@@ -63,7 +66,6 @@ export class LevelScene extends ex.Scene {
   onInitialize(engine: ex.Engine) {
     globals.currentLevelOptions = this._gatherLevelOptions();
     globals.currentLevelOptions.score = 0;
-    globals.currentLevelOptions.playerColor = this._player.getPlayerColor();
   }
 
   onActivate () {

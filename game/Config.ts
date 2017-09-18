@@ -100,7 +100,8 @@ export class Config {
       pig:      {x: 0,    y: 287,   w: 285, h: 284},
       rabbit:   {x: 0,    y: 859,   w: 284, h: 284},
       snake:    {x: 0,    y: 573,   w: 284, h: 284}
-    }
+    },
+    SLOT: {W: 49, H: 45}
   };
 
   static FOODS = [
@@ -412,7 +413,7 @@ export class Config {
         {X: 600, Y: 300, T: "giraffe"}
       ],
       BLOB: true,
-      DURATION_S: 999
+      DURATION_S: 60
     },
     {
       NAME: "Map_01",

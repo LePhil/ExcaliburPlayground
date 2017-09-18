@@ -48,15 +48,27 @@ export class Inventory extends ex.Actor {
   private _maxItems: number;
 
   constructor() {
-    let inv = globals.conf.INVENTORY;
+    let conf = globals.conf.INVENTORY;
 
-    super(inv.POS_X,
-          inv.POS_Y,
-          inv.ITEMS.WIDTH * inv.ITEMS.MAX + ((inv.ITEMS.MAX - 1) * inv.SPACING),
-          inv.ITEMS.HEIGHT);
+    super(conf.POS_X,
+          conf.POS_Y,
+          conf.ITEMS.WIDTH * conf.ITEMS.MAX + ((conf.ITEMS.MAX - 1) * conf.SPACING),
+          conf.ITEMS.HEIGHT);
 
     this.inventory = new Array<InventoryItem>();
-    this._maxItems = inv.ITEMS.MAX;
+    this._maxItems = conf.ITEMS.MAX;
+  }
+
+  onInitialize(engine: ex.Engine): void {
+    super.onInitialize(engine);
+
+    let conf = globals.conf.INVENTORY;
+
+    for(let i = 0; i < this._maxItems; i++) {
+      let xPos = this.pos.x + i * (conf.ITEMS.WIDTH + conf.SPACING) - conf.ITEMS.WIDTH / 2;
+      let yPos = this.pos.y - conf.ITEMS.HEIGHT / 2;
+      this.add(new InventorySlot(xPos, yPos));
+    }
   }
 
   public addItem(newItem: Food) {
@@ -107,4 +119,18 @@ export class Inventory extends ex.Actor {
     this.inventory = new Array<InventoryItem>();
   }
 
+}
+
+class InventorySlot extends ex.UIActor {
+  constructor(x, y) {
+    super(x, y);
+  }
+
+  onInitialize(engine: ex.Engine): void {
+    super.onInitialize(engine);
+    let conf = globals.conf.INVENTORY;
+    let sprite = globals.resources.ImgInventorySlot.asSprite();
+    sprite.scale.setTo(conf.ITEMS.WIDTH/conf.SLOT.W, conf.ITEMS.HEIGHT/conf.SLOT.H);
+    this.addDrawing(sprite);
+  }
 }

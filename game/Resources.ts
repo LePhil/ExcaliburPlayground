@@ -14,6 +14,7 @@ export class Resources {
 
     static ImgButton            = new ex.Texture("game/assets/ui/blue_button00.png");
     static ImgClock             = new ex.Texture("game/assets/ui/clock.png");
+    static ImgInventorySlot     = new ex.Texture("game/assets/ui/grey_button13.png");
 
     static OptionBtn            = new ex.Texture("game/assets/ui/btn_option.png");
     static OptionBtnHover       = new ex.Texture("game/assets/ui/btn_option_hover.png");
