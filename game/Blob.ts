@@ -9,13 +9,13 @@ export class Blob extends ex.Actor {
 
   constructor() {
     let getRandomX = () => {
-      let minX = (1024 - 840) / 2;
-      let maxX = 1024 - minX;
+      let minX = (globals.conf.GAME.WIDTH - globals.currentLevelOptions.setup.W) / 2;
+      let maxX = globals.conf.GAME.WIDTH - minX;
       return ex.Util.randomIntInRange(minX, maxX);
     };
     let getRandomY = () => {
-      let minY = (768 - 560) / 2;
-      let maxY = 768 - minY;
+      let minY = (globals.conf.GAME.HEIGHT - globals.currentLevelOptions.setup.H) / 2;
+      let maxY = globals.conf.GAME.HEIGHT - minY;
       return ex.Util.randomIntInRange(minY, maxY);
     };
 
@@ -30,7 +30,8 @@ export class Blob extends ex.Actor {
     let nrOfPoints = ex.Util.randomIntInRange(3, 6);
 
     for(let i = 0; i < nrOfPoints; i++) {
-      this.actions.moveTo(getRandomX(), getRandomX(), this._speed).delay(500);
+      this.actions.moveTo(getRandomX(), getRandomX(), this._speed)
+                  .delay(500);
     }
 
     this.actions.repeatForever();
