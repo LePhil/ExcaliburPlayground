@@ -16,20 +16,6 @@ export class Resources {
     static ImgClock             = new ex.Texture("game/assets/ui/clock.png");
     static ImgInventorySlot     = new ex.Texture("game/assets/ui/grey_button13.png");
 
-    static OptionBtn            = new ex.Texture("game/assets/ui/btn_option.png");
-    static OptionBtnHover       = new ex.Texture("game/assets/ui/btn_option_hover.png");
-    static BackBtn              = new ex.Texture("game/assets/ui/btn_back.png");
-    static BackBtnHover         = new ex.Texture("game/assets/ui/btn_back_hover.png");
-    static StartBtn             = new ex.Texture("game/assets/ui/btn_start.png");
-    static StartBtnHover        = new ex.Texture("game/assets/ui/btn_start_hover.png");
-    static ChangePlayerBtn      = new ex.Texture("game/assets/ui/btn_changeplayer.png");
-    static ChangePlayerBtnHover = new ex.Texture("game/assets/ui/btn_changeplayer_hover.png");
-
-    static Level1_1_Btn         = new ex.Texture("game/assets/ui/1-1.png");
-    static Level1_1_BtnHover    = new ex.Texture("game/assets/ui/1-1_hover.png");
-    static Level1_2_Btn         = new ex.Texture("game/assets/ui/1-2.png");
-    static Level1_2_BtnHover    = new ex.Texture("game/assets/ui/1-2_hover.png");
-
     static Cassa                = new ex.Texture("game/assets/textures/store/chimneyLow.png");
 
     static HUDSpriteSheet       = new ex.Texture("game/assets/ui/hud_spritesheet.png");

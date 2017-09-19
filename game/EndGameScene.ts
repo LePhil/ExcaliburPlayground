@@ -6,7 +6,6 @@ import {Medal} from "./ui/Medal";
 
 export class EndGameScene extends ex.Scene {
 
-  private _goToStartButton: ex.UIActor;
   private _digits:Array<Digit>;
 
   public onInitialize(engine: ex.Engine) {
@@ -15,14 +14,15 @@ export class EndGameScene extends ex.Scene {
     let pos_x = globals.conf.GAME.WIDTH / 2 - globals.conf.GAME.UI.BUTTON_WIDTH / 2;
     let pos_y = globals.conf.GAME.HEIGHT / 2 - globals.conf.GAME.UI.BUTTON_HEIGHT;
 
-    this._goToStartButton = new Button(
-      globals.resources.BackBtn.asSprite(),
-      globals.resources.BackBtnHover.asSprite(),
-      () => {this._goToStart()},
-      pos_x, pos_y
+    let goToStartButton  = new Button(
+      pos_x, pos_y,
+      190, 49,
+      "Zurück",
+      globals.resources.ImgButton.asSprite(),
+      () => {this._goToStart()}
     );
 
-    this.add(this._goToStartButton);
+    this.add(goToStartButton);
   }
 
   private _goToStart():any {

@@ -9,7 +9,6 @@ Done!
 # Open features / Bugs:
 * finish CutScene stuff (animations, props, ...)
 * Sound
-* Re-do buttons with Labels. Images are not a solution!
 * Upgrades/Events/Penalties!
 * * More/less space in inventory
 * * More reward per serving
@@ -20,3 +19,6 @@ Done!
 * If speed is increased, actions should take less long as well (e.g. pickup)
 * If inventory is full, clicks on station should not do anything
 * Multiple clicks on Cassa should not stack up/take no time if no customer is there
+
+# Recently done
+* Re-do buttons with Labels

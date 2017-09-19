@@ -4,8 +4,7 @@ import {Button} from "./ui/Button";
 
 export class MainMenu extends ex.Scene {
 
-  private _level1Button: ex.UIActor;
-  private _level2Button: ex.UIActor;
+  private _introButton: ex.UIActor;
 
   private _startButton: ex.UIActor;
   private _optionsButton: ex.UIActor;
@@ -16,57 +15,54 @@ export class MainMenu extends ex.Scene {
 
   constructor(engine: ex.Engine) {
     super(engine);
-
+    
+    let pos0_y = globals.conf.GAME.HEIGHT / 2 - 3 * globals.conf.GAME.UI.BUTTON_HEIGHT;
     let pos1_x = globals.conf.GAME.WIDTH / 2 - globals.conf.GAME.UI.BUTTON_WIDTH / 2;
     let pos1_y = globals.conf.GAME.HEIGHT / 2 - globals.conf.GAME.UI.BUTTON_HEIGHT;
     let pos2_x = globals.conf.GAME.WIDTH / 2 - globals.conf.GAME.UI.BUTTON_WIDTH / 2;
     let pos2_y = globals.conf.GAME.HEIGHT / 2 + globals.conf.GAME.UI.BUTTON_HEIGHT;
 
-    // TODO: yeah no...
-    this._level1Button  = new Button(
-      globals.resources.Level1_1_Btn.asSprite(),
-      globals.resources.Level1_1_BtnHover.asSprite(),
-      () => {this.startCutscene()},
-      200, 200, 100, 100
+    this._introButton  = new Button(
+      pos1_x, pos0_y,
+      190, 49,
+      "Intro",
+      globals.resources.ImgButton.asSprite(),
+      () => {this.startCutscene()}
     );
 
-    this._level2Button  = new Button(
-      globals.resources.Level1_2_Btn.asSprite(),
-      globals.resources.Level1_2_BtnHover.asSprite(),
-      () => {this.startGame()},
-      200, 600, 100, 100
+    this._startButton  = new Button(
+      pos1_x, pos1_y,
+      190, 49,
+      "Start",
+      globals.resources.ImgButton.asSprite(),
+      () => {this.startGame()}
     );
 
-    this._startButton   = new Button(
-      globals.resources.StartBtn.asSprite(),
-      globals.resources.StartBtnHover.asSprite(),
-      () => {this.startGame()},
-      pos1_x, pos1_y
-    );
-
-    this._optionsButton = new Button(
-      globals.resources.OptionBtn.asSprite(),
-      globals.resources.OptionBtnHover.asSprite(),
-      () => {this.openOptions()},
-      pos2_x, pos2_y
+    this._optionsButton  = new Button(
+      pos2_x, pos2_y,
+      190, 49,
+      "Options",
+      globals.resources.ImgButton.asSprite(),
+      () => {this.openOptions()}
     );
 
     this._backButton = new Button(
-      globals.resources.BackBtn.asSprite(),
-      globals.resources.BackBtnHover.asSprite(),
+      pos1_x, pos1_y,
+      190, 49,
+      "Back",
+      globals.resources.ImgButton.asSprite(),
       () => {this.back()},
-      pos1_x, pos1_y
     );
 
     this._changePlayerButton = new Button(
-      globals.resources.ChangePlayerBtn.asSprite(),
-      globals.resources.ChangePlayerBtnHover.asSprite(),
-      () => {this.changePlayer()},
-      pos2_x, pos2_y
+      pos2_x, pos2_y,
+      190, 49,
+      "Change",
+      globals.resources.ImgButton.asSprite(),
+      () => {this.changePlayer()}
     );
 
-    this.add(this._level1Button);
-    this.add(this._level2Button);
+    this.add(this._introButton);
     this.add(this._startButton);
     this.add(this._optionsButton);
     this.add(this._backButton);
@@ -79,8 +75,7 @@ export class MainMenu extends ex.Scene {
 
   // each time the scene is activated by Engine.goToScene
   onActivate () {
-    this._level1Button.visible = true;
-    this._level2Button.visible = true;
+    this._introButton.visible = true;
     this._startButton.visible = true;
     this._optionsButton.visible = true;
     this._backButton.visible = false;
@@ -88,8 +83,7 @@ export class MainMenu extends ex.Scene {
   }
   // each time the scene is deactivated by Engine.goToScene
   onDeactivate () {
-    this._level1Button.visible = false;
-    this._level2Button.visible = false;
+    this._introButton.visible = false;
     this._startButton.visible = false;
     this._optionsButton.visible = false;
     this._backButton.visible = false;
@@ -103,7 +97,7 @@ export class MainMenu extends ex.Scene {
   }
 
   public startCutscene() {
-    if ( !this._level1Button.visible ) { return; }
+    if ( !this._introButton.visible ) { return; }
     globals.startCutscene();    
   }
 
@@ -113,8 +107,7 @@ export class MainMenu extends ex.Scene {
     // Hacky fix (TODO?) - option and changePlayer buttons are on top of each other
     // --> click triggers both. Have to delay enabling option button a tiny bit...
     setTimeout(() => {
-      this._level1Button.visible = false;
-      this._level2Button.visible = false;
+      this._introButton.visible = false;
       this._startButton.visible = false;
       this._optionsButton.visible = false;
       this._backButton.visible = true;
@@ -128,8 +121,7 @@ export class MainMenu extends ex.Scene {
   public back() {
     if ( !this._backButton.visible ) { return; }
 
-    this._level1Button.visible = true;
-    this._level2Button.visible = true;
+    this._introButton.visible = true;
     this._startButton.visible = true;
     this._optionsButton.visible = true;
     this._backButton.visible = false;
