@@ -7,15 +7,33 @@ export class Blob extends ex.Actor {
   private _speed: number;
   private _scoreCounter: ScoreCounter;
 
-  constructor(x, y) {
-    super(x, y,
+  constructor() {
+    let getRandomX = () => {
+      let minX = (1024 - 840) / 2;
+      let maxX = 1024 - minX;
+      return ex.Util.randomIntInRange(minX, maxX);
+    };
+    let getRandomY = () => {
+      let minY = (768 - 560) / 2;
+      let maxY = 768 - minY;
+      return ex.Util.randomIntInRange(minY, maxY);
+    };
+
+    super(getRandomX(), getRandomY(),
           globals.conf.BLOB.WIDTH,
           globals.conf.BLOB.HEIGHT);
 
     this._speed = globals.conf.BLOB.SPEED;
     this._scoreCounter = globals.scoreCounter;
-
     this.collisionType = ex.CollisionType.Passive;
+
+    let nrOfPoints = ex.Util.randomIntInRange(3, 6);
+
+    for(let i = 0; i < nrOfPoints; i++) {
+      this.actions.moveTo(getRandomX(), getRandomX(), this._speed).delay(500);
+    }
+
+    this.actions.repeatForever();
 
     this.on("pointerdown", (event) => {
       this.kill();
@@ -23,17 +41,6 @@ export class Blob extends ex.Actor {
 
       this.scene.add(new MoneyEffect(this.pos.x, this.pos.y));
     });
-
-    let nrOfPoints = ex.Util.randomIntInRange(3, 6);
-
-    for(let i = 0; i < nrOfPoints; i++) {
-      let randomX = ex.Util.randomIntInRange(200, 800);
-      let randomY = ex.Util.randomIntInRange(200, 600);
-
-      this.actions.moveTo(randomX, randomY, this._speed).delay(500);
-    }
-
-    this.actions.repeatForever();
   }
 
   onInitialize(engine: ex.Engine): void {
