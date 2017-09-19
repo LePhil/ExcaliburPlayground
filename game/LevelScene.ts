@@ -10,7 +10,7 @@ import {Customer} from "./Customer";
 import {LevelMap} from "./LevelMap";
 import {Door} from "./Door";
 import {Cassa} from "./Cassa";
-import {Tool} from "./Tools";
+import {Tool, ConsumableTool, PickuppableTool} from "./Tools";
 
 export class LevelScene extends ex.Scene {
   // crude object to represent some major properties of the level
@@ -50,10 +50,7 @@ export class LevelScene extends ex.Scene {
     globals.scoreCounter = this._scoreCounter;
     this.add(this._scoreCounter);
 
-    this._player = new Player(inv);
-    globals.player = this._player;
-    this.add(this._player);
-
+    
     // Add a blob after a random time, the latest at half of the game time is over
     if (setup.BLOB) {
       setTimeout(() => {
@@ -62,11 +59,15 @@ export class LevelScene extends ex.Scene {
         this.add(this._blob);
       }, ex.Util.randomIntInRange(0, setup.DURATION_S*1000/2));
     }
-
-    this.add(new Tool(200, 200, "cup"));
-    this.add(new Tool(200, 250, "hammer"));
-    this.add(new Tool(200, 300, "bone"));
-
+    
+    this.add(new ConsumableTool(200, 200, "cup"));
+    this.add(new PickuppableTool(200, 250, "hammer"));
+    this.add(new PickuppableTool(200, 300, "bone"));
+    
+    this._player = new Player(inv);
+    globals.player = this._player;
+    this.add(this._player);
+    
     this._timer = new Timer(setup.DURATION_S);
     this.add(this._timer);
   }
