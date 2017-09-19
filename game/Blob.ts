@@ -24,14 +24,16 @@ export class Blob extends ex.Actor {
       this.scene.add(new MoneyEffect(this.pos.x, this.pos.y));
     });
 
-    // TODO: nicer pattern, points/event on capture
-    this.actions
-      .moveTo(0  , 0  , this._speed)
-      .delay(500)
-      .moveTo(200, 400, this._speed)
-      .delay(500)
-      .moveTo(400, 200, this._speed)
-      .repeatForever();
+    let nrOfPoints = ex.Util.randomIntInRange(3, 6);
+
+    for(let i = 0; i < nrOfPoints; i++) {
+      let randomX = ex.Util.randomIntInRange(200, 800);
+      let randomY = ex.Util.randomIntInRange(200, 600);
+
+      this.actions.moveTo(randomX, randomY, this._speed).delay(500);
+    }
+
+    this.actions.repeatForever();
   }
 
   onInitialize(engine: ex.Engine): void {

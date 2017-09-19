@@ -39,19 +39,14 @@ export class Tool extends ex.Actor{
         this.setDrawing("normal");
     }
 
-    getType():string {
-        return this._type;
-    }
-
     handleClick(player: Player) {
         if (this._isActive) {
             player.pickupTool(this, () => {this.handlePickup(player)} );
         }
     }
-
-    isActive():boolean {
-        return this._isActive;
-    }
+    
+    getType():string { return this._type; }
+    isActive():boolean { return this._isActive; }
       
     setActive() {
         this._isActive = true;
@@ -66,19 +61,15 @@ export class Tool extends ex.Actor{
     handlePickup(player: Player):void {}
 }
 
+// These tools can be picked up and get added to the inventory 
 export class PickuppableTool extends Tool {
 
     handlePickup(player: Player):void {
-        switch (this.getType()) {
-            case "hammer":
-            case "bone":
-            default:
-                player.addTool(this.getType());
-                break;
-        }
+        player.addTool(this.getType());
     }
 }
 
+// Consumable "Tools" have an effect on the player
 export class ConsumableTool extends Tool {
     
     handlePickup(player: Player):void {
