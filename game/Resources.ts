@@ -39,4 +39,5 @@ export class Resources {
     static MedalsSheet          = new ex.Texture("game/assets/textures/medals.png");
 
     static Map_00               = new ex.Texture("game/assets/textures/map_00.png");
+    static Map_intro_01         = new ex.Texture("game/assets/maps/intro.png");
 }

@@ -586,25 +586,25 @@ export class Config {
       DURATION_S: 60
     },
     {
-      NAME: "Map_01",
+      NAME: "intro_01",
       TYPE: Config.LEVEL_TYPES.CUTSCENE,
-      IMG: "Map_00",
+      IMG: "Map_intro_01",
       W: 840,
       H: 560,
       LOCATIONS: [
-        {Name: "player_entry", X: 800, Y: 595},
-        {Name: "player_main",  X: 600, Y: 600}
+        {Name: "player_entry", X: 900, Y: 460},
+        {Name: "player_main",  X: 380, Y: 460}
       ],
       CHARACTERS: [
         {Id: "player", Name: "Player", Color: "green", Initial: "player_entry"}
       ],
       SCRIPT: [
         {T: 3,  S: "player", A: ActionType.Move, O: {to: "player_main"} },
-        {T: 5,  S: "player", A: ActionType.Talk, O: {text: "Hi!"} },
-        {T: 9,  S: "player", A: ActionType.Talk, O: {text: "My name is Har-As!"} },
-        {T: 13, S: "player", A: ActionType.Talk, O: {text: "I'm a Choch. You might not have heard of us."} },
-        {T: 20, S: "player", A: ActionType.Talk, O: {text: "I'm from a planet far, far away."} },
-        {T: 25, S: "player", A: ActionType.Talk, O: {text: "And today I'll tell you how I got here."} }
+        {T: 7,  S: "player", A: ActionType.Talk, O: {text: "Hi!"} },
+        {T: 11, S: "player", A: ActionType.Talk, O: {text: "My name is Har-As!"} },
+        {T: 16, S: "player", A: ActionType.Talk, O: {text: "I'm a Choch. You might not have heard of us."} },
+        {T: 23, S: "player", A: ActionType.Talk, O: {text: "I'm from a planet far, far away."} },
+        {T: 28, S: "player", A: ActionType.Talk, O: {text: "And today I'll tell you how I got here."} }
       ]
     }
   ];
