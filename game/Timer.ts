@@ -112,15 +112,13 @@ export class ScoreCounter extends DigitDisplay {
   }
 
   public updateScore(points:number):void {
-    this._display += points;
+    this._display = points;
     
     // Make sure it's not longer than the maximum amount of digits - if so, make it into a bunch of 9s
     if (("" + this._display).length > this._digits.length) {
       this._display = +(Array(this._digits.length+1).join("9"));
     }
 
-    globals.currentLevelOptions.score = this._display;
-    
     this._updateDigits();
   }
 }

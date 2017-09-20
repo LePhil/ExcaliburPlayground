@@ -28,7 +28,10 @@ export class LevelScene extends ex.Scene {
   constructor(engine: ex.Engine) {
     super(engine);
 
-    this.director = new Director("Map_00");
+    this._scoreCounter = new ScoreCounter();
+    this.add(this._scoreCounter);
+
+    this.director = new Director("Map_00", this._scoreCounter);
     let setup = this.director.getLevelData();
 
     this.add( new LevelMap(setup) );
@@ -36,7 +39,7 @@ export class LevelScene extends ex.Scene {
     this._cassa = new Cassa(setup.CASSA.X, setup.CASSA.Y);
     this.add(this._cassa);
 
-    this._door = new Door(setup.DOOR.X, setup.DOOR.Y, this._cassa, setup.DOOR.SPAWN_TIME_S, setup);
+    this._door = new Door(setup.DOOR.X, setup.DOOR.Y, this._cassa, setup.DOOR.SPAWN_TIME_S, this.director);
     this.add(this._door);
 
     // Food Stations
@@ -46,16 +49,11 @@ export class LevelScene extends ex.Scene {
 
     let inv = new Inventory();
     this.add(inv);
-
-    this._scoreCounter = new ScoreCounter();
-    globals.scoreCounter = this._scoreCounter;
-    this.add(this._scoreCounter);
-
     
     // Add a blob after a random time, the latest at half of the game time is over
     if (setup.BLOB) {
       setTimeout(() => {
-        this.add(new Blob(setup));
+        this.add(new Blob(this.director));
       }, ex.Util.randomIntInRange(0, setup.DURATION_S*1000/2));
     }
     
@@ -78,12 +76,11 @@ export class LevelScene extends ex.Scene {
     if (this.director) {
       this.director.loadLevel("Map_00");
     } else {
-      this.director = new Director("Map_00");
+      this.director = new Director("Map_00", this._scoreCounter);
     }
 
     this._player.resetState();
     this._timer.resetState();
-    this._scoreCounter.resetState();
   }
   
   onDeactivate () {

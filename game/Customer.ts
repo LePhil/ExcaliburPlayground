@@ -2,9 +2,9 @@ declare var globals: any;
 import * as ex from "excalibur";
 import { Food } from "./Food";
 import { AbstractPlayer } from "./AbstractPlayer";
-import { ScoreCounter } from "./Timer";
 import { Cassa } from "./Cassa";
 import { MoneyEffect } from "./Effects";
+import { Director } from "./Director";
 
 export class Customer extends AbstractPlayer {
   public wants: Food;
@@ -12,16 +12,15 @@ export class Customer extends AbstractPlayer {
   private _hasDecided: boolean;
   private _hasReceivedItem: boolean;
   private _thinkBubble: ThinkBubble;
-  private _scoreCounter: ScoreCounter;
   private _cassa: Cassa;
   private _patience: number;
   private _patienceDecreaseTimer: ex.Timer;
   private _patienceIndicator: PatienceIndicator;
   private _initialX:number;
   private _initialY:number;
-  private _setup: any;
+  private _director: Director;
 
-  constructor(x, y, cassa: Cassa, setup: any) {
+  constructor(x, y, cassa: Cassa, director: Director) {
     super(x, y,
       globals.conf.CUSTOMER.WIDTH,
       globals.conf.CUSTOMER.HEIGHT,
@@ -33,12 +32,9 @@ export class Customer extends AbstractPlayer {
     this.name = globals.conf.CUSTOMER.NAMES[Math.floor(Math.random() * globals.conf.CUSTOMER.NAMES.length)];
     this._hasDecided = false;
     this._hasReceivedItem = false;
-
-    // TODO: maybe via events..
-    this._scoreCounter = globals.scoreCounter;
+    this._director = director;
 
     this._cassa = cassa;
-    this._setup = setup;
 
     this._patience = globals.conf.CUSTOMER.INITIAL_PATIENCE;
     
@@ -132,7 +128,7 @@ export class Customer extends AbstractPlayer {
     }
 
     // earned score per customer depends on the patience they had left
-    this._scoreCounter.updateScore(globals.conf.SCORE.VALUE_OF_SERVING * this._patience / globals.conf.CUSTOMER.INITIAL_PATIENCE);
+    this._director.addPoints(globals.conf.SCORE.VALUE_OF_SERVING * this._patience / globals.conf.CUSTOMER.INITIAL_PATIENCE);
 
     // Some fancy KA-CHING stuff
     this.scene.add(new MoneyEffect(this.pos.x, this.pos.y));
@@ -163,7 +159,7 @@ export class Customer extends AbstractPlayer {
   }
 
   private _getRandomFood(): Food {
-    let foods = this._setup.FOODS;
+    let foods = this._director.getLevelData().FOODS;
     let randomFood = foods[Math.floor(Math.random() * foods.length)];
 
     return new Food(randomFood);

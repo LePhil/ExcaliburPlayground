@@ -2,6 +2,7 @@ declare var globals: any;
 import * as ex from "excalibur";
 import {Customer} from "./Customer";
 import {Cassa} from "./Cassa";
+import {Director} from "./Director";
 
 export class Door extends ex.Actor {
     private _open:boolean;
@@ -13,9 +14,9 @@ export class Door extends ex.Actor {
     private _cassa:Cassa;
     private _customerSpawnerTimer: ex.Timer;
 
-    private _setup:any;
+    private _director: Director;
 
-    constructor(x, y, cassa:Cassa, spawnTime: number, setup: any) {
+    constructor(x, y, cassa:Cassa, spawnTime: number, director: Director) {
         super(x, y,
             globals.conf.DOOR.W,
             globals.conf.DOOR.H);
@@ -23,7 +24,7 @@ export class Door extends ex.Actor {
         this._cassa = cassa;
         this._open = false;
         this._spawnTime = spawnTime;
-        this._setup = setup;
+        this._director = director;
 
         this.on("pointerdown", this.open);
     }
@@ -83,7 +84,7 @@ export class Door extends ex.Actor {
             this.pos.x,
             this.pos.y,
             this._cassa,
-            this._setup);
+            this._director);
         this.scene.add(newCustomer);
     }
 }

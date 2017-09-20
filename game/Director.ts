@@ -1,5 +1,6 @@
 declare var globals: any;
 import * as ex from "excalibur";
+import {ScoreCounter} from "./Timer";
 
 export class Director {
     private _currentLevelName: string;
@@ -7,10 +8,14 @@ export class Director {
     private _dynamicData: any;
     private _currentScore: number;
 
-    constructor(mapName: string) {
+    private _scoreDisplay: ScoreCounter;
+
+    constructor(mapName: string, scoreCounter: ScoreCounter) {
         this.loadLevel(mapName);
         this._currentScore = 0;
         this._dynamicData = {};
+
+        this._scoreDisplay = scoreCounter;
     }
 
     loadLevel(levelIdentifier:string) {
@@ -35,10 +40,15 @@ export class Director {
 
     addPoints(points: number): number {
         this._currentScore += points;
+        this._scoreDisplay.updateScore(this._currentScore);
         return this._currentScore;
     }
 
     getDynamicData(): any {
         return this._dynamicData;
+    }
+
+    exitLevel():void {
+        this._scoreDisplay.resetState();
     }
 }
