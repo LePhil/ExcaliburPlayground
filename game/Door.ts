@@ -13,7 +13,9 @@ export class Door extends ex.Actor {
     private _cassa:Cassa;
     private _customerSpawnerTimer: ex.Timer;
 
-    constructor(x, y, cassa:Cassa, spawnTime: number) {
+    private _setup:any;
+
+    constructor(x, y, cassa:Cassa, spawnTime: number, setup: any) {
         super(x, y,
             globals.conf.DOOR.W,
             globals.conf.DOOR.H);
@@ -21,6 +23,7 @@ export class Door extends ex.Actor {
         this._cassa = cassa;
         this._open = false;
         this._spawnTime = spawnTime;
+        this._setup = setup;
 
         this.on("pointerdown", this.open);
     }
@@ -79,7 +82,8 @@ export class Door extends ex.Actor {
         let newCustomer = new Customer(
             this.pos.x,
             this.pos.y,
-            this._cassa);
+            this._cassa,
+            this._setup);
         this.scene.add(newCustomer);
     }
 }

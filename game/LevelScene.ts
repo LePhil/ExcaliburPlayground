@@ -11,10 +11,13 @@ import {LevelMap} from "./LevelMap";
 import {Door} from "./Door";
 import {Cassa} from "./Cassa";
 import {Tool, ConsumableTool, PickuppableTool} from "./Tools";
+import {Director} from "./Director";
 
 export class LevelScene extends ex.Scene {
   // crude object to represent some major properties of the level
   public levelOptions:object;
+
+  public director: Director;
 
   private _player:Player;
   private _timer:Timer;
@@ -25,16 +28,15 @@ export class LevelScene extends ex.Scene {
   constructor(engine: ex.Engine) {
     super(engine);
 
-    // LEVELS! \o/
-    globals.currentLevelOptions = this._gatherLevelOptions();
-    let setup = this._gatherLevelOptions().setup;
+    this.director = new Director("Map_00");
+    let setup = this.director.getLevelData();
 
     this.add( new LevelMap(setup) );
 
     this._cassa = new Cassa(setup.CASSA.X, setup.CASSA.Y);
     this.add(this._cassa);
 
-    this._door = new Door(setup.DOOR.X, setup.DOOR.Y, this._cassa, setup.DOOR.SPAWN_TIME_S);
+    this._door = new Door(setup.DOOR.X, setup.DOOR.Y, this._cassa, setup.DOOR.SPAWN_TIME_S, setup);
     this.add(this._door);
 
     // Food Stations
@@ -53,7 +55,7 @@ export class LevelScene extends ex.Scene {
     // Add a blob after a random time, the latest at half of the game time is over
     if (setup.BLOB) {
       setTimeout(() => {
-        this.add(new Blob());
+        this.add(new Blob(setup));
       }, ex.Util.randomIntInRange(0, setup.DURATION_S*1000/2));
     }
     
@@ -70,11 +72,15 @@ export class LevelScene extends ex.Scene {
   }
 
   onInitialize(engine: ex.Engine) {
-    globals.currentLevelOptions = this._gatherLevelOptions();
-    globals.currentLevelOptions.score = 0;
   }
-
+  
   onActivate () {
+    if (this.director) {
+      this.director.loadLevel("Map_00");
+    } else {
+      this.director = new Director("Map_00");
+    }
+
     this._player.resetState();
     this._timer.resetState();
     this._scoreCounter.resetState();

@@ -19,8 +19,9 @@ export class Customer extends AbstractPlayer {
   private _patienceIndicator: PatienceIndicator;
   private _initialX:number;
   private _initialY:number;
+  private _setup: any;
 
-  constructor(x, y, cassa: Cassa) {
+  constructor(x, y, cassa: Cassa, setup: any) {
     super(x, y,
       globals.conf.CUSTOMER.WIDTH,
       globals.conf.CUSTOMER.HEIGHT,
@@ -37,6 +38,7 @@ export class Customer extends AbstractPlayer {
     this._scoreCounter = globals.scoreCounter;
 
     this._cassa = cassa;
+    this._setup = setup;
 
     this._patience = globals.conf.CUSTOMER.INITIAL_PATIENCE;
     
@@ -138,7 +140,7 @@ export class Customer extends AbstractPlayer {
 
   getPlayerColor(): string {
     // Disallow chosen player color for customers
-    let availablePlayers = globals.conf.PLAYER.TYPES.filter(type => type.color !== globals.currentLevelOptions.playerColor);
+    let availablePlayers = globals.conf.PLAYER.TYPES.filter(type => type.color !== globals.storage.get("playerColor"));
     let randomIndex = Math.floor(Math.random() * availablePlayers.length);
 
     return availablePlayers[randomIndex].color;
@@ -161,7 +163,7 @@ export class Customer extends AbstractPlayer {
   }
 
   private _getRandomFood(): Food {
-    let foods = globals.currentLevelOptions.setup.FOODS;
+    let foods = this._setup.FOODS;
     let randomFood = foods[Math.floor(Math.random() * foods.length)];
 
     return new Food(randomFood);

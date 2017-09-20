@@ -7,14 +7,14 @@ export class Blob extends ex.Actor {
   private _speed: number;
   private _scoreCounter: ScoreCounter;
 
-  constructor() {
+  constructor(setup:any) {
     let getRandomX = () => {
-      let minX = (globals.conf.GAME.WIDTH - globals.currentLevelOptions.setup.W) / 2;
+      let minX = (globals.conf.GAME.WIDTH - setup.W) / 2;
       let maxX = globals.conf.GAME.WIDTH - minX;
       return ex.Util.randomIntInRange(minX, maxX);
     };
     let getRandomY = () => {
-      let minY = (globals.conf.GAME.HEIGHT - globals.currentLevelOptions.setup.H) / 2;
+      let minY = (globals.conf.GAME.HEIGHT - setup.H) / 2;
       let maxY = globals.conf.GAME.HEIGHT - minY;
       return ex.Util.randomIntInRange(minY, maxY);
     };
