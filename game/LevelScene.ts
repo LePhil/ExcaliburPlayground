@@ -31,7 +31,10 @@ export class LevelScene extends ex.Scene {
     this._scoreCounter = new ScoreCounter();
     this.add(this._scoreCounter);
 
-    this.director = new Director("Map_00", this._scoreCounter);
+    this._timer = new Timer();
+    this.add(this._timer);
+
+    this.director = new Director("Map_00", this._scoreCounter, this._timer);
     let setup = this.director.getLevelData();
 
     this.add( new LevelMap(setup) );
@@ -65,8 +68,6 @@ export class LevelScene extends ex.Scene {
     globals.player = this._player;
     this.add(this._player);
     
-    this._timer = new Timer(setup.DURATION_S);
-    this.add(this._timer);
   }
 
   onInitialize(engine: ex.Engine) {
@@ -76,11 +77,12 @@ export class LevelScene extends ex.Scene {
     if (this.director) {
       this.director.loadLevel("Map_00");
     } else {
-      this.director = new Director("Map_00", this._scoreCounter);
+      this.director = new Director("Map_00", this._scoreCounter, this._timer);
     }
 
     this._player.resetState();
-    this._timer.resetState();
+
+    this.director.startLevel();
   }
   
   onDeactivate () {

@@ -1,21 +1,26 @@
 declare var globals: any;
 import * as ex from "excalibur";
-import {ScoreCounter} from "./Timer";
+import {ScoreCounter, Timer} from "./Timer";
 
 export class Director {
     private _currentLevelName: string;
     private _levelData: any;
     private _dynamicData: any;
     private _currentScore: number;
+    private _isTimeRunning: boolean;
 
     private _scoreDisplay: ScoreCounter;
+    private _timer: Timer;
 
-    constructor(mapName: string, scoreCounter: ScoreCounter) {
+    constructor(mapName: string, scoreCounter: ScoreCounter, timer: Timer) {
         this.loadLevel(mapName);
+
         this._currentScore = 0;
+        this._isTimeRunning = false;
         this._dynamicData = {};
 
         this._scoreDisplay = scoreCounter;
+        this._timer = timer;
     }
 
     loadLevel(levelIdentifier:string) {
@@ -28,6 +33,10 @@ export class Director {
         } else {
             console.warn(`Level ${levelIdentifier} doesn't exist!`);
         }
+    }
+    
+    startLevel() {
+        this.startTime();
     }
 
     getLevelData(): any {
@@ -50,5 +59,25 @@ export class Director {
 
     exitLevel():void {
         this._scoreDisplay.resetState();
+    }
+
+    isTimeRunning():boolean {
+        return this._isTimeRunning;
+    }
+
+    startTime(): void {
+        this._isTimeRunning = true;
+        this._timer.setTimer(this.getLevelData().DURATION_S);
+        this._timer.resetState();
+    }
+
+    continueTime(): void {
+        this._isTimeRunning = true;
+        this._timer.continue();
+    }
+
+    pauseTime(): void {
+        this._isTimeRunning = false;
+        this._timer.pause();
     }
 }

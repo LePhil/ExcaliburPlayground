@@ -44,15 +44,17 @@ class DigitDisplay extends ex.UIActor {
 }
 
 export class Timer extends DigitDisplay {
-  private _time:number;
+  private _targetTime:number;
   private _timer:ex.Timer;
 
-  constructor(time:number) {
+  constructor(time = 999) {
     super(globals.conf.TIMER.X,
           globals.conf.TIMER.Y,
           globals.conf.TIMER.NROFDIGITS);
 
-    this._time = time;
+    if (time) {
+      this._targetTime = time;
+    }
   }
 
   onInitialize(engine: ex.Engine): void {
@@ -62,6 +64,18 @@ export class Timer extends DigitDisplay {
     let sprite = globals.resources.ImgClock.asSprite();
     sprite.scale.setTo(conf.CLOCK.W / 70, conf.CLOCK.H / 70);
     this.addDrawing(sprite);
+  }
+
+  setTimer(time):void {
+    this._targetTime = time;
+  }
+
+  pause(): void {
+    // TODO
+  }
+
+  continue(): void {
+    // TODO
   }
 
   private _endGame():void {
@@ -74,9 +88,9 @@ export class Timer extends DigitDisplay {
     this._timer = new ex.Timer(() => {
       this._display++;
       
-      if(this._display >= this._time) {
+      if(this._display >= this._targetTime) {
         this._endGame();
-        this._display = this._time;
+        this._display = this._targetTime;
       }
       
       this._updateDigits();

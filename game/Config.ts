@@ -583,7 +583,9 @@ export class Config {
         {X: 600, Y: 300, T: "giraffe"}
       ],
       BLOB: true,
-      DURATION_S: 60
+      DURATION_S: 60,
+      INTRO: "As a proud owner of your new pet store, make sure each customer gets what they want!",
+      OUTRO: "Well done!"
     },
     {
       NAME: "intro_01",
