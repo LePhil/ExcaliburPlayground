@@ -42,7 +42,9 @@ export class EndGameScene extends ex.Scene {
     let pos_x = globals.conf.GAME.WIDTH / 2 - globals.conf.GAME.UI.BUTTON_WIDTH / 2;
     let pos_y = globals.conf.GAME.HEIGHT / 2 - globals.conf.GAME.UI.BUTTON_HEIGHT;
 
-    let score = globals.currentLevelOptions.score;
+    // TODO: pass Director to EndGameScene
+    //let score = globals.currentLevelOptions.score;
+    let score = 0;
     let digitStartX = pos_x - 100;
     
     for(let i = 0; i < (""+score).length; i++) {
@@ -51,6 +53,7 @@ export class EndGameScene extends ex.Scene {
       this.add(newDigit);
     }
 
+    // TODO: different medal, depending on the score
     this.add( new Medal(200, 200, "sun_silver") );
   }
 

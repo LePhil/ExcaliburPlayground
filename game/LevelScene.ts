@@ -12,6 +12,7 @@ import {Door} from "./Door";
 import {Cassa} from "./Cassa";
 import {Tool, ConsumableTool, PickuppableTool} from "./Tools";
 import {Director} from "./Director";
+import {TextOverlay} from "./ui/TextOverlay";
 
 export class LevelScene extends ex.Scene {
   // crude object to represent some major properties of the level
@@ -53,6 +54,7 @@ export class LevelScene extends ex.Scene {
     let inv = new Inventory();
     this.add(inv);
     
+    // TODO: director should spawn blob/start the timer
     // Add a blob after a random time, the latest at half of the game time is over
     if (setup.BLOB) {
       setTimeout(() => {
@@ -82,7 +84,13 @@ export class LevelScene extends ex.Scene {
 
     this._player.resetState();
 
-    this.director.startLevel();
+    let intro = this.director.getLevelData().INTRO;
+    
+    if (intro) {
+      this.add(new TextOverlay(intro, this.director));
+    } else {
+      this.director.startLevel();
+    }
   }
   
   onDeactivate () {

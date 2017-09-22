@@ -14,11 +14,11 @@ export class Director {
 
     constructor(mapName: string, scoreCounter: ScoreCounter, timer: Timer) {
         this.loadLevel(mapName);
-
+        
         this._currentScore = 0;
         this._isTimeRunning = false;
         this._dynamicData = {};
-
+        
         this._scoreDisplay = scoreCounter;
         this._timer = timer;
     }
@@ -79,5 +79,9 @@ export class Director {
     pauseTime(): void {
         this._isTimeRunning = false;
         this._timer.pause();
+    }
+
+    onOverlayClose() {
+        this.startLevel();
     }
 }

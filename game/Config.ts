@@ -293,7 +293,8 @@ export class Config {
     DEBUG: false,
     UI: {
       BUTTON_WIDTH: 190,
-      BUTTON_HEIGHT: 49
+      BUTTON_HEIGHT: 49,
+      OVERLAY: {W: 600, H: 400}
     }
   };
 
