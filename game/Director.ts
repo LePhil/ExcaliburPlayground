@@ -71,6 +71,9 @@ export class Director {
         if (this._scoreDisplay) {
             this._scoreDisplay.resetState();
         }
+        if (this._timer) {
+            this._timer.resetState();
+        }
     }
 
     isTimeRunning():boolean {
@@ -81,7 +84,7 @@ export class Director {
         this._isTimeRunning = true;
 
         if (this._timer) {
-            this._timer.setTimer(this.getLevelData("DURATION_S"));
+            this._timer.setTimer(this.getLevelData("DURATION_S"), () => { this.onTimeLimitReached(); });
             this._timer.resetState();
         }
     }
@@ -90,7 +93,7 @@ export class Director {
         this._isTimeRunning = true;
 
         if (this._timer) {
-            this._timer.continue();
+            this._timer.unpause();
         }
     }
 
@@ -102,7 +105,16 @@ export class Director {
         }
     }
 
+    endLevel():void {
+        // TODO: eww!
+        globals.endScreen();
+    }
+
     onOverlayClose() {
         this.startLevel();
+    }
+
+    onTimeLimitReached() {
+        this.endLevel();
     }
 }

@@ -46,6 +46,7 @@ class DigitDisplay extends ex.UIActor {
 export class Timer extends DigitDisplay {
   private _targetTime:number;
   private _timer:ex.Timer;
+  private _callback: () => void;
 
   constructor(time = 999) {
     super(globals.conf.TIMER.X,
@@ -66,20 +67,17 @@ export class Timer extends DigitDisplay {
     this.addDrawing(sprite);
   }
 
-  setTimer(time):void {
+  setTimer(time, callback: () => void):void {
     this._targetTime = time;
+    this._callback = callback;
   }
 
   pause(): void {
-    // TODO
+    // this._timer.pause();
   }
 
-  continue(): void {
-    // TODO
-  }
-
-  private _endGame():void {
-    globals.endScreen();
+  unpause(): void {
+    // this._timer.unpause();
   }
 
   public resetState():void {
@@ -89,7 +87,7 @@ export class Timer extends DigitDisplay {
       this._display++;
       
       if(this._display >= this._targetTime) {
-        this._endGame();
+        this._callback();
         this._display = this._targetTime;
       }
       
