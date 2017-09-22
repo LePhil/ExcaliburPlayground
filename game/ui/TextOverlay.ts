@@ -3,27 +3,28 @@ import * as ex from "excalibur";
 import {Director} from "../Director";
 
 export class TextOverlay extends ex.UIActor {
-    constructor(text: string,
+    constructor(texts: Array<string>,
                 director: Director) {
 
       let w = globals.conf.GAME.UI.OVERLAY.W;
       let h = globals.conf.GAME.UI.OVERLAY.H;
+      let x = (globals.conf.GAME.WIDTH - w) / 2;
+      let y = (globals.conf.GAME.HEIGHT - h) / 2;
 
-      super(
-        (globals.conf.GAME.WIDTH - w) / 2,
-        (globals.conf.GAME.HEIGHT - h) / 2,
-        w,
-        h);
+      super(x, y, w, h);
 
       this.color = ex.Color.White;
 
       let fontSize = 24;
-      let label = new ex.Label(text, w/2, h/2 + fontSize/2);
-      label.fontSize = fontSize;
-      label.color = ex.Color.Black;
-      // TODO: if the text is too long, it'll go over the panel
-      label.textAlign = ex.TextAlign.Center;
-      this.add(label);
+      let textColor = ex.Color.Black;
+
+      texts.forEach((text, index) => {
+          let label = new ex.Label(text, w/2, (y - h/2) + (1.6 * (index + 3) * fontSize));
+          label.fontSize = fontSize;
+          label.color = textColor;
+          label.textAlign = ex.TextAlign.Center;
+          this.add(label);
+      });
 
       // TODO: maybe add a button to contine
       

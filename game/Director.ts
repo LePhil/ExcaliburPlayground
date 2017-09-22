@@ -39,8 +39,14 @@ export class Director {
         this.startTime();
     }
 
-    getLevelData(): any {
-        return this._levelData;
+    getLevelData(key?: string): any {
+        if(key && this._levelData[key]) {
+            return this._levelData[key];
+        } else if (key) {
+            return null;
+        } else {
+            return this._levelData;
+        }
     }
 
     getScore(): number {
@@ -67,7 +73,7 @@ export class Director {
 
     startTime(): void {
         this._isTimeRunning = true;
-        this._timer.setTimer(this.getLevelData().DURATION_S);
+        this._timer.setTimer(this.getLevelData("DURATION_S"));
         this._timer.resetState();
     }
 

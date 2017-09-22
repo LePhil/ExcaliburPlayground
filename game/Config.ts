@@ -585,7 +585,8 @@ export class Config {
       ],
       BLOB: true,
       DURATION_S: 60,
-      INTRO: "As a proud owner of your new pet store, make sure each customer gets what they want!",
+      INTRO: ["As a proud owner of your new pet store,",
+              "make sure each customer gets what they want!"],
       OUTRO: "Well done!"
     },
     {

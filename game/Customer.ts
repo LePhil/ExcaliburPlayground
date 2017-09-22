@@ -159,7 +159,7 @@ export class Customer extends AbstractPlayer {
   }
 
   private _getRandomFood(): Food {
-    let foods = this._director.getLevelData().FOODS;
+    let foods = this._director.getLevelData("FOODS");
     let randomFood = foods[Math.floor(Math.random() * foods.length)];
 
     return new Food(randomFood);

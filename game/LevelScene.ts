@@ -84,7 +84,7 @@ export class LevelScene extends ex.Scene {
 
     this._player.resetState();
 
-    let intro = this.director.getLevelData().INTRO;
+    let intro = this.director.getLevelData("INTRO");
     
     if (intro) {
       this.add(new TextOverlay(intro, this.director));
