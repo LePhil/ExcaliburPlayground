@@ -3,10 +3,19 @@ import * as ex from "excalibur";
 import {Digit} from "./Digit";
 import {Button} from "./ui/Button";
 import {Medal} from "./ui/Medal";
+import {Director} from "./Director";
+
 
 export class EndGameScene extends ex.Scene {
 
   private _digits:Array<Digit>;
+  private _director: Director;
+
+  constructor(engine: ex.Engine, director: Director) {
+    super(engine);
+
+    this._director = director;
+  }
 
   public onInitialize(engine: ex.Engine) {
     super.onInitialize(engine);
@@ -42,9 +51,7 @@ export class EndGameScene extends ex.Scene {
     let pos_x = globals.conf.GAME.WIDTH / 2 - globals.conf.GAME.UI.BUTTON_WIDTH / 2;
     let pos_y = globals.conf.GAME.HEIGHT / 2 - globals.conf.GAME.UI.BUTTON_HEIGHT;
 
-    // TODO: pass Director to EndGameScene
-    //let score = globals.currentLevelOptions.score;
-    let score = 0;
+    let score = this._director.getScore();
     let digitStartX = pos_x - 100;
     
     for(let i = 0; i < (""+score).length; i++) {

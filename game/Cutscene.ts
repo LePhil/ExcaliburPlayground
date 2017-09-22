@@ -6,7 +6,7 @@ import {LevelMap} from "./LevelMap";
 export class Cutscene extends ex.Scene {
     public levelOptions:object;
 
-    private director:Director;
+    private director:CutSceneDirector;
 
     constructor(engine: ex.Engine) {
         super(engine);
@@ -40,7 +40,7 @@ export class Cutscene extends ex.Scene {
             actions.push( new Action(action.T, characters[action.S], action.A, action.O) );
         });
 
-        this.director = new Director(locations, characters, actions);
+        this.director = new CutSceneDirector(locations, characters, actions);
         this.add(this.director);
     }
 
@@ -177,7 +177,7 @@ class Location {
     }
 }
 
-class Director extends ex.Actor {
+class CutSceneDirector extends ex.Actor {
     private _locations:any;
     private _characters:any;
     private _actions:Array<Action>;

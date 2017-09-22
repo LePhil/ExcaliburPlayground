@@ -26,7 +26,7 @@ export class LevelScene extends ex.Scene {
   private _door:Door;
   private _cassa:Cassa;
 
-  constructor(engine: ex.Engine) {
+  constructor(engine: ex.Engine, director: Director) {
     super(engine);
 
     this._scoreCounter = new ScoreCounter();
@@ -35,7 +35,9 @@ export class LevelScene extends ex.Scene {
     this._timer = new Timer();
     this.add(this._timer);
 
-    this.director = new Director("Map_00", this._scoreCounter, this._timer);
+    this.director = director;
+    director.loadLevel("Map_00");
+    director.addDisplays(this._scoreCounter, this._timer);
     let setup = this.director.getLevelData();
 
     this.add( new LevelMap(setup) );
@@ -76,10 +78,9 @@ export class LevelScene extends ex.Scene {
   }
   
   onActivate () {
+    // TODO: still necessary? (yes)
     if (this.director) {
       this.director.loadLevel("Map_00");
-    } else {
-      this.director = new Director("Map_00", this._scoreCounter, this._timer);
     }
 
     this._player.resetState();

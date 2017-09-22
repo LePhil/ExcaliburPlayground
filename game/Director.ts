@@ -12,15 +12,10 @@ export class Director {
     private _scoreDisplay: ScoreCounter;
     private _timer: Timer;
 
-    constructor(mapName: string, scoreCounter: ScoreCounter, timer: Timer) {
-        this.loadLevel(mapName);
-        
+    constructor() {        
         this._currentScore = 0;
         this._isTimeRunning = false;
         this._dynamicData = {};
-        
-        this._scoreDisplay = scoreCounter;
-        this._timer = timer;
     }
 
     loadLevel(levelIdentifier:string) {
@@ -33,6 +28,11 @@ export class Director {
         } else {
             console.warn(`Level ${levelIdentifier} doesn't exist!`);
         }
+    }
+
+    addDisplays(scoreCounter: ScoreCounter, timer: Timer) {
+        this._scoreDisplay = scoreCounter;
+        this._timer = timer;
     }
     
     startLevel() {
@@ -55,7 +55,11 @@ export class Director {
 
     addPoints(points: number): number {
         this._currentScore += points;
-        this._scoreDisplay.updateScore(this._currentScore);
+
+        if (this._scoreDisplay) {
+            this._scoreDisplay.updateScore(this._currentScore);
+        }
+
         return this._currentScore;
     }
 
@@ -64,7 +68,9 @@ export class Director {
     }
 
     exitLevel():void {
-        this._scoreDisplay.resetState();
+        if (this._scoreDisplay) {
+            this._scoreDisplay.resetState();
+        }
     }
 
     isTimeRunning():boolean {
@@ -73,18 +79,27 @@ export class Director {
 
     startTime(): void {
         this._isTimeRunning = true;
-        this._timer.setTimer(this.getLevelData("DURATION_S"));
-        this._timer.resetState();
+
+        if (this._timer) {
+            this._timer.setTimer(this.getLevelData("DURATION_S"));
+            this._timer.resetState();
+        }
     }
 
     continueTime(): void {
         this._isTimeRunning = true;
-        this._timer.continue();
+
+        if (this._timer) {
+            this._timer.continue();
+        }
     }
 
     pauseTime(): void {
         this._isTimeRunning = false;
-        this._timer.pause();
+
+        if (this._timer) {
+            this._timer.pause();
+        }
     }
 
     onOverlayClose() {

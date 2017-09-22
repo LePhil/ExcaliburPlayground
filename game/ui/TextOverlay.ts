@@ -26,12 +26,13 @@ export class TextOverlay extends ex.UIActor {
           this.add(label);
       });
 
-      // TODO: maybe add a button to contine
+      // TODO: maybe add a button to continue
       
       this.on("pointerup", () => {
         director.onOverlayClose();
         // TODO: killing the uiActor results in errors on the LevelScene.
         this.visible = false;
+        this.off("pointerup");
       });
     }
   }
