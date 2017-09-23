@@ -58,18 +58,45 @@ export class Player extends AbstractPlayer {
    this.actions.moveTo(evt.x, evt.y, this._speed);
   }
 
-  public sendToFoodStation(station: FoodStation) {
+  public sendToFoodStation(station: FoodStation, callback: () => void) {
     this.actions
       .moveTo(station.pos.x,
               station.pos.y,
               this._speed)
       .callMethod(() => {
-        this._isBusy = true;
-        this.setDrawing("pickUp");
-      })
+        callback();
+        if (station.isReady()) {
+          this.getFoodFromStation(station);
+        } else if (station.isBroken()) {
+          if (this.inventory.checkAndRemoveTool("hammer")) {
+            this.repairStation(station);
+          } else {
+            // TODO: What to do if tool not equipped
+          }
+        }
+      });
+  }
+
+  public getFoodFromStation(station: FoodStation): void {
+    this._isBusy = true;
+    this.setDrawing("pickUp");
+    this.actions
       .delay(station.getDuration())
-      .callMethod(()=> {
+      .callMethod(() => {
         this.addFood(station.getFood());
+        this._isBusy = false;
+        this.setDrawing("idle");
+      });
+  }
+
+  public repairStation(station: FoodStation): void {
+    // TODO: maybe different duration, depending on tool and/or station?
+    this._isBusy = true;
+    this.setDrawing("pickUp");
+    this.actions
+      .delay(station.getDuration())
+      .callMethod(() => {
+        station.fix();
         this._isBusy = false;
         this.setDrawing("idle");
       });

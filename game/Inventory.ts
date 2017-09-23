@@ -138,6 +138,23 @@ export class Inventory extends ex.Actor {
     return false;
   }
 
+  // TODO: ew ew ew ew
+  public checkAndRemoveTool(typeToCheck: string) {
+    let itemToRemove = null;
+
+    for (let inventoryItem of this.inventory) {
+      if (inventoryItem.getType() === typeToCheck) {
+        itemToRemove = inventoryItem;
+      }
+    }
+
+    if (itemToRemove) {
+      this.removeItem(itemToRemove);
+      return true;
+    }
+    return false;
+  }
+
   public removeItem(itemToRemove: InventoryItem) {
     this.inventory.splice( this.inventory.indexOf(itemToRemove), 1 );
     this.remove(itemToRemove);

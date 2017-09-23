@@ -1,6 +1,7 @@
 declare var globals: any;
 import * as ex from "excalibur";
 import {ScoreCounter, Timer} from "./Timer";
+import {FoodStation} from "./FoodStation";
 
 export class Director {
     private _currentLevelName: string;
@@ -8,6 +9,7 @@ export class Director {
     private _dynamicData: any;
     private _currentScore: number;
     private _isTimeRunning: boolean;
+    private _stations: Array<FoodStation>;
 
     private _scoreDisplay: ScoreCounter;
     private _timer: Timer;
@@ -18,7 +20,7 @@ export class Director {
         this._dynamicData = {};
     }
 
-    loadLevel(levelIdentifier:string) {
+    loadLevelData(levelIdentifier:string) {
         this._currentLevelName = levelIdentifier;
         
         let levelArray = globals.conf.MAPS.filter(map => map.NAME === this._currentLevelName);
@@ -26,7 +28,7 @@ export class Director {
         if(levelArray.length === 1) {
             this._levelData = levelArray[0];
         } else {
-            console.warn(`Level ${levelIdentifier} doesn't exist!`);
+            console.warn(`Level ${levelIdentifier} doesn't exist or there are multiple maps with the same name!`);
         }
     }
 
@@ -37,6 +39,16 @@ export class Director {
     
     startLevel() {
         this.startTime();
+
+        if(this.getLevelData().STATIONS.DECAY && this._stations) {
+            //let decayTimer = new ex.Timer(() => {
+            // TODO: ewwwwwwww
+            setTimeout(() => {
+                let randomStation = this._stations[ex.Util.randomIntInRange(0, this._stations.length - 1)];
+                randomStation.breakDown();
+            }, 10000);
+            //}, 10000, false);
+        }
     }
 
     getLevelData(key?: string): any {
@@ -116,5 +128,13 @@ export class Director {
 
     onTimeLimitReached() {
         this.endLevel();
+    }
+
+    addStation(station: FoodStation): void {
+        if (!this._stations) {
+            this._stations = [];
+        }
+
+        this._stations.push(station);
     }
 }

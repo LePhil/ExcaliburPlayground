@@ -578,11 +578,14 @@ export class Config {
       CASSA: {X: 250, Y: 500},
       DOOR:  {X: 800, Y: 595, SPAWN_TIME_S: 5},
       FOODS: ["rabbit", "elephant", "giraffe"],
-      STATION_PLACEMENTS: [
-        {X: 700, Y: 500, T: "rabbit"},
-        {X: 300, Y: 300, T: "elephant"},
-        {X: 600, Y: 300, T: "giraffe"}
-      ],
+      STATIONS: {
+        PLACEMENTS: [
+          {X: 700, Y: 500, T: "rabbit"},
+          {X: 300, Y: 300, T: "elephant"},
+          {X: 600, Y: 300, T: "giraffe"}
+        ],
+        DECAY: true
+      },
       BLOB: true,
       DURATION_S: 60,
       INTRO: ["As a proud owner of your new pet store,",

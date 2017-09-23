@@ -36,7 +36,7 @@ export class LevelScene extends ex.Scene {
     this.add(this._timer);
 
     this.director = director;
-    director.loadLevel("Map_00");
+    director.loadLevelData("Map_00");
     director.addDisplays(this._scoreCounter, this._timer);
     let setup = this.director.getLevelData();
 
@@ -49,8 +49,13 @@ export class LevelScene extends ex.Scene {
     this.add(this._door);
 
     // Food Stations
-    setup.STATION_PLACEMENTS.forEach(placement => {
-      this.add(new FoodStation(placement.X, placement.Y, placement.T));
+    setup.STATIONS.PLACEMENTS.forEach(placement => {
+      let foodStation = new FoodStation(placement.X, placement.Y, placement.T);
+      this.add(foodStation);
+
+      if (setup.STATIONS.DECAY) {
+        this.director.addStation(foodStation);
+      }
     });
 
     let inv = new Inventory();
@@ -80,7 +85,7 @@ export class LevelScene extends ex.Scene {
   onActivate () {
     // TODO: still necessary? (yes)
     if (this.director) {
-      this.director.loadLevel("Map_00");
+      this.director.loadLevelData("Map_00");
     }
 
     this._player.resetState();
