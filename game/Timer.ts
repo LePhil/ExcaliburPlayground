@@ -134,3 +134,60 @@ export class ScoreCounter extends DigitDisplay {
     this._updateDigits();
   }
 }
+
+class Time {
+  h: number;
+  m: number;
+
+  // "12:34" --> 12 hours 43 minutes
+  constructor(timeString: string) {
+    this.h = +timeString.substr(0, 2);
+    this.m = +timeString.substr(3, 2);
+  }
+
+  static convert(timeString) {
+    return new Time(timeString);
+  }
+}
+
+export class Clock extends ex.UIActor {
+  private _startTime:Time;
+  private _endTime: Time;
+  private _currentTime: Time;
+
+  private _timeFactor: number;
+  private _digits:Array<Digit>;
+
+  private _timer:ex.Timer;
+  private _callback: () => void;
+
+  constructor(start = "08:00", end = "17:00", callback: () => void) {
+    super(globals.conf.TIMER.X,
+          globals.conf.TIMER.Y);
+
+    this._startTime = Time.convert(start);
+    this._currentTime = Time.convert(start);
+    this._endTime = Time.convert(end);
+    this._callback = callback;
+    this._digits = new Array<Digit>();
+  }
+
+  onInitialize(engine: ex.Engine): void {
+    super.onInitialize(engine);
+
+    for(let i = 0; i < 4; i++ ) {
+      let xPos = this.pos.x + globals.conf.TIMER.CLOCK.OFFSET_X + i * globals.conf.DIGIT_WIDTH;
+      let yPos = this.pos.y + globals.conf.TIMER.CLOCK.OFFSET_Y;
+
+      if(i >= 2) {
+        xPos += 20; // ":" between 2nd and 3rd digit
+      }
+
+      let digit = new Digit(xPos, yPos);
+      this._digits.push( digit );
+      this.scene.add( digit );
+    }
+
+    // TODO: add ":" between 2nd and 3rd digit
+  }
+}
