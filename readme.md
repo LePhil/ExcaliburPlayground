@@ -19,6 +19,7 @@ Done!
 * optional Intro and outro text for each level (maybe only intro, outro could go into the endscene)
 * Multiple levels with offhanding via Director
 * Speech bubbles or Text in its own container outside of the screen. Text on multi-colored bg just can't be read easily.
+* map config should contain next level's name
 
 # Bugs
 * If speed is increased, actions should take less long as well (e.g. pickup)
@@ -32,7 +33,7 @@ Done!
 * Use a Director for score management, *not* a global POJO
 * Time stuff via Director as well
 * Intro/Outro in separate Scenes - no hassle with pausing/unpausing and inputs!
-* Conf/Levels/Resources as Import, not via Global!
+* Conf/Levels/Resources/Storage as Import, not via Global!
 
 
 # Won't do

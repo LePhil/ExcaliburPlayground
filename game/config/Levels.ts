@@ -10,7 +10,7 @@ enum ActionType {
 export class Levels {
     static ActionType = ActionType;
 
-    static LEVEL_TYPES = {
+    static TYPES = {
         NORMAL: "normal",   // Normal time management
         CUTSCENE: "cutscene"  // For some story
     };
@@ -18,7 +18,7 @@ export class Levels {
     static MAPS = [
         {
             NAME: "Map_00",
-            TYPE: Levels.LEVEL_TYPES.NORMAL,
+            TYPE: Levels.TYPES.NORMAL,
             IMG: "Map_00",
             W: 840,
             H: 560,
@@ -40,7 +40,7 @@ export class Levels {
             OUTRO: "Well done!"
         },{
             NAME: "intro_01",
-            TYPE: Levels.LEVEL_TYPES.CUTSCENE,
+            TYPE: Levels.TYPES.CUTSCENE,
             IMG: "Map_intro_01",
             W: 840,
             H: 560,
@@ -58,7 +58,8 @@ export class Levels {
                 {T: 16, S: "player", A: ActionType.Talk, O: {text: "I'm a Choch. You might not have heard of us."} },
                 {T: 23, S: "player", A: ActionType.Talk, O: {text: "I'm from a planet far, far away."} },
                 {T: 28, S: "player", A: ActionType.Talk, O: {text: "And today I'll tell you how I got here."} }
-            ]
+            ],
+            NEXT: "Map_00"
         }
     ];
 }

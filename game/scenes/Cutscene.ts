@@ -210,5 +210,11 @@ class CutSceneDirector extends ex.Actor {
 
             deltaT = action.getTimepoint();
         });
+
+        this.actions
+            .delay(3000)
+            .callMethod(() => {
+                // TODO: load next map (via map.NEXT, if set)
+            });
     }
 }
