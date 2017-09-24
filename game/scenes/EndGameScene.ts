@@ -4,8 +4,8 @@ import {Digit} from "../Digit";
 import {Button} from "../ui/Button";
 import {Medal} from "../ui/Medal";
 import {Director} from "../Director";
+import {Config} from "../config/Config";
 import {Resources} from "../config/Resources";
-
 
 export class EndGameScene extends ex.Scene {
 
@@ -21,8 +21,8 @@ export class EndGameScene extends ex.Scene {
   public onInitialize(engine: ex.Engine) {
     super.onInitialize(engine);
 
-    let pos_x = globals.conf.GAME.WIDTH / 2 - globals.conf.GAME.UI.BUTTON_WIDTH / 2;
-    let pos_y = globals.conf.GAME.HEIGHT / 2 - globals.conf.GAME.UI.BUTTON_HEIGHT;
+    let pos_x = Config.GAME.WIDTH / 2 - Config.GAME.UI.BUTTON_WIDTH / 2;
+    let pos_y = Config.GAME.HEIGHT / 2 - Config.GAME.UI.BUTTON_HEIGHT;
 
     let goToStartButton  = new Button(
       pos_x, pos_y,
@@ -49,14 +49,14 @@ export class EndGameScene extends ex.Scene {
 
     this._digits = new Array<Digit>();
     
-    let pos_x = globals.conf.GAME.WIDTH / 2 - globals.conf.GAME.UI.BUTTON_WIDTH / 2;
-    let pos_y = globals.conf.GAME.HEIGHT / 2 - globals.conf.GAME.UI.BUTTON_HEIGHT;
+    let pos_x = Config.GAME.WIDTH / 2 - Config.GAME.UI.BUTTON_WIDTH / 2;
+    let pos_y = Config.GAME.HEIGHT / 2 - Config.GAME.UI.BUTTON_HEIGHT;
 
     let score = this._director.getScore();
     let digitStartX = pos_x - 100;
     
     for(let i = 0; i < (""+score).length; i++) {
-      let newDigit = new Digit(digitStartX + i*globals.conf.DIGIT_WIDTH, pos_y - 100, +(""+score)[i]);
+      let newDigit = new Digit(digitStartX + i*Config.DIGIT_WIDTH, pos_y - 100, +(""+score)[i]);
       this._digits.push(newDigit);
       this.add(newDigit);
     }

@@ -1,6 +1,7 @@
 declare var globals: any;
 import * as ex from "excalibur";
 import {Food} from "./Food";
+import {Config} from "./config/Config";
 import {Resources} from "./config/Resources";
 
 class InventoryItem extends ex.Actor {
@@ -8,7 +9,7 @@ class InventoryItem extends ex.Actor {
   _type:string;
 
   constructor(x, y, type: string, inv: Inventory) {
-    super(x, y, globals.conf.INVENTORY.ITEMS.WIDTH, globals.conf.INVENTORY.ITEMS.HEIGHT);
+    super(x, y, Config.INVENTORY.ITEMS.WIDTH, Config.INVENTORY.ITEMS.HEIGHT);
 
     this._type = type;
     this._inv = inv;
@@ -21,21 +22,21 @@ class InventoryItem extends ex.Actor {
   public draw(ctx: CanvasRenderingContext2D, delta: number) {
     super.draw(ctx, delta);
 
-    if(globals.conf.GAME.DEBUG) {
+    if(Config.GAME.DEBUG) {
       ctx.fillStyle = 'rgb(200,0,0)';
-      ctx.fillRect(this.pos.x, this.pos.y, globals.conf.INVENTORY.ITEMS.WIDTH, globals.conf.INVENTORY.ITEMS.HEIGHT);
+      ctx.fillRect(this.pos.x, this.pos.y, Config.INVENTORY.ITEMS.WIDTH, Config.INVENTORY.ITEMS.HEIGHT);
     }
   }
 
   onInitialize(engine: ex.Engine): void {
-    let conf = globals.conf.INVENTORY.SPRITE[this._type];
+    let conf = Config.INVENTORY.SPRITE[this._type];
     let tex = Resources.TextureInventory;
     let sprite = new ex.Sprite(tex, conf.x, conf.y, conf.w, conf.h);
 
-    let scale_x = globals.conf.INVENTORY.ITEMS.WIDTH  / conf.w;
-    let scale_y = globals.conf.INVENTORY.ITEMS.HEIGHT / conf.h;
+    let scale_x = Config.INVENTORY.ITEMS.WIDTH  / conf.w;
+    let scale_y = Config.INVENTORY.ITEMS.HEIGHT / conf.h;
 
-    sprite.scale.setTo(globals.conf.STATIONS.CONF.SCALE, globals.conf.STATIONS.CONF.SCALE);
+    sprite.scale.setTo(Config.STATIONS.CONF.SCALE, Config.STATIONS.CONF.SCALE);
     this.addDrawing( sprite );
   }
 
@@ -48,14 +49,14 @@ class InventoryToolItem extends InventoryItem {
   // e.g. wrench to fix Station
 
   onInitialize(engine: ex.Engine): void {
-    let conf = globals.conf.ITEMS[this._type];
+    let conf = Config.ITEMS[this._type];
     let tex = Resources.ItemSpriteSheet;
     let sprite = new ex.Sprite(tex, conf.x, conf.y, conf.w, conf.h);
 
-    let scale_x = globals.conf.INVENTORY.ITEMS.WIDTH  / conf.w;
-    let scale_y = globals.conf.INVENTORY.ITEMS.HEIGHT / conf.h;
+    let scale_x = Config.INVENTORY.ITEMS.WIDTH  / conf.w;
+    let scale_y = Config.INVENTORY.ITEMS.HEIGHT / conf.h;
 
-    sprite.scale.setTo(globals.conf.STATIONS.CONF.SCALE, globals.conf.STATIONS.CONF.SCALE);
+    sprite.scale.setTo(Config.STATIONS.CONF.SCALE, Config.STATIONS.CONF.SCALE);
     this.addDrawing( sprite );
   }
 }
@@ -66,7 +67,7 @@ export class Inventory extends ex.Actor {
   private _slots:Array<InventorySlot>;
 
   constructor() {
-    let conf = globals.conf.INVENTORY;
+    let conf = Config.INVENTORY;
 
     super(conf.POS_X,
           conf.POS_Y,
@@ -81,7 +82,7 @@ export class Inventory extends ex.Actor {
   onInitialize(engine: ex.Engine): void {
     super.onInitialize(engine);
 
-    let conf = globals.conf.INVENTORY;
+    let conf = Config.INVENTORY;
 
     for(let i = 0; i < this._maxItems; i++) {
       let xPos = this.pos.x + i * (conf.ITEMS.WIDTH + conf.SPACING) - conf.ITEMS.WIDTH / 2;
@@ -97,7 +98,7 @@ export class Inventory extends ex.Actor {
       return;
     }
 
-    let c = globals.conf.INVENTORY;
+    let c = Config.INVENTORY;
     let pos_x = this.pos.x + this.inventory.length * (c.ITEMS.WIDTH + c.SPACING);
     let pos_y = this.pos.y;
 
@@ -113,7 +114,7 @@ export class Inventory extends ex.Actor {
       return;
     }
     
-    let c = globals.conf.INVENTORY;
+    let c = Config.INVENTORY;
     let pos_x = this.pos.x + this.inventory.length * (c.ITEMS.WIDTH + c.SPACING);
     let pos_y = this.pos.y;
     
@@ -162,7 +163,7 @@ export class Inventory extends ex.Actor {
 
     // Update remaining items' positions ("float" to the left)
     this.inventory.forEach((item, index) => {
-      item.pos.x = globals.conf.INVENTORY.POS_X + index * (globals.conf.INVENTORY.ITEMS.WIDTH + globals.conf.INVENTORY.SPACING);
+      item.pos.x = Config.INVENTORY.POS_X + index * (Config.INVENTORY.ITEMS.WIDTH + Config.INVENTORY.SPACING);
     });
   }
 
@@ -180,7 +181,7 @@ export class Inventory extends ex.Actor {
     this._slots = [];
     */
 
-    this._maxItems = globals.conf.INVENTORY.ITEMS.MAX;
+    this._maxItems = Config.INVENTORY.ITEMS.MAX;
   }
 
   public changeSlotNumber(count:number):void {
@@ -196,7 +197,7 @@ class InventorySlot extends ex.UIActor {
 
   onInitialize(engine: ex.Engine): void {
     super.onInitialize(engine);
-    let conf = globals.conf.INVENTORY;
+    let conf = Config.INVENTORY;
     let sprite = Resources.ImgInventorySlot.asSprite();
     sprite.scale.setTo(conf.ITEMS.WIDTH/conf.SLOT.W, conf.ITEMS.HEIGHT/conf.SLOT.H);
     this.addDrawing(sprite);

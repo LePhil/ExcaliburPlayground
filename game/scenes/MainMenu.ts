@@ -1,6 +1,7 @@
 declare var globals: any;
 import * as ex from "excalibur";
 import {Button} from "../ui/Button";
+import {Config} from "../config/Config";
 import {Resources} from "../config/Resources";
 
 export class MainMenu extends ex.Scene {
@@ -17,11 +18,11 @@ export class MainMenu extends ex.Scene {
   constructor(engine: ex.Engine) {
     super(engine);
     
-    let pos0_y = globals.conf.GAME.HEIGHT / 2 - 3 * globals.conf.GAME.UI.BUTTON_HEIGHT;
-    let pos1_x = globals.conf.GAME.WIDTH / 2 - globals.conf.GAME.UI.BUTTON_WIDTH / 2;
-    let pos1_y = globals.conf.GAME.HEIGHT / 2 - globals.conf.GAME.UI.BUTTON_HEIGHT;
-    let pos2_x = globals.conf.GAME.WIDTH / 2 - globals.conf.GAME.UI.BUTTON_WIDTH / 2;
-    let pos2_y = globals.conf.GAME.HEIGHT / 2 + globals.conf.GAME.UI.BUTTON_HEIGHT;
+    let pos0_y = Config.GAME.HEIGHT / 2 - 3 * Config.GAME.UI.BUTTON_HEIGHT;
+    let pos1_x = Config.GAME.WIDTH / 2 - Config.GAME.UI.BUTTON_WIDTH / 2;
+    let pos1_y = Config.GAME.HEIGHT / 2 - Config.GAME.UI.BUTTON_HEIGHT;
+    let pos2_x = Config.GAME.WIDTH / 2 - Config.GAME.UI.BUTTON_WIDTH / 2;
+    let pos2_y = Config.GAME.HEIGHT / 2 + Config.GAME.UI.BUTTON_HEIGHT;
 
     this._introButton  = new Button(
       pos1_x, pos0_y,
@@ -144,10 +145,10 @@ class PlayerPreview extends ex.Actor {
   constructor(x,y) {
     super(x,
           y,
-          globals.conf.PLAYER.WIDTH,
-          globals.conf.PLAYER.HEIGHT);
+          Config.PLAYER.WIDTH,
+          Config.PLAYER.HEIGHT);
 
-    this._playerTypes = globals.conf.PLAYER.TYPES;
+    this._playerTypes = Config.PLAYER.TYPES;
 
     if ( globals.storage.get("playerColor") ) {
       this._currentPlayerTypeIndex = this._playerTypes.indexOf(this._playerTypes.filter( type => type.color === globals.storage.get("playerColor") )[0]);
@@ -155,7 +156,7 @@ class PlayerPreview extends ex.Actor {
       this._currentPlayerTypeIndex = 0;
     }
 
-    let scale = globals.conf.PLAYER.SPRITE_SCALE;
+    let scale = Config.PLAYER.SPRITE_SCALE;
     let spriteSheet = new ex.SpriteSheet(Resources.TexturePlayers, 7, 8, 128, 256);
 
     this._playerTypes.forEach((type) => {

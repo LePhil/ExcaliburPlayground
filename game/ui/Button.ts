@@ -1,11 +1,13 @@
 declare var globals: any;
 import * as ex from "excalibur";
+import {Config} from "../config/Config";
 
 export class Button extends ex.UIActor {
+    // TODO: usually it's the same sprite... so make it optional
     constructor(x: number,
                 y: number,
-                w = globals.conf.GAME.UI.BUTTON_WIDTH,
-                h = globals.conf.GAME.UI.BUTTON_HEIGHT,
+                w = Config.GAME.UI.BUTTON_WIDTH,
+                h = Config.GAME.UI.BUTTON_HEIGHT,
                 public text: string,
                 sprite: ex.Sprite,
                 public action: () => void) {

@@ -4,12 +4,13 @@ import {Customer} from "./Customer";
 import {Food} from "./Food";
 import {Player} from "./Player";
 import {Resources} from "./config/Resources";
+import {Config} from "./config/Config";
 
 export class Cassa extends ex.Actor {
     public queue:Customer[];
 
     constructor(x, y) {
-        super(x, y, globals.conf.CASSA.W, globals.conf.CASSA.H);
+        super(x, y, Config.CASSA.W, Config.CASSA.H);
 
         this.on("pointerdown", (event) => {
             this.handleClick(globals.player);
@@ -30,7 +31,7 @@ export class Cassa extends ex.Actor {
         this.queue.forEach((cust, index) => {
             setTimeout(() => {
                 cust.moveInQueue(new ex.Vector(
-                    this.pos.x + (index+1) * (globals.conf.CUSTOMER.WIDTH + 2),
+                    this.pos.x + (index+1) * (Config.CUSTOMER.WIDTH + 2),
                     this.pos.y - this.getHeight() / 2
                 ));
             }, index * 200);
@@ -80,12 +81,12 @@ export class Cassa extends ex.Actor {
     }
 
     public isQueueFull():boolean {
-        return this.queue.length >= globals.conf.CUSTOMER.QUEUE_LENGTH;
+        return this.queue.length >= Config.CUSTOMER.QUEUE_LENGTH;
     }
 
     public getLastPositionInQueue():ex.Vector {
         return new ex.Vector(
-            this.pos.x + (this.queue.length + 1) * (globals.conf.CUSTOMER.WIDTH + 2),
+            this.pos.x + (this.queue.length + 1) * (Config.CUSTOMER.WIDTH + 2),
             this.pos.y - this.getHeight() / 2
         );
     }

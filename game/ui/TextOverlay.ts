@@ -1,13 +1,14 @@
 declare var globals: any;
 import * as ex from "excalibur";
+import {Config} from "../config/Config";
 
 export class TextOverlay extends ex.UIActor {
     constructor(texts: Array<string>) {
 
-      let w = globals.conf.GAME.UI.OVERLAY.W;
-      let h = globals.conf.GAME.UI.OVERLAY.H;
-      let x = (globals.conf.GAME.WIDTH - w) / 2;
-      let y = (globals.conf.GAME.HEIGHT - h) / 2;
+      let w = Config.GAME.UI.OVERLAY.W;
+      let h = Config.GAME.UI.OVERLAY.H;
+      let x = (Config.GAME.WIDTH - w) / 2;
+      let y = (Config.GAME.HEIGHT - h) / 2;
 
       super(x, y, w, h);
 

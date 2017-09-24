@@ -1,5 +1,6 @@
 declare var globals: any;
 import * as ex from "excalibur";
+import {Config} from "../config/Config";
 import {AbstractPlayer} from "../AbstractPlayer";
 import {LevelMap} from "../LevelMap";
 import {Levels} from "../config/Levels";
@@ -119,7 +120,7 @@ class Character extends AbstractPlayer {
     }
 
     getPlayerColor(): string {
-        let playerColor = globals.conf.PLAYER.INITIAL_TYPE; //start with green guy if no color was chosen
+        let playerColor = Config.PLAYER.INITIAL_TYPE; //start with green guy if no color was chosen
         
         if ( globals.storage.get("playerColor") ) {
             playerColor = globals.storage.get("playerColor");
@@ -184,7 +185,7 @@ class CutSceneDirector extends ex.Actor {
     private _actions:Array<Action>;
 
     constructor(locations, characters, actions) {
-        super(0,0, globals.conf.GAME.WIDTH, globals.conf.GAME.HEIGHT);
+        super(0,0, Config.GAME.HEIGHT);
 
         this._locations = locations;
         this._characters = characters;

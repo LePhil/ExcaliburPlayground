@@ -1,6 +1,7 @@
 declare var globals: any;
 import * as ex from "excalibur";
 import {Digit} from "./Digit";
+import {Config} from "./config/Config";
 import {Resources} from "./config/Resources";
 
 class DigitDisplay extends ex.UIActor {
@@ -20,8 +21,8 @@ class DigitDisplay extends ex.UIActor {
     super.onInitialize(engine);
 
     for(let i = 0; i < this._nrOfDigits; i++ ) {
-      let xPos = this.pos.x + globals.conf.TIMER.CLOCK.OFFSET_X + i * globals.conf.DIGIT_WIDTH;
-      let yPos = this.pos.y + globals.conf.TIMER.CLOCK.OFFSET_Y;
+      let xPos = this.pos.x + Config.TIMER.CLOCK.OFFSET_X + i * Config.DIGIT_WIDTH;
+      let yPos = this.pos.y + Config.TIMER.CLOCK.OFFSET_Y;
       let digit = new Digit(xPos, yPos);
       this._digits.push( digit );
       this.scene.add( digit );
@@ -50,9 +51,9 @@ export class Timer extends DigitDisplay {
   private _callback: () => void;
 
   constructor(time = 999) {
-    super(globals.conf.TIMER.X,
-          globals.conf.TIMER.Y,
-          globals.conf.TIMER.NROFDIGITS);
+    super(Config.TIMER.X,
+          Config.TIMER.Y,
+          Config.TIMER.NROFDIGITS);
 
     if (time) {
       this._targetTime = time;
@@ -62,7 +63,7 @@ export class Timer extends DigitDisplay {
   onInitialize(engine: ex.Engine): void {
     super.onInitialize(engine);
 
-    let conf = globals.conf.TIMER;
+    let conf = Config.TIMER;
     let sprite = Resources.ImgClock.asSprite();
     sprite.scale.setTo(conf.CLOCK.W / 70, conf.CLOCK.H / 70);
     this.addDrawing(sprite);
@@ -105,15 +106,15 @@ export class Timer extends DigitDisplay {
 export class ScoreCounter extends DigitDisplay {
 
   constructor() {
-    super(globals.conf.SCORECOUNTER.X,
-          globals.conf.SCORECOUNTER.Y,
-          globals.conf.SCORECOUNTER.NROFDIGITS);
+    super(Config.SCORECOUNTER.X,
+          Config.SCORECOUNTER.Y,
+          Config.SCORECOUNTER.NROFDIGITS);
   }
 
   onInitialize(engine: ex.Engine): void {
     super.onInitialize(engine);
 
-    let conf = globals.conf.HUD.hud_coins;
+    let conf = Config.HUD.hud_coins;
     let sprite = new ex.Sprite(Resources.HUDSpriteSheet, conf.x, conf.y, conf.w, conf.h);
     this.addDrawing(sprite);
 
@@ -163,8 +164,8 @@ export class Clock extends ex.UIActor {
   private _callback: () => void;
 
   constructor(start = "08:00", end = "17:00", callback: () => void) {
-    super(globals.conf.TIMER.X,
-          globals.conf.TIMER.Y);
+    super(Config.TIMER.X,
+          Config.TIMER.Y);
 
     this._startTime = Time.convert(start);
     this._currentTime = Time.convert(start);
@@ -177,8 +178,8 @@ export class Clock extends ex.UIActor {
     super.onInitialize(engine);
 
     for(let i = 0; i < 4; i++ ) {
-      let xPos = this.pos.x + globals.conf.TIMER.CLOCK.OFFSET_X + i * globals.conf.DIGIT_WIDTH;
-      let yPos = this.pos.y + globals.conf.TIMER.CLOCK.OFFSET_Y;
+      let xPos = this.pos.x + Config.TIMER.CLOCK.OFFSET_X + i * Config.DIGIT_WIDTH;
+      let yPos = this.pos.y + Config.TIMER.CLOCK.OFFSET_Y;
 
       if(i >= 2) {
         xPos += 20; // ":" between 2nd and 3rd digit

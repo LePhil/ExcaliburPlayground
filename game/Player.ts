@@ -1,5 +1,6 @@
 declare var globals: any;
 import * as ex from "excalibur";
+import {Config} from "./config/Config";
 import {Food} from "./Food";
 import {FoodStation} from "./FoodStation";
 import {Inventory} from "./Inventory";
@@ -13,10 +14,10 @@ export class Player extends AbstractPlayer {
   private _isBusy:boolean;
 
   constructor(inventory: Inventory) {
-    super(globals.conf.PLAYER.STARTX,
-          globals.conf.PLAYER.STARTY,
-          globals.conf.PLAYER.WIDTH,
-          globals.conf.PLAYER.HEIGHT);
+    super(Config.PLAYER.STARTX,
+          Config.PLAYER.STARTY,
+          Config.PLAYER.WIDTH,
+          Config.PLAYER.HEIGHT);
 
     this.inventory = inventory;
     this.collisionType = ex.CollisionType.Active;
@@ -24,7 +25,7 @@ export class Player extends AbstractPlayer {
   }
 
   getPlayerColor ():string {
-    let playerColor = globals.conf.PLAYER.INITIAL_TYPE; //start with green guy if no color was chosen
+    let playerColor = Config.PLAYER.INITIAL_TYPE; //start with green guy if no color was chosen
 
     if ( globals.storage.get("playerColor") ) {
       playerColor = globals.storage.get("playerColor");
@@ -154,7 +155,6 @@ export class Player extends AbstractPlayer {
   public resetState():void {
     this.inventory.resetState();
     this.actions.clearActions();
-    this.pos.x = globals.conf.PLAYER.STARTX;
-    this.pos.y = globals.conf.PLAYER.STARTY;
+    this.pos.x = Config.PLAYER.STARTY;
   }
 }

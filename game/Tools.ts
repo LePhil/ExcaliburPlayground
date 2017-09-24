@@ -1,5 +1,6 @@
 declare var globals: any;
 import * as ex from "excalibur";
+import {Config} from "./config/Config";
 import {Resources} from "./config/Resources";
 import {Player} from "./Player";
 
@@ -9,7 +10,7 @@ export class Tool extends ex.Actor{
     private _isActive: boolean;
 
     constructor(x, y, type:string) {
-        let conf = globals.conf.ITEMS.CONF;
+        let conf = Config.ITEMS.CONF;
 
         super(x, y, conf.W, conf.H);
         
@@ -23,11 +24,11 @@ export class Tool extends ex.Actor{
     }
     
     onInitialize(engine: ex.Engine): void {
-        let conf = globals.conf.ITEMS[this._type];
+        let conf = Config.ITEMS[this._type];
         let tex = Resources.ItemSpriteSheet;
         let sprite = new ex.Sprite(tex, conf.x, conf.y, conf.w, conf.h);
 
-        let scale = conf.w > conf.h ? globals.conf.ITEMS.CONF.W / conf.w : globals.conf.ITEMS.CONF.H / conf.h;
+        let scale = conf.w > conf.h ? Config.ITEMS.CONF.W / conf.w : Config.ITEMS.CONF.H / conf.h;
         sprite.scale.setTo(scale, scale);
 
         let darkSprite = sprite.clone();

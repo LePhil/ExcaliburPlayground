@@ -3,8 +3,8 @@ import * as ex from "excalibur";
 import {Button} from "../ui/Button";
 import {TextOverlay} from "../ui/TextOverlay";
 import {Director} from "../Director";
+import {Config} from "../config/Config";
 import {Resources} from "../config/Resources";
-
 
 export class PreGameScene extends ex.Scene {
 
@@ -24,8 +24,8 @@ export class PreGameScene extends ex.Scene {
     let textOverlay = new TextOverlay(this._director.getLevelData("INTRO"));
     this.add(textOverlay);
     
-    let pos_x = globals.conf.GAME.WIDTH / 2 - globals.conf.GAME.UI.BUTTON_WIDTH / 2;
-    let pos_y = globals.conf.GAME.HEIGHT / 2 - globals.conf.GAME.UI.BUTTON_HEIGHT;
+    let pos_x = Config.GAME.WIDTH / 2 - Config.GAME.UI.BUTTON_WIDTH / 2;
+    let pos_y = Config.GAME.HEIGHT / 2 - Config.GAME.UI.BUTTON_HEIGHT;
 
     let startGameButton = new Button(
       pos_x, pos_y,

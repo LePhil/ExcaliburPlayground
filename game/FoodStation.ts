@@ -3,6 +3,7 @@ import * as ex from "excalibur";
 import {Player} from "./Player";
 import {Food} from "./Food";
 import {Resources} from "./config/Resources";
+import {Config} from "./config/Config";
 
 enum StationState {
   Normal = "normal",
@@ -16,8 +17,8 @@ export class FoodStation extends ex.Actor {
   private _state: StationState;
 
   constructor(x: number, y: number, type: string) {
-    let conf = globals.conf.STATIONS[type];
-    let scale = globals.conf.STATIONS.CONF.SCALE;
+    let conf = Config.STATIONS[type];
+    let scale = Config.STATIONS.CONF.SCALE;
     let w = conf.w * scale;
     let h = conf.h * scale;
 
@@ -39,10 +40,10 @@ export class FoodStation extends ex.Actor {
   }
 
   onInitialize(engine: ex.Engine): void {
-    let conf = globals.conf.STATIONS[this._type];
+    let conf = Config.STATIONS[this._type];
     let tex = Resources.TextureStations;
     let sprite = new ex.Sprite(tex, conf.x, conf.y, conf.w, conf.h);
-    sprite.scale.setTo(globals.conf.STATIONS.CONF.SCALE, globals.conf.STATIONS.CONF.SCALE);
+    sprite.scale.setTo(Config.STATIONS.CONF.SCALE, Config.STATIONS.CONF.SCALE);
 
     let brokenSprite = sprite.clone();
     brokenSprite.darken(.5);

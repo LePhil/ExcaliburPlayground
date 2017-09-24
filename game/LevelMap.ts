@@ -1,17 +1,16 @@
 declare var globals: any;
 import * as ex from "excalibur";
 import {Resources} from "./config/Resources";
+import {Config} from "./config/Config";
 
 export class LevelMap extends ex.Actor {
     private _levelConf: any;
 
     constructor(levelConf) {
-        let c = globals.conf;
-
-        super(c.GAME.WIDTH / 2,
-            c.GAME.HEIGHT / 2,
-            levelConf.W,
-            levelConf.H);
+        super(Config.GAME.WIDTH / 2,
+              Config.GAME.HEIGHT / 2,
+              levelConf.W,
+              levelConf.H);
         
         this._levelConf = levelConf;
     }

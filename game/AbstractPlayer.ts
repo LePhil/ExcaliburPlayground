@@ -1,5 +1,6 @@
 declare var globals: any;
 import * as ex from "excalibur";
+import {Config} from "./config/Config";
 import {Resources} from "./config/Resources";
 
 export abstract class AbstractPlayer extends ex.Actor {
@@ -8,11 +9,11 @@ export abstract class AbstractPlayer extends ex.Actor {
   private _lastPosY: number;
   private _characterColor: string;
 
-  constructor(x = globals.conf.PLAYER.STARTX,
-              y = globals.conf.PLAYER.STARTY,
-              w = globals.conf.PLAYER.WIDTH,
-              h = globals.conf.PLAYER.HEIGHT,
-              s = globals.conf.PLAYER.SPEED) {
+  constructor(x = Config.PLAYER.STARTX,
+              y = Config.PLAYER.STARTY,
+              w = Config.PLAYER.WIDTH,
+              h = Config.PLAYER.HEIGHT,
+              s = Config.PLAYER.SPEED) {
     super(x, y, w, h);
 
     this._speed = s;
@@ -25,10 +26,10 @@ export abstract class AbstractPlayer extends ex.Actor {
     let spriteSheet = new ex.SpriteSheet(Resources.TexturePlayers, 7, 8, 128, 256);
 
     let playerColor = this.getPlayerColor();
-    let colorIndex = globals.conf.PLAYER.TYPES.indexOf(globals.conf.PLAYER.TYPES.filter( type => type.color === playerColor )[0]);
-    let scale = globals.conf.PLAYER.SPRITE_SCALE;
-    let speed = globals.conf.PLAYER.SPRITE_ANIM_SPEED;
-    let coords = globals.conf.PLAYER.TYPES[colorIndex].coords;
+    let colorIndex = Config.PLAYER.TYPES.indexOf(Config.PLAYER.TYPES.filter( type => type.color === playerColor )[0]);
+    let scale = Config.PLAYER.SPRITE_SCALE;
+    let speed = Config.PLAYER.SPRITE_ANIM_SPEED;
+    let coords = Config.PLAYER.TYPES[colorIndex].coords;
 
     let walkRightAnim = spriteSheet.getAnimationByIndices(engine, coords.walkR, speed);
     walkRightAnim.loop = true;

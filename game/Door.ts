@@ -4,6 +4,7 @@ import {Customer} from "./Customer";
 import {Cassa} from "./Cassa";
 import {Director} from "./Director";
 import {Resources} from "./config/Resources";
+import {Config} from "./config/Config";
 
 export class Door extends ex.Actor {
     private _open:boolean;
@@ -19,8 +20,8 @@ export class Door extends ex.Actor {
 
     constructor(x, y, cassa:Cassa, spawnTime: number, director: Director) {
         super(x, y,
-            globals.conf.DOOR.W,
-            globals.conf.DOOR.H);
+            Config.DOOR.W,
+            Config.DOOR.H);
 
         this._cassa = cassa;
         this._open = false;
@@ -31,7 +32,7 @@ export class Door extends ex.Actor {
     }
 
     onInitialize(engine: ex.Engine): void {
-        let conf = globals.conf.TILES;
+        let conf = Config.TILES;
         let tex  = Resources.TextureTiles;
         let s = conf.door_openTop.w;
 
