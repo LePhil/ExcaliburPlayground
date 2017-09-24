@@ -2,6 +2,7 @@ declare var globals: any;
 import * as ex from "excalibur";
 import {ScoreCounter, Timer} from "./Timer";
 import {FoodStation} from "./FoodStation";
+import {Levels} from "./config/Levels";
 
 export class Director {
     private _currentLevelName: string;
@@ -23,7 +24,7 @@ export class Director {
     loadLevelData(levelIdentifier:string) {
         this._currentLevelName = levelIdentifier;
         
-        let levelArray = globals.conf.MAPS.filter(map => map.NAME === this._currentLevelName);
+        let levelArray = Levels.MAPS.filter(map => map.NAME === this._currentLevelName);
 
         if(levelArray.length === 1) {
             this._levelData = levelArray[0];

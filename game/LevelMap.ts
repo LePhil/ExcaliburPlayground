@@ -9,8 +9,8 @@ export class LevelMap extends ex.Actor {
 
         super(c.GAME.WIDTH / 2,
             c.GAME.HEIGHT / 2,
-            c.MAPS.W,
-            c.MAPS.H);
+            levelConf.W,
+            levelConf.H);
         
         this._levelConf = levelConf;
     }

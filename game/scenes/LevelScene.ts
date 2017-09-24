@@ -1,5 +1,6 @@
 declare var globals: any;
 import * as ex from "excalibur";
+import {Levels} from "../config/Levels";
 import {Player} from "../Player";
 import {Inventory} from "../Inventory";
 import {Timer, ScoreCounter} from "../Timer";
@@ -93,7 +94,7 @@ export class LevelScene extends ex.Scene {
   }
 
   private _gatherLevelOptions():any {
-    let conf = globals.conf.MAPS[0];
+    let conf = Levels.MAPS[0];
     return {setup: conf};
   }
 

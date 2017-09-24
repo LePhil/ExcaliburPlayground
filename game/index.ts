@@ -1,7 +1,8 @@
 declare var globals: any;
 import * as ex from "excalibur";
-import {Config} from "./Config";
-import {Resources} from "./Resources";
+import {Config} from "./config/Config";
+import {Levels} from "./config/Levels";
+import {Resources} from "./config/Resources";
 
 import {Storage} from "./Storage";
 import {MainMenu} from "./scenes/MainMenu";

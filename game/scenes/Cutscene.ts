@@ -2,6 +2,7 @@ declare var globals: any;
 import * as ex from "excalibur";
 import {AbstractPlayer} from "../AbstractPlayer";
 import {LevelMap} from "../LevelMap";
+import {Levels} from "../config/Levels";
 
 export class Cutscene extends ex.Scene {
     public levelOptions:object;
@@ -64,7 +65,7 @@ export class Cutscene extends ex.Scene {
     }
 
     private _gatherLevelOptions():any {
-        return globals.conf.MAPS[1];
+        return Levels.MAPS[1];
     }
 }
 
