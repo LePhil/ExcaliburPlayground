@@ -1,10 +1,8 @@
 declare var globals: any;
 import * as ex from "excalibur";
-import {Director} from "../Director";
 
 export class TextOverlay extends ex.UIActor {
-    constructor(texts: Array<string>,
-                director: Director) {
+    constructor(texts: Array<string>) {
 
       let w = globals.conf.GAME.UI.OVERLAY.W;
       let h = globals.conf.GAME.UI.OVERLAY.H;
@@ -24,15 +22,6 @@ export class TextOverlay extends ex.UIActor {
           label.color = textColor;
           label.textAlign = ex.TextAlign.Center;
           this.add(label);
-      });
-
-      // TODO: maybe add a button to continue
-      
-      this.on("pointerup", () => {
-        director.onOverlayClose();
-        // TODO: killing the uiActor results in errors on the LevelScene.
-        this.visible = false;
-        this.off("pointerup");
       });
     }
   }

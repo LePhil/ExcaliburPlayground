@@ -12,7 +12,6 @@ import {Door} from "../Door";
 import {Cassa} from "../Cassa";
 import {Tool, ConsumableTool, PickuppableTool} from "../Tools";
 import {Director} from "../Director";
-import {TextOverlay} from "../ui/TextOverlay";
 
 export class LevelScene extends ex.Scene {
   // crude object to represent some major properties of the level
@@ -83,20 +82,9 @@ export class LevelScene extends ex.Scene {
   }
   
   onActivate () {
-    // TODO: still necessary? (yes)
-    if (this.director) {
-      this.director.loadLevelData("Map_00");
-    }
-
+    this.director.loadLevelData("Map_00");
     this._player.resetState();
-
-    let intro = this.director.getLevelData("INTRO");
-    
-    if (intro) {
-      this.add(new TextOverlay(intro, this.director));
-    } else {
-      this.director.startLevel();
-    }
+    this.director.startLevel();
   }
   
   onDeactivate () {

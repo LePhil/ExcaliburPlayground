@@ -6,6 +6,7 @@ import {Resources} from "./Resources";
 import {Storage} from "./Storage";
 import {MainMenu} from "./scenes/MainMenu";
 import {LevelScene} from "./scenes/LevelScene";
+import {PreGameScene} from "./scenes/PreGameScene";
 import {EndGameScene} from "./scenes/EndGameScene";
 import {Cutscene} from "./scenes/Cutscene";
 import {Director} from "./Director";
@@ -18,6 +19,7 @@ globals.resources = Resources;
 globals.storage = new Storage();
 
 game.add("menu", new MainMenu(game));
+game.add("pre", new PreGameScene(game, director));
 game.add("end", new EndGameScene(game, director));
 
 game.add("game", new LevelScene(game, director));
@@ -25,6 +27,10 @@ game.add("cutScene", new Cutscene(game));
 
 globals.startMenu = () => {
   game.goToScene("menu");
+};
+
+globals.preScreen = () => {
+  game.goToScene("pre");
 };
 
 globals.endScreen = () => {
