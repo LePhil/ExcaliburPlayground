@@ -39,7 +39,7 @@ export class PreGameScene extends ex.Scene {
   }
 
   private _startGame():any {
-    this._director.onOverlayClose();
+    globals.startGame();
   }
 
   onActivate () {}

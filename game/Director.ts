@@ -122,10 +122,6 @@ export class Director {
         globals.endScreen();
     }
 
-    onOverlayClose() {
-        this.startLevel();
-    }
-
     onTimeLimitReached() {
         this.endLevel();
     }
