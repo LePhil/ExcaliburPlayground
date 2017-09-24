@@ -8,6 +8,7 @@ import {Customer} from "./Customer";
 import {Cassa} from "./Cassa";
 import {AbstractPlayer} from "./AbstractPlayer";
 import {Tool} from "./Tools";
+import {Storage} from "./Storage";
 
 export class Player extends AbstractPlayer {
   inventory: Inventory;
@@ -27,8 +28,8 @@ export class Player extends AbstractPlayer {
   getPlayerColor ():string {
     let playerColor = Config.PLAYER.INITIAL_TYPE; //start with green guy if no color was chosen
 
-    if ( globals.storage.get("playerColor") ) {
-      playerColor = globals.storage.get("playerColor");
+    if ( Storage.get("playerColor") ) {
+      playerColor = Storage.get("playerColor");
     }
     
     return playerColor;

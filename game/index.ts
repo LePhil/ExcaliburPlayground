@@ -15,7 +15,6 @@ import {Director} from "./Director";
 let game = new ex.Engine({ displayMode: ex.DisplayMode.FullScreen });
 let director = new Director();
 globals.game = game;
-globals.storage = new Storage();
 
 game.add("menu", new MainMenu(game));
 game.add("pre", new PreGameScene(game, director));

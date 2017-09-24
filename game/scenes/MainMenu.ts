@@ -3,6 +3,7 @@ import * as ex from "excalibur";
 import {Button} from "../ui/Button";
 import {Config} from "../config/Config";
 import {Resources} from "../config/Resources";
+import {Storage} from "../Storage";
 
 export class MainMenu extends ex.Scene {
 
@@ -150,8 +151,8 @@ class PlayerPreview extends ex.Actor {
 
     this._playerTypes = Config.PLAYER.TYPES;
 
-    if ( globals.storage.get("playerColor") ) {
-      this._currentPlayerTypeIndex = this._playerTypes.indexOf(this._playerTypes.filter( type => type.color === globals.storage.get("playerColor") )[0]);
+    if ( Storage.get("playerColor") ) {
+      this._currentPlayerTypeIndex = this._playerTypes.indexOf(this._playerTypes.filter( type => type.color === Storage.get("playerColor") )[0]);
     } else {
       this._currentPlayerTypeIndex = 0;
     }
@@ -179,6 +180,6 @@ class PlayerPreview extends ex.Actor {
 
     let newPlayerColor = this._playerTypes[this._currentPlayerTypeIndex].color;
     this.setDrawing(newPlayerColor);
-    globals.storage.set("playerColor", newPlayerColor);
+    Storage.set("playerColor", newPlayerColor);
   }
 }

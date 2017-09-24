@@ -3,6 +3,7 @@ import * as ex from "excalibur";
 import {Config} from "../config/Config";
 import {AbstractPlayer} from "../AbstractPlayer";
 import {LevelMap} from "../LevelMap";
+import {Storage} from "../Storage";
 import {Levels} from "../config/Levels";
 
 export class Cutscene extends ex.Scene {
@@ -122,8 +123,8 @@ class Character extends AbstractPlayer {
     getPlayerColor(): string {
         let playerColor = Config.PLAYER.INITIAL_TYPE; //start with green guy if no color was chosen
         
-        if ( globals.storage.get("playerColor") ) {
-            playerColor = globals.storage.get("playerColor");
+        if ( Storage.get("playerColor") ) {
+            playerColor = Storage.get("playerColor");
         }
         
         return playerColor;

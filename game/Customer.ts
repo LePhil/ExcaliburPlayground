@@ -5,6 +5,7 @@ import {AbstractPlayer} from "./AbstractPlayer";
 import {Cassa} from "./Cassa";
 import {MoneyEffect} from "./Effects";
 import {Director} from "./Director";
+import {Storage} from "./Storage";
 import {Config} from "./config/Config";
 import {Resources} from "./config/Resources";
 
@@ -138,7 +139,7 @@ export class Customer extends AbstractPlayer {
 
   getPlayerColor(): string {
     // Disallow chosen player color for customers
-    let availablePlayers = Config.PLAYER.TYPES.filter(type => type.color !== globals.storage.get("playerColor"));
+    let availablePlayers = Config.PLAYER.TYPES.filter(type => type.color !== Storage.get("playerColor"));
     let randomIndex = Math.floor(Math.random() * availablePlayers.length);
 
     return availablePlayers[randomIndex].color;
