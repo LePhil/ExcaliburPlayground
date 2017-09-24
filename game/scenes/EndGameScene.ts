@@ -1,9 +1,9 @@
 declare var globals: any;
 import * as ex from "excalibur";
-import {Digit} from "./Digit";
-import {Button} from "./ui/Button";
-import {Medal} from "./ui/Medal";
-import {Director} from "./Director";
+import {Digit} from "../Digit";
+import {Button} from "../ui/Button";
+import {Medal} from "../ui/Medal";
+import {Director} from "../Director";
 
 
 export class EndGameScene extends ex.Scene {

@@ -1,6 +1,6 @@
 declare var globals: any;
 import * as ex from "excalibur";
-import {Button} from "./ui/Button";
+import {Button} from "../ui/Button";
 
 export class MainMenu extends ex.Scene {
 

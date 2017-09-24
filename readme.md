@@ -18,15 +18,20 @@ Done!
 * Hover-States on Buttons
 * optional Intro and outro text for each level (maybe only intro, outro could go into the endscene)
 * Multiple levels with offhanding via Director
+* Intro/Outro in separate Scenes - no hassle with pausing/unpausing and inputs!
 
 # Bugs
 * If speed is increased, actions should take less long as well (e.g. pickup)
-* If inventory is full, clicks on station should not do anything
 * Multiple clicks on Cassa should not stack up/take no time if no customer is there
 * Level Handling... levelScene should only be created when a game is started.
+* Picking up foods is broken right now
 
 # Recently done
 * Re-done buttons with Labels
 * Don't keep the score in the scoreCounter...
 * Use a Director for score management, *not* a global POJO
 * Time stuff via Director as well
+
+
+# Won't do
+* -If inventory is full, clicks on station should not do anything- No. We'd have to check for Tools in Inventory (in case the station is broken) and if there are actions in the queue to remove some items - let the user make mistakes!

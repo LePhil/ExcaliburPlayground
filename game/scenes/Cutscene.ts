@@ -1,7 +1,7 @@
 declare var globals: any;
 import * as ex from "excalibur";
-import {AbstractPlayer} from "./AbstractPlayer";
-import {LevelMap} from "./LevelMap";
+import {AbstractPlayer} from "../AbstractPlayer";
+import {LevelMap} from "../LevelMap";
 
 export class Cutscene extends ex.Scene {
     public levelOptions:object;

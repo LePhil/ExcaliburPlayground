@@ -1,18 +1,18 @@
 declare var globals: any;
 import * as ex from "excalibur";
-import {Player} from "./Player";
-import {Inventory} from "./Inventory";
-import {Timer, ScoreCounter} from "./Timer";
-import {Blob} from "./Blob";
-import {FoodStation} from "./FoodStation";
-import {Food} from "./Food";
-import {Customer} from "./Customer";
-import {LevelMap} from "./LevelMap";
-import {Door} from "./Door";
-import {Cassa} from "./Cassa";
-import {Tool, ConsumableTool, PickuppableTool} from "./Tools";
-import {Director} from "./Director";
-import {TextOverlay} from "./ui/TextOverlay";
+import {Player} from "../Player";
+import {Inventory} from "../Inventory";
+import {Timer, ScoreCounter} from "../Timer";
+import {Blob} from "../Blob";
+import {FoodStation} from "../FoodStation";
+import {Food} from "../Food";
+import {Customer} from "../Customer";
+import {LevelMap} from "../LevelMap";
+import {Door} from "../Door";
+import {Cassa} from "../Cassa";
+import {Tool, ConsumableTool, PickuppableTool} from "../Tools";
+import {Director} from "../Director";
+import {TextOverlay} from "../ui/TextOverlay";
 
 export class LevelScene extends ex.Scene {
   // crude object to represent some major properties of the level

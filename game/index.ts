@@ -4,10 +4,10 @@ import {Config} from "./Config";
 import {Resources} from "./Resources";
 
 import {Storage} from "./Storage";
-import {MainMenu} from "./MainMenu";
-import {LevelScene} from "./LevelScene";
-import {EndGameScene} from "./EndGameScene";
-import {Cutscene} from "./Cutscene";
+import {MainMenu} from "./scenes/MainMenu";
+import {LevelScene} from "./scenes/LevelScene";
+import {EndGameScene} from "./scenes/EndGameScene";
+import {Cutscene} from "./scenes/Cutscene";
 import {Director} from "./Director";
 
 let game = new ex.Engine({ displayMode: ex.DisplayMode.FullScreen });
