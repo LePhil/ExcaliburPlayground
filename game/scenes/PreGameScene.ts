@@ -3,6 +3,7 @@ import * as ex from "excalibur";
 import {Button} from "../ui/Button";
 import {TextOverlay} from "../ui/TextOverlay";
 import {Director} from "../Director";
+import {Resources} from "../config/Resources";
 
 
 export class PreGameScene extends ex.Scene {
@@ -30,7 +31,7 @@ export class PreGameScene extends ex.Scene {
       pos_x, pos_y,
       190, 49,
       "Start",
-      globals.resources.ImgButton.asSprite(),
+      Resources.ImgButton.asSprite(),
       () => {this._startGame()}
     );
 

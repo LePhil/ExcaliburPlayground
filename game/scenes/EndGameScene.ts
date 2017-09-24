@@ -4,6 +4,7 @@ import {Digit} from "../Digit";
 import {Button} from "../ui/Button";
 import {Medal} from "../ui/Medal";
 import {Director} from "../Director";
+import {Resources} from "../config/Resources";
 
 
 export class EndGameScene extends ex.Scene {
@@ -27,7 +28,7 @@ export class EndGameScene extends ex.Scene {
       pos_x, pos_y,
       190, 49,
       "Zurück",
-      globals.resources.ImgButton.asSprite(),
+      Resources.ImgButton.asSprite(),
       () => {this._goToStart()}
     );
 

@@ -1,6 +1,6 @@
 declare var globals: any;
 import * as ex from "excalibur";
-
+import {Resources} from "./config/Resources";
 import {Player} from "./Player";
 
 // maybe in Inventory as an InventoryItem? --> can be picked up and gets consumed by station on fixing..?
@@ -24,7 +24,7 @@ export class Tool extends ex.Actor{
     
     onInitialize(engine: ex.Engine): void {
         let conf = globals.conf.ITEMS[this._type];
-        let tex = globals.resources.ItemSpriteSheet;
+        let tex = Resources.ItemSpriteSheet;
         let sprite = new ex.Sprite(tex, conf.x, conf.y, conf.w, conf.h);
 
         let scale = conf.w > conf.h ? globals.conf.ITEMS.CONF.W / conf.w : globals.conf.ITEMS.CONF.H / conf.h;

@@ -16,7 +16,6 @@ let game = new ex.Engine({ displayMode: ex.DisplayMode.FullScreen });
 let director = new Director();
 globals.game = game;
 globals.conf = Config;
-globals.resources = Resources;
 globals.storage = new Storage();
 
 game.add("menu", new MainMenu(game));
@@ -49,10 +48,9 @@ globals.startCutscene = () => {
 
 let loader = new ex.Loader();
 
-for (let r in globals.resources) {
-  loader.addResource(globals.resources[r]);
+for (let r in Resources) {
+  loader.addResource(Resources[r]);
 }
-
 
 game.start(loader).then(function(){
   globals.startMenu();

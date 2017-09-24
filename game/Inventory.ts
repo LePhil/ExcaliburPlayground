@@ -1,6 +1,7 @@
 declare var globals: any;
 import * as ex from "excalibur";
 import {Food} from "./Food";
+import {Resources} from "./config/Resources";
 
 class InventoryItem extends ex.Actor {
   _inv:Inventory;
@@ -28,7 +29,7 @@ class InventoryItem extends ex.Actor {
 
   onInitialize(engine: ex.Engine): void {
     let conf = globals.conf.INVENTORY.SPRITE[this._type];
-    let tex = globals.resources.TextureInventory;
+    let tex = Resources.TextureInventory;
     let sprite = new ex.Sprite(tex, conf.x, conf.y, conf.w, conf.h);
 
     let scale_x = globals.conf.INVENTORY.ITEMS.WIDTH  / conf.w;
@@ -48,7 +49,7 @@ class InventoryToolItem extends InventoryItem {
 
   onInitialize(engine: ex.Engine): void {
     let conf = globals.conf.ITEMS[this._type];
-    let tex = globals.resources.ItemSpriteSheet;
+    let tex = Resources.ItemSpriteSheet;
     let sprite = new ex.Sprite(tex, conf.x, conf.y, conf.w, conf.h);
 
     let scale_x = globals.conf.INVENTORY.ITEMS.WIDTH  / conf.w;
@@ -196,7 +197,7 @@ class InventorySlot extends ex.UIActor {
   onInitialize(engine: ex.Engine): void {
     super.onInitialize(engine);
     let conf = globals.conf.INVENTORY;
-    let sprite = globals.resources.ImgInventorySlot.asSprite();
+    let sprite = Resources.ImgInventorySlot.asSprite();
     sprite.scale.setTo(conf.ITEMS.WIDTH/conf.SLOT.W, conf.ITEMS.HEIGHT/conf.SLOT.H);
     this.addDrawing(sprite);
   }

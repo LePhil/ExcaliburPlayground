@@ -1,6 +1,7 @@
 declare var globals: any;
 import * as ex from "excalibur";
 import {Button} from "../ui/Button";
+import {Resources} from "../config/Resources";
 
 export class MainMenu extends ex.Scene {
 
@@ -26,7 +27,7 @@ export class MainMenu extends ex.Scene {
       pos1_x, pos0_y,
       190, 49,
       "Intro",
-      globals.resources.ImgButton.asSprite(),
+      Resources.ImgButton.asSprite(),
       () => {this.startCutscene()}
     );
 
@@ -34,7 +35,7 @@ export class MainMenu extends ex.Scene {
       pos1_x, pos1_y,
       190, 49,
       "Start",
-      globals.resources.ImgButton.asSprite(),
+      Resources.ImgButton.asSprite(),
       () => {this.startGame()}
     );
 
@@ -42,7 +43,7 @@ export class MainMenu extends ex.Scene {
       pos2_x, pos2_y,
       190, 49,
       "Options",
-      globals.resources.ImgButton.asSprite(),
+      Resources.ImgButton.asSprite(),
       () => {this.openOptions()}
     );
 
@@ -50,7 +51,7 @@ export class MainMenu extends ex.Scene {
       pos1_x, pos1_y,
       190, 49,
       "Back",
-      globals.resources.ImgButton.asSprite(),
+      Resources.ImgButton.asSprite(),
       () => {this.back()},
     );
 
@@ -58,7 +59,7 @@ export class MainMenu extends ex.Scene {
       pos2_x, pos2_y,
       190, 49,
       "Change",
-      globals.resources.ImgButton.asSprite(),
+      Resources.ImgButton.asSprite(),
       () => {this.changePlayer()}
     );
 
@@ -155,7 +156,7 @@ class PlayerPreview extends ex.Actor {
     }
 
     let scale = globals.conf.PLAYER.SPRITE_SCALE;
-    let spriteSheet = new ex.SpriteSheet(globals.resources.TexturePlayers, 7, 8, 128, 256);
+    let spriteSheet = new ex.SpriteSheet(Resources.TexturePlayers, 7, 8, 128, 256);
 
     this._playerTypes.forEach((type) => {
       let sprite = spriteSheet.getSprite(type.coords.idle);

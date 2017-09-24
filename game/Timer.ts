@@ -1,6 +1,7 @@
 declare var globals: any;
 import * as ex from "excalibur";
 import {Digit} from "./Digit";
+import {Resources} from "./config/Resources";
 
 class DigitDisplay extends ex.UIActor {
   _digits:Array<Digit>;
@@ -62,7 +63,7 @@ export class Timer extends DigitDisplay {
     super.onInitialize(engine);
 
     let conf = globals.conf.TIMER;
-    let sprite = globals.resources.ImgClock.asSprite();
+    let sprite = Resources.ImgClock.asSprite();
     sprite.scale.setTo(conf.CLOCK.W / 70, conf.CLOCK.H / 70);
     this.addDrawing(sprite);
   }
@@ -113,7 +114,7 @@ export class ScoreCounter extends DigitDisplay {
     super.onInitialize(engine);
 
     let conf = globals.conf.HUD.hud_coins;
-    let sprite = new ex.Sprite(globals.resources.HUDSpriteSheet, conf.x, conf.y, conf.w, conf.h);
+    let sprite = new ex.Sprite(Resources.HUDSpriteSheet, conf.x, conf.y, conf.w, conf.h);
     this.addDrawing(sprite);
 
     this._updateDigits()

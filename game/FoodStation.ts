@@ -2,6 +2,7 @@ declare var globals: any;
 import * as ex from "excalibur";
 import {Player} from "./Player";
 import {Food} from "./Food";
+import {Resources} from "./config/Resources";
 
 enum StationState {
   Normal = "normal",
@@ -39,7 +40,7 @@ export class FoodStation extends ex.Actor {
 
   onInitialize(engine: ex.Engine): void {
     let conf = globals.conf.STATIONS[this._type];
-    let tex = globals.resources.TextureStations;
+    let tex = Resources.TextureStations;
     let sprite = new ex.Sprite(tex, conf.x, conf.y, conf.w, conf.h);
     sprite.scale.setTo(globals.conf.STATIONS.CONF.SCALE, globals.conf.STATIONS.CONF.SCALE);
 

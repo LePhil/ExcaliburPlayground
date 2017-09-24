@@ -1,5 +1,6 @@
 declare var globals: any;
 import * as ex from "excalibur";
+import {Resources} from "./config/Resources";
 
 export abstract class AbstractPlayer extends ex.Actor {
   _speed: number;
@@ -21,7 +22,7 @@ export abstract class AbstractPlayer extends ex.Actor {
   }
 
   onInitialize(engine: ex.Engine): void {
-    let spriteSheet = new ex.SpriteSheet(globals.resources.TexturePlayers, 7, 8, 128, 256);
+    let spriteSheet = new ex.SpriteSheet(Resources.TexturePlayers, 7, 8, 128, 256);
 
     let playerColor = this.getPlayerColor();
     let colorIndex = globals.conf.PLAYER.TYPES.indexOf(globals.conf.PLAYER.TYPES.filter( type => type.color === playerColor )[0]);

@@ -3,6 +3,7 @@ import * as ex from "excalibur";
 import {Customer} from "./Customer";
 import {Cassa} from "./Cassa";
 import {Director} from "./Director";
+import {Resources} from "./config/Resources";
 
 export class Door extends ex.Actor {
     private _open:boolean;
@@ -31,7 +32,7 @@ export class Door extends ex.Actor {
 
     onInitialize(engine: ex.Engine): void {
         let conf = globals.conf.TILES;
-        let tex  = globals.resources.TextureTiles;
+        let tex  = Resources.TextureTiles;
         let s = conf.door_openTop.w;
 
         this._top = new ex.Actor(-s/2, -s/2, s, s);

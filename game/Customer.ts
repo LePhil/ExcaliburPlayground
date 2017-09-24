@@ -1,10 +1,11 @@
 declare var globals: any;
 import * as ex from "excalibur";
-import { Food } from "./Food";
-import { AbstractPlayer } from "./AbstractPlayer";
-import { Cassa } from "./Cassa";
-import { MoneyEffect } from "./Effects";
-import { Director } from "./Director";
+import {Food} from "./Food";
+import {AbstractPlayer} from "./AbstractPlayer";
+import {Cassa} from "./Cassa";
+import {MoneyEffect} from "./Effects";
+import {Director} from "./Director";
+import {Resources} from "./config/Resources";
 
 export class Customer extends AbstractPlayer {
   public wants: Food;
@@ -177,7 +178,7 @@ class ThinkBubble extends ex.UIActor {
     super.onInitialize(engine);
 
     let conf = globals.conf.CUSTOMER.THINKBUBBLE.SPRITE[this._wants.name];
-    let tex = globals.resources.TextureBubbles;
+    let tex = Resources.TextureBubbles;
     let sprite = new ex.Sprite(tex, conf.x, conf.y, conf.w, conf.h);
 
     let scale_x = globals.conf.CUSTOMER.THINKBUBBLE.WIDTH  / conf.w;

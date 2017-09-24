@@ -1,7 +1,8 @@
 declare var globals: any;
 import * as ex from "excalibur";
-import { Director } from "./Director";
-import { MoneyEffect } from "./Effects";
+import {Director} from "./Director";
+import {MoneyEffect} from "./Effects";
+import {Resources} from "./config/Resources";
 
 export class Blob extends ex.Actor {
   private _speed: number;
@@ -46,7 +47,7 @@ export class Blob extends ex.Actor {
   }
 
   onInitialize(engine: ex.Engine): void {
-    let spriteSheet = new ex.SpriteSheet(globals.resources.TextureBlob, 1, 2, 57, 34);
+    let spriteSheet = new ex.SpriteSheet(Resources.TextureBlob, 1, 2, 57, 34);
 
     let speed = globals.conf.BLOB.ANIM_SPEED;
 

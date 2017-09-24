@@ -3,6 +3,7 @@ import * as ex from "excalibur";
 import {Customer} from "./Customer";
 import {Food} from "./Food";
 import {Player} from "./Player";
+import {Resources} from "./config/Resources";
 
 export class Cassa extends ex.Actor {
     public queue:Customer[];
@@ -18,7 +19,7 @@ export class Cassa extends ex.Actor {
     onInitialize(engine: ex.Engine): void {
         this._setup();
 
-        let tex  = globals.resources.Cassa;
+        let tex  = Resources.Cassa;
         this.addDrawing(new ex.Sprite(tex, 0, 0, 70, 70));
     }
 
