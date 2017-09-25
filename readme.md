@@ -5,6 +5,8 @@
 
 Done!
 
+Tiles/Sprites by Kenney (https://kenney.nl)
+
 # Open features
 * finish CutScene stuff (animations, ...)
 * Sound
@@ -19,6 +21,7 @@ Done!
 * optional Intro and outro text for each level (maybe only intro, outro could go into the endscene)
 * Multiple levels with offhanding via Director
 * Speech bubbles or Text in its own container outside of the screen. Text on multi-colored bg just can't be read easily.
+* move away from electron...
 
 # Bugs
 * If speed is increased, actions should take less long as well (e.g. pickup)
