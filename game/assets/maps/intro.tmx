@@ -630,7 +630,10 @@
    <image width="64" height="64" source="../../../../../Documents/game_art/kenney/new/kenney_foliagepack/PNG/Default size/Leaves/foliagePack_leaves_001.png"/>
   </tile>
  </tileset>
- <layer name="bg" width="12" height="8">
+ <imagelayer name="bg_img" y="-210">
+  <image source="../../../../../Documents/game_art/kenney/new/platformer-pack-redux-360-assets/PNG/Backgrounds/blue_land.png"/>
+ </imagelayer>
+ <layer name="bg" width="12" height="8" visible="0">
   <data encoding="base64">
    BwEAAAcBAAAHAQAABwEAAAcBAAAHAQAABwEAAAcBAAAHAQAABwEAAAcBAAAHAQAABwEAAAcBAAAHAQAABwEAAAcBAAAHAQAABwEAAAcBAAAHAQAABwEAAAcBAAAHAQAABwEAAAcBAAAHAQAABwEAAAcBAAAHAQAABwEAAAcBAAAHAQAABwEAAAcBAAAHAQAABwEAAAcBAAAHAQAABwEAAAcBAAAHAQAABwEAAAcBAAAHAQAABwEAAAcBAAAHAQAABwEAAAcBAAAHAQAABwEAAAcBAAAHAQAABwEAAAcBAAAHAQAABwEAAAcBAAAHAQAABwEAAAcBAAAHAQAABwEAAAcBAAAHAQAABwEAAAcBAAAHAQAABwEAAAcBAAAHAQAABwEAAAcBAAAHAQAABwEAAAcBAAAHAQAABwEAAAcBAAAHAQAABwEAAAcBAAAHAQAABwEAAAcBAAAHAQAABwEAAAcBAAAHAQAABwEAAAcBAAAHAQAABwEAAAcBAAAHAQAA
   </data>

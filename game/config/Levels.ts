@@ -66,6 +66,24 @@ export class Levels {
                 {T: 28, S: "player", A: ActionType.Talk, O: {text: "And today I'll tell you how I got here."} }
             ],
             NEXT: "Map_00"
+        },{
+            NAME: "forest_01",
+            TYPE: Levels.TYPES.CUTSCENE,
+            IMG: "Map_forest",
+            W: 840,
+            H: 560,
+            LOCATIONS: [
+                {Name: "player_entry",   X: 900, Y: 460},
+                {Name: "player_main",    X: 380, Y: 460}
+            ],
+            CHARACTERS: [
+                {Id: "player", Name: "Player", Color: "green", Initial: "player_entry"}
+            ],
+            PROPS: [],
+            SCRIPT: [
+                {T: 3,  S: "player", A: ActionType.Move, O: {to: "player_main"} }
+            ],
+            NEXT: "Map_00"
         }
     ];
 
