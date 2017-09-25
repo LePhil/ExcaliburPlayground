@@ -6,7 +6,7 @@
 Done!
 
 # Open features
-* finish CutScene stuff (animations, props, ...)
+* finish CutScene stuff (animations, ...)
 * Sound
 * Upgrades/Events/Penalties!
 * * More/less space in inventory
@@ -19,7 +19,6 @@ Done!
 * optional Intro and outro text for each level (maybe only intro, outro could go into the endscene)
 * Multiple levels with offhanding via Director
 * Speech bubbles or Text in its own container outside of the screen. Text on multi-colored bg just can't be read easily.
-* map config should contain next level's name
 
 # Bugs
 * If speed is increased, actions should take less long as well (e.g. pickup)
@@ -34,6 +33,8 @@ Done!
 * Time stuff via Director as well
 * Intro/Outro in separate Scenes - no hassle with pausing/unpausing and inputs!
 * Conf/Levels/Resources/Storage as Import, not via Global!
+* map config should contain next level's name
+* added props to Cutscene
 
 
 # Won't do

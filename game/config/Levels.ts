@@ -4,7 +4,9 @@ import {Config} from "./Config";
 
 enum ActionType {
     Move = "move",
-    Talk = "talk"
+    Talk = "talk",
+    Hide = "hide",
+    Show = "show"
 };
 
 export class Levels {
@@ -45,11 +47,15 @@ export class Levels {
             W: 840,
             H: 560,
             LOCATIONS: [
-                {Name: "player_entry", X: 900, Y: 460},
-                {Name: "player_main",  X: 380, Y: 460}
+                {Name: "player_entry",   X: 900, Y: 460},
+                {Name: "player_main",    X: 380, Y: 460},
+                {Name: "hammer_initial", X: 400, Y: 400},
             ],
             CHARACTERS: [
                 {Id: "player", Name: "Player", Color: "green", Initial: "player_entry"}
+            ],
+            PROPS: [
+                {Id: "hammer", Type: "hammer", Initial: "hammer_initial"}
             ],
             SCRIPT: [
                 {T: 3,  S: "player", A: ActionType.Move, O: {to: "player_main"} },

@@ -5,6 +5,7 @@ import {AbstractPlayer} from "../AbstractPlayer";
 import {LevelMap} from "../LevelMap";
 import {Storage} from "../Storage";
 import {Levels} from "../config/Levels";
+import {Resources} from "../config/Resources";
 
 export class Cutscene extends ex.Scene {
     public levelOptions:object;
@@ -23,6 +24,16 @@ export class Cutscene extends ex.Scene {
             locations[locationSetup.Name] = new Location(locationSetup.X, locationSetup.Y);
         });
 
+        let props = {};
+        setup.PROPS.forEach(propSetup => {
+            // make sure the spawn location exists
+            if (!locations[propSetup.Initial]) {
+                console.warn(`Location ${propSetup.Initial} doesn't exist!`);
+                return;
+            }
+            props[propSetup.Id] = new Prop(locations[propSetup.Initial], propSetup.Type, locations);
+        });
+
         let characters = {};
         setup.CHARACTERS.forEach(characterSetup => {
             // make sure the spawn location exists
@@ -35,15 +46,17 @@ export class Cutscene extends ex.Scene {
 
         let actions = [];
         setup.SCRIPT.forEach(action => {
-            // make sure the character exists
-            if (!characters[action.S]) {
-                console.warn(`Character ${action.S} doesn't exist!`);
+            // make sure the character or prop exists
+            if (!characters[action.S] && !props[action.S]) {
+                console.warn(`Character/Prop ${action.S} doesn't exist!`);
                 return;
             }
-            actions.push( new Action(action.T, characters[action.S], action.A, action.O) );
+            let subject = characters[action.S] ? characters[action.S] : props[action.S];
+
+            actions.push( new Action(action.T, subject, action.A, action.O) );
         });
 
-        this.cutSceneDirector = new CutSceneDirector(setup, locations, characters, actions);
+        this.cutSceneDirector = new CutSceneDirector(setup, locations, characters, actions, props);
         this.add(this.cutSceneDirector);
     }
 
@@ -67,7 +80,14 @@ export class Cutscene extends ex.Scene {
     }
 }
 
-class Character extends AbstractPlayer {
+interface Subject {
+    action_move(to: string);
+    action_talk(text: string, duration: number);
+    action_show();
+    action_hide();
+}
+
+class Character extends AbstractPlayer implements Subject {
     private name: string;
     private _locations:any;
     private _label:ex.Label;
@@ -116,6 +136,14 @@ class Character extends AbstractPlayer {
         }
     }
 
+    action_show() {
+        this.opacity = 1;
+    }
+    
+    action_hide() {
+        this.opacity = 0;
+    }
+
     getPlayerColor(): string {
         let playerColor = Config.PLAYER.INITIAL_TYPE; //start with green guy if no color was chosen
         
@@ -133,18 +161,67 @@ class Character extends AbstractPlayer {
     }
 }
 
+// Very simple character that can basically appear and disappear.
+class Prop extends ex.Actor implements Subject {
+    private _type: string;
+    private _locations:any;
+
+    constructor(initialLocation: Location,
+        type: string,
+        locations: any) {
+
+        if (!Config.ITEMS[type]) {
+            console.warn(`Type ${type} doesn't exist!`);
+            return;
+        }
+
+        super(initialLocation.x, initialLocation.y, Config.ITEMS.CONF.W, Config.ITEMS.CONF.H);
+        this._type = type;
+        this._locations = locations;
+    }
+
+    onInitialize(engine: ex.Engine): void {
+        let conf = Config.ITEMS[this._type];
+        let tex = Resources.ItemSpriteSheet;
+        let sprite = new ex.Sprite(tex, conf.x, conf.y, conf.w, conf.h);
+
+        let scale = conf.w > conf.h ? Config.ITEMS.CONF.W / conf.w : Config.ITEMS.CONF.H / conf.h;
+        sprite.scale.setTo(scale, scale);
+
+        let darkSprite = sprite.clone();
+        darkSprite.darken(.5);
+
+        this.addDrawing("normal", sprite);
+        this.addDrawing("inactive", darkSprite);
+
+        this.setDrawing("normal");
+    }
+
+    action_move(to: string) {}
+    action_talk(text: string, duration: number) {}
+    
+    action_show() {
+        this.opacity = 1;
+    }
+    action_hide() {
+        this.opacity = 0;
+    }
+}
+
 enum ActionType {
     Move = "move",
-    Talk = "talk"
+    Talk = "talk",
+    Hide = "hide",
+    Show = "show"
 };
 
 class Action {
     private timepoint: number;
-    private subject: Character;
+    private subject: Subject;
     private type: ActionType;
     private options: any;
 
-    constructor(timepoint: number, subject: Character, type: ActionType, options:any) {
+    constructor(timepoint: number, subject: Subject, type: ActionType, options:any) {
         this.timepoint = timepoint * 1000;
         this.subject = subject;
         this.type = type;
@@ -158,6 +235,12 @@ class Action {
                 break;
             case ActionType.Talk:
                 this.subject.action_talk(this.options.text, this.options.duration);
+                break;
+            case ActionType.Hide:
+                this.subject.action_hide();
+                break;
+            case ActionType.Show:
+                this.subject.action_show();
                 break;
         }
     }
@@ -180,23 +263,30 @@ class CutSceneDirector extends ex.Actor {
     private _setup:any;
     private _locations:any;
     private _characters:any;
+    private _props:any;
     private _actions:Array<Action>;
 
-    constructor(setup, locations, characters, actions) {
+    constructor(setup, locations, characters, actions, props) {
         super(0,0, Config.GAME.HEIGHT);
 
         this._setup = setup;
         this._locations = locations;
         this._characters = characters;
         this._actions = actions;
+        this._props = props;
     }
 
     startScript():void {
         let deltaT = 0;
 
-        // Tiny hack - loop over object's keys and access it 
+        // Tiny hack - loop over object's keys and access it
+        // Spawn Characters
         Object.keys(this._characters).forEach(char => {
             this.add(this._characters[char]);
+        });
+        // Spawn Props
+        Object.keys(this._props).forEach(prop => {
+            this.add(this._props[prop]);
         });
 
         this._actions.forEach(action => {
