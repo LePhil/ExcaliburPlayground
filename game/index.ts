@@ -21,7 +21,7 @@ game.add("pre", new PreGameScene(game, director));
 game.add("end", new EndGameScene(game, director));
 
 game.add("game", new LevelScene(game, director));
-game.add("cutScene", new Cutscene(game));
+game.add("cutScene", new Cutscene(game, "intro_01"));
 
 globals.startMenu = () => {
   game.goToScene("menu");
@@ -42,6 +42,10 @@ globals.startGame = () => {
 
 globals.startCutscene = () => {
   game.goToScene("cutScene");
+};
+
+globals.loadNextLevel = (levelIdentifier) => {
+  // TODO - level/scene handling
 };
 
 let loader = new ex.Loader();

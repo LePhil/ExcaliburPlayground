@@ -21,16 +21,10 @@ export class Director {
         this._dynamicData = {};
     }
 
-    loadLevelData(levelIdentifier:string) {
+    loadLevelData(levelIdentifier:string): any {
         this._currentLevelName = levelIdentifier;
-        
-        let levelArray = Levels.MAPS.filter(map => map.NAME === this._currentLevelName);
-
-        if(levelArray.length === 1) {
-            this._levelData = levelArray[0];
-        } else {
-            console.warn(`Level ${levelIdentifier} doesn't exist or there are multiple maps with the same name!`);
-        }
+        this._levelData = Levels.getLevel(levelIdentifier);
+        return this._levelData;
     }
 
     addDisplays(scoreCounter: ScoreCounter, timer: Timer) {

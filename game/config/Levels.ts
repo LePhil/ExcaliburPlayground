@@ -62,4 +62,14 @@ export class Levels {
             NEXT: "Map_00"
         }
     ];
+
+    static getLevel(name: string): any {
+        let levelArray = Levels.MAPS.filter(map => map.NAME === name);
+        
+        if(levelArray.length === 1) {
+            return levelArray[0];
+        } else {
+            console.warn(`Level ${name} doesn't exist or there are multiple maps with the same name!`);
+        }
+    }
 }

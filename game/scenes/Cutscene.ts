@@ -9,12 +9,12 @@ import {Levels} from "../config/Levels";
 export class Cutscene extends ex.Scene {
     public levelOptions:object;
 
-    private director:CutSceneDirector;
+    private cutSceneDirector:CutSceneDirector;
 
-    constructor(engine: ex.Engine) {
+    constructor(engine: ex.Engine, levelName: string) {
         super(engine);
 
-        let setup = this._gatherLevelOptions();
+        let setup = Levels.getLevel(levelName);
 
         this.add( new LevelMap(setup) );
 
@@ -43,8 +43,8 @@ export class Cutscene extends ex.Scene {
             actions.push( new Action(action.T, characters[action.S], action.A, action.O) );
         });
 
-        this.director = new CutSceneDirector(locations, characters, actions);
-        this.add(this.director);
+        this.cutSceneDirector = new CutSceneDirector(setup, locations, characters, actions);
+        this.add(this.cutSceneDirector);
     }
 
     update(engine: ex.Engine, delta: number) {
@@ -59,15 +59,11 @@ export class Cutscene extends ex.Scene {
     }
 
     onActivate () {
-        this.director.startScript();
+        this.cutSceneDirector.startScript();
     }
 
     onDeactivate () {
         // TODO: reset scene
-    }
-
-    private _gatherLevelOptions():any {
-        return Levels.MAPS[1];
     }
 }
 
@@ -181,13 +177,15 @@ class Location {
 }
 
 class CutSceneDirector extends ex.Actor {
+    private _setup:any;
     private _locations:any;
     private _characters:any;
     private _actions:Array<Action>;
 
-    constructor(locations, characters, actions) {
+    constructor(setup, locations, characters, actions) {
         super(0,0, Config.GAME.HEIGHT);
 
+        this._setup = setup;
         this._locations = locations;
         this._characters = characters;
         this._actions = actions;
@@ -214,7 +212,11 @@ class CutSceneDirector extends ex.Actor {
         this.actions
             .delay(3000)
             .callMethod(() => {
-                // TODO: load next map (via map.NEXT, if set)
+                if (this._setup.NEXT) {
+                    globals.loadNextLevel(this._setup.NEXT);
+                } else {
+                    globals.startMenu();
+                }
             });
     }
 }
