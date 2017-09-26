@@ -39,8 +39,30 @@ export class Levels {
             DURATION_S: 60,
             INTRO: ["As a proud owner of your new pet store,",
             "make sure each customer gets what they want!"],
+            OUTRO: "Well done!",
+            NEXT: "Map_01"
+        }, {
+            NAME: "Map_01",
+            TYPE: Levels.TYPES.NORMAL,
+            IMG: "Map_00",
+            W: 840,
+            H: 560,
+            CASSA: {X: 250, Y: 500},
+            DOOR:  {X: 800, Y: 595, SPAWN_TIME_S: 5},
+            FOODS: ["rabbit", "elephant", "giraffe"],
+            STATIONS: {
+                PLACEMENTS: [
+                    {X: 700, Y: 500, T: "rabbit"},
+                    {X: 300, Y: 300, T: "elephant"},
+                    {X: 600, Y: 300, T: "giraffe"}
+                ],
+                DECAY: true
+            },
+            BLOB: true,
+            DURATION_S: 60,
+            INTRO: ["Second level"],
             OUTRO: "Well done!"
-        },{
+        }, {
             NAME: "intro_01",
             TYPE: Levels.TYPES.CUTSCENE,
             IMG: "Map_intro_01",
@@ -99,5 +121,9 @@ export class Levels {
 
     static isCutscene(name: string): boolean {
         return Levels.getLevel(name).TYPE === Levels.TYPES.CUTSCENE;
+    }
+
+    static isGameLevel(name: string): boolean {
+        return Levels.getLevel(name).TYPE === Levels.TYPES.NORMAL;
     }
 }

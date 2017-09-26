@@ -22,6 +22,7 @@ Tiles/Sprites by Kenney (https://kenney.nl)
 * Multiple levels with offhanding via Director
 * Speech bubbles or Text in its own container outside of the screen. Text on multi-colored bg just can't be read easily.
 * move away from electron...
+* finish Clock display
 
 # Bugs
 * If speed is increased, actions should take less long as well (e.g. pickup)

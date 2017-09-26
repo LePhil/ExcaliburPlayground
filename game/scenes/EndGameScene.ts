@@ -22,7 +22,9 @@ export class EndGameScene extends ex.Scene {
     super.onInitialize(engine);
 
     let pos_x = Config.GAME.WIDTH / 2 - Config.GAME.UI.BUTTON_WIDTH / 2;
-    let pos_y = Config.GAME.HEIGHT / 2 - Config.GAME.UI.BUTTON_HEIGHT;
+    let pos_y = Config.GAME.HEIGHT - 300;
+
+    // TODO: if there's a next level, show "Continue" button
 
     let goToStartButton  = new Button(
       pos_x, pos_y,

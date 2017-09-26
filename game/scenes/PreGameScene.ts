@@ -25,8 +25,8 @@ export class PreGameScene extends ex.Scene {
     this.add(textOverlay);
     
     let pos_x = Config.GAME.WIDTH / 2 - Config.GAME.UI.BUTTON_WIDTH / 2;
-    let pos_y = Config.GAME.HEIGHT / 2 - Config.GAME.UI.BUTTON_HEIGHT;
-
+    let pos_y = Config.GAME.HEIGHT - 300;
+    
     let startGameButton = new Button(
       pos_x, pos_y,
       190, 49,
