@@ -65,7 +65,7 @@ export class Levels {
                 {T: 23, S: "player", A: ActionType.Talk, O: {text: "I'm from a planet far, far away."} },
                 {T: 28, S: "player", A: ActionType.Talk, O: {text: "And today I'll tell you how I got here."} }
             ],
-            NEXT: "Map_00"
+            NEXT: "forest_01"
         },{
             NAME: "forest_01",
             TYPE: Levels.TYPES.CUTSCENE,
@@ -73,8 +73,8 @@ export class Levels {
             W: 840,
             H: 560,
             LOCATIONS: [
-                {Name: "player_entry",   X: 900, Y: 460},
-                {Name: "player_main",    X: 380, Y: 460}
+                {Name: "player_entry",   X: 900, Y: 530},
+                {Name: "player_main",    X: 380, Y: 530}
             ],
             CHARACTERS: [
                 {Id: "player", Name: "Player", Color: "green", Initial: "player_entry"}
@@ -95,5 +95,9 @@ export class Levels {
         } else {
             console.warn(`Level ${name} doesn't exist or there are multiple maps with the same name!`);
         }
+    }
+
+    static isCutscene(name: string): boolean {
+        return Levels.getLevel(name).TYPE === Levels.TYPES.CUTSCENE;
     }
 }

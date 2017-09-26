@@ -38,6 +38,7 @@ Tiles/Sprites by Kenney (https://kenney.nl)
 * Conf/Levels/Resources/Storage as Import, not via Global!
 * map config should contain next level's name
 * added props to Cutscene
+* Cutscenes can now change to other cutscene in the same Level
 
 
 # Won't do

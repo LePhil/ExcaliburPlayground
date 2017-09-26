@@ -8,15 +8,24 @@ import {Levels} from "../config/Levels";
 import {Resources} from "../config/Resources";
 
 export class Cutscene extends ex.Scene {
-    public levelOptions:object;
-
     private cutSceneDirector:CutSceneDirector;
+    private _levelName: string;
 
     constructor(engine: ex.Engine, levelName: string) {
         super(engine);
 
-        let setup = Levels.getLevel(levelName);
+        this._levelName = levelName;
+        this.loadLevelData(levelName);
+    }
 
+    public loadLevelData(levelName: string): void {
+        if(this._levelName !== levelName) {
+            // new level to be loaded! Discard of all actors for now
+            this.cutSceneDirector.kill();
+        }
+
+        let setup = Levels.getLevel(levelName);
+        
         this.add( new LevelMap(setup) );
 
         let locations = {};
