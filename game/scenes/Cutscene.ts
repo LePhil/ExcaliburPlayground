@@ -325,13 +325,14 @@ class CutSceneDirector extends ex.Actor {
     }
 
     resetScene(): void {
-        // reset all actors that coould have changed
-        this._characters.each((char) => {
-            char.reset();
-        });
+        this.actions.clearActions();
 
-        this._props.each((prop) => {
-            prop.reset();
+        // reset all actors that coould have changed
+        Object.keys(this._characters).forEach(char => {
+            this._characters[char].reset();
+        });
+        Object.keys(this._props).forEach(prop => {
+            this._props[prop].reset();
         });
     }
 

@@ -55,7 +55,7 @@ export class Levels {
                 {Id: "player", Name: "Player", Color: "green", Initial: "player_entry"}
             ],
             PROPS: [
-                {Id: "hammer", Type: "hammer", Initial: "hammer_initial", Opacity: 1}
+                {Id: "hammer", Type: "hammer", Initial: "hammer_initial", Opacity: 0}
             ],
             SCRIPT: [
                 {T: 3,  S: "player", A: ActionType.Move, O: {to: "player_main"} },
