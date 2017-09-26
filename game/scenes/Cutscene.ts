@@ -21,7 +21,9 @@ export class Cutscene extends ex.Scene {
 
         let locations = {};
         setup.LOCATIONS.forEach(locationSetup => {
-            locations[locationSetup.Name] = new Location(locationSetup.X, locationSetup.Y);
+            locations[locationSetup.Name] = new Location(
+                locationSetup.X,
+                locationSetup.Y);
         });
 
         let props = {};
@@ -31,7 +33,11 @@ export class Cutscene extends ex.Scene {
                 console.warn(`Location ${propSetup.Initial} doesn't exist!`);
                 return;
             }
-            props[propSetup.Id] = new Prop(locations[propSetup.Initial], propSetup.Type, locations);
+            props[propSetup.Id] = new Prop(
+                locations[propSetup.Initial],
+                propSetup.Type,
+                locations,
+                propSetup.Opacity);
         });
 
         let characters = {};
@@ -41,7 +47,13 @@ export class Cutscene extends ex.Scene {
                 console.warn(`Location ${characterSetup.Initial} doesn't exist!`);
                 return;
             }
-            characters[characterSetup.Id] = new Character(locations[characterSetup.Initial], characterSetup.Name, characterSetup.Color, locations);
+            characters[characterSetup.Id] = new Character(
+                locations[characterSetup.Initial],
+                characterSetup.Name,
+                characterSetup.Color,
+                locations,
+                characterSetup.Opacity
+            );
         });
 
         let actions = [];
@@ -76,7 +88,7 @@ export class Cutscene extends ex.Scene {
     }
 
     onDeactivate () {
-        // TODO: reset scene
+        this.cutSceneDirector.resetScene();
     }
 }
 
@@ -85,20 +97,29 @@ interface Subject {
     action_talk(text: string, duration: number);
     action_show();
     action_hide();
+    reset();
 }
 
 class Character extends AbstractPlayer implements Subject {
     private name: string;
     private _locations:any;
     private _label:ex.Label;
+    private _initialLocation: Location;
+    private _initialOpacity: number;    
 
     constructor(initialLocation: Location,
                 name: string,
                 color: string,
-                locations: any) {
+                locations: any,
+                initialOpacity = 1) {
         super(initialLocation.x, initialLocation.y);
+
+        this._initialLocation = initialLocation;
+        this._initialOpacity = initialOpacity;
         this.name = name;
         this._locations = locations;
+
+        this.opacity = initialOpacity;        
     }
 
     action_move(to: string) {
@@ -139,7 +160,7 @@ class Character extends AbstractPlayer implements Subject {
     action_show() {
         this.opacity = 1;
     }
-    
+
     action_hide() {
         this.opacity = 0;
     }
@@ -154,6 +175,18 @@ class Character extends AbstractPlayer implements Subject {
         return playerColor;
     }
 
+    reset(): void {
+        this.actions.clearActions();
+        this.pos.x = this._initialLocation.x;
+        this.pos.y = this._initialLocation.y;
+        this.opacity = this._initialOpacity;
+        this.setDrawing("idle");
+        
+        if(this._label) {
+            this.remove(this._label); 
+        }
+    }
+
     _updateChildren(): void {}
 
     _handleIdlePlayer(): void {
@@ -165,10 +198,13 @@ class Character extends AbstractPlayer implements Subject {
 class Prop extends ex.Actor implements Subject {
     private _type: string;
     private _locations:any;
+    private _initialLocation: Location;
+    private _initialOpacity: number;
 
     constructor(initialLocation: Location,
         type: string,
-        locations: any) {
+        locations: any,
+        initialOpacity = 1) {
 
         if (!Config.ITEMS[type]) {
             console.warn(`Type ${type} doesn't exist!`);
@@ -176,8 +212,12 @@ class Prop extends ex.Actor implements Subject {
         }
 
         super(initialLocation.x, initialLocation.y, Config.ITEMS.CONF.W, Config.ITEMS.CONF.H);
+
         this._type = type;
         this._locations = locations;
+        this._initialLocation = initialLocation;
+        this._initialOpacity = initialOpacity;
+        this.opacity = initialOpacity;
     }
 
     onInitialize(engine: ex.Engine): void {
@@ -205,6 +245,14 @@ class Prop extends ex.Actor implements Subject {
     }
     action_hide() {
         this.opacity = 0;
+    }
+
+    reset(): void {
+        this.actions.clearActions();
+        this.setDrawing("normal");
+        this.opacity = this._initialOpacity;
+        this.pos.x = this._initialLocation.x;
+        this.pos.y = this._initialLocation.y;
     }
 }
 
@@ -276,6 +324,17 @@ class CutSceneDirector extends ex.Actor {
         this._props = props;
     }
 
+    resetScene(): void {
+        // reset all actors that coould have changed
+        this._characters.each((char) => {
+            char.reset();
+        });
+
+        this._props.each((prop) => {
+            prop.reset();
+        });
+    }
+
     startScript():void {
         let deltaT = 0;
 
@@ -289,6 +348,7 @@ class CutSceneDirector extends ex.Actor {
             this.add(this._props[prop]);
         });
 
+        // execute each action
         this._actions.forEach(action => {
             this.actions
                 .delay( action.getTimepoint() - deltaT )
@@ -299,6 +359,7 @@ class CutSceneDirector extends ex.Actor {
             deltaT = action.getTimepoint();
         });
 
+        // Load next SCene/Level if applicable, otherwise back to the main menu
         this.actions
             .delay(3000)
             .callMethod(() => {
