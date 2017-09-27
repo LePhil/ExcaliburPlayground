@@ -22,7 +22,10 @@ Tiles/Sprites by Kenney (https://kenney.nl)
 * Multiple levels with offhanding via Director
 * Speech bubbles or Text in its own container outside of the screen. Text on multi-colored bg just can't be read easily.
 * move away from electron...
-* finish Clock display
+* new Director concept
+* Animals/Cages with limited amount of items
+* rate of interest in a food/animal/item should depend on the worth/duration/amount available. Expensive items should take a long time or be very limited or be only rarely asked for (or a combination/all of them)
+* maybe (MAYBE) a small minigame with direct input - it's more fun anyway :)
 
 # Bugs
 * If speed is increased, actions should take less long as well (e.g. pickup)
