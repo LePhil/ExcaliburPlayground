@@ -26,6 +26,7 @@ Tiles/Sprites by Kenney (https://kenney.nl)
 * Animals/Cages with limited amount of items
 * rate of interest in a food/animal/item should depend on the worth/duration/amount available. Expensive items should take a long time or be very limited or be only rarely asked for (or a combination/all of them)
 * maybe (MAYBE) a small minigame with direct input - it's more fun anyway :)
+* Button should have Resources.ImgButton as the default sprite, no need to always pass it.
 
 # Bugs
 * If speed is increased, actions should take less long as well (e.g. pickup)
