@@ -1,6 +1,7 @@
 declare var globals: any;
 import * as ex from "excalibur";
 import {Config} from "./Config";
+import {Storage} from "../Storage";
 
 enum ActionType {
     Move = "move",
@@ -11,7 +12,6 @@ enum ActionType {
 
 export class Levels {
     static ActionType = ActionType;
-
     static TYPES = {
         NORMAL: "normal",   // Normal time management
         CUTSCENE: "cutscene"  // For some story
@@ -125,5 +125,9 @@ export class Levels {
 
     static isGameLevel(name: string): boolean {
         return Levels.getLevel(name).TYPE === Levels.TYPES.NORMAL;
+    }
+
+    static getCurrentLevelName(): string {
+        return Storage.get("currentLevel", "Map_00");
     }
 }

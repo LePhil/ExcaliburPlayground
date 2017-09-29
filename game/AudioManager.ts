@@ -2,14 +2,29 @@ import {Resources} from "./config/Resources";
 import {Storage} from "./Storage";
 
 export class AudioManager {
+    static setup() {
+        AudioManager.isMuted = Storage.get("muted", false);
+    }
+
     static isMuted: boolean = false;
+
+    static toggleMute():boolean {
+        if (AudioManager.isMuted) {
+            AudioManager.unmute();
+        } else {
+            AudioManager.mute();
+        }
+        return AudioManager.isMuted;
+    }
 
     static mute(): void {
         AudioManager.isMuted = true;
+        Storage.set("muted", true);
     }
 
     static unmute(): void {
         AudioManager.isMuted = false;
+        Storage.set("muted", false);
     }
 
     static play(audio: string, looped: boolean = false): void {

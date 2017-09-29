@@ -26,15 +26,13 @@ Tiles/Sprites by Kenney (https://kenney.nl)
 * customers via LevelScene, not via door. Too far away!
 * Pagination on textoverlay, if content is too long.
 * Settings for Text in Textoverlay (Bold, etc.) from Config
-* Audio Settings + Storage
-* Settings should be its own scene - showing & hiding buttons is embarassing.
+* various button positions via Config, don't want to calculate it in each scene again..
 
 # Bugs
 * If speed is increased, actions should take less long as well (e.g. pickup)
 * Multiple clicks on Cassa should not stack up/take no time if no customer is there
 * Level Handling... levelScene should only be created when a game is started.
 * Picking up foods is broken right now, doesn't pause the player
-* stations don't break at the moment
 * changing the player color (options) after having started a game doesn't get saved
 
 # Recently done
@@ -53,6 +51,9 @@ Tiles/Sprites by Kenney (https://kenney.nl)
 * Button should have Resources.ImgButton as the default sprite, no need to always pass it.
 * some sounds <3
 * Credits
+* Settings should be its own scene - showing & hiding buttons is embarassing.
+* stations don't break at the moment --> break again
+* Audio Settings + Storage
 
 # Won't do
 * If inventory is full, clicks on station should not do anything- No. We'd have to check for Tools in Inventory (in case the station is broken) and if there are actions in the queue to remove some items --> let the user make mistakes!
