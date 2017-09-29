@@ -10,10 +10,13 @@ import {LevelScene} from "./scenes/LevelScene";
 import {PreGameScene} from "./scenes/PreGameScene";
 import {EndGameScene} from "./scenes/EndGameScene";
 import {Cutscene} from "./scenes/Cutscene";
+import {CreditsScene} from "./scenes/CreditsScene";
 import {Director} from "./Director";
 
 let game = new ex.Engine({ displayMode: ex.DisplayMode.FullScreen });
 globals.game = game;
+
+game.add("credits", new CreditsScene(game));
 
 game.add("menu", new MainMenu(game));
 
@@ -54,6 +57,10 @@ globals.loadNextLevel = (levelIdentifier) => {
     director.loadLevelSet(levelIdentifier);
   }
 };
+
+globals.credits = () => {
+  game.goToScene("credits");
+}
 
 let loader = new ex.Loader();
 

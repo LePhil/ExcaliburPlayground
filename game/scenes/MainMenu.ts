@@ -7,12 +7,12 @@ import {Storage} from "../Storage";
 
 export class MainMenu extends ex.Scene {
 
-  private _introButton: ex.UIActor;
-
-  private _startButton: ex.UIActor;
-  private _optionsButton: ex.UIActor;
-  private _backButton: ex.UIActor;
-  private _changePlayerButton: ex.UIActor;
+  private _introButton: Button;
+  private _startButton: Button;
+  private _optionsButton: Button;
+  private _backButton: Button;
+  private _changePlayerButton: Button;
+  private _creditsButton: Button;
 
   private _playerPreview: PlayerPreview;
 
@@ -25,19 +25,19 @@ export class MainMenu extends ex.Scene {
     let pos2_x = Config.GAME.WIDTH / 2 - Config.GAME.UI.BUTTON_WIDTH / 2;
     let pos2_y = Config.GAME.HEIGHT / 2 + Config.GAME.UI.BUTTON_HEIGHT;
 
-    this._introButton  = new Button(
+    this._introButton = new Button(
       pos1_x, pos0_y,
       "Intro",
       () => {this.startCutscene()}
     );
 
-    this._startButton  = new Button(
+    this._startButton = new Button(
       pos1_x, pos1_y,
       "Start",
       () => {this.startGame()}
     );
 
-    this._optionsButton  = new Button(
+    this._optionsButton = new Button(
       pos2_x, pos2_y,
       "Options",
       () => {this.openOptions()}
@@ -55,32 +55,43 @@ export class MainMenu extends ex.Scene {
       () => {this.changePlayer()}
     );
 
+    this._creditsButton = new Button(
+      500, 500,
+      "Credits",
+      () => {globals.credits();}
+    )
+
     this.add(this._introButton);
     this.add(this._startButton);
     this.add(this._optionsButton);
     this.add(this._backButton);
     this.add(this._changePlayerButton);
+
+    this.add(this._creditsButton);
   }
 
   // start-up logic, called once
   onInitialize(engine: ex.Engine) {
   }
 
-  // each time the scene is activated by Engine.goToScene
   onActivate () {
     this._introButton.visible = true;
     this._startButton.visible = true;
     this._optionsButton.visible = true;
     this._backButton.visible = false;
     this._changePlayerButton.visible = false;
+
+    Resources.Sound_Intro.play();
   }
-  // each time the scene is deactivated by Engine.goToScene
+
   onDeactivate () {
     this._introButton.visible = false;
     this._startButton.visible = false;
     this._optionsButton.visible = false;
     this._backButton.visible = false;
     this._changePlayerButton.visible = false;
+
+    Resources.Sound_Intro.stop();
   }
 
   public startGame() {

@@ -29,4 +29,5 @@ export class Resources {
     static Map_forest           = new ex.Texture("game/assets/maps/forest.png");
 
     static Sound_ChaChing       = new ex.Sound("game/assets/sounds/cha_ching.mp3", "game/assets/sounds/cha_ching.wav");
+    static Sound_Intro          = new ex.Sound("game/assets/sounds/Whimsical-Popsicle.mp3");
 }
