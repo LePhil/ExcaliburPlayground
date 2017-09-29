@@ -3,6 +3,7 @@ import * as ex from "excalibur";
 import {Button} from "../ui/Button";
 import {Config} from "../config/Config";
 import {Resources} from "../config/Resources";
+import {AudioManager} from "../AudioManager";
 import {Storage} from "../Storage";
 
 export class MainMenu extends ex.Scene {
@@ -81,7 +82,7 @@ export class MainMenu extends ex.Scene {
     this._backButton.visible = false;
     this._changePlayerButton.visible = false;
 
-    Resources.Sound_Intro.play();
+    AudioManager.play("Sound_Intro", true);
   }
 
   onDeactivate () {
@@ -91,7 +92,7 @@ export class MainMenu extends ex.Scene {
     this._backButton.visible = false;
     this._changePlayerButton.visible = false;
 
-    Resources.Sound_Intro.stop();
+    AudioManager.stop("Sound_Intro");
   }
 
   public startGame() {

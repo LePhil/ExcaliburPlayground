@@ -1,6 +1,6 @@
 declare var globals: any;
 import * as ex from "excalibur";
-import {Resources} from "./config/Resources";
+import {AudioManager} from "./AudioManager";
 
 export class MoneyEffect extends ex.Actor {
     constructor(x, y) {
@@ -29,7 +29,7 @@ export class MoneyEffect extends ex.Actor {
         emitter.isEmitting = true;
         this.scene.add(emitter);
 
-        Resources.Sound_ChaChing.play();
+        AudioManager.play("Sound_ChaChing");
 
         setTimeout(() => {
             emitter.kill();
