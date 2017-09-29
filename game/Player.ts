@@ -60,11 +60,11 @@ export class Player extends AbstractPlayer {
    this.actions.moveTo(evt.x, evt.y, this._speed);
   }
 
+  // TODO: found the bug - click on 2nd foodstations before 1st is reached --> the "waiting" happens while player is moving to the 2nd station already!
+  // See https://github.com/excaliburjs/Excalibur/issues/292
   public sendToFoodStation(station: FoodStation, callback: () => void) {
     this.actions
-      .moveTo(station.pos.x,
-              station.pos.y,
-              this._speed)
+      .moveTo(station.pos.x, station.pos.y, this._speed)
       .callMethod(() => {
         callback();
         if (station.isReady()) {

@@ -49,4 +49,4 @@ Tiles/Sprites by Kenney (https://kenney.nl)
 * Button should have Resources.ImgButton as the default sprite, no need to always pass it.
 
 # Won't do
-* -If inventory is full, clicks on station should not do anything- No. We'd have to check for Tools in Inventory (in case the station is broken) and if there are actions in the queue to remove some items - let the user make mistakes!
+* If inventory is full, clicks on station should not do anything- No. We'd have to check for Tools in Inventory (in case the station is broken) and if there are actions in the queue to remove some items --> let the user make mistakes!
