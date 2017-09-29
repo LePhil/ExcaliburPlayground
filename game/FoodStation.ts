@@ -16,7 +16,7 @@ export class FoodStation extends ex.Actor {
   private _duration: number;
   private _state: StationState;
 
-  constructor(x: number, y: number, type: string) {
+  constructor(x: number, y: number, type: string, player: Player) {
     let conf = Config.STATIONS[type];
     let scale = Config.STATIONS.CONF.SCALE;
     let w = conf.w * scale;
@@ -29,9 +29,8 @@ export class FoodStation extends ex.Actor {
     this._duration = conf.duration;
     this._food = new Food(this._type, ex.Color.Red);
 
-    // TODO: no globals
     this.on("pointerdown", (event) => {
-      globals.player.sendToFoodStation(this, this.onPlayerReachedStation );
+      player.sendToFoodStation(this, this.onPlayerReachedStation );
     });
   }
   

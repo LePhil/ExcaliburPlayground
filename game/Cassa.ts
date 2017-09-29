@@ -9,11 +9,11 @@ import {Config} from "./config/Config";
 export class Cassa extends ex.Actor {
     public queue:Customer[];
 
-    constructor(x, y) {
+    constructor(x, y, player: Player) {
         super(x, y, Config.CASSA.W, Config.CASSA.H);
 
         this.on("pointerdown", (event) => {
-            this.handleClick(globals.player);
+            this.handleClick(player);
         });
     }
 

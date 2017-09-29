@@ -43,13 +43,13 @@ export class LevelScene extends ex.Scene {
 
       this._stations = [];
       
-      // TODO: set up tools via Level Setup
-      this.add(new ConsumableTool(200, 200, "cup"));
-      this.add(new PickuppableTool(200, 250, "hammer"));
-      this.add(new PickuppableTool(200, 300, "bone"));
-      
       this._player = new Player(inv);
-      globals.player = this._player;
+
+      // TODO: set up tools via Level Setup
+      this.add(new ConsumableTool(200, 200, "cup", this._player) );
+      this.add(new PickuppableTool(200, 250, "hammer", this._player) );
+      this.add(new PickuppableTool(200, 300, "bone", this._player) );
+      
       this.add(this._player);
     }
 
@@ -93,7 +93,7 @@ export class LevelScene extends ex.Scene {
       let mapZIndex = this._levelMap.getZIndex();
       
       if(!this._cassa) {
-        this._cassa = new Cassa(setup.CASSA.X, setup.CASSA.Y);
+        this._cassa = new Cassa(setup.CASSA.X, setup.CASSA.Y, this._player);
         this.add(this._cassa);
       } else {
         this._cassa.pos.x = setup.CASSA.X;
@@ -124,7 +124,7 @@ export class LevelScene extends ex.Scene {
       });
       this._stations = [];
       setup.STATIONS.PLACEMENTS.forEach(placement => {
-        let foodStation = new FoodStation(placement.X, placement.Y, placement.T);
+        let foodStation = new FoodStation(placement.X, placement.Y, placement.T, this._player);
         this.add(foodStation);
 
         if (setup.STATIONS.DECAY) {

@@ -31,6 +31,7 @@ Tiles/Sprites by Kenney (https://kenney.nl)
 * Level Handling... levelScene should only be created when a game is started.
 * Picking up foods is broken right now, doesn't pause the player
 * stations don't break at the moment
+* changing the player color (options) after having started a game doesn't get saved
 
 # Recently done
 * Re-done buttons with Labels

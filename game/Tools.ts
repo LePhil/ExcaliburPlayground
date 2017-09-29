@@ -9,7 +9,7 @@ export class Tool extends ex.Actor{
     private _type:string;
     private _isActive: boolean;
 
-    constructor(x, y, type:string) {
+    constructor(x, y, type:string, player: Player) {
         let conf = Config.ITEMS.CONF;
 
         super(x, y, conf.W, conf.H);
@@ -19,7 +19,7 @@ export class Tool extends ex.Actor{
         this._isActive = true;
     
         this.on("pointerdown", (event) => {
-            this.handleClick(globals.player);
+            this.handleClick(player);
         });
     }
     

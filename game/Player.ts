@@ -158,5 +158,7 @@ export class Player extends AbstractPlayer {
     this.actions.clearActions();
     this.pos.x = Config.PLAYER.START.X;
     this.pos.y = Config.PLAYER.START.Y;
+    this.setDrawing("idle");
+    this._isBusy = false;
   }
 }
