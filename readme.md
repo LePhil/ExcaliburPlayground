@@ -31,7 +31,6 @@ Tiles/Sprites by Kenney (https://kenney.nl)
 # Bugs
 * If speed is increased, actions should take less long as well (e.g. pickup)
 * Multiple clicks on Cassa should not stack up/take no time if no customer is there
-* Level Handling... levelScene should only be created when a game is started.
 * Picking up foods is broken right now, doesn't pause the player
 * changing the player color (options) after having started a game doesn't get saved
 
@@ -51,6 +50,7 @@ Tiles/Sprites by Kenney (https://kenney.nl)
 * Button should have Resources.ImgButton as the default sprite, no need to always pass it.
 * some sounds <3
 * Credits
+* Level Handling... levelScene should only be created when a game is started.
 * Settings should be its own scene - showing & hiding buttons is embarassing.
 * stations don't break at the moment --> break again
 * Audio Settings + Storage
