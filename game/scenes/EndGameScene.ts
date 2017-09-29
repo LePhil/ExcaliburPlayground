@@ -29,17 +29,13 @@ export class EndGameScene extends ex.Scene {
     
         this.add(new Button(
             pos_x_left, pos_y,
-            190, 49,
             "Zurück",
-            Resources.ImgButton.asSprite(),
             () => { globals.startMenu(); }
         ));
 
         this._button = new Button(
             pos_x_right, pos_y,
-            190, 49,
             "Weiter",
-            Resources.ImgButton.asSprite(),
             () => {}
         );
         this.add(this._button);
@@ -50,7 +46,7 @@ export class EndGameScene extends ex.Scene {
     }
 
     onActivate () {}
-    
+
     onDeactivate () {}
 
     public load(setup: any, results: number, callback: () => void) {

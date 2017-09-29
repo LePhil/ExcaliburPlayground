@@ -44,7 +44,7 @@ Tiles/Sprites by Kenney (https://kenney.nl)
 * Cutscenes can now change to other cutscene in the same Level
 * new Director concept
 * Multiple levels with offhanding via Director
-* optional Intro and outro text for each level (maybe only intro, outro could go into the endscene)
+* optional Intro and outro text for each level (Pre- and EndGameScene)
 
 # Won't do
 * -If inventory is full, clicks on station should not do anything- No. We'd have to check for Tools in Inventory (in case the station is broken) and if there are actions in the queue to remove some items - let the user make mistakes!

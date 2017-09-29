@@ -21,9 +21,7 @@ export class PreGameScene extends ex.Scene {
         
         this._button = new Button(
             pos_x, pos_y,
-            190, 49,
             "Start",
-            Resources.ImgButton.asSprite(),
             () => {}
         );
 

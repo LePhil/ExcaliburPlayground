@@ -27,41 +27,31 @@ export class MainMenu extends ex.Scene {
 
     this._introButton  = new Button(
       pos1_x, pos0_y,
-      190, 49,
       "Intro",
-      Resources.ImgButton.asSprite(),
       () => {this.startCutscene()}
     );
 
     this._startButton  = new Button(
       pos1_x, pos1_y,
-      190, 49,
       "Start",
-      Resources.ImgButton.asSprite(),
       () => {this.startGame()}
     );
 
     this._optionsButton  = new Button(
       pos2_x, pos2_y,
-      190, 49,
       "Options",
-      Resources.ImgButton.asSprite(),
       () => {this.openOptions()}
     );
 
     this._backButton = new Button(
       pos1_x, pos1_y,
-      190, 49,
       "Back",
-      Resources.ImgButton.asSprite(),
       () => {this.back()},
     );
 
     this._changePlayerButton = new Button(
       pos2_x, pos2_y,
-      190, 49,
       "Change",
-      Resources.ImgButton.asSprite(),
       () => {this.changePlayer()}
     );
 
