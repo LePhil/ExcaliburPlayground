@@ -1,5 +1,6 @@
 declare var globals: any;
 import * as ex from "excalibur";
+import {Resources} from "./config/Resources";
 
 export class MoneyEffect extends ex.Actor {
     constructor(x, y) {
@@ -7,7 +8,6 @@ export class MoneyEffect extends ex.Actor {
     }
 
     onInitialize(engine: ex.Engine): void {
-        // TODO: sound?
         let emitter = new ex.ParticleEmitter(this.pos.x, this.pos.y, 0, 0);
         emitter.emitterType = ex.EmitterType.Circle;
         emitter.radius = 34;
@@ -28,6 +28,8 @@ export class MoneyEffect extends ex.Actor {
 
         emitter.isEmitting = true;
         this.scene.add(emitter);
+
+        Resources.Sound_ChaChing.play();
 
         setTimeout(() => {
             emitter.kill();
