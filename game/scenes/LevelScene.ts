@@ -23,6 +23,7 @@ export class LevelScene extends ex.Scene {
     private _door:Door;
     private _cassa:Cassa;
     private _stations: Array<FoodStation>;
+    private _decayTimer: ex.Timer;
     private _callbackOnTimerEnded: (results: number) => void;
 
     private _levelMap: LevelMap;
@@ -46,9 +47,10 @@ export class LevelScene extends ex.Scene {
       this._player = new Player(inv);
 
       // TODO: set up tools via Level Setup
-      this.add(new ConsumableTool(200, 200, "cup", this._player) );
-      this.add(new PickuppableTool(200, 250, "hammer", this._player) );
-      this.add(new PickuppableTool(200, 300, "bone", this._player) );
+      this.createGroup("tools");
+      this.getGroup("tools").add( new ConsumableTool(200, 200, "cup", this._player) )
+      this.getGroup("tools").add( new PickuppableTool(200, 250, "hammer", this._player) );
+      this.getGroup("tools").add( new PickuppableTool(200, 300, "bone", this._player) );
       
       this.add(this._player);
     }
@@ -68,6 +70,12 @@ export class LevelScene extends ex.Scene {
       this._player.resetState();
       this._door.close();
       this._cassa.resetState();
+
+      if (this._decayTimer) {
+        this._decayTimer.cancel();
+        this.removeTimer(this._decayTimer);
+        this._decayTimer = null;
+      }
     }
 
     addPoints(points: number): number {
@@ -80,6 +88,7 @@ export class LevelScene extends ex.Scene {
         return this._currentScore;
     } 
 
+    // TODO: split up into smaller chunks, too big now.
     public load(setup: any, callback: (results: number) => void) {
       this._setup = setup;
       this._callbackOnTimerEnded = callback;
@@ -131,6 +140,15 @@ export class LevelScene extends ex.Scene {
           this._stations.push(foodStation);
         }
       });
+
+      if(setup.STATIONS.DECAY && this._stations) {
+        let decayTimer = new ex.Timer(() => {
+          let randomStation = this._stations[ex.Util.randomIntInRange(0, this._stations.length - 1)];
+          randomStation.breakDown();
+        }, 10000, true);
+        this.add(decayTimer);
+        this._decayTimer = decayTimer;
+      }
       
       // Add a blob after a random time, the latest at half of the game time is over
       if (setup.BLOB) {

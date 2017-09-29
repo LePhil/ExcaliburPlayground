@@ -28,22 +28,6 @@ export class Director {
         this._levelData = Levels.getLevel(levelIdentifier);
         return this._levelData;
     }
-    
-    startLevel() {
-        /*
-        this.startTime();
-
-        if(this.getLevelData().STATIONS.DECAY && this._stations) {
-            //let decayTimer = new ex.Timer(() => {
-            // TODO: ewwwwwwww
-            setTimeout(() => {
-                let randomStation = this._stations[ex.Util.randomIntInRange(0, this._stations.length - 1)];
-                randomStation.breakDown();
-            }, 10000);
-            //}, 10000, false);
-        }
-        */
-    }
 
     getLevelData(key?: string): any {
         if(key && this._levelData[key]) {
