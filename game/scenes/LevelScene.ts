@@ -86,47 +86,17 @@ export class LevelScene extends ex.Scene {
         }
 
         return this._currentScore;
-    } 
+    }
 
-    // TODO: split up into smaller chunks, too big now.
-    public load(setup: any, callback: (results: number) => void) {
-      this._setup = setup;
-      this._callbackOnTimerEnded = callback;
+    private _setupLevelMap(setup: any) {
+        if (this._levelMap) {
+            this.remove(this._levelMap);
+        }
+        this._levelMap = new LevelMap(setup);
+        this.add( this._levelMap );
+    }
 
-      if (this._levelMap) {
-        this.remove(this._levelMap);
-      }
-      this._levelMap = new LevelMap(setup);
-      this.add( this._levelMap );
-
-      let mapZIndex = this._levelMap.getZIndex();
-      
-      if(!this._cassa) {
-        this._cassa = new Cassa(setup.CASSA.X, setup.CASSA.Y, this._player);
-        this.add(this._cassa);
-      } else {
-        this._cassa.pos.x = setup.CASSA.X;
-        this._cassa.pos.y = setup.CASSA.Y;
-        this._cassa.setZIndex(mapZIndex + 1);
-      }
-
-      if(!this._door) {
-        this._door = new Door(setup, this._cassa, results => this.addPoints(results));
-        this.add(this._door);
-      } else {
-        this._door.resetState(setup);
-        this._door.setZIndex(mapZIndex + 1);
-      }
-
-      this._player.setZIndex(mapZIndex + 10);
-
-      if (this._scoreDisplay) {
-          this._scoreDisplay.resetState();
-      }
-      if (this._timer) {
-          this._timer.resetState();
-      }
-
+    private _setupStations(setup: any): void {
       // Food Stations
       this._stations.forEach(station => {
         this.remove(station);
@@ -149,13 +119,63 @@ export class LevelScene extends ex.Scene {
         this.add(decayTimer);
         this._decayTimer = decayTimer;
       }
-      
+    }
+
+    private _setupZIndex() {
+        let mapZIndex = this._levelMap.getZIndex();
+
+        this._cassa.setZIndex(mapZIndex + 1);
+        this._door.setZIndex(mapZIndex + 1);
+        this._player.setZIndex(mapZIndex + 10);
+    }
+
+    private _setupDisplays(setup: any): void {
+      if (this._scoreDisplay) {
+        this._scoreDisplay.resetState();
+      }
+      if (this._timer) {
+          this._timer.resetState();
+      }
+    }
+
+    private _setupDoor(setup: any): void {
+      if(!this._door) {
+        this._door = new Door(setup, this._cassa, results => this.addPoints(results));
+        this.add(this._door);
+      } else {
+        this._door.resetState(setup);
+      }
+    }
+
+    private _setupCassa(setup: any): void {
+      if(!this._cassa) {
+        this._cassa = new Cassa(setup.CASSA.X, setup.CASSA.Y, this._player);
+        this.add(this._cassa);
+      } else {
+        this._cassa.pos.x = setup.CASSA.X;
+        this._cassa.pos.y = setup.CASSA.Y;
+      }
+    }
+
+    private _setupBlob(setup: any): void {
       // Add a blob after a random time, the latest at half of the game time is over
       if (setup.BLOB) {
         setTimeout(() => {
           this.add(new Blob(setup, results => this.onBlobDied(results)));
         }, ex.Util.randomIntInRange(0, setup.DURATION_S*1000/2));
       }
+    }
+
+    public load(setup: any, callback: (results: number) => void) {
+      this._setup = setup;
+      this._callbackOnTimerEnded = callback;
+      this._setupLevelMap(setup);
+      this._setupDisplays(setup);
+      this._setupCassa(setup);
+      this._setupDoor(setup);
+      this._setupStations(setup);
+      this._setupBlob(setup);
+      this._setupZIndex();
     }
 
     update(engine: ex.Engine, delta: number) {
