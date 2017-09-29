@@ -4,21 +4,23 @@ import {ScoreCounter, Timer} from "./Timer";
 import {FoodStation} from "./FoodStation";
 import {Levels} from "./config/Levels";
 
+import {PreGameScene} from "./scenes/PreGameScene";
+import {LevelScene} from "./scenes/LevelScene";
+import {EndGameScene} from "./scenes/EndGameScene";
+
+
 export class Director {
     private _currentLevelName: string;
     private _levelData: any;
-    private _dynamicData: any;
-    private _currentScore: number;
-    private _isTimeRunning: boolean;
-    private _stations: Array<FoodStation>;
 
-    private _scoreDisplay: ScoreCounter;
-    private _timer: Timer;
+    private _intro: PreGameScene;
+    private _game: LevelScene;
+    private _outro: EndGameScene;
 
-    constructor() {        
-        this._currentScore = 0;
-        this._isTimeRunning = false;
-        this._dynamicData = {};
+    constructor(introScene: PreGameScene, gameScene: LevelScene, outroScene: EndGameScene) {
+        this._intro = introScene;
+        this._game = gameScene;
+        this._outro = outroScene;
     }
 
     loadLevelData(levelIdentifier:string): any {
@@ -26,13 +28,9 @@ export class Director {
         this._levelData = Levels.getLevel(levelIdentifier);
         return this._levelData;
     }
-
-    addDisplays(scoreCounter: ScoreCounter, timer: Timer) {
-        this._scoreDisplay = scoreCounter;
-        this._timer = timer;
-    }
     
     startLevel() {
+        /*
         this.startTime();
 
         if(this.getLevelData().STATIONS.DECAY && this._stations) {
@@ -44,6 +42,7 @@ export class Director {
             }, 10000);
             //}, 10000, false);
         }
+        */
     }
 
     getLevelData(key?: string): any {
@@ -56,64 +55,7 @@ export class Director {
         }
     }
 
-    getScore(): number {
-        return this._currentScore;
-    }
-
-    addPoints(points: number): number {
-        this._currentScore += points;
-
-        if (this._scoreDisplay) {
-            this._scoreDisplay.updateScore(this._currentScore);
-        }
-
-        return this._currentScore;
-    }
-
-    getDynamicData(): any {
-        return this._dynamicData;
-    }
-
-    exitLevel():void {
-        if (this._scoreDisplay) {
-            this._scoreDisplay.resetState();
-        }
-        if (this._timer) {
-            this._timer.resetState();
-        }
-    }
-
-    isTimeRunning():boolean {
-        return this._isTimeRunning;
-    }
-
-    startTime(): void {
-        this._isTimeRunning = true;
-
-        if (this._timer) {
-            this._timer.setTimer(this.getLevelData("DURATION_S"), () => { this.onTimeLimitReached(); });
-            this._timer.resetState();
-        }
-    }
-
-    continueTime(): void {
-        this._isTimeRunning = true;
-
-        if (this._timer) {
-            this._timer.unpause();
-        }
-    }
-
-    pauseTime(): void {
-        this._isTimeRunning = false;
-
-        if (this._timer) {
-            this._timer.pause();
-        }
-    }
-
     endLevel():void {
-        // TODO: eww!
         globals.endScreen();
     }
 
@@ -121,11 +63,36 @@ export class Director {
         this.endLevel();
     }
 
-    addStation(station: FoodStation): void {
-        if (!this._stations) {
-            this._stations = [];
-        }
+    // A level set consists of an intro level, a game level and an endgame scene. The director is responsible for creating and switching between these levels.
+    public loadLevelSet(mapName: string):void {
+        let setup = this.loadLevelData(mapName);
 
-        this._stations.push(station);
+        if (setup.INTRO) {
+            this._intro.load(setup, () => this.onIntroDone());
+            globals.preScreen();
+        } else {
+            this._game.load(setup, this.onGameDone);
+            globals.gameScreen();
+        }
     }
+
+    public onIntroDone():void {
+        this._game.load(this._levelData, results => this.onGameDone(results));
+        globals.gameScreen();
+    }
+    
+    public onGameDone(result): void {
+        this._outro.load(this._levelData, result, () => this.onEndSceneDone());
+        globals.endScreen();
+    }
+
+    public onEndSceneDone(): void {
+        if (this._levelData.NEXT) {
+            globals.loadNextLevel(this._levelData.NEXT);
+        } else {
+            globals.startMenu();
+        }
+    }
+
+
 }

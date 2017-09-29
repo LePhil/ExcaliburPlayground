@@ -23,6 +23,6 @@ export class Button extends ex.UIActor {
       this.add(label);
       
       this.off("pointerup", this.action);
-      this.on("pointerup", this.action);
+      this.on("pointerup", () => this.action());
     }
   }

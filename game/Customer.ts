@@ -4,7 +4,6 @@ import {Food} from "./Food";
 import {AbstractPlayer} from "./AbstractPlayer";
 import {Cassa} from "./Cassa";
 import {MoneyEffect} from "./Effects";
-import {Director} from "./Director";
 import {Storage} from "./Storage";
 import {Config} from "./config/Config";
 import {Resources} from "./config/Resources";
@@ -21,9 +20,10 @@ export class Customer extends AbstractPlayer {
   private _patienceIndicator: PatienceIndicator;
   private _initialX:number;
   private _initialY:number;
-  private _director: Director;
+  private _setup: any;
+  private _onGetServedCallback: (results:number) => void
 
-  constructor(x, y, cassa: Cassa, director: Director) {
+  constructor(x, y, cassa: Cassa, setup: any, onGetServedCallback: (results:number) => void) {
     super(x, y,
       Config.CUSTOMER.WIDTH,
       Config.CUSTOMER.HEIGHT,
@@ -31,11 +31,12 @@ export class Customer extends AbstractPlayer {
 
     this._initialX = x;
     this._initialY = y;
+    this._onGetServedCallback = onGetServedCallback;
 
     this.name = Config.CUSTOMER.NAMES[Math.floor(Math.random() * Config.CUSTOMER.NAMES.length)];
     this._hasDecided = false;
     this._hasReceivedItem = false;
-    this._director = director;
+    this._setup = setup;
 
     this._cassa = cassa;
 
@@ -131,7 +132,7 @@ export class Customer extends AbstractPlayer {
     }
 
     // earned score per customer depends on the patience they had left
-    this._director.addPoints(Config.SCORE.VALUE_OF_SERVING * this._patience / Config.CUSTOMER.INITIAL_PATIENCE);
+    this._onGetServedCallback(Config.SCORE.VALUE_OF_SERVING * this._patience / Config.CUSTOMER.INITIAL_PATIENCE);
 
     // Some fancy KA-CHING stuff
     this.scene.add(new MoneyEffect(this.pos.x, this.pos.y));
@@ -162,7 +163,7 @@ export class Customer extends AbstractPlayer {
   }
 
   private _getRandomFood(): Food {
-    let foods = this._director.getLevelData("FOODS");
+    let foods = this._setup.FOODS;
     let randomFood = foods[Math.floor(Math.random() * foods.length)];
 
     return new Food(randomFood);

@@ -1,16 +1,13 @@
 declare var globals: any;
 import * as ex from "excalibur";
-import {Director} from "./Director";
 import {MoneyEffect} from "./Effects";
 import {Config} from "./config/Config";
 import {Resources} from "./config/Resources";
 
 export class Blob extends ex.Actor {
   private _speed: number;
-  private _director: Director;
 
-  constructor(director: Director) {
-    let setup = director.getLevelData();
+  constructor(setup: any, callback: (results: number) => void) {
     let getRandomX = () => {
       let minX = (Config.GAME.WIDTH - setup.W) / 2;
       let maxX = Config.GAME.WIDTH - minX;
@@ -28,7 +25,6 @@ export class Blob extends ex.Actor {
 
     this._speed = Config.BLOB.SPEED;
     this.collisionType = ex.CollisionType.Passive;
-    this._director = director;
 
     let nrOfPoints = ex.Util.randomIntInRange(3, 6);
 
@@ -41,9 +37,9 @@ export class Blob extends ex.Actor {
 
     this.on("pointerdown", (event) => {
       this.kill();
-      this._director.addPoints(Config.BLOB.WORTH);
-
       this.scene.add(new MoneyEffect(this.pos.x, this.pos.y));
+      // TODO: maybe worth decreases with time?
+      callback(Config.BLOB.WORTH);
     });
   }
 

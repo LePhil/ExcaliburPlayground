@@ -2,7 +2,6 @@ declare var globals: any;
 import * as ex from "excalibur";
 import {Customer} from "./Customer";
 import {Cassa} from "./Cassa";
-import {Director} from "./Director";
 import {Resources} from "./config/Resources";
 import {Config} from "./config/Config";
 
@@ -16,17 +15,21 @@ export class Door extends ex.Actor {
     private _cassa:Cassa;
     private _customerSpawnerTimer: ex.Timer;
 
-    private _director: Director;
+    private _setup: any;
+    private _onGetServedCallback: (results: number) => void;
 
-    constructor(x, y, cassa:Cassa, spawnTime: number, director: Director) {
-        super(x, y,
+    constructor(setup: any, cassa:Cassa, onCustomerPaidCallback: (results:number) => void) {
+
+        super(setup.DOOR.X,
+            setup.DOOR.Y,
             Config.DOOR.W,
             Config.DOOR.H);
 
         this._cassa = cassa;
         this._open = false;
-        this._spawnTime = spawnTime;
-        this._director = director;
+        this._spawnTime = setup.DOOR.SPAWN_TIME_S;
+        this._setup = setup;
+        this._onGetServedCallback = onCustomerPaidCallback;
 
         this.on("pointerdown", this.open);
     }
@@ -48,10 +51,10 @@ export class Door extends ex.Actor {
         this.add(this._top);
         this.add(this._mid);
 
-        this._updateChildren();
+        this._updateDoorParts();
     }
 
-    private _updateChildren():void {
+    private _updateDoorParts():void {
         this._top.setDrawing(this._open ? "open" : "closed");
         this._mid.setDrawing(this._open ? "open" : "closed");
     }
@@ -60,6 +63,8 @@ export class Door extends ex.Actor {
         this.setState(false);
         if(this._customerSpawnerTimer) {
             this._customerSpawnerTimer.cancel();
+            this.scene.removeTimer(this._customerSpawnerTimer);
+            this._customerSpawnerTimer = null;
         }
     }
 
@@ -78,7 +83,7 @@ export class Door extends ex.Actor {
 
     public setState(isOpen:boolean):void {
         this._open = isOpen;
-        this._updateChildren();
+        this._updateDoorParts();
     }
 
     public spawn():void {
@@ -86,7 +91,16 @@ export class Door extends ex.Actor {
             this.pos.x,
             this.pos.y,
             this._cassa,
-            this._director);
+            this._setup,
+            this._onGetServedCallback);
         this.scene.add(newCustomer);
+        newCustomer.setZIndex(this.getZIndex() + 1);
+    }
+
+    public resetState(setup: any): void {
+        this.pos.x = setup.DOOR.X;
+        this.pos.y = setup.DOOR.Y;
+
+        this.close();
     }
 }

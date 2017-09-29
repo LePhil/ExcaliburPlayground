@@ -36,10 +36,10 @@ export class Levels {
                 DECAY: true
             },
             BLOB: true,
-            DURATION_S: 60,
+            DURATION_S: 10,
             INTRO: ["As a proud owner of your new pet store,",
             "make sure each customer gets what they want!"],
-            OUTRO: "Well done!",
+            OUTRO: ["Well done!"],
             NEXT: "Map_01"
         }, {
             NAME: "Map_01",
@@ -61,7 +61,7 @@ export class Levels {
             BLOB: true,
             DURATION_S: 60,
             INTRO: ["Second level"],
-            OUTRO: "Well done!"
+            OUTRO: ["Well done!"]
         }, {
             NAME: "intro_01",
             TYPE: Levels.TYPES.CUTSCENE,

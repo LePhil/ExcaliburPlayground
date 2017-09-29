@@ -9,8 +9,8 @@ export abstract class AbstractPlayer extends ex.Actor {
   private _lastPosY: number;
   private _characterColor: string;
 
-  constructor(x = Config.PLAYER.STARTX,
-              y = Config.PLAYER.STARTY,
+  constructor(x = Config.PLAYER.START.X,
+              y = Config.PLAYER.START.Y,
               w = Config.PLAYER.WIDTH,
               h = Config.PLAYER.HEIGHT,
               s = Config.PLAYER.SPEED) {

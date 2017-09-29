@@ -15,8 +15,8 @@ export class Player extends AbstractPlayer {
   private _isBusy:boolean;
 
   constructor(inventory: Inventory) {
-    super(Config.PLAYER.STARTX,
-          Config.PLAYER.STARTY,
+    super(Config.PLAYER.START.X,
+          Config.PLAYER.START.Y,
           Config.PLAYER.WIDTH,
           Config.PLAYER.HEIGHT);
 
@@ -156,6 +156,7 @@ export class Player extends AbstractPlayer {
   public resetState():void {
     this.inventory.resetState();
     this.actions.clearActions();
-    this.pos.x = Config.PLAYER.STARTY;
+    this.pos.x = Config.PLAYER.START.X;
+    this.pos.y = Config.PLAYER.START.Y;
   }
 }

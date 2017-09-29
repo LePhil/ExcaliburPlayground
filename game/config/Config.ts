@@ -3,8 +3,7 @@ import * as ex from "excalibur";
 
 export class Config {
   static PLAYER = {
-    STARTX: 500,
-    STARTY: 200,
+    START: {X: 500, Y: 200},
     WIDTH: 50,
     HEIGHT: 50,
     SPEED: 200,

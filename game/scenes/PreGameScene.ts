@@ -2,48 +2,44 @@ declare var globals: any;
 import * as ex from "excalibur";
 import {Button} from "../ui/Button";
 import {TextOverlay} from "../ui/TextOverlay";
-import {Director} from "../Director";
 import {Config} from "../config/Config";
 import {Resources} from "../config/Resources";
 
 export class PreGameScene extends ex.Scene {
 
-  private _director: Director;
+    private _textOverlay: TextOverlay;
+    private _button: Button;
 
-  constructor(engine: ex.Engine, director: Director) {
-    super(engine);
+    constructor(engine: ex.Engine) {
+        super(engine);
 
-    this._director = director;
-  }
+        this._textOverlay = new TextOverlay();
+        this.add(this._textOverlay);
+        
+        let pos_x = Config.GAME.WIDTH / 2 - Config.GAME.UI.BUTTON_WIDTH / 2;
+        let pos_y = Config.GAME.HEIGHT - 300;
+        
+        this._button = new Button(
+            pos_x, pos_y,
+            190, 49,
+            "Start",
+            Resources.ImgButton.asSprite(),
+            () => {}
+        );
 
-  public onInitialize(engine: ex.Engine) {
-    super.onInitialize(engine);
+        this.add(this._button);
+    }
 
-    this._director.loadLevelData("Map_00");
-    
-    let textOverlay = new TextOverlay(this._director.getLevelData("INTRO"));
-    this.add(textOverlay);
-    
-    let pos_x = Config.GAME.WIDTH / 2 - Config.GAME.UI.BUTTON_WIDTH / 2;
-    let pos_y = Config.GAME.HEIGHT - 300;
-    
-    let startGameButton = new Button(
-      pos_x, pos_y,
-      190, 49,
-      "Start",
-      Resources.ImgButton.asSprite(),
-      () => {this._startGame()}
-    );
+    public onInitialize(engine: ex.Engine) {
+        super.onInitialize(engine);
+    }
 
-    this.add(startGameButton);
+    public load(setup: any, callback: () => void) {
+      this._textOverlay.setText(setup.INTRO);
+      this._button.action = callback;
+    }
 
-  }
+    onActivate () {}
 
-  private _startGame():any {
-    globals.startGame();
-  }
-
-  onActivate () {}
-
-  onDeactivate () {}
+    onDeactivate () {}
 }

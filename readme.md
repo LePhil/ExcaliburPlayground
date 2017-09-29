@@ -18,15 +18,13 @@ Tiles/Sprites by Kenney (https://kenney.nl)
 * Time should show time (e.g. from 08:00 to 18:00) or at the least count down so it's clear when the time is almost over
 * saving the scores, show older scores (sorted)
 * Hover-States on Buttons
-* optional Intro and outro text for each level (maybe only intro, outro could go into the endscene)
-* Multiple levels with offhanding via Director
 * Speech bubbles or Text in its own container outside of the screen. Text on multi-colored bg just can't be read easily.
 * move away from electron...
-* new Director concept
 * Animals/Cages with limited amount of items
 * rate of interest in a food/animal/item should depend on the worth/duration/amount available. Expensive items should take a long time or be very limited or be only rarely asked for (or a combination/all of them)
 * maybe (MAYBE) a small minigame with direct input - it's more fun anyway :)
 * Button should have Resources.ImgButton as the default sprite, no need to always pass it.
+* player via LevelScene, not via door. Too far away!
 
 # Bugs
 * If speed is increased, actions should take less long as well (e.g. pickup)
@@ -44,7 +42,9 @@ Tiles/Sprites by Kenney (https://kenney.nl)
 * map config should contain next level's name
 * added props to Cutscene
 * Cutscenes can now change to other cutscene in the same Level
-
+* new Director concept
+* Multiple levels with offhanding via Director
+* optional Intro and outro text for each level (maybe only intro, outro could go into the endscene)
 
 # Won't do
 * -If inventory is full, clicks on station should not do anything- No. We'd have to check for Tools in Inventory (in case the station is broken) and if there are actions in the queue to remove some items - let the user make mistakes!

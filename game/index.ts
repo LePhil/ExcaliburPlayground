@@ -13,33 +13,32 @@ import {Cutscene} from "./scenes/Cutscene";
 import {Director} from "./Director";
 
 let game = new ex.Engine({ displayMode: ex.DisplayMode.FullScreen });
-let director = new Director();
 globals.game = game;
 
 game.add("menu", new MainMenu(game));
-game.add("pre", new PreGameScene(game, director));
-game.add("end", new EndGameScene(game, director));
 
-game.add("game", new LevelScene(game, director));
+let introScene = new PreGameScene(game);
+game.add("pre", introScene);
+
+let endgameScene = new EndGameScene(game);
+game.add("end", endgameScene);
+
+let gameScene = new LevelScene(game);
+game.add("game", gameScene );
 
 let cutScene = new Cutscene(game, "intro_01");
 game.add("cutScene", cutScene );
 
-globals.startMenu = () => {
-  game.goToScene("menu");
-};
+let director = new Director(introScene, gameScene, endgameScene);
 
-globals.preScreen = () => {
-  game.goToScene("pre");
-};
+globals.startMenu = () => { game.goToScene("menu"); };
+globals.preScreen = () => { game.goToScene("pre"); };
+globals.gameScreen= () => { game.goToScene("game"); };
+globals.endScreen = () => { game.goToScene("end"); };
 
-globals.endScreen = () => {
-  game.goToScene("end");
-};
-
-// TODO: levels
 globals.startGame = () => {
-  game.goToScene("game");
+  // TODO: save/get first level from storage
+  director.loadLevelSet("Map_00");
 };
 
 globals.startCutscene = () => {
@@ -52,6 +51,7 @@ globals.loadNextLevel = (levelIdentifier) => {
     globals.startCutscene();
   } else {
     // TODO - level/scene handling for non-cutscenes
+    director.loadLevelSet(levelIdentifier);
   }
 };
 

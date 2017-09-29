@@ -96,7 +96,7 @@ export class MainMenu extends ex.Scene {
   public startGame() {
     if ( !this._startButton.visible ) { return; }
 
-    globals.preScreen();
+    globals.startGame();
   }
 
   public startCutscene() {
