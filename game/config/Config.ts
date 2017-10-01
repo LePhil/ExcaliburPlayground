@@ -289,7 +289,7 @@ export class Config {
   static GAME = {
     WIDTH: 1024,  // defined by electron wrapper
     HEIGHT: 768,  // defined by electron wrapper
-    DEBUG: false,
+    DEBUG: true,
     UI: {
       BUTTON_WIDTH: 190,
       BUTTON_HEIGHT: 49,

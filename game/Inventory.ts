@@ -21,11 +21,6 @@ class InventoryItem extends ex.Actor {
 
   public draw(ctx: CanvasRenderingContext2D, delta: number) {
     super.draw(ctx, delta);
-
-    if(Config.GAME.DEBUG) {
-      ctx.fillStyle = 'rgb(200,0,0)';
-      ctx.fillRect(this.pos.x, this.pos.y, Config.INVENTORY.ITEMS.WIDTH, Config.INVENTORY.ITEMS.HEIGHT);
-    }
   }
 
   onInitialize(engine: ex.Engine): void {
