@@ -149,7 +149,7 @@ export class Config {
     genericItem_color_064: { x: 688, y: 1068, w: 58, h: 110 },
     genericItem_color_065: { x: 688, y: 240, w: 58, h: 88 },
     genericItem_color_066: { x: 627, y: 1075, w: 60, h: 94 },
-    genericItem_color_067: { x: 625, y: 1740, w: 66, h: 82 },
+    mobile_phone:           { x: 625, y: 1740, w: 66, h: 82, t: Config.ITEM_TYPES.PICKUPPABLE },
     genericItem_color_068: { x: 550, y: 696, w: 82, h: 96 },
     genericItem_color_069: { x: 474, y: 0, w: 84, h: 98 },
     genericItem_color_070: { x: 424, y: 784, w: 24, h: 44 },

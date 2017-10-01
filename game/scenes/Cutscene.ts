@@ -132,7 +132,6 @@ class Character extends AbstractPlayer implements Subject {
     }
 
     action_move(to: string) {
-        
         if (!this._locations[to]) {
             console.warn(`Location ${to} doesn't exist!`);
             return;
@@ -369,15 +368,19 @@ class CutSceneDirector extends ex.Actor {
             deltaT = action.getTimepoint();
         });
 
-        // Load next SCene/Level if applicable, otherwise back to the main menu
-        this.actions
-            .delay(3000)
-            .callMethod(() => {
-                if (this._setup.NEXT) {
-                    globals.loadNextLevel(this._setup.NEXT);
-                } else {
-                    globals.startMenu();
-                }
-            });
+        this.actions.delay(3000);
+        
+        if (this._setup.OUT === "fade") {
+            // TODO: fade out scene, e.g. fullscreen black actor covering everything with opacity going from 0 to 1 slowly.
+        }
+        
+        // Load next Scene/Level if applicable, otherwise back to the main menu
+        this.actions.callMethod(() => {
+            if (this._setup.NEXT) {
+                globals.loadNextLevel(this._setup.NEXT);
+            } else {
+                globals.startMenu();
+            }
+        });
     }
 }
