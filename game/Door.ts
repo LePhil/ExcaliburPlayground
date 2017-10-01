@@ -61,7 +61,7 @@ export class Door extends ex.Actor {
 
     public close():void {
         this.setState(false);
-        if(this._customerSpawnerTimer) {
+        if (this._customerSpawnerTimer) {
             this._customerSpawnerTimer.cancel();
             this.scene.removeTimer(this._customerSpawnerTimer);
             this._customerSpawnerTimer = null;

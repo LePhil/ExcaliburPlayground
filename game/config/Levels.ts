@@ -13,13 +13,38 @@ enum ActionType {
 export class Levels {
     static ActionType = ActionType;
     static TYPES = {
-        NORMAL: "normal",   // Normal time management
-        CUTSCENE: "cutscene"  // For some story
+        NORMAL: "normal",       // Normal time management
+        CUTSCENE: "cutscene"    // For some story
     };
     
     static MAPS = [
         {
             NAME: "Map_00",
+            TYPE: Levels.TYPES.NORMAL,
+            IMG: "Map_00",
+            W: 840,
+            H: 560,
+            CASSA: {X: 250, Y: 500},
+            DOOR:  {X: 800, Y: 595, SPAWN_TIME_S: 5},
+            FOODS: ["rabbit"],
+            STATIONS: {
+                PLACEMENTS: [
+                    {X: 700, Y: 400, T: "rabbit"}
+                ],
+                DECAY: false
+            },
+            TOOLS: {},
+            BLOB: false,
+            DURATION_S: 60,
+            INTRO: [
+                "Welcome to your new pet store!",
+                "Make your customers happy and sell them",
+                "all the rabbit food they need!"
+            ],
+            OUTRO: ["Well done!"],
+            NEXT: "Map_01"
+        }, {
+            NAME: "Map_01",
             TYPE: Levels.TYPES.NORMAL,
             IMG: "Map_00",
             W: 840,
@@ -47,9 +72,9 @@ export class Levels {
             INTRO: ["As a proud owner of your new pet store,",
             "make sure each customer gets what they want!"],
             OUTRO: ["Well done!"],
-            NEXT: "Map_01"
+            NEXT: "Map_02"
         }, {
-            NAME: "Map_01",
+            NAME: "Map_02",
             TYPE: Levels.TYPES.NORMAL,
             IMG: "Map_00",
             W: 840,
