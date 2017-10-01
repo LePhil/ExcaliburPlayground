@@ -113,6 +113,7 @@ class Character extends AbstractPlayer implements Subject {
     private name: string;
     private _locations:any;
     private _label:ex.Label;
+    private _color:string;
     private _initialLocation: Location;
     private _initialOpacity: number;    
 
@@ -125,6 +126,7 @@ class Character extends AbstractPlayer implements Subject {
 
         this._initialLocation = initialLocation;
         this._initialOpacity = initialOpacity;
+        this._color = color;
         this.name = name;
         this._locations = locations;
 
@@ -174,13 +176,7 @@ class Character extends AbstractPlayer implements Subject {
     }
 
     getPlayerColor(): string {
-        let playerColor = Config.PLAYER.INITIAL_TYPE; //start with green guy if no color was chosen
-        
-        if ( Storage.get("playerColor") ) {
-            playerColor = Storage.get("playerColor");
-        }
-        
-        return playerColor;
+        return this._color;
     }
 
     reset(): void {
