@@ -12,7 +12,10 @@ import {Storage} from "./Storage";
 
 export class Player extends AbstractPlayer {
   inventory: Inventory;
-  private _isBusy:boolean;
+  private _isBusy:boolean = false;
+  // Used temporarily to disable chaining of actions due to not being able to splice the actionQueue
+  // Can be removed once actionQueue-splicing works...
+  private _isWorkingOnATask: boolean = false;
 
   constructor(inventory: Inventory) {
     super(Config.PLAYER.START.X,
@@ -22,7 +25,6 @@ export class Player extends AbstractPlayer {
 
     this.inventory = inventory;
     this.collisionType = ex.CollisionType.Active;
-    this._isBusy = false;
   }
 
   getPlayerColor ():string {
@@ -42,6 +44,12 @@ export class Player extends AbstractPlayer {
 
   // TODO: very similar to sendToFoodStation...
   public pickupTool(tool: Tool, callback: any) {
+    if(this._isWorkingOnATask) {
+      return;
+    } else {
+      this._isWorkingOnATask = true;
+    }
+
     this.actions
       .moveTo(tool.pos.x, tool.pos.y, this._speed)
       .callMethod(() => {
@@ -53,6 +61,7 @@ export class Player extends AbstractPlayer {
         this._isBusy = false;
         this.setDrawing("idle");
         callback();
+        this._isWorkingOnATask = false;
       });
   }
   
@@ -63,6 +72,12 @@ export class Player extends AbstractPlayer {
   // TODO: found the bug - click on 2nd foodstations before 1st is reached --> the "waiting" happens while player is moving to the 2nd station already!
   // See https://github.com/excaliburjs/Excalibur/issues/292
   public sendToFoodStation(station: FoodStation, callback: () => void) {
+    if(this._isWorkingOnATask) {
+      return;
+    } else {
+      this._isWorkingOnATask = true;
+    }
+
     this.actions
       .moveTo(station.pos.x, station.pos.y, this._speed)
       .callMethod(() => {
@@ -88,6 +103,7 @@ export class Player extends AbstractPlayer {
         this.addFood(station.getFood());
         this._isBusy = false;
         this.setDrawing("idle");
+        this._isWorkingOnATask = false;
       });
   }
 
@@ -101,15 +117,24 @@ export class Player extends AbstractPlayer {
         station.fix();
         this._isBusy = false;
         this.setDrawing("idle");
+        this._isWorkingOnATask = false;
       });
   }
 
   public sendToCassa(cassa: Cassa, callback: any) {
-    // TODO: delay still necessary?
+    if(this._isWorkingOnATask) {
+      return;
+    } else {
+      this._isWorkingOnATask = true;
+    }
+
     this.actions
       .moveTo(cassa.pos.x, cassa.pos.y, 200)
       .delay(1000)
-      .callMethod(callback);
+      .callMethod(() => {
+        callback();
+        this._isWorkingOnATask = false;
+      });
   }
 
   public addFood(food: Food) {
@@ -160,5 +185,6 @@ export class Player extends AbstractPlayer {
     this.pos.y = Config.PLAYER.START.Y;
     this.setDrawing("idle");
     this._isBusy = false;
+    this._isWorkingOnATask = false;
   }
 }
