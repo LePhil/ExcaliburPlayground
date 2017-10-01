@@ -11,7 +11,6 @@ Done!
 * Upgrades/Events/Penalties!
 * * More/less space in inventory
 * * More reward per serving
-* * Randomly breaking stations? -> got to get Tools/Wrench to fix it before being able to resume using them
 * * A way to increase patience of customers
 * Time should show time (e.g. from 08:00 to 18:00) or at the least count down so it's clear when the time is almost over
 * saving the scores, show older scores (sorted)
@@ -53,6 +52,7 @@ Done!
 * Settings should be its own scene - showing & hiding buttons is embarassing.
 * stations don't break at the moment --> break again
 * Audio Settings + Storage
+* Randomly breaking stations -> got to get Hammer to fix it before being able to resume using them
 * Tools are generated via Config & ToolFactory
 
 # Won't do
