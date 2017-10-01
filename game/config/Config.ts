@@ -73,6 +73,11 @@ export class Config {
     snake:    {x: 384, y: 963,  w: 284, h: 334, duration: 2000}
   };
 
+  static ITEM_TYPES = {
+    CONSUMABLE: "consumable",
+    PICKUPPABLE: "pickuppable"
+  };
+
   static ITEMS = {
     CONF: {
       W: 50,
@@ -80,14 +85,14 @@ export class Config {
     },
     genericItem_color_001: { x: 0, y: 322, w: 162, h: 94 },
     genericItem_color_002: { x: 136, y: 1231, w: 120, h: 110 },
-    cup:                    { x: 130, y: 1791, w: 89, h: 45 },
-    wrench_single:          { x: 623, y: 1826, w: 70, h: 88 },
+    cup:                    { x: 130, y: 1791, w: 89, h: 45, t: Config.ITEM_TYPES.CONSUMABLE },
+    wrench_single:          { x: 623, y: 1826, w: 70, h: 88, t: Config.ITEM_TYPES.PICKUPPABLE },
     genericItem_color_005: { x: 626, y: 135, w: 66, h: 105 },
     genericItem_color_006: { x: 366, y: 1095, w: 96, h: 84 },
-    wrench_double:          { x: 628, y: 0, w: 60, h: 95 },
+    wrench_double:          { x: 628, y: 0, w: 60, h: 95, t: Config.ITEM_TYPES.PICKUPPABLE },
     genericItem_color_008: { x: 623, y: 1914, w: 68, h: 102 },
     genericItem_color_009: { x: 551, y: 1305, w: 76, h: 104 },
-    hammer:                 { x: 553, y: 1826, w: 70, h: 104 },
+    hammer:                 { x: 553, y: 1826, w: 70, h: 104, t: Config.ITEM_TYPES.PICKUPPABLE },
     genericItem_color_011: { x: 551, y: 1495, w: 75, h: 113 },
     genericItem_color_012: { x: 261, y: 993, w: 106, h: 102 },
     genericItem_color_013: { x: 556, y: 174, w: 70, h: 119 },
@@ -166,8 +171,8 @@ export class Config {
     genericItem_color_086: { x: 367, y: 1037, w: 38, h: 41 },
     genericItem_color_087: { x: 219, y: 1791, w: 31, h: 41 },
     genericItem_color_088: { x: 550, y: 792, w: 82, h: 82 },
-    pill_red:               { x: 312, y: 1186, w: 40, h: 40 },
-    pill_blue:              { x: 628, y: 95, w: 40, h: 40 },
+    pill_red:               { x: 312, y: 1186, w: 40, h: 40, t: Config.ITEM_TYPES.CONSUMABLE },
+    pill_blue:              { x: 628, y: 95, w: 40, h: 40, t: Config.ITEM_TYPES.CONSUMABLE },
     genericItem_color_091: { x: 688, y: 328, w: 57, h: 65 },
     genericItem_color_092: { x: 688, y: 84, w: 51, h: 51 },
     genericItem_color_093: { x: 690, y: 1365, w: 50, h: 104 },
@@ -179,7 +184,7 @@ export class Config {
     genericItem_color_099: { x: 256, y: 1226, w: 108, h: 105 },
     genericItem_color_100: { x: 461, y: 1611, w: 91, h: 93 },
     bone:                   { x: 550, y: 956, w: 81, h: 119 },
-    medkit:                 { x: 152, y: 532, w: 117, h: 117 },
+    medkit:                 { x: 152, y: 532, w: 117, h: 117, t: Config.ITEM_TYPES.CONSUMABLE },
     genericItem_color_103: { x: 689, y: 1257, w: 53, h: 108 },
     genericItem_color_104: { x: 735, y: 461, w: 35, h: 110 },
     serum_blue:             { x: 625, y: 497, w: 68, h: 93 },
@@ -187,7 +192,7 @@ export class Config {
     genericItem_color_107: { x: 553, y: 1740, w: 72, h: 86 },
     genericItem_color_108: { x: 631, y: 956, w: 60, h: 112 },
     genericItem_color_109: { x: 143, y: 1027, w: 118, h: 89 },
-    stethoscope:            { x: 364, y: 1186, w: 98, h: 128 },
+    stethoscope:            { x: 364, y: 1186, w: 98, h: 128, t: Config.ITEM_TYPES.PICKUPPABLE },
     genericItem_color_111: { x: 254, y: 1804, w: 110, h: 138 },
     genericItem_color_112: { x: 464, y: 696, w: 86, h: 86 },
     genericItem_color_113: { x: 129, y: 1839, w: 125, h: 194 },
@@ -201,7 +206,7 @@ export class Config {
     genericItem_color_121: { x: 556, y: 293, w: 69, h: 72 },
     genericItem_color_122: { x: 691, y: 1914, w: 46, h: 95 },
     genericItem_color_123: { x: 691, y: 1710, w: 47, h: 95 },
-    coffee:                 { x: 145, y: 880, w: 117, h: 113 },
+    coffee:                 { x: 145, y: 880, w: 117, h: 113, t: Config.ITEM_TYPES.CONSUMABLE },
     genericItem_color_125: { x: 0, y: 620, w: 152, h: 116 },
     genericItem_color_126: { x: 558, y: 0, w: 70, h: 135 },
     genericItem_color_127: { x: 691, y: 696, w: 50, h: 140 },
@@ -232,7 +237,7 @@ export class Config {
     genericItem_color_152: { x: 467, y: 406, w: 85, h: 100 },
     genericItem_color_153: { x: 553, y: 1608, w: 73, h: 132 },
     genericItem_color_154: { x: 367, y: 964, w: 94, h: 73 },
-    key:                    { x: 625, y: 293, w: 63, h: 65 },
+    key:                    { x: 625, y: 293, w: 63, h: 65, t: Config.ITEM_TYPES.PICKUPPABLE },
     genericItem_color_156: { x: 550, y: 1075, w: 77, h: 100 },
     wallet:                 { x: 363, y: 1942, w: 98, h: 102 },
     wad_of_cash:            { x: 268, y: 649, w: 101, h: 106 },

@@ -4,7 +4,19 @@ import {Config} from "./config/Config";
 import {Resources} from "./config/Resources";
 import {Player} from "./Player";
 
-// maybe in Inventory as an InventoryItem? --> can be picked up and gets consumed by station on fixing..?
+export class ToolFactory {
+    static create(x: number, y: number, type: string, player: Player): Tool {
+        if (Config.ITEMS[type].t === Config.ITEM_TYPES.CONSUMABLE) {
+            return new ConsumableTool(x, y, type, player);
+        } else if (Config.ITEMS[type].t === Config.ITEM_TYPES.PICKUPPABLE) {
+            return new PickuppableTool(x, y, type, player);
+        } else {
+            console.warn(`Tool "${type}" doesn't have a type. Using "Tool".`);
+            return new Tool(x, y, type, player);
+        }
+    }
+}
+
 export class Tool extends ex.Actor{
     private _type:string;
     private _isActive: boolean;
@@ -16,7 +28,6 @@ export class Tool extends ex.Actor{
         
         this.collisionType = ex.CollisionType.Passive;
         this._type = type;
-        this._isActive = true;
     
         this.on("pointerdown", (event) => {
             this.handleClick(player);
@@ -37,7 +48,7 @@ export class Tool extends ex.Actor{
         this.addDrawing("normal", sprite);
         this.addDrawing("inactive", darkSprite);
 
-        this.setDrawing("normal");
+        this.setActive();
     }
 
     handleClick(player: Player) {
@@ -60,6 +71,10 @@ export class Tool extends ex.Actor{
     }
 
     handlePickup(player: Player):void {}
+
+    resetState(): void {
+        this.setActive();
+    }
 }
 
 // These tools can be picked up and get added to the inventory 

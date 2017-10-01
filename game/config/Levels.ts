@@ -35,6 +35,13 @@ export class Levels {
                 ],
                 DECAY: true
             },
+            TOOLS: {
+                PLACEMENTS: [
+                    {X: 200, Y: 200, T: "cup"},
+                    {X: 200, Y: 250, T: "hammer"},
+                    {X: 200, Y: 300, T: "bone"}
+                ]
+            },
             BLOB: true,
             DURATION_S: 10,
             INTRO: ["As a proud owner of your new pet store,",
@@ -57,6 +64,11 @@ export class Levels {
                     {X: 600, Y: 300, T: "giraffe"}
                 ],
                 DECAY: true
+            },
+            TOOLS: {
+                PLACEMENTS: [
+                    {X: 500, Y: 500, T: "hammer"}
+                ]
             },
             BLOB: true,
             DURATION_S: 60,

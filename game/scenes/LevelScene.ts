@@ -11,7 +11,7 @@ import {Customer} from "../Customer";
 import {LevelMap} from "../LevelMap";
 import {Door} from "../Door";
 import {Cassa} from "../Cassa";
-import {Tool, ConsumableTool, PickuppableTool} from "../Tools";
+import {ToolFactory, Tool, ConsumableTool, PickuppableTool} from "../Tools";
 import {Config} from "../config/Config";
 
 export class LevelScene extends ex.Scene {
@@ -22,6 +22,7 @@ export class LevelScene extends ex.Scene {
     private _scoreDisplay:ScoreCounter;
     private _door:Door;
     private _cassa:Cassa;
+    private _tools: Array<Tool>;
     private _stations: Array<FoodStation>;
     private _decayTimer: ex.Timer;
     private _callbackOnTimerEnded: (results: number) => void;
@@ -42,15 +43,10 @@ export class LevelScene extends ex.Scene {
       let inv = new Inventory();
       this.add(inv);
 
+      this._tools = [];
       this._stations = [];
       
       this._player = new Player(inv);
-
-      // TODO: set up tools via Level Setup
-      this.createGroup("tools");
-      this.getGroup("tools").add( new ConsumableTool(200, 200, "cup", this._player) )
-      this.getGroup("tools").add( new PickuppableTool(200, 250, "hammer", this._player) );
-      this.getGroup("tools").add( new PickuppableTool(200, 300, "bone", this._player) );
       
       this.add(this._player);
     }
@@ -96,19 +92,31 @@ export class LevelScene extends ex.Scene {
         this.add( this._levelMap );
     }
 
+    private _setupTools(setup: any): void {
+      this._tools.forEach(tool => {
+        this.remove(tool);
+      });
+
+      this._tools = [];
+
+      setup.TOOLS.PLACEMENTS.forEach(placement => {
+        let tool = ToolFactory.create(placement.X, placement.Y, placement.T, this._player);
+        this.add(tool);
+        this._tools.push(tool);
+      });
+    }
+
     private _setupStations(setup: any): void {
-      // Food Stations
       this._stations.forEach(station => {
         this.remove(station);
       });
+
       this._stations = [];
+
       setup.STATIONS.PLACEMENTS.forEach(placement => {
         let foodStation = new FoodStation(placement.X, placement.Y, placement.T, this._player);
         this.add(foodStation);
-
-        if (setup.STATIONS.DECAY) {
-          this._stations.push(foodStation);
-        }
+        this._stations.push(foodStation);
       });
 
       if(setup.STATIONS.DECAY && this._stations) {
@@ -173,6 +181,7 @@ export class LevelScene extends ex.Scene {
       this._setupDisplays(setup);
       this._setupCassa(setup);
       this._setupDoor(setup);
+      this._setupTools(setup);
       this._setupStations(setup);
       this._setupBlob(setup);
       this._setupZIndex();
