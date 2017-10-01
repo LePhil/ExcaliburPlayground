@@ -19,88 +19,7 @@ export class Levels {
     
     static MAPS = [
         {
-            NAME: "Map_00",
-            TYPE: Levels.TYPES.NORMAL,
-            IMG: "Map_00",
-            W: 840,
-            H: 560,
-            CASSA: {X: 250, Y: 500},
-            DOOR:  {X: 800, Y: 595, SPAWN_TIME_S: 5},
-            FOODS: ["rabbit"],
-            STATIONS: {
-                PLACEMENTS: [
-                    {X: 700, Y: 400, T: "rabbit"}
-                ],
-                DECAY: false
-            },
-            TOOLS: {},
-            BLOB: false,
-            DURATION_S: 60,
-            INTRO: [
-                "Welcome to your new Rabbit Food Store!",
-                "Make your customers happy and sell them",
-                "all the rabbit food they need!"
-            ],
-            OUTRO: ["Well done!"],
-            NEXT: "Map_01"
-        }, {
-            NAME: "Map_01",
-            TYPE: Levels.TYPES.NORMAL,
-            IMG: "Map_00",
-            W: 840,
-            H: 560,
-            CASSA: {X: 250, Y: 500},
-            DOOR:  {X: 800, Y: 595, SPAWN_TIME_S: 5},
-            FOODS: ["rabbit", "elephant", "giraffe"],
-            STATIONS: {
-                PLACEMENTS: [
-                    {X: 700, Y: 500, T: "rabbit"},
-                    {X: 300, Y: 300, T: "elephant"},
-                    {X: 600, Y: 300, T: "giraffe"}
-                ],
-                DECAY: true
-            },
-            TOOLS: {
-                PLACEMENTS: [
-                    {X: 200, Y: 200, T: "cup"},
-                    {X: 200, Y: 250, T: "hammer"},
-                    {X: 200, Y: 300, T: "bone"}
-                ]
-            },
-            BLOB: true,
-            DURATION_S: 10,
-            INTRO: ["As a proud owner of your new pet store,",
-            "make sure each customer gets what they want!"],
-            OUTRO: ["Well done!"],
-            NEXT: "Map_02"
-        }, {
-            NAME: "Map_02",
-            TYPE: Levels.TYPES.NORMAL,
-            IMG: "Map_00",
-            W: 840,
-            H: 560,
-            CASSA: {X: 250, Y: 500},
-            DOOR:  {X: 800, Y: 595, SPAWN_TIME_S: 5},
-            FOODS: ["rabbit", "elephant", "giraffe"],
-            STATIONS: {
-                PLACEMENTS: [
-                    {X: 700, Y: 500, T: "rabbit"},
-                    {X: 300, Y: 300, T: "elephant"},
-                    {X: 600, Y: 300, T: "giraffe"}
-                ],
-                DECAY: true
-            },
-            TOOLS: {
-                PLACEMENTS: [
-                    {X: 500, Y: 500, T: "hammer"}
-                ]
-            },
-            BLOB: true,
-            DURATION_S: 60,
-            INTRO: ["Second level"],
-            OUTRO: ["Well done!"]
-        }, {
-            NAME: "intro_01",
+            NAME: "schools_out",
             TYPE: Levels.TYPES.CUTSCENE,
             IMG: "Map_intro_01",
             W: 840,
@@ -135,9 +54,9 @@ export class Levels {
                 {T: 58, S: "hime", A: ActionType.Hide}                
             ],
             OUT: "fade",
-            NEXT: "forest_01"
-        },{
-            NAME: "forest_01",
+            NEXT: "uncle_to_the_rescue"
+        }, {
+            NAME: "uncle_to_the_rescue",
             TYPE: Levels.TYPES.CUTSCENE,
             IMG: "Map_forest",
             W: 840,
@@ -182,7 +101,88 @@ export class Levels {
                 {T: 63, S: "oldguy",A: ActionType.Talk, O: {text: "Humbug! You can start tomorrow!", duration: 3} },
                 {T: 66, S: "oldguy",A: ActionType.Move, O: {to: "old_guy_entry"} }
             ],
-            NEXT: "Map_00"
+            NEXT: "first_day"
+        }, {
+            NAME: "first_day",
+            TYPE: Levels.TYPES.NORMAL,
+            IMG: "Map_01_first_day",
+            W: 840,
+            H: 560,
+            CASSA: {X: 250, Y: 500},
+            DOOR:  {X: 800, Y: 595, SPAWN_TIME_S: 5},
+            FOODS: ["rabbit"],
+            STATIONS: {
+                PLACEMENTS: [
+                    {X: 700, Y: 400, T: "rabbit"}
+                ],
+                DECAY: false
+            },
+            TOOLS: {},
+            BLOB: false,
+            DURATION_S: 60,
+            INTRO: [
+                "Welcome to your new Rabbit Food Store!",
+                "Make your customers happy and sell them",
+                "all the rabbit food they need!"
+            ],
+            OUTRO: ["Well done!"],
+            NEXT: "Map_01"
+        }, {
+            NAME: "Map_01",
+            TYPE: Levels.TYPES.NORMAL,
+            IMG: "Map_01_first_day",
+            W: 840,
+            H: 560,
+            CASSA: {X: 250, Y: 500},
+            DOOR:  {X: 800, Y: 595, SPAWN_TIME_S: 5},
+            FOODS: ["rabbit", "elephant", "giraffe"],
+            STATIONS: {
+                PLACEMENTS: [
+                    {X: 700, Y: 500, T: "rabbit"},
+                    {X: 300, Y: 300, T: "elephant"},
+                    {X: 600, Y: 300, T: "giraffe"}
+                ],
+                DECAY: true
+            },
+            TOOLS: {
+                PLACEMENTS: [
+                    {X: 200, Y: 200, T: "cup"},
+                    {X: 200, Y: 250, T: "hammer"},
+                    {X: 200, Y: 300, T: "bone"}
+                ]
+            },
+            BLOB: true,
+            DURATION_S: 10,
+            INTRO: ["As a proud owner of your new pet store,",
+            "make sure each customer gets what they want!"],
+            OUTRO: ["Well done!"],
+            NEXT: "Map_02"
+        }, {
+            NAME: "Map_02",
+            TYPE: Levels.TYPES.NORMAL,
+            IMG: "Map_01_first_day",
+            W: 840,
+            H: 560,
+            CASSA: {X: 250, Y: 500},
+            DOOR:  {X: 800, Y: 595, SPAWN_TIME_S: 5},
+            FOODS: ["rabbit", "elephant", "giraffe"],
+            STATIONS: {
+                PLACEMENTS: [
+                    {X: 700, Y: 500, T: "rabbit"},
+                    {X: 300, Y: 300, T: "elephant"},
+                    {X: 600, Y: 300, T: "giraffe"}
+                ],
+                DECAY: true
+            },
+            TOOLS: {
+                PLACEMENTS: [
+                    {X: 500, Y: 500, T: "hammer"}
+                ]
+            },
+            BLOB: true,
+            DURATION_S: 60,
+            INTRO: ["Second level"],
+            OUTRO: ["Well done!"]
         }
     ];
 
@@ -205,6 +205,6 @@ export class Levels {
     }
 
     static getCurrentLevelName(): string {
-        return Storage.get("currentLevel", "Map_00");
+        return Storage.get("currentLevel", "schools_out");
     }
 }

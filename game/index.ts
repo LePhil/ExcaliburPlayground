@@ -32,7 +32,7 @@ game.add("end", endgameScene);
 let gameScene = new LevelScene(game);
 game.add("game", gameScene );
 
-let cutScene = new Cutscene(game, "intro_01");
+let cutScene = new Cutscene(game);
 game.add("cutScene", cutScene );
 
 let director = new Director(introScene, gameScene, endgameScene);
@@ -44,7 +44,7 @@ globals.endScreen     = () => { game.goToScene("end"); };
 globals.credits       = () => { game.goToScene("credits"); };
 globals.optionsScene  = () => { game.goToScene("options"); };
 globals.startCutscene = () => { game.goToScene("cutScene"); };
-globals.startGame     = () => { director.loadLevelSet(Levels.getCurrentLevelName()); };
+globals.startGame     = () => { globals.loadNextLevel(Levels.getCurrentLevelName()); };
 
 globals.loadNextLevel = (levelIdentifier) => {
   if(Levels.isCutscene(levelIdentifier)) {

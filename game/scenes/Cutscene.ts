@@ -9,17 +9,14 @@ import {Resources} from "../config/Resources";
 
 export class Cutscene extends ex.Scene {
     private cutSceneDirector:CutSceneDirector;
-    private _levelName: string;
+    private _levelName: string = "";
 
-    constructor(engine: ex.Engine, levelName: string) {
+    constructor(engine: ex.Engine) {
         super(engine);
-
-        this._levelName = levelName;
-        this.loadLevelData(levelName);
     }
 
     public loadLevelData(levelName: string): void {
-        if(this._levelName !== levelName) {
+        if(this._levelName !== levelName && this.cutSceneDirector) {
             // new level to be loaded! Discard of all actors for now
             this.cutSceneDirector.kill();
         }
