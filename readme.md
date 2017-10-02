@@ -24,6 +24,7 @@ Done!
 * Pagination on textoverlay, if content is too long.
 * Settings for Text in Textoverlay (Bold, etc.) from Config
 * various button positions via Config, don't want to calculate it in each scene again..
+* Cassa click: Player shouldn't stand on top of it, but beside the cassa. Makes it easier to click it as well!
 
 # Bugs
 * If speed is increased, actions should take less long as well (e.g. pickup)

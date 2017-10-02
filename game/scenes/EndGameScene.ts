@@ -29,13 +29,13 @@ export class EndGameScene extends ex.Scene {
     
         this.add(new Button(
             pos_x_left, pos_y,
-            "Zurück",
+            "Back",
             () => { globals.startMenu(); }
         ));
 
         this._button = new Button(
             pos_x_right, pos_y,
-            "Weiter",
+            "Continue",
             () => {}
         );
         this.add(this._button);
