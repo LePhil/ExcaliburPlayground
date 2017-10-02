@@ -7,7 +7,8 @@ export abstract class AbstractPlayer extends ex.Actor {
   _speed: number;
   private _lastPosX: number;
   private _lastPosY: number;
-  private _characterColor: string;
+  private _engine: ex.Engine;
+  characterColor: string;
 
   constructor(x = Config.PLAYER.START.X,
               y = Config.PLAYER.START.Y,
@@ -23,20 +24,26 @@ export abstract class AbstractPlayer extends ex.Actor {
   }
 
   onInitialize(engine: ex.Engine): void {
+    this.characterColor = this.getPlayerColor();
+    this._engine = engine;
+    this.setDrawings(this.characterColor);
+  }
+
+  public setDrawings(playerColor: string): void {
+    this.characterColor = playerColor;
     let spriteSheet = new ex.SpriteSheet(Resources.TexturePlayers, 7, 8, 128, 256);
 
-    let playerColor = this.getPlayerColor();
     let colorIndex = Config.PLAYER.TYPES.indexOf(Config.PLAYER.TYPES.filter( type => type.color === playerColor )[0]);
     let scale = Config.PLAYER.SPRITE_SCALE;
     let speed = Config.PLAYER.SPRITE_ANIM_SPEED;
     let coords = Config.PLAYER.TYPES[colorIndex].coords;
 
-    let walkRightAnim = spriteSheet.getAnimationByIndices(engine, coords.walkR, speed);
+    let walkRightAnim = spriteSheet.getAnimationByIndices(this._engine, coords.walkR, speed);
     walkRightAnim.loop = true;
     walkRightAnim.scale.setTo(scale, scale);
     this.addDrawing("walkRight", walkRightAnim);
 
-    let walkLeftAnim = spriteSheet.getAnimationByIndices(engine, coords.walkR, speed);
+    let walkLeftAnim = spriteSheet.getAnimationByIndices(this._engine, coords.walkR, speed);
     walkLeftAnim.loop = true;
     walkLeftAnim.flipHorizontal = true;
     walkLeftAnim.scale.setTo(scale, scale);
@@ -46,7 +53,7 @@ export abstract class AbstractPlayer extends ex.Actor {
     idleSprite.scale.setTo(scale, scale);
     this.addDrawing("idle", idleSprite);
 
-    let walkUpAnim = spriteSheet.getAnimationByIndices(engine, coords.walkUp, speed);
+    let walkUpAnim = spriteSheet.getAnimationByIndices(this._engine, coords.walkUp, speed);
     walkUpAnim.loop = true;
     walkUpAnim.scale.setTo(scale, scale);
     this.addDrawing("walkUp", walkUpAnim);
