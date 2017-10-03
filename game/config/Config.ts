@@ -293,7 +293,14 @@ export class Config {
     UI: {
       BUTTON_WIDTH: 190,
       BUTTON_HEIGHT: 49,
-      OVERLAY: {W: 600, H: 400}
+      OVERLAY: {W: 600, H: 400},
+      BUTTONS: {
+        POSITIONS: {
+          center: {X: 1024/2, Y: 768/2}
+        },
+        W: 190,
+        H: 49
+      }
     }
   };
 
