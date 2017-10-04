@@ -87,8 +87,11 @@ export class LevelScene extends ex.Scene {
         if (this._levelMap) {
             this.remove(this._levelMap);
         }
-        this._levelMap = new LevelMap(setup);
-        this.add( this._levelMap );
+
+        if (setup.IMG) {
+          this._levelMap = new LevelMap(setup);
+          this.add( this._levelMap );
+        }
     }
 
     private _setupTools(setup: any): void {
