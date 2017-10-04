@@ -148,7 +148,8 @@ export class Levels {
             INTRO: [
                 "Welcome to your new Rabbit Food Store!",
                 "Make your customers happy and sell them",
-                "all the rabbit food they need!"
+                "all the rabbit food they need!",
+                "(and don't forget to open the door)"
             ],
             OUTRO: ["Well done!"],
             NEXT: "Map_01"
