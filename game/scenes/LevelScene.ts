@@ -139,12 +139,19 @@ export class LevelScene extends ex.Scene {
         }
     }
 
+    /**
+     * If there's a level map, the z index has to be
+     * fixed after each game because new actors are
+     * spawned on top of it.
+     */
     private _setupZIndex() {
-        let mapZIndex = this._levelMap.getZIndex();
-
-        this._cassa.setZIndex(mapZIndex + 1);
-        this._door.setZIndex(mapZIndex + 1);
-        this._player.setZIndex(mapZIndex + 10);
+        if (this._levelMap) {
+            let mapZIndex = this._levelMap.getZIndex();
+            
+            this._cassa && this._cassa.setZIndex(mapZIndex + 1);
+            this._door && this._door.setZIndex(mapZIndex + 1);
+            this._player && this._player.setZIndex(mapZIndex + 10);
+        }
     }
 
     private _setupDisplays(setup: any): void {

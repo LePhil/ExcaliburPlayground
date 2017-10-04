@@ -19,6 +19,31 @@ export class Levels {
     
     static MAPS = [
         {
+            NAME: "Test",
+            TYPE: Levels.TYPES.NORMAL,
+            W: 840,
+            H: 560,
+            CASSA: {X: 250, Y: 500},
+            DOOR:  {X: 800, Y: 595, SPAWN_TIME_S: 5},
+            FOODS: ["rabbit", "elephant", "giraffe"],
+            STATIONS: {
+                PLACEMENTS: [
+                    {X: 700, Y: 500, T: "rabbit"},
+                    {X: 300, Y: 300, T: "elephant"},
+                    {X: 600, Y: 300, T: "giraffe"}
+                ],
+                DECAY: true
+            },
+            TOOLS: {
+                PLACEMENTS: [
+                    {X: 500, Y: 500, T: "hammer"}
+                ]
+            },
+            BLOB: true,
+            DURATION_S: 60,
+            INTRO: [{text: "Hello", fontSize: 44, color: ex.Color.Red}],
+            OUTRO: ["Well done!"]
+        }, {
             NAME: "schools_out",
             TYPE: Levels.TYPES.CUTSCENE,
             IMG: "Map_intro_01",
