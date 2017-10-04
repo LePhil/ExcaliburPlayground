@@ -2,7 +2,7 @@ declare var globals: any;
 import * as ex from "excalibur";
 import {Digit} from "../Digit";
 import {TextOverlay} from "../ui/TextOverlay";
-import {Button} from "../ui/Button";
+import {Pos, Button} from "../ui/Button";
 import {Medal} from "../ui/Medal";
 import {Config} from "../config/Config";
 import {Resources} from "../config/Resources";
@@ -14,10 +14,6 @@ export class EndGameScene extends ex.Scene {
 
     constructor(engine: ex.Engine) {
         super(engine);
-
-        let pos_x_left = Config.GAME.WIDTH / 2 - Config.GAME.UI.BUTTON_WIDTH - 10;
-        let pos_x_right = Config.GAME.WIDTH / 2 + Config.GAME.UI.BUTTON_WIDTH + 10;
-        let pos_y = Config.GAME.HEIGHT - 300;
     
         this._textOverlay = new TextOverlay();
         this.add(this._textOverlay);
@@ -28,13 +24,13 @@ export class EndGameScene extends ex.Scene {
         this.add( new Medal(200, 200, "sun_silver") );
     
         this.add(new Button(
-            pos_x_left, pos_y,
+            Pos.make(Config.GAME.UI.BUTTONS.POSITIONS.bottom_l),
             "Back",
             () => { globals.startMenu(); }
         ));
 
         this._button = new Button(
-            pos_x_right, pos_y,
+            Pos.make(Config.GAME.UI.BUTTONS.POSITIONS.bottom_r),
             "Continue",
             () => {}
         );

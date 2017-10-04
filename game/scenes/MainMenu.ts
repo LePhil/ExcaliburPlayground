@@ -1,6 +1,6 @@
 declare var globals: any;
 import * as ex from "excalibur";
-import {Button} from "../ui/Button";
+import {Pos, Button} from "../ui/Button";
 import {Config} from "../config/Config";
 import {Levels} from "../config/Levels";
 import {AudioManager} from "../AudioManager";
@@ -15,32 +15,28 @@ export class MainMenu extends ex.Scene {
     constructor(engine: ex.Engine) {
         super(engine);
         
-        let pos0_y = Config.GAME.HEIGHT / 2 - 3 * Config.GAME.UI.BUTTON_HEIGHT;
-        let pos1_x = Config.GAME.WIDTH / 2 - Config.GAME.UI.BUTTON_WIDTH / 2;
-        let pos1_y = Config.GAME.HEIGHT / 2 - Config.GAME.UI.BUTTON_HEIGHT;
-        let pos2_x = Config.GAME.WIDTH / 2 - Config.GAME.UI.BUTTON_WIDTH / 2;
-        let pos2_y = Config.GAME.HEIGHT / 2 + Config.GAME.UI.BUTTON_HEIGHT;
+        let buttonPos = Config.GAME.UI.BUTTONS.POSITIONS;
 
         this._introButton = new Button(
-            pos1_x, pos0_y,
+            Pos.make(buttonPos.center_1),
             "Intro",
             () => {globals.startCutscene();}
         );
 
         this._startButton = new Button(
-            pos1_x, pos1_y,
+            Pos.make(buttonPos.center_2),
             "Start",
             () => {globals.startGame();}
         );
 
         this._optionsButton = new Button(
-            pos2_x, pos2_y,
+            Pos.make(buttonPos.center_3),
             "Options",
             () => {globals.optionsScene();}
         );
 
         this._creditsButton = new Button(
-            500, 500,
+            Pos.make(buttonPos.center_4),
             "Credits",
             () => {globals.credits();}
         )
@@ -52,7 +48,10 @@ export class MainMenu extends ex.Scene {
 
         if (Config.GAME.DEBUG) {
             Levels.MAPS.forEach((map, index) => {
-              this.add(new Button(0, 0 + index * 50, map.NAME, () => globals.loadNextLevel(map.NAME) ));
+              this.add(new Button(
+                Pos.make(Config.GAME.UI.BUTTON_WIDTH/2, Config.GAME.UI.BUTTON_HEIGHT/2 + index * 50),
+                map.NAME,
+                () => globals.loadNextLevel(map.NAME) ));
             });
         }
     }

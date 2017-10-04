@@ -1,6 +1,6 @@
 declare var globals: any;
 import * as ex from "excalibur";
-import {Button} from "../ui/Button";
+import {Pos, Button} from "../ui/Button";
 import {TextOverlay} from "../ui/TextOverlay";
 import {Config} from "../config/Config";
 import {Resources} from "../config/Resources";
@@ -20,7 +20,7 @@ export class PreGameScene extends ex.Scene {
         let pos_y = Config.GAME.HEIGHT - 300;
         
         this._button = new Button(
-            pos_x, pos_y,
+            Pos.make(Config.GAME.UI.BUTTONS.POSITIONS.bottom_r),
             "Start",
             () => {}
         );

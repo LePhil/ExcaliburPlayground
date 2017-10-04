@@ -1,6 +1,6 @@
 declare var globals: any;
 import * as ex from "excalibur";
-import {Button} from "../ui/Button";
+import {Pos, Button} from "../ui/Button";
 import {TextOverlay} from "../ui/TextOverlay";
 import {Config} from "../config/Config";
 import {Resources} from "../config/Resources";
@@ -18,29 +18,26 @@ export class OptionsScene extends ex.Scene {
     constructor(engine: ex.Engine) {
         super(engine);
 
-        let pos0_y = Config.GAME.HEIGHT / 2 - 3 * Config.GAME.UI.BUTTON_HEIGHT;
-        let pos1_x = Config.GAME.WIDTH / 2 - Config.GAME.UI.BUTTON_WIDTH / 2;
-        let pos1_y = Config.GAME.HEIGHT / 2 - Config.GAME.UI.BUTTON_HEIGHT;
-        let pos2_x = Config.GAME.WIDTH / 2 - Config.GAME.UI.BUTTON_WIDTH / 2;
-        let pos2_y = Config.GAME.HEIGHT / 2 + Config.GAME.UI.BUTTON_HEIGHT;
-
+        
         this._playerPreview = new PlayerPreview(100, 100);
         this.add(this._playerPreview);
-
+        
+        let buttonPos = Config.GAME.UI.BUTTONS.POSITIONS;
+        
         this._backButton = new Button(
-            pos2_x, pos2_y,
+            Pos.make(buttonPos.bottom_l),
             "Back",
             () => {globals.startMenu();},
         );
       
         this._changePlayerButton = new Button(
-            pos1_x, pos1_y,
+            Pos.make(buttonPos.center_1),
             "Change",
             () => {this.changePlayer()}
         );
 
         this._muteButton = new Button(
-            500, 500,
+            Pos.make(buttonPos.center_2),
             "Mute/Unmute",
             () => {this.toggleMute();}
         );
