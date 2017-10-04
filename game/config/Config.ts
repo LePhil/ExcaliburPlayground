@@ -296,7 +296,16 @@ export class Config {
       OVERLAY: {W: 600, H: 400},
       BUTTONS: {
         POSITIONS: {
-          center: {X: 1024/2, Y: 768/2}
+          center:   {X: 1024/2, Y: 768/2},
+          center_1: {X: 1024/2-3*49, Y: 768/2},
+          center_2: {X: 1024/2-2*49, Y: 768/2},
+          center_3: {X: 1024/2-1*49, Y: 768/2},
+          center_4: {X: 1024/2     , Y: 768/2},
+          center_5: {X: 1024/2+1*49, Y: 768/2},
+          center_6: {X: 1024/2+2*49, Y: 768/2},
+          center_7: {X: 1024/2+3*49, Y: 768/2},
+          bottom_r: {X: 932,    Y: 664},
+          bottom_l: {X: 92,     Y: 664}
         },
         W: 190,
         H: 49
