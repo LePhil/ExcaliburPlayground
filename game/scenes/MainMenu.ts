@@ -7,7 +7,6 @@ import {AudioManager} from "../AudioManager";
 
 export class MainMenu extends ex.Scene {
 
-    private _introButton: Button;
     private _startButton: Button;
     private _optionsButton: Button;
     private _creditsButton: Button;  
@@ -17,31 +16,24 @@ export class MainMenu extends ex.Scene {
         
         let buttonPos = Config.GAME.UI.BUTTONS.POSITIONS;
 
-        this._introButton = new Button(
-            Pos.make(buttonPos.center_1),
-            "Intro",
-            () => {globals.startCutscene();}
-        );
-
         this._startButton = new Button(
-            Pos.make(buttonPos.center_2),
+            Pos.make(buttonPos.center_1),
             "Start",
             () => {globals.startGame();}
         );
 
         this._optionsButton = new Button(
-            Pos.make(buttonPos.center_3),
+            Pos.make(buttonPos.center_2),
             "Options",
             () => {globals.optionsScene();}
         );
 
         this._creditsButton = new Button(
-            Pos.make(buttonPos.center_4),
+            Pos.make(buttonPos.center_3),
             "Credits",
             () => {globals.credits();}
         )
 
-        this.add(this._introButton);
         this.add(this._startButton);
         this.add(this._optionsButton);
         this.add(this._creditsButton);
