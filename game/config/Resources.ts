@@ -30,4 +30,5 @@ export class Resources {
 
     static Sound_ChaChing       = new ex.Sound("game/assets/sounds/cha_ching.mp3", "game/assets/sounds/cha_ching.wav");
     static Sound_Intro          = new ex.Sound("game/assets/sounds/Whimsical-Popsicle.mp3");
+    static Sound_Doorbell       = new ex.Sound("game/assets/sounds/doorbell.mp3", "game/assets/sounds/doorbell.wav");
 }

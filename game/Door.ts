@@ -4,6 +4,7 @@ import {Customer} from "./Customer";
 import {Cassa} from "./Cassa";
 import {Resources} from "./config/Resources";
 import {Config} from "./config/Config";
+import {AudioManager} from "./AudioManager";
 
 export class Door extends ex.Actor {
     private _open:boolean;
@@ -95,6 +96,7 @@ export class Door extends ex.Actor {
             this._onGetServedCallback);
         this.scene.add(newCustomer);
         newCustomer.setZIndex(this.getZIndex() + 1);
+        AudioManager.play("Sound_Doorbell");
     }
 
     public resetState(setup: any): void {
