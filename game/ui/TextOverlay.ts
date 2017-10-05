@@ -1,4 +1,3 @@
-declare var globals: any;
 import * as ex from "excalibur";
 import {Config} from "../config/Config";
 
