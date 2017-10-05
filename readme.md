@@ -30,7 +30,6 @@ Done!
 * If speed is increased, actions should take less long as well (e.g. pickup)
 * Multiple clicks on Cassa should not stack up/take no time if no customer is there
 * Picking up foods is broken right now, doesn't pause the player
-* blob can go out of the screen
 
 # Recently done
 * Re-done buttons with Labels
@@ -58,6 +57,7 @@ Done!
 * Settings for Text in Textoverlay (Bold, etc.) from Config
 * various button positions via Config, don't want to calculate it in each scene again..
 * remove patience bar when paid
+* blob can go out of the screen
 
 # Won't do
 * If inventory is full, clicks on station should not do anything- No. We'd have to check for Tools in Inventory (in case the station is broken) and if there are actions in the queue to remove some items --> let the user make mistakes!

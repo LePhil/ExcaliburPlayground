@@ -145,13 +145,15 @@ export class LevelScene extends ex.Scene {
      * spawned on top of it.
      */
     private _setupZIndex() {
+        let mapZIndex = 1;
+        
         if (this._levelMap) {
-            let mapZIndex = this._levelMap.getZIndex();
-            
-            this._cassa && this._cassa.setZIndex(mapZIndex + 1);
-            this._door && this._door.setZIndex(mapZIndex + 1);
-            this._player && this._player.setZIndex(mapZIndex + 10);
+            mapZIndex = this._levelMap.getZIndex();
         }
+
+        this._cassa && this._cassa.setZIndex(mapZIndex + 1);
+        this._door && this._door.setZIndex(mapZIndex + 1);
+        this._player && this._player.setZIndex(mapZIndex + 10);
     }
 
     private _setupDisplays(setup: any): void {
