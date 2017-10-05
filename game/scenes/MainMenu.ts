@@ -25,13 +25,13 @@ export class MainMenu extends ex.Scene {
         this._optionsButton = new Button(
             Pos.make(buttonPos.center_2),
             "Options",
-            () => {globals.optionsScene();}
+            () => {engine.goToScene("options");}
         );
 
         this._creditsButton = new Button(
             Pos.make(buttonPos.center_3),
             "Credits",
-            () => {globals.credits();}
+            () => {engine.goToScene("credits");}
         )
 
         this.add(this._startButton);

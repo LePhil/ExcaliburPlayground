@@ -35,21 +35,14 @@ game.add("game", gameScene );
 let cutScene = new Cutscene(game);
 game.add("cutScene", cutScene );
 
-let director = new Director(introScene, gameScene, endgameScene);
+let director = new Director(game, introScene, gameScene, endgameScene);
 
-globals.startMenu     = () => { game.goToScene("menu"); };
-globals.preScreen     = () => { game.goToScene("pre"); };
-globals.gameScreen    = () => { game.goToScene("game"); };
-globals.endScreen     = () => { game.goToScene("end"); };
-globals.credits       = () => { game.goToScene("credits"); };
-globals.optionsScene  = () => { game.goToScene("options"); };
-globals.startCutscene = () => { game.goToScene("cutScene"); };
 globals.startGame     = () => { globals.loadNextLevel(Levels.getCurrentLevelName()); };
 
 globals.loadNextLevel = (levelIdentifier) => {
   if(Levels.isCutscene(levelIdentifier)) {
     cutScene.loadLevelData(levelIdentifier);  
-    globals.startCutscene();
+    game.goToScene("cutScene");
   } else {
     director.loadLevelSet(levelIdentifier);
   }
@@ -62,5 +55,5 @@ for (let r in Resources) {
 }
 
 game.start(loader).then(function(){
-  globals.startMenu();
+  game.goToScene("menu");
 });

@@ -35,7 +35,7 @@ export class CreditsScene extends ex.Scene {
         this.add(new Button(
             Pos.make(Config.GAME.UI.BUTTONS.POSITIONS.bottom_l),
             "Back",
-            () => { globals.startMenu(); }
+            () => { engine.goToScene("menu"); }
         ));
     }
 }

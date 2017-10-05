@@ -26,7 +26,7 @@ export class EndGameScene extends ex.Scene {
         this.add(new Button(
             Pos.make(Config.GAME.UI.BUTTONS.POSITIONS.bottom_l),
             "Back",
-            () => { globals.startMenu(); }
+            () => { engine.goToScene("menu"); }
         ));
 
         this._button = new Button(

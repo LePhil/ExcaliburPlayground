@@ -23,11 +23,11 @@ export class OptionsScene extends ex.Scene {
         this.add(this._playerPreview);
         
         let buttonPos = Config.GAME.UI.BUTTONS.POSITIONS;
-        
+
         this._backButton = new Button(
             Pos.make(buttonPos.bottom_l),
             "Back",
-            () => {globals.startMenu();},
+            () => {engine.goToScene("menu");},
         );
       
         this._changePlayerButton = new Button(

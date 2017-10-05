@@ -146,7 +146,7 @@ export class LevelScene extends ex.Scene {
      */
     private _setupZIndex() {
         let mapZIndex = 1;
-        
+
         if (this._levelMap) {
             mapZIndex = this._levelMap.getZIndex();
         }
@@ -211,7 +211,7 @@ export class LevelScene extends ex.Scene {
 
         if ( engine.input.keyboard.wasReleased(ex.Input.Keys.Esc) ) {
           // TODO: rather pause than going back to the menu, but boy is that a lot of work
-            globals.startMenu();
+            engine.goToScene("menu");
         }
     }
 

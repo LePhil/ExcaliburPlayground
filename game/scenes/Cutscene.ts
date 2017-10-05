@@ -10,9 +10,11 @@ import {Resources} from "../config/Resources";
 export class Cutscene extends ex.Scene {
     private cutSceneDirector:CutSceneDirector;
     private _levelName: string = "";
+    private _game: ex.Engine;
 
     constructor(engine: ex.Engine) {
         super(engine);
+        this._game = engine;
     }
 
     public loadLevelData(levelName: string): void {
@@ -74,7 +76,7 @@ export class Cutscene extends ex.Scene {
             actions.push( new Action(action.T, subject, action.A, action.O) );
         });
 
-        this.cutSceneDirector = new CutSceneDirector(setup, locations, characters, actions, props);
+        this.cutSceneDirector = new CutSceneDirector(setup, locations, characters, actions, props, this._game);
         this.add(this.cutSceneDirector);
     }
 
@@ -82,7 +84,7 @@ export class Cutscene extends ex.Scene {
         super.update(engine, delta);
 
         if ( engine.input.keyboard.wasReleased(ex.Input.Keys.Esc) ) {
-            globals.startMenu();
+            engine.goToScene("menu");
         }
     }
 
@@ -314,8 +316,9 @@ class CutSceneDirector extends ex.Actor {
     private _characters:any;
     private _props:any;
     private _actions:Array<Action>;
+    private _game: ex.Engine;
 
-    constructor(setup, locations, characters, actions, props) {
+    constructor(setup, locations, characters, actions, props, game) {
         super(0,0, Config.GAME.HEIGHT);
 
         this._setup = setup;
@@ -323,6 +326,7 @@ class CutSceneDirector extends ex.Actor {
         this._characters = characters;
         this._actions = actions;
         this._props = props;
+        this._game = game;
     }
 
     resetScene(): void {
@@ -372,7 +376,7 @@ class CutSceneDirector extends ex.Actor {
             if (this._setup.NEXT) {
                 globals.loadNextLevel(this._setup.NEXT);
             } else {
-                globals.startMenu();
+                this._game.goToScene("menu");
             }
         });
     }
