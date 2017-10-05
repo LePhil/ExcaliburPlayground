@@ -1,3 +1,4 @@
+import * as ex from "excalibur";
 import {Resources} from "./config/Resources";
 import {Storage} from "./Storage";
 
@@ -39,5 +40,12 @@ export class AudioManager {
 
     static stop(audio: string): void {
         Resources[audio].stop();
+    }
+
+    static playRandom(audios: Array<string>, looped: boolean = false): void {
+        if(!AudioManager.isMuted) {
+            let audio = audios[ex.Util.randomInRange(0, audios.length-1)];
+            AudioManager.play(audio, looped);
+        }
     }
 }
