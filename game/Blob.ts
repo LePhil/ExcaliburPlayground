@@ -28,7 +28,7 @@ export class Blob extends ex.Actor {
     let nrOfPoints = ex.Util.randomIntInRange(3, 6);
 
     for(let i = 0; i < nrOfPoints; i++) {
-      this.actions.moveTo(getRandomX(), getRandomX(), this._speed)
+      this.actions.moveTo(getRandomX(), getRandomY(), this._speed)
                   .delay(500);
     }
 
