@@ -1,4 +1,3 @@
-declare var globals: any;
 import * as ex from "excalibur";
 import {Levels} from "../config/Levels";
 import {Player} from "../Player";

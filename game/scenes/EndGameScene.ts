@@ -1,4 +1,3 @@
-declare var globals: any;
 import * as ex from "excalibur";
 import {Digit} from "../Digit";
 import {TextOverlay} from "../ui/TextOverlay";
