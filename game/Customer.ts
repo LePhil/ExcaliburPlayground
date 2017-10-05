@@ -121,6 +121,10 @@ export class Customer extends AbstractPlayer {
       this._moneymoneymoney();
     }
 
+    if (this._patienceIndicator) {
+      this._patienceIndicator.kill();
+    }
+
     this.actions
       .moveTo(this._initialX, this._initialY, this._speed)
       .callMethod(this.kill);
