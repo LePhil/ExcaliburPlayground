@@ -58,6 +58,10 @@ export class Cassa extends ex.Actor {
         });
     }
 
+    public getTargetLocation(): ex.Vector {
+        return new ex.Vector(this.pos.x - Config.PLAYER.WIDTH, this.pos.y - 30);
+    }
+
     private _removeFromQueue(customerToRemove: Customer):void {
         this.queue.splice( this.queue.indexOf(customerToRemove), 1 );
         this.adjustQueue();

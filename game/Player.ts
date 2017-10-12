@@ -127,8 +127,10 @@ export class Player extends AbstractPlayer {
         this._isWorkingOnATask = true;
       }
 
+      let target = cassa.getTargetLocation();
+
       this.actions
-        .moveTo(cassa.pos.x, cassa.pos.y, 200)
+        .moveTo(target.x, target.y, 200)
         .delay(1000)
         .callMethod(() => {
           callback();

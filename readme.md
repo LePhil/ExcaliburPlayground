@@ -22,9 +22,9 @@ Done!
 * maybe (MAYBE) a small minigame with direct input - it's more fun anyway :)
 * customers via LevelScene, not via door. Too far away!
 * Pagination on textoverlay, if content is too long.
-* Cassa click: Player shouldn't stand on top of it, but beside the cassa. Makes it easier to click it as well!
 * more doorbell sounds, play at random (https://freesound.org/people/maisonsonique/packs/12501/)
 * some ambient sounds for cutscenes etc., play one at random
+* much more extended player character with separate eyes (blinking, emotions), mouth ("talking", frowning) and legs (animated)
 
 # Bugs
 * If speed is increased, actions should take less long as well (e.g. pickup)
@@ -58,6 +58,7 @@ Done!
 * various button positions via Config, don't want to calculate it in each scene again..
 * remove patience bar when paid
 * blob can go out of the screen
+* Cassa click: Player shouldn't stand on top of it, but beside the cassa. Makes it easier to click it as well!
 
 # Won't do
 * If inventory is full, clicks on station should not do anything- No. We'd have to check for Tools in Inventory (in case the station is broken) and if there are actions in the queue to remove some items --> let the user make mistakes!
