@@ -2,7 +2,7 @@ import * as ex from "excalibur";
 import {Levels} from "../config/Levels";
 import {Player} from "../Player";
 import {Inventory} from "../Inventory";
-import {Timer, ScoreCounter} from "../Timer";
+import {Clock, Timer, ScoreCounter} from "../Timer";
 import {Blob} from "../Blob";
 import {FoodStation} from "../FoodStation";
 import {Food} from "../Food";
@@ -17,7 +17,7 @@ export class LevelScene extends ex.Scene {
     private _setup: any;
     private _currentScore: number = 0;
     private _player:Player;
-    private _timer:Timer;
+    private _timeDisplay:Clock;
     private _scoreDisplay:ScoreCounter;
     private _door:Door;
     private _cassa:Cassa;
@@ -34,8 +34,10 @@ export class LevelScene extends ex.Scene {
         this._scoreDisplay = new ScoreCounter();
         this.add(this._scoreDisplay);
 
-        this._timer = new Timer();
-        this.add(this._timer);
+        // TODO: countdown-style timer or Clock-style timer? depends on level config, of course!
+        //this._timeDisplay = new Timer();
+        this._timeDisplay = new Clock();
+        this.add(this._timeDisplay);
 
         let inv = new Inventory();
         this.add(inv);
@@ -54,9 +56,10 @@ export class LevelScene extends ex.Scene {
            this._player.checkDrawings();
         }
 
-        if (this._timer) {
-            this._timer.setTimer(this._setup.DURATION_S, () => this.onTimerEnded());
-            this._timer.resetState();
+        if (this._timeDisplay) {
+            //this._timeDisplay.setTimer(this._setup.DURATION_S, () => this.onTimerEnded());
+            this._timeDisplay.setTimer("08:00", "17:00", () => this.onTimerEnded());
+            this._timeDisplay.resetState();
         }
     }
     
@@ -159,8 +162,8 @@ export class LevelScene extends ex.Scene {
         if (this._scoreDisplay) {
             this._scoreDisplay.resetState();
         }
-        if (this._timer) {
-            this._timer.resetState();
+        if (this._timeDisplay) {
+            this._timeDisplay.resetState();
         }
     }
 

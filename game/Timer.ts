@@ -137,58 +137,115 @@ export class ScoreCounter extends DigitDisplay {
 }
 
 class Time {
-  h: number;
-  m: number;
+    h: number;
+    m: number;
 
-  // "12:34" --> 12 hours 43 minutes
-  constructor(timeString: string) {
-    this.h = +timeString.substr(0, 2);
-    this.m = +timeString.substr(3, 2);
-  }
+    // "12:34" --> 12 hours 43 minutes
+    constructor(timeString: string) {
+        this.h = +timeString.substr(0, 2);
+        this.m = +timeString.substr(3, 2);
+    }
 
-  static convert(timeString) {
-    return new Time(timeString);
-  }
+    static convert(timeString) {
+        return new Time(timeString);
+    }
+
+    addMin(nrOfMinutes: number): void {
+        this.m += nrOfMinutes;
+        
+        if (this.m >= 60) {
+            this.addHrs((this.m - (this.m % 60) ) / 60);
+            this.m %= 60;
+        }
+    }
+
+    addHrs(nrOfHours: number): void {
+        this.h += nrOfHours;
+
+        if (this.h >= 24) {
+          this.h %= 24;
+        }
+    }
+
+    getString(): string {
+      return (this.h < 10 ? "0" : "") + this.h + (this.m < 10 ? "0" : "") + this.m;
+    }
+
+    isGreaterOrEqual(other: Time): boolean {
+      return this.h > other.h || (this.h === other.h && this.m >= other.m);
+    }
 }
 
 export class Clock extends ex.UIActor {
-  private _startTime:Time;
-  private _endTime: Time;
-  private _currentTime: Time;
+    private _startTime:Time;
+    private _endTime: Time;
+    private _currentTime: Time;
 
-  private _timeFactor: number;
-  private _digits:Array<Digit>;
+    private _digits:Array<Digit>;
+    private _internalTimer: ex.Timer;
+    private _callback: () => void;
 
-  private _timer:ex.Timer;
-  private _callback: () => void;
+    constructor(start = "08:00", end = "17:00", callback?: () => void ) {
+        super(Config.TIMER.X,
+              Config.TIMER.Y);
 
-  constructor(start = "08:00", end = "17:00", callback: () => void) {
-    super(Config.TIMER.X,
-          Config.TIMER.Y);
-
-    this._startTime = Time.convert(start);
-    this._currentTime = Time.convert(start);
-    this._endTime = Time.convert(end);
-    this._callback = callback;
-    this._digits = new Array<Digit>();
-  }
-
-  onInitialize(engine: ex.Engine): void {
-    super.onInitialize(engine);
-
-    for(let i = 0; i < 4; i++ ) {
-      let xPos = this.pos.x + Config.TIMER.CLOCK.OFFSET_X + i * Config.DIGIT_WIDTH;
-      let yPos = this.pos.y + Config.TIMER.CLOCK.OFFSET_Y;
-
-      if(i >= 2) {
-        xPos += 20; // ":" between 2nd and 3rd digit
-      }
-
-      let digit = new Digit(xPos, yPos);
-      this._digits.push( digit );
-      this.scene.add( digit );
+        this.setTimer(start, end, callback);
+        this._digits = new Array<Digit>();
     }
 
-    // TODO: add ":" between 2nd and 3rd digit
-  }
+    onInitialize(engine: ex.Engine): void {
+        super.onInitialize(engine);
+
+        for(let i = 0; i < 4; i++ ) {
+            let xPos = this.pos.x + Config.TIMER.CLOCK.OFFSET_X + i * Config.DIGIT_WIDTH;
+            let yPos = this.pos.y + Config.TIMER.CLOCK.OFFSET_Y;
+
+            if(i >= 2) {
+                xPos += 20; // ":" between 2nd and 3rd digit
+            }
+
+            let digit = new Digit(xPos, yPos);
+            this._digits.push( digit );
+            this.scene.add( digit );
+        }
+
+        // TODO: add ":" between 2nd and 3rd digit
+        this.updateDisplay();
+    }
+
+    updateDisplay(): void {
+        let timeStr = this._currentTime.getString();
+
+        this._digits.forEach((digit, i) => {
+            digit.setDigit( +(timeStr.charAt(i)) );
+        });
+    }
+
+    resetState(): void {
+        this._currentTime = this._startTime;
+
+        if (this._internalTimer) {
+            this._internalTimer.reset();
+        } else {
+            this._internalTimer = new ex.Timer(() => {
+                this._currentTime.addMin(1);
+                if (this._currentTime.isGreaterOrEqual(this._endTime)) {
+                    console.log("DONE!");
+                    if (this._callback) {
+                      this._callback();
+                    }
+                }
+                this.updateDisplay();
+          }, 100, true);
+
+          this.scene.add(this._internalTimer);
+        }
+    }
+
+    setTimer(start = "08:00", end = "17:00", callback?: () => void): void {
+        this._startTime = Time.convert(start);
+        this._currentTime = Time.convert(start);
+        this._endTime = Time.convert(end);
+        this._callback = callback;
+    }
 }
