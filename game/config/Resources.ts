@@ -17,6 +17,7 @@ export class Resources {
 
     static Cassa                = new ex.Texture("game/assets/textures/store/chimneyLow.png");
 
+    static AnimalsSprites       = new ex.Texture("game/assets/textures/animals/animals.png");
     static HUDSpriteSheet       = new ex.Texture("game/assets/ui/hud_spritesheet.png");
     static TextureTiles         = new ex.Texture("game/assets/textures/tiles_spritesheet.png");
     static ItemSpriteSheet      = new ex.Texture("game/assets/textures/genericItems_spritesheet_colored.png");

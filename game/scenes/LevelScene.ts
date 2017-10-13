@@ -10,6 +10,7 @@ import {Customer} from "../Customer";
 import {LevelMap} from "../LevelMap";
 import {Door} from "../Door";
 import {Cassa} from "../Cassa";
+import {Animal, AnimalCage} from "../AnimalCage";
 import {ToolFactory, Tool, ConsumableTool, PickuppableTool} from "../Tools";
 import {Config} from "../config/Config";
 
@@ -206,6 +207,10 @@ export class LevelScene extends ex.Scene {
         this._setupStations(setup);
         this._setupBlob(setup);
         this._setupZIndex();
+
+        let cage = new AnimalCage(500, 500, "elephant", 3);
+        this.add(cage);
+        cage.setZIndex(this._player.getZIndex() - 1);
     }
 
     update(engine: ex.Engine, delta: number) {

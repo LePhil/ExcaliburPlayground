@@ -15,6 +15,10 @@ export class Levels {
         NORMAL: "normal",       // Normal time management
         CUTSCENE: "cutscene"    // For some story
     };
+    static TIMERS = {
+        CLOCK: "clock",         // HH:MM style clock
+        COUNTDOWN: "countdown"
+    };
     
     static MAPS = [
         {
@@ -22,6 +26,7 @@ export class Levels {
             TYPE: Levels.TYPES.NORMAL,
             W: 840,
             H: 560,
+            TIMER: Levels.TIMERS.CLOCK,
             CASSA: {X: 250, Y: 500},
             DOOR:  {X: 800, Y: 595, SPAWN_TIME_S: 5},
             FOODS: ["rabbit", "elephant", "giraffe"],

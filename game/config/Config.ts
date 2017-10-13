@@ -247,6 +247,22 @@ export class Config {
     genericItem_color_163: { x: 474, y: 98, w: 83, h: 76 }
   }
 
+  static ANIMALS = {
+    SCALE: 0.15,
+    SPRITE: {
+      elephant: {x: 0,    y: 0,     w: 376, h: 310},
+      giraffe:  {x: 0,    y: 599,   w: 334, h: 350},
+      hippo:    {x: 0,    y: 1525,  w: 294, h: 293},
+      monkey:   {x: 0,    y: 312,   w: 336, h: 285},
+      panda:    {x: 0,    y: 951,   w: 332, h: 285},
+      parrot:   {x: 378,  y: 0,     w: 284, h: 285},
+      penguin:  {x: 296,  y: 1525,  w: 284, h: 285},
+      pig:      {x: 0,    y: 1238,  w: 316, h: 285},
+      rabbit:   {x: 338,  y: 312,   w: 284, h: 370},
+      snake:    {x: 334,  y: 951,   w: 284, h: 321}
+    }
+  };
+
   static INVENTORY = {
     POS_X: 32,
     POS_Y: 32,

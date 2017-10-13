@@ -16,7 +16,6 @@ Done!
 * Hover-States on Buttons
 * Speech bubbles or Text in its own container outside of the screen. Text on multi-colored bg just can't be read easily.
 * move away from electron...
-* Animals/Cages with limited amount of items
 * rate of interest in a food/animal/item should depend on the worth/duration/amount available. Expensive items should take a long time or be very limited or be only rarely asked for (or a combination/all of them)
 * maybe (MAYBE) a small minigame with direct input - it's more fun anyway :)
 * customers via LevelScene, not via door. Too far away!
@@ -24,6 +23,8 @@ Done!
 * more doorbell sounds, play at random (https://freesound.org/people/maisonsonique/packs/12501/)
 * some ambient sounds for cutscenes etc., play one at random
 * much more extended player character with separate eyes (blinking, emotions), mouth ("talking" in cutscenes, frowning) and legs (animated)
+* finish Animals/Animal Cages (similar to FoodStations)
+* FoodStations should serve FOOD, not Animals -> Bones, Cans, etc.
 
 # Bugs
 * If speed is increased, actions should take less long as well (e.g. pickup)
@@ -59,6 +60,7 @@ Done!
 * blob can go out of the screen
 * Cassa click: Player shouldn't stand on top of it, but beside the cassa. Makes it easier to click it as well!
 * Time should show time (e.g. from 08:00 to 18:00) or at the least count down so it's clear when the time is almost over
+* Animals/Cages with limited amount of items (WIP)
 
 # Won't do
 * If inventory is full, clicks on station should not do anything- No. We'd have to check for Tools in Inventory (in case the station is broken) and if there are actions in the queue to remove some items --> let the user make mistakes!
