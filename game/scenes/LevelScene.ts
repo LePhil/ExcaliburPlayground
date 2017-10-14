@@ -208,7 +208,7 @@ export class LevelScene extends ex.Scene {
         this._setupBlob(setup);
         this._setupZIndex();
 
-        let cage = new AnimalCage(500, 500, "elephant", 3);
+        let cage = new AnimalCage(500, 500, "elephant", 3, this._player);
         this.add(cage);
         cage.setZIndex(this._player.getZIndex() - 1);
     }

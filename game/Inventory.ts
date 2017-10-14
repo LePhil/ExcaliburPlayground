@@ -1,11 +1,12 @@
 import * as ex from "excalibur";
-import {Food} from "./Food";
-import {Config} from "./config/Config";
-import {Resources} from "./config/Resources";
+import { Food } from "./Food";
+import { Config } from "./config/Config";
+import { Resources } from "./config/Resources";
+import { Animal } from "./AnimalCage";
 
-class InventoryItem extends ex.Actor {
-  _inv:Inventory;
-  _type:string;
+export class InventoryItem extends ex.Actor {
+  _inv: Inventory;
+  _type: string;
 
   constructor(x, y, type: string, inv: Inventory) {
     super(x, y, Config.INVENTORY.ITEMS.WIDTH, Config.INVENTORY.ITEMS.HEIGHT);
@@ -27,11 +28,11 @@ class InventoryItem extends ex.Actor {
     let tex = Resources.TextureInventory;
     let sprite = new ex.Sprite(tex, conf.x, conf.y, conf.w, conf.h);
 
-    let scale_x = Config.INVENTORY.ITEMS.WIDTH  / conf.w;
+    let scale_x = Config.INVENTORY.ITEMS.WIDTH / conf.w;
     let scale_y = Config.INVENTORY.ITEMS.HEIGHT / conf.h;
 
     sprite.scale.setTo(Config.STATIONS.CONF.SCALE, Config.STATIONS.CONF.SCALE);
-    this.addDrawing( sprite );
+    this.addDrawing(sprite);
   }
 
   public getType() {
@@ -47,26 +48,26 @@ class InventoryToolItem extends InventoryItem {
     let tex = Resources.ItemSpriteSheet;
     let sprite = new ex.Sprite(tex, conf.x, conf.y, conf.w, conf.h);
 
-    let scale_x = Config.INVENTORY.ITEMS.WIDTH  / conf.w;
+    let scale_x = Config.INVENTORY.ITEMS.WIDTH / conf.w;
     let scale_y = Config.INVENTORY.ITEMS.HEIGHT / conf.h;
 
     sprite.scale.setTo(Config.STATIONS.CONF.SCALE, Config.STATIONS.CONF.SCALE);
-    this.addDrawing( sprite );
+    this.addDrawing(sprite);
   }
 }
 
 export class Inventory extends ex.Actor {
   inventory: InventoryItem[];
   private _maxItems: number;
-  private _slots:Array<InventorySlot>;
+  private _slots: Array<InventorySlot>;
 
   constructor() {
     let conf = Config.INVENTORY;
 
     super(conf.POS_X,
-          conf.POS_Y,
-          conf.ITEMS.WIDTH * conf.ITEMS.MAX + ((conf.ITEMS.MAX - 1) * conf.SPACING),
-          conf.ITEMS.HEIGHT);
+      conf.POS_Y,
+      conf.ITEMS.WIDTH * conf.ITEMS.MAX + ((conf.ITEMS.MAX - 1) * conf.SPACING),
+      conf.ITEMS.HEIGHT);
 
     this.inventory = new Array<InventoryItem>();
     this._maxItems = conf.ITEMS.MAX;
@@ -78,7 +79,7 @@ export class Inventory extends ex.Actor {
 
     let conf = Config.INVENTORY;
 
-    for(let i = 0; i < this._maxItems; i++) {
+    for (let i = 0; i < this._maxItems; i++) {
       let xPos = this.pos.x + i * (conf.ITEMS.WIDTH + conf.SPACING) - conf.ITEMS.WIDTH / 2;
       let yPos = this.pos.y - conf.ITEMS.HEIGHT / 2;
       let slot = new InventorySlot(xPos, yPos);
@@ -87,8 +88,8 @@ export class Inventory extends ex.Actor {
     }
   }
 
-  public addItem(newItem: Food) {
-    if ( this.inventory.length >= this._maxItems) {
+  public addItem(type: string) {
+    if (this.inventory.length >= this._maxItems) {
       return;
     }
 
@@ -96,23 +97,39 @@ export class Inventory extends ex.Actor {
     let pos_x = this.pos.x + this.inventory.length * (c.ITEMS.WIDTH + c.SPACING);
     let pos_y = this.pos.y;
 
-    let newActor = new InventoryItem(pos_x, pos_y, newItem.name, this);
+    let itemToAdd = new InventoryItem(pos_x, pos_y, type, this);
+
+    this.inventory.push(itemToAdd);
+    this.add(itemToAdd);
+  }
+
+  // TODO: many similarities with addItem
+  public addTool(type: string) {
+    if (this.inventory.length >= this._maxItems) {
+      return;
+    }
+
+    let c = Config.INVENTORY;
+    let pos_x = this.pos.x + this.inventory.length * (c.ITEMS.WIDTH + c.SPACING);
+    let pos_y = this.pos.y;
+
+    let newActor = new InventoryToolItem(pos_x, pos_y, type, this);
 
     this.inventory.push(newActor);
     this.add(newActor);
   }
 
-  // TODO: many similarities with addItem
-  public addTool(type: string) {
-    if ( this.inventory.length >= this._maxItems) {
+  // TODO: even more similarities...
+  public addAnimal(animal: Animal) {
+    if (this.inventory.length >= this._maxItems) {
       return;
     }
-    
+
     let c = Config.INVENTORY;
     let pos_x = this.pos.x + this.inventory.length * (c.ITEMS.WIDTH + c.SPACING);
     let pos_y = this.pos.y;
-    
-    let newActor = new InventoryToolItem(pos_x, pos_y, type, this);
+
+    let newActor = new InventoryItem(pos_x, pos_y, animal.getType(), this);
 
     this.inventory.push(newActor);
     this.add(newActor);
@@ -152,7 +169,7 @@ export class Inventory extends ex.Actor {
   }
 
   public removeItem(itemToRemove: InventoryItem) {
-    this.inventory.splice( this.inventory.indexOf(itemToRemove), 1 );
+    this.inventory.splice(this.inventory.indexOf(itemToRemove), 1);
     this.remove(itemToRemove);
 
     // Update remaining items' positions ("float" to the left)
@@ -162,7 +179,7 @@ export class Inventory extends ex.Actor {
   }
 
   // TODO: use this on init to keep it DRY
-  public resetState():void {
+  public resetState(): void {
     this.inventory.forEach((item) => {
       this.remove(item);
     });
@@ -178,7 +195,7 @@ export class Inventory extends ex.Actor {
     this._maxItems = Config.INVENTORY.ITEMS.MAX;
   }
 
-  public changeSlotNumber(count:number):void {
+  public changeSlotNumber(count: number): void {
     this._maxItems = count;
     //TODO: add/remove slots accordingly
   }
@@ -193,7 +210,7 @@ class InventorySlot extends ex.UIActor {
     super.onInitialize(engine);
     let conf = Config.INVENTORY;
     let sprite = Resources.ImgInventorySlot.asSprite();
-    sprite.scale.setTo(conf.ITEMS.WIDTH/conf.SLOT.W, conf.ITEMS.HEIGHT/conf.SLOT.H);
+    sprite.scale.setTo(conf.ITEMS.WIDTH / conf.SLOT.W, conf.ITEMS.HEIGHT / conf.SLOT.H);
     this.addDrawing(sprite);
   }
 }

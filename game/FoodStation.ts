@@ -56,6 +56,10 @@ export class FoodStation extends ex.Actor {
     return this._food;
   }
 
+  public getContent(): string {
+    return this._type;
+  }
+
   public getDuration():number {
     return this._duration;
   }
