@@ -1,14 +1,13 @@
 import * as ex from "excalibur";
 import { Config } from "./config/Config";
-import { Food } from "./Food";
-import { FoodStation } from "./FoodStation";
+import { Item } from "./Item";
+import { ItemSource } from "./ItemSource";
 import { Inventory } from "./Inventory";
 import { Customer } from "./Customer";
 import { Cassa } from "./Cassa";
 import { AbstractPlayer } from "./AbstractPlayer";
 import { Tool } from "./Tools";
 import { Storage } from "./Storage";
-import { Animal, AnimalCage } from "./AnimalCage";
 
 export class Player extends AbstractPlayer {
   inventory: Inventory;
@@ -71,51 +70,32 @@ export class Player extends AbstractPlayer {
 
   // TODO: found the bug - click on 2nd foodstations before 1st is reached --> the "waiting" happens while player is moving to the 2nd station already!
   // See https://github.com/excaliburjs/Excalibur/issues/292
-  public sendToFoodStation(station: FoodStation, callback: () => void) {
+  public goToItemSource(itemSource: ItemSource, callback: () => void) {
     if (this._isWorkingOnATask) {
       return;
     } else {
       this._isWorkingOnATask = true;
     }
 
-    this.actions
-      .moveTo(station.pos.x, station.pos.y, this._speed)
-      .callMethod(() => {
-        callback();
-        if (station.isReady()) {
-          this.getFoodFromStation(station);
-        } else if (station.isBroken()) {
-          if (this.inventory.checkAndRemoveTool("hammer")) {
-            this.repairStation(station);
-          } else {
-            // TODO: What to do if tool not equipped
-          }
-        }
-      });
-  }
-
-  public sendToCage(cage: AnimalCage, callback: () => void) {
-    if (this._isWorkingOnATask) {
-      return;
-    }
-
-    this._isWorkingOnATask = true;
-    let target = cage.getPositionToStand();
+    let target = itemSource.getPositionToStand();
 
     this.actions
-      .moveTo(target.x, target.y, this._speed)
-      .callMethod(() => {
-        callback();
-        if (!cage.isEmpty()) {
-          this.getAnimalFromCage(cage);
+    .moveTo(target.x, target.y, this._speed)
+    .callMethod(() => {
+      callback();
+      if (itemSource.isReady()) {
+        this.getItemFromSource(itemSource);
+      } else if (itemSource.isBroken()) {
+        if (this.inventory.checkAndRemoveTool("hammer")) {
+          this.repairItemSource(itemSource);
         } else {
-          this._isBusy = false;
-          this._isWorkingOnATask = false;
+          // TODO: What to do if tool not equipped
         }
-      });
+      }
+    });
   }
 
-  public getFoodFromStation(station: FoodStation): void {
+  public getItemFromSource(station: ItemSource): void {
     this._isBusy = true;
     this.setDrawing("pickUp");
     this.actions
@@ -128,28 +108,14 @@ export class Player extends AbstractPlayer {
       });
   }
 
-  // TODO: cage and station should extend some base class
-  public getAnimalFromCage(cage: AnimalCage): void {
-    this._isBusy = true;
-    this.setDrawing("pickUp");
-    this.actions
-      .delay(cage.getDuration())
-      .callMethod(() => {
-        this.addToInventory(cage.getContent());
-        this._isBusy = false;
-        this.setDrawing("idle");
-        this._isWorkingOnATask = false;
-      });
-  }
-
-  public repairStation(station: FoodStation): void {
+  public repairItemSource(itemSource: ItemSource): void {
     // TODO: maybe different duration, depending on tool and/or station?
     this._isBusy = true;
     this.setDrawing("pickUp");
     this.actions
-      .delay(station.getDuration())
+      .delay(itemSource.getDuration())
       .callMethod(() => {
-        station.fix();
+        itemSource.fix();
         this._isBusy = false;
         this.setDrawing("idle");
         this._isWorkingOnATask = false;

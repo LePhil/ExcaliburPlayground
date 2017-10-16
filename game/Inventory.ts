@@ -2,7 +2,6 @@ import * as ex from "excalibur";
 import { Food } from "./Food";
 import { Config } from "./config/Config";
 import { Resources } from "./config/Resources";
-import { Animal } from "./AnimalCage";
 
 export class InventoryItem extends ex.Actor {
   _inv: Inventory;
@@ -114,22 +113,6 @@ export class Inventory extends ex.Actor {
     let pos_y = this.pos.y;
 
     let newActor = new InventoryToolItem(pos_x, pos_y, type, this);
-
-    this.inventory.push(newActor);
-    this.add(newActor);
-  }
-
-  // TODO: even more similarities...
-  public addAnimal(animal: Animal) {
-    if (this.inventory.length >= this._maxItems) {
-      return;
-    }
-
-    let c = Config.INVENTORY;
-    let pos_x = this.pos.x + this.inventory.length * (c.ITEMS.WIDTH + c.SPACING);
-    let pos_y = this.pos.y;
-
-    let newActor = new InventoryItem(pos_x, pos_y, animal.getType(), this);
 
     this.inventory.push(newActor);
     this.add(newActor);

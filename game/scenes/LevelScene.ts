@@ -4,13 +4,12 @@ import {Player} from "../Player";
 import {Inventory} from "../Inventory";
 import {Clock, Timer, ScoreCounter} from "../Timer";
 import {Blob} from "../Blob";
-import {FoodStation} from "../FoodStation";
+import {ItemSource, AnimalCage} from "../ItemSource";
 import {Food} from "../Food";
 import {Customer} from "../Customer";
 import {LevelMap} from "../LevelMap";
 import {Door} from "../Door";
 import {Cassa} from "../Cassa";
-import {Animal, AnimalCage} from "../AnimalCage";
 import {ToolFactory, Tool, ConsumableTool, PickuppableTool} from "../Tools";
 import {Config} from "../config/Config";
 
@@ -23,7 +22,7 @@ export class LevelScene extends ex.Scene {
     private _door:Door;
     private _cassa:Cassa;
     private _tools: Array<Tool> = [];
-    private _stations: Array<FoodStation> = [];
+    private _stations: Array<ItemSource> = [];
     private _decayTimer: ex.Timer;
     private _callbackOnTimerEnded: (results: number) => void;
 
@@ -127,9 +126,10 @@ export class LevelScene extends ex.Scene {
         }
 
         setup.STATIONS.PLACEMENTS.forEach(placement => {
-            let foodStation = new FoodStation(placement.X, placement.Y, placement.T, this._player);
-            this.add(foodStation);
-            this._stations.push(foodStation);
+            // TODO: Factory to create the different versions of ItemSources
+            let itemSource = new ItemSource(placement.X, placement.Y, placement.T, this._player);
+            this.add(itemSource);
+            this._stations.push(itemSource);
         });
 
         if (setup.STATIONS.DECAY && this._stations) {
