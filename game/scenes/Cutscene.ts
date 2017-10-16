@@ -190,8 +190,6 @@ class Character extends AbstractPlayer implements Subject {
         }
     }
 
-    _updateChildren(): void {}
-
     _handleIdlePlayer(): void {
         this.setDrawing("idle");
     }

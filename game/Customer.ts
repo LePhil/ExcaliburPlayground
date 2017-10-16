@@ -36,9 +36,7 @@ export class Customer extends AbstractPlayer {
     this._hasDecided = false;
     this._hasReceivedItem = false;
     this._setup = setup;
-
     this._cassa = cassa;
-
     this._patience = Config.CUSTOMER.INITIAL_PATIENCE;
     
     this.collisionType = ex.CollisionType.Passive;
@@ -60,12 +58,13 @@ export class Customer extends AbstractPlayer {
   private _decideOnProduct(): void {
     this.wants = this._getRandomFood();
     this._hasDecided = true;
+    let conf = Config.CUSTOMER.THINKBUBBLE;
     
-    this._patienceIndicator = new PatienceIndicator(this.pos.x, this.pos.y, this._patience);
-    this._thinkBubble = new ThinkBubble(this.pos.x + Config.CUSTOMER.THINKBUBBLE.OFFSET_X, this.pos.y - Config.CUSTOMER.THINKBUBBLE.OFFSET_X, this.wants);
+    this._patienceIndicator = new PatienceIndicator(0, 0, this._patience);
+    this._thinkBubble = new ThinkBubble(conf.OFFSET_X, conf.OFFSET_Y, this.wants);
 
-    this.scene.add(this._patienceIndicator);
-    this.scene.add(this._thinkBubble);
+    this.add(this._patienceIndicator);
+    this.add(this._thinkBubble);
 
     this._patienceDecreaseTimer = new ex.Timer(() => {
       this._patience -= Config.CUSTOMER.PATIENCE_DELTA;
@@ -81,15 +80,8 @@ export class Customer extends AbstractPlayer {
   }
 
   public kill(): void {
-    // Because thinkBubble was added to scene we have to go and kill it. (TODO - maybe look into that... y u no "this.add()"?)
-    if (this._thinkBubble) {
-      this._thinkBubble.kill();
-    }
     if (this._patienceDecreaseTimer) {
       this._patienceDecreaseTimer.cancel();
-    }
-    if (this._patienceIndicator) {
-      this._patienceIndicator.kill();
     }
     super.kill();
   }
@@ -108,7 +100,11 @@ export class Customer extends AbstractPlayer {
    */
   public leaveStore(): void {
     if (this._thinkBubble) {
-      this._thinkBubble.kill();
+      this.remove(this._thinkBubble);
+    }
+
+    if (this._patienceIndicator) {
+      this.remove(this._patienceIndicator);
     }
 
     if (this._patienceDecreaseTimer) {
@@ -117,10 +113,6 @@ export class Customer extends AbstractPlayer {
 
     if (this._hasReceivedItem) {
       this._moneymoneymoney();
-    }
-
-    if (this._patienceIndicator) {
-      this._patienceIndicator.kill();
     }
 
     this.actions
@@ -148,18 +140,6 @@ export class Customer extends AbstractPlayer {
     return availablePlayers[randomIndex].color;
   }
 
-  _updateChildren(): void {
-    if (this._hasDecided) {
-      // update thinkBubble's position if not standing still, if it exists
-      this._thinkBubble.pos.x = this.pos.x + Config.CUSTOMER.THINKBUBBLE.OFFSET_X;
-      this._thinkBubble.pos.y = this.pos.y - Config.CUSTOMER.THINKBUBBLE.OFFSET_Y;
-    }
-
-    if(this._patienceIndicator) {
-      this._patienceIndicator.pos = this.pos;
-    }
-  }
-
   _handleIdlePlayer(): void {
     this.setDrawing("idle");
   }
@@ -172,7 +152,7 @@ export class Customer extends AbstractPlayer {
   }
 }
 
-class ThinkBubble extends ex.UIActor {
+class ThinkBubble extends ex.Actor {
   private _wants: Food;
   constructor(x, y, wants: Food) {
     super(x, y, Config.CUSTOMER.THINKBUBBLE.WIDTH, Config.CUSTOMER.THINKBUBBLE.HEIGHT);
@@ -194,7 +174,7 @@ class ThinkBubble extends ex.UIActor {
   }
 }
 
-class PatienceIndicator extends ex.UIActor {
+class PatienceIndicator extends ex.Actor {
   private _patience: number;
   private _patienceInitial: number;
   private _colors: any;

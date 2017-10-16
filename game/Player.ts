@@ -36,11 +36,6 @@ export class Player extends AbstractPlayer {
     return playerColor;
   }
 
-  /**
-   * Ain't got no kids!
-   */
-  _updateChildren(): void { }
-
   // TODO: very similar to sendToFoodStation...
   public pickupTool(tool: Tool, callback: any) {
     if (this._isWorkingOnATask) {

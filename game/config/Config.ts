@@ -36,7 +36,7 @@ export class Config {
       WIDTH: 30,
       HEIGHT: 30,
       OFFSET_X: 20,
-      OFFSET_Y: 20,
+      OFFSET_Y: -20,
       SPRITE: {
         giraffe:    {x: 0,    y: 0,     w: 284, h: 285},
         monkey:     {x: 0,    y: 1148,  w: 284, h: 285},

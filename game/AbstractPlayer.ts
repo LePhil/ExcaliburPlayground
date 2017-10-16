@@ -89,8 +89,6 @@ export abstract class AbstractPlayer extends ex.Actor {
 
     if (yMovement === 0 && xMovement === 0) {
       this._handleIdlePlayer();
-    } else {
-      this._updateChildren();
     }
 
     this._lastPosX = this.pos.x;
@@ -98,8 +96,6 @@ export abstract class AbstractPlayer extends ex.Actor {
   }
 
   abstract getPlayerColor ():string
-
-  abstract _updateChildren():void
 
   abstract _handleIdlePlayer():void
 }
