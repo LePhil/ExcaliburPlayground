@@ -17,8 +17,11 @@ export class Blob extends ex.Actor {
       let maxY = Config.GAME.HEIGHT - minY;
       return ex.Util.randomIntInRange(minY, maxY);
     };
+    
+    let initialX = getRandomX(),
+        initialY = getRandomY();
 
-    super(getRandomX(), getRandomY(),
+    super(initialX, initialY,
           Config.BLOB.WIDTH,
           Config.BLOB.HEIGHT);
 
@@ -26,18 +29,15 @@ export class Blob extends ex.Actor {
     this.collisionType = ex.CollisionType.Passive;
 
     let nrOfPoints = ex.Util.randomIntInRange(3, 6);
-
     for(let i = 0; i < nrOfPoints; i++) {
-      this.actions.moveTo(getRandomX(), getRandomY(), this._speed)
-                  .delay(500);
+      this.actions.moveTo(getRandomX(), getRandomY(), this._speed).delay(500);
     }
-
+    this.actions.moveTo(initialX, initialY, this._speed).delay(500);
     this.actions.repeatForever();
 
     this.on("pointerdown", (event) => {
       this.kill();
       this.scene.add(new MoneyEffect(this.pos.x, this.pos.y));
-      // TODO: maybe worth decreases with time?
       callback(Config.BLOB.WORTH);
     });
   }

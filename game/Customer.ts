@@ -58,7 +58,6 @@ export class Customer extends AbstractPlayer {
   }
   
   private _decideOnProduct(): void {
-    // TODO: maybe wait with deciding for a bit
     this.wants = this._getRandomFood();
     this._hasDecided = true;
     

@@ -63,8 +63,8 @@ class InventoryToolItem extends InventoryItem {
 }
 
 export class Inventory extends ex.Actor {
-  inventory: InventoryItem[];
-  private _maxItems: number;
+  public inventory: InventoryItem[];
+  private _initialSlots: number;
   private _slots: Array<InventorySlot>;
 
   constructor() {
@@ -76,26 +76,28 @@ export class Inventory extends ex.Actor {
       conf.ITEMS.HEIGHT);
 
     this.inventory = new Array<InventoryItem>();
-    this._maxItems = conf.ITEMS.MAX;
+    this._initialSlots = conf.ITEMS.MAX;
     this._slots = [];
   }
 
   onInitialize(engine: ex.Engine): void {
     super.onInitialize(engine);
+    this.resetState();
+  }
 
+  private _addSlot() {
+    let index = this._slots.length;
     let conf = Config.INVENTORY;
+    let xPos = this.pos.x + index * (conf.ITEMS.WIDTH + conf.SPACING) - conf.ITEMS.WIDTH / 2;
+    let yPos = this.pos.y - conf.ITEMS.HEIGHT / 2;
 
-    for (let i = 0; i < this._maxItems; i++) {
-      let xPos = this.pos.x + i * (conf.ITEMS.WIDTH + conf.SPACING) - conf.ITEMS.WIDTH / 2;
-      let yPos = this.pos.y - conf.ITEMS.HEIGHT / 2;
-      let slot = new InventorySlot(xPos, yPos);
-      this.add(slot);
-      this._slots.push(slot);
-    }
+    let slot = new InventorySlot(xPos, yPos);
+    this.add(slot);
+    this._slots.push(slot);
   }
 
   public addItem(type: string) {
-    if (this.inventory.length >= this._maxItems) {
+    if (this.inventory.length >= this._initialSlots) {
       return;
     }
 
@@ -115,6 +117,7 @@ export class Inventory extends ex.Actor {
     for (let inventoryItem of this.inventory) {
       if (inventoryItem.getType() === itemType) {
         itemToRemove = inventoryItem;
+        break;
       }
     }
 
@@ -135,26 +138,32 @@ export class Inventory extends ex.Actor {
     });
   }
 
-  // TODO: use this on init to keep it DRY
   public resetState(): void {
     this.inventory.forEach((item) => {
       this.remove(item);
     });
     this.inventory = new Array<InventoryItem>();
 
-    /*
     this._slots.forEach((slot) => {
       this.remove(slot);
     });
     this._slots = [];
-    */
 
-    this._maxItems = Config.INVENTORY.ITEMS.MAX;
+    this._initialSlots = Config.INVENTORY.ITEMS.MAX;
+
+    for (let i = 0; i < this._initialSlots; i++) {
+      this._addSlot();
+    }
   }
 
   public changeSlotNumber(count: number): void {
-    this._maxItems = count;
-    //TODO: add/remove slots accordingly
+    while (this._slots.length > count) {
+      this.remove(this._slots.pop());
+    }
+
+    while (this._slots.length < count) {
+      this._addSlot();
+    }
   }
 }
 
