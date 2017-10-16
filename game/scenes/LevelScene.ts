@@ -1,26 +1,26 @@
 import * as ex from "excalibur";
-import {Levels} from "../config/Levels";
-import {Player} from "../Player";
-import {Inventory} from "../Inventory";
-import {Clock, Timer, ScoreCounter} from "../Timer";
-import {Blob} from "../Blob";
-import {ItemSource, AnimalCage} from "../ItemSource";
-import {Food} from "../Food";
-import {Customer} from "../Customer";
-import {LevelMap} from "../LevelMap";
-import {Door} from "../Door";
-import {Cassa} from "../Cassa";
-import {ToolFactory, Tool, ConsumableTool, PickuppableTool} from "../Tools";
-import {Config} from "../config/Config";
+import { Levels } from "../config/Levels";
+import { Player } from "../Player";
+import { Inventory } from "../Inventory";
+import { Clock, Timer, ScoreCounter } from "../Timer";
+import { Blob } from "../Blob";
+import { ItemSource, AnimalCage } from "../ItemSource";
+import { Food } from "../Food";
+import { Customer } from "../Customer";
+import { LevelMap } from "../LevelMap";
+import { Door } from "../Door";
+import { Cassa } from "../Cassa";
+import { ToolFactory, Tool, ConsumableTool, PickuppableTool } from "../Tools";
+import { Config } from "../config/Config";
 
 export class LevelScene extends ex.Scene {
     private _setup: any;
     private _currentScore: number = 0;
-    private _player:Player;
-    private _timeDisplay:Clock;
-    private _scoreDisplay:ScoreCounter;
-    private _door:Door;
-    private _cassa:Cassa;
+    private _player: Player;
+    private _timeDisplay: Clock;
+    private _scoreDisplay: ScoreCounter;
+    private _door: Door;
+    private _cassa: Cassa;
     private _tools: Array<Tool> = [];
     private _stations: Array<ItemSource> = [];
     private _decayTimer: ex.Timer;
@@ -41,16 +41,16 @@ export class LevelScene extends ex.Scene {
 
         let inv = new Inventory();
         this.add(inv);
-        
+
         this._player = new Player(inv);
         this.add(this._player);
     }
-    
-    onActivate () {
+
+    onActivate() {
         this._currentScore = 0;
 
         if (this._player) {
-           this._player.checkDrawings();
+            this._player.checkDrawings();
         }
 
         if (this._timeDisplay) {
@@ -59,8 +59,8 @@ export class LevelScene extends ex.Scene {
             this._timeDisplay.resetState();
         }
     }
-    
-    onDeactivate () {
+
+    onDeactivate() {
         this._player.resetState();
         this._door.close();
         this._cassa.resetState();
@@ -88,8 +88,8 @@ export class LevelScene extends ex.Scene {
         }
 
         if (setup.IMG) {
-          this._levelMap = new LevelMap(setup);
-          this.add( this._levelMap );
+            this._levelMap = new LevelMap(setup);
+            this.add(this._levelMap);
         }
     }
 
@@ -166,7 +166,7 @@ export class LevelScene extends ex.Scene {
     }
 
     private _setupDoor(setup: any): void {
-        if(!this._door) {
+        if (!this._door) {
             this._door = new Door(setup, this._cassa, results => this.addPoints(results));
             this.add(this._door);
         } else {
@@ -175,7 +175,7 @@ export class LevelScene extends ex.Scene {
     }
 
     private _setupCassa(setup: any): void {
-        if(!this._cassa) {
+        if (!this._cassa) {
             this._cassa = new Cassa(setup.CASSA.X, setup.CASSA.Y, this._player);
             this.add(this._cassa);
         } else {
@@ -189,7 +189,7 @@ export class LevelScene extends ex.Scene {
         if (setup.BLOB) {
             setTimeout(() => {
                 this.add(new Blob(setup, results => this.onBlobDied(results)));
-            }, ex.Util.randomIntInRange(0, setup.DURATION_S*1000/2));
+            }, ex.Util.randomIntInRange(0, setup.DURATION_S * 1000 / 2));
         }
     }
 
@@ -213,8 +213,7 @@ export class LevelScene extends ex.Scene {
     update(engine: ex.Engine, delta: number) {
         super.update(engine, delta);
 
-        if ( engine.input.keyboard.wasReleased(ex.Input.Keys.Esc) ) {
-          // TODO: rather pause than going back to the menu, but boy is that a lot of work
+        if (engine.input.keyboard.wasReleased(ex.Input.Keys.Esc)) {
             engine.goToScene("menu");
         }
     }

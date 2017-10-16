@@ -17,7 +17,7 @@ export class Levels {
     };
     static TIMERS = {
         CLOCK: "clock",         // HH:MM style clock
-        COUNTDOWN: "countdown"
+        COUNTDOWN: "countdown"  // Counting down seconds
     };
     
     static MAPS = [
