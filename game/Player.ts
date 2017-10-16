@@ -95,14 +95,13 @@ export class Player extends AbstractPlayer {
     });
   }
 
-  public getItemFromSource(station: ItemSource): void {
+  public getItemFromSource(itemSource: ItemSource): void {
     this._isBusy = true;
     this.setDrawing("pickUp");
-    debugger;
     this.actions
-      .delay(station.getDuration())
+      .delay(itemSource.getDuration())
       .callMethod(() => {
-        this.addToInventory(station.getContent());
+        this.addToInventory(itemSource.getContent());
         this._isBusy = false;
         this.setDrawing("idle");
         this._isWorkingOnATask = false;
