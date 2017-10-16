@@ -1,6 +1,5 @@
 import * as ex from "excalibur";
 import {Customer} from "./Customer";
-import {Food} from "./Food";
 import {Player} from "./Player";
 import {Resources} from "./config/Resources";
 import {Config} from "./config/Config";

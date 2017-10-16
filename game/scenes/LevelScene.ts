@@ -43,11 +43,8 @@ export class LevelScene extends ex.Scene {
         this.add(inv);
         
         this._player = new Player(inv);
-        
         this.add(this._player);
     }
-
-    onInitialize(engine: ex.Engine) {}
     
     onActivate () {
         this._currentScore = 0;

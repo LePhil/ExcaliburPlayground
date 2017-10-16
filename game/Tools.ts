@@ -80,7 +80,7 @@ export class Tool extends ex.Actor{
 export class PickuppableTool extends Tool {
 
     handlePickup(player: Player):void {
-        player.addTool(this.getType());
+        player.addToInventory(this.getType());
     }
 }
 

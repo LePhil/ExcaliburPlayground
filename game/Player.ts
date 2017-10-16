@@ -86,7 +86,7 @@ export class Player extends AbstractPlayer {
       if (itemSource.isReady()) {
         this.getItemFromSource(itemSource);
       } else if (itemSource.isBroken()) {
-        if (this.inventory.checkAndRemoveTool("hammer")) {
+        if (this.inventory.checkAndRemoveItem("hammer")) {
           this.repairItemSource(itemSource);
         } else {
           // TODO: What to do if tool not equipped
@@ -98,6 +98,7 @@ export class Player extends AbstractPlayer {
   public getItemFromSource(station: ItemSource): void {
     this._isBusy = true;
     this.setDrawing("pickUp");
+    debugger;
     this.actions
       .delay(station.getDuration())
       .callMethod(() => {
@@ -144,10 +145,6 @@ export class Player extends AbstractPlayer {
     this.inventory.addItem(type);
   }
 
-  public addTool(type: string) {
-    this.inventory.addTool(type);
-  }
-
   /**
    * Serve items to a customer if applicable
    * @param  {Customer[]} customerQueue
@@ -157,7 +154,7 @@ export class Player extends AbstractPlayer {
 
     // check for each customer if we have what they want
     for (let cust of customerQueue) {
-      if (this.inventory.checkAndRemoveItem(cust.wants)) {
+      if (this.inventory.checkAndRemoveItem(cust.wants.name)) {
         customersToRemove.push(cust);
       }
     }

@@ -25,6 +25,13 @@ export class InventoryItem extends ex.Actor {
   onInitialize(engine: ex.Engine): void {
     let conf = Config.INVENTORY.SPRITE[this._type];
     let tex = Resources.TextureInventory;
+    
+    // TODO: Unify all items in the Config...
+    if (!conf) {
+      conf = Config.ITEMS[this._type];
+      tex = Resources.ItemSpriteSheet;
+    }
+
     let sprite = new ex.Sprite(tex, conf.x, conf.y, conf.w, conf.h);
 
     let scale_x = Config.INVENTORY.ITEMS.WIDTH / conf.w;
@@ -102,44 +109,11 @@ export class Inventory extends ex.Actor {
     this.add(itemToAdd);
   }
 
-  // TODO: many similarities with addItem
-  public addTool(type: string) {
-    if (this.inventory.length >= this._maxItems) {
-      return;
-    }
-
-    let c = Config.INVENTORY;
-    let pos_x = this.pos.x + this.inventory.length * (c.ITEMS.WIDTH + c.SPACING);
-    let pos_y = this.pos.y;
-
-    let newActor = new InventoryToolItem(pos_x, pos_y, type, this);
-
-    this.inventory.push(newActor);
-    this.add(newActor);
-  }
-
-  public checkAndRemoveItem(itemToCheck: Food) {
+  public checkAndRemoveItem(itemType: string) {
     let itemToRemove = null;
 
     for (let inventoryItem of this.inventory) {
-      if (inventoryItem.getType() === itemToCheck.name) {
-        itemToRemove = inventoryItem;
-      }
-    }
-
-    if (itemToRemove) {
-      this.removeItem(itemToRemove);
-      return true;
-    }
-    return false;
-  }
-
-  // TODO: ew ew ew ew
-  public checkAndRemoveTool(typeToCheck: string) {
-    let itemToRemove = null;
-
-    for (let inventoryItem of this.inventory) {
-      if (inventoryItem.getType() === typeToCheck) {
+      if (inventoryItem.getType() === itemType) {
         itemToRemove = inventoryItem;
       }
     }

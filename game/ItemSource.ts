@@ -12,14 +12,14 @@ enum ItemSourceState {
   
 export class ItemSource extends ex.Actor {
     protected _type: string;
+    protected _conf: any;
     private _duration: number;
     private _state: ItemSourceState;
-    private _conf: any;
   
-    constructor(x: number, y: number, type: string, player: Player, conf?: any) {
-        conf = conf || Config.STATIONS[type];
+    constructor(x: number, y: number, type: string, player: Player, conf?: any, scale?: number) {
         // TODO: unify all possible ItemSources (Stations, Cages, ...) in Config.
-        let scale = Config.STATIONS.CONF.SCALE;
+        conf = conf || Config.STATIONS[type];
+        scale = scale || Config.STATIONS.CONF.SCALE;
         let w = conf.w * scale;
         let h = conf.h * scale;
     
@@ -39,9 +39,8 @@ export class ItemSource extends ex.Actor {
     onPlayerReached(): void {}
   
     onInitialize(engine: ex.Engine): void {
-        let conf = Config.STATIONS[this._type];
         let tex = Resources.TextureStations;
-        let sprite = new ex.Sprite(tex, conf.x, conf.y, conf.w, conf.h);
+        let sprite = new ex.Sprite(tex, this._conf.x, this._conf.y, this._conf.w, this._conf.h);
         sprite.scale.setTo(Config.STATIONS.CONF.SCALE, Config.STATIONS.CONF.SCALE);
     
         let brokenSprite = sprite.clone();
@@ -57,6 +56,9 @@ export class ItemSource extends ex.Actor {
         return this._type;
     }
   
+    /**
+     * How long (ms) it should take to remove an animal from this cage. Less time for small/simple animals, more for bigger or more dangerous ones.
+     */
     public getDuration():number {
         return this._duration;
     }
@@ -79,8 +81,13 @@ export class ItemSource extends ex.Actor {
         return this._state === ItemSourceState.Normal;
     }
 
-    getPositionToStand(): ex.Vector {
+    public getPositionToStand(): ex.Vector {
         return new ex.Vector(this.pos.x - 70, this.pos.y - 20);
+    }
+
+    public reset(): void {
+        this._state = ItemSourceState.Normal;
+        this.setDrawing("normal");
     }
 }
 
@@ -135,7 +142,9 @@ export class AnimalCage extends ItemSource {
     constructor(x: number, y: number, type: string, amount: number, player: Player) {
         let conf = Config.TILES.fence;
 
-        super(x, y, type, player, conf);
+        super(x, y, type, player, conf, 1);
+
+        this._conf = conf;
 
         this._animals = [];
         this._initialAmount = amount;
@@ -161,14 +170,6 @@ export class AnimalCage extends ItemSource {
         return this._animals.length === 0;
     }
 
-    /**
-     * How long (ms) it should take to remove an animal from this cage. Less time for small/simple animals, more for bigger or more dangerous ones.
-     */
-    getDuration(): number {
-        // TODO: configurable per animal
-        return 1000;
-    }
-
     getContent(): string {
         if (this.isEmpty()) {
             console.warn("Cage is empty, can't get another Animal from here!");
@@ -176,10 +177,18 @@ export class AnimalCage extends ItemSource {
         }
 
         this._animals.pop().kill();
-        return this._type;
+
+        return super.getContent();
+    }
+
+    // TODO: define in config!
+    public getDuration():number {
+        return 1000;
     }
 
     reset(): void {
+        super.reset();
+
         for (var i = this._animals.length-1; i < this._initialAmount; i++) {
             let animal = new Animal(this.pos.x, this.pos.y, this._type);
             this.scene.add(animal);
