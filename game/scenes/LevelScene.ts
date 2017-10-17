@@ -22,7 +22,7 @@ export class LevelScene extends ex.Scene {
     private _door: Door;
     private _cassa: Cassa;
     private _tools: Array<Tool> = [];
-    private _stations: Array<ItemSource> = [];
+    private _itemSources: Array<ItemSource> = [];
     private _decayTimer: ex.Timer;
     private _callbackOnTimerEnded: (results: number) => void;
 
@@ -111,27 +111,32 @@ export class LevelScene extends ex.Scene {
         });
     }
 
-    private _setupStations(setup: any): void {
-        this._stations.forEach(station => {
+    private _setupItemSources(setup: any): void {
+        this._itemSources.forEach(station => {
             this.remove(station);
         });
 
-        this._stations = [];
+        this._itemSources = [];
 
-        if (!setup.STATIONS || !setup.STATIONS.PLACEMENTS) {
+        if (!setup.ITEMSOURCES || !setup.ITEMSOURCES.PLACEMENTS) {
             return;
         }
+        let breakableSources = [];
 
-        setup.STATIONS.PLACEMENTS.forEach(placement => {
-            // TODO: Factory to create the different versions of ItemSources
+        setup.ITEMSOURCES.PLACEMENTS.forEach(placement => {
+            // TODO: Factory to create the different versions of ItemSources.
             let itemSource = new ItemSource(placement.X, placement.Y, placement.T, this._player);
             this.add(itemSource);
-            this._stations.push(itemSource);
+            this._itemSources.push(itemSource);
+
+            if (placement.DECAY && placement.DECAY === true) {
+                breakableSources.push(itemSource);
+            }
         });
 
-        if (setup.STATIONS.DECAY && this._stations) {
+        if (breakableSources.length > 0) {
             let decayTimer = new ex.Timer(() => {
-                let randomStation = this._stations[ex.Util.randomIntInRange(0, this._stations.length - 1)];
+                let randomStation = breakableSources[ex.Util.randomIntInRange(0, breakableSources.length - 1)];
                 randomStation.breakDown();
             }, 10000, true);
             this.add(decayTimer);
@@ -201,7 +206,7 @@ export class LevelScene extends ex.Scene {
         this._setupCassa(setup);
         this._setupDoor(setup);
         this._setupTools(setup);
-        this._setupStations(setup);
+        this._setupItemSources(setup);
         this._setupBlob(setup);
         this._setupZIndex();
 
