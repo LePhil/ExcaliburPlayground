@@ -124,7 +124,6 @@ export class LevelScene extends ex.Scene {
         let breakableSources = [];
 
         setup.ITEMSOURCES.PLACEMENTS.forEach(placement => {
-            // TODO: Factory to create the different versions of ItemSources.
             let itemSource = ItemSourceFactory.make(placement, this._player);
             this.add(itemSource);
             this._itemSources.push(itemSource);
@@ -189,8 +188,13 @@ export class LevelScene extends ex.Scene {
         }
     }
 
+    /**
+     * Add a blob after a random time, the latest at half of
+     * the game time is over.
+     *
+     * @param setup 
+     */
     private _setupBlob(setup: any): void {
-        // Add a blob after a random time, the latest at half of the game time is over
         if (setup.BLOB) {
             setTimeout(() => {
                 this.add(new Blob(setup, results => this.onBlobDied(results)));
@@ -209,10 +213,6 @@ export class LevelScene extends ex.Scene {
         this._setupItemSources(setup);
         this._setupBlob(setup);
         this._setupZIndex();
-
-        let cage = new AnimalCage(500, 500, "elephant", 3, this._player);
-        this.add(cage);
-        cage.setZIndex(this._player.getZIndex() - 1);
     }
 
     update(engine: ex.Engine, delta: number) {

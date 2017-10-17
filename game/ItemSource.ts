@@ -6,13 +6,24 @@ import {Config} from "./config/Config";
 
 export class ItemSourceFactory {
     static make(setup: any, player: Player): ItemSource {
+        let itemSource;
         // TODO: create different types of Sources, depending on the setup
-        let itemSource = new ItemSource(
-            setup.X,
-            setup.Y,
-            setup.T,
-            player
-        );
+        if (!!Config.ANIMALS.SPRITE[setup.T]) {
+            itemSource = new AnimalCage(
+                setup.X,
+                setup.Y,
+                setup.T,
+                player,
+                3
+            );
+        } else {
+            itemSource = new ItemSource(
+                setup.X,
+                setup.Y,
+                setup.T,
+                player
+            );
+        }
 
         if (setup.DECAY && setup.DECAY === true) {
             itemSource.setBreakable(true);
@@ -66,7 +77,9 @@ export class ItemSource extends ex.Actor {
         let tex = Resources.TextureStations;
         let sprite = new ex.Sprite(tex, this._conf.x, this._conf.y, this._conf.w, this._conf.h);
         sprite.scale.setTo(Config.STATIONS.CONF.SCALE, Config.STATIONS.CONF.SCALE);
-    
+    }
+
+    protected createDrawings(sprite: ex.Sprite): void {
         let brokenSprite = sprite.clone();
         brokenSprite.darken(.5);
     
@@ -81,7 +94,9 @@ export class ItemSource extends ex.Actor {
     }
   
     /**
-     * How long (ms) it should take to remove an animal from this cage. Less time for small/simple animals, more for bigger or more dangerous ones.
+     * How long (ms) it should take to remove an animal
+     * from this cage. Less time for small/simple animals,
+     * more for bigger or more dangerous ones.
      */
     public getDuration():number {
         return this._duration;
@@ -171,7 +186,11 @@ export class AnimalCage extends ItemSource {
     private _animals: Array<Animal>;
     private _initialAmount: number;
 
-    constructor(x: number, y: number, type: string, amount: number, player: Player) {
+    constructor(x: number,
+                y: number,
+                type: string,
+                player: Player,
+                amount?: number) {
         let conf = Config.TILES.fence;
 
         super(x, y, type, player, conf, 1);
@@ -179,7 +198,7 @@ export class AnimalCage extends ItemSource {
         this._conf = conf;
 
         this._animals = [];
-        this._initialAmount = amount;
+        this._initialAmount = amount || 3;
     }
 
     onInitialize(engine: ex.Engine): void {
@@ -188,7 +207,7 @@ export class AnimalCage extends ItemSource {
 
         let sprite = new ex.Sprite(tex, conf.x, conf.y, conf.w, conf.h);
 
-        this.addDrawing(sprite);
+        this.createDrawings(sprite);
 
         for (var i = 0; i < this._initialAmount; i++) {
             let animal = new Animal(this.pos.x, this.pos.y, this._type);
