@@ -4,6 +4,23 @@ import {Item} from "./Item";
 import {Resources} from "./config/Resources";
 import {Config} from "./config/Config";
 
+export class ItemSourceFactory {
+    static make(setup: any, player: Player): ItemSource {
+        // TODO: create different types of Sources, depending on the setup
+        let itemSource = new ItemSource(
+            setup.X,
+            setup.Y,
+            setup.T,
+            player
+        );
+
+        if (setup.DECAY && setup.DECAY === true) {
+            itemSource.setBreakable(true);
+        }
+
+        return itemSource;
+    }
+}
 
 enum ItemSourceState {
     Normal = "normal",
@@ -14,9 +31,15 @@ export class ItemSource extends ex.Actor {
     protected _type: string;
     protected _conf: any;
     private _duration: number;
+    private _isBreakable: boolean;
     private _state: ItemSourceState;
   
-    constructor(x: number, y: number, type: string, player: Player, conf?: any, scale?: number) {
+    constructor(x: number,
+                y: number,
+                type: string,
+                player: Player,
+                conf?: any,
+                scale?: number) {
         // TODO: unify all possible ItemSources (Stations, Cages, ...) in Config.
         conf = conf || Config.STATIONS[type];
         scale = scale || Config.STATIONS.CONF.SCALE;
@@ -27,6 +50,7 @@ export class ItemSource extends ex.Actor {
     
         this._conf = conf;
         this._type = type;
+        this._isBreakable = false;
         this._state = ItemSourceState.Normal,
         this._duration = conf.duration;
     
@@ -61,6 +85,14 @@ export class ItemSource extends ex.Actor {
      */
     public getDuration():number {
         return this._duration;
+    }
+
+    public isBreakable(): boolean {
+        return this._isBreakable;
+    }
+
+    public setBreakable(isBreakable): void {
+        this._isBreakable = isBreakable;
     }
   
     public breakDown(): void {

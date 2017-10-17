@@ -4,7 +4,7 @@ import { Player } from "../Player";
 import { Inventory } from "../Inventory";
 import { Clock, Timer, ScoreCounter } from "../Timer";
 import { Blob } from "../Blob";
-import { ItemSource, AnimalCage } from "../ItemSource";
+import { ItemSourceFactory, ItemSource, AnimalCage } from "../ItemSource";
 import { Food } from "../Food";
 import { Customer } from "../Customer";
 import { LevelMap } from "../LevelMap";
@@ -125,11 +125,11 @@ export class LevelScene extends ex.Scene {
 
         setup.ITEMSOURCES.PLACEMENTS.forEach(placement => {
             // TODO: Factory to create the different versions of ItemSources.
-            let itemSource = new ItemSource(placement.X, placement.Y, placement.T, this._player);
+            let itemSource = ItemSourceFactory.make(placement, this._player);
             this.add(itemSource);
             this._itemSources.push(itemSource);
 
-            if (placement.DECAY && placement.DECAY === true) {
+            if (itemSource.isBreakable()) {
                 breakableSources.push(itemSource);
             }
         });
