@@ -288,19 +288,6 @@ export class Config {
     SLOT: {W: 49, H: 45}
   };
 
-  static FOODS = [
-    "elephant",
-    "giraffe",
-    "hippo",
-    "monkey",
-    "panda",
-    "parrot",
-    "penguin",
-    "pig",
-    "rabbit",
-    "snake"
-  ];
-
   static GAME = {
     WIDTH: 1024,  // defined by electron wrapper
     HEIGHT: 768,  // defined by electron wrapper

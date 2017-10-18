@@ -148,7 +148,7 @@ export class Player extends AbstractPlayer {
 
     // check for each customer if we have what they want
     for (let cust of customerQueue) {
-      if (this.inventory.checkAndRemoveItem(cust.wants.name)) {
+      if (this.inventory.checkAndRemoveItem(cust.desiredItem.getType())) {
         customersToRemove.push(cust);
       }
     }

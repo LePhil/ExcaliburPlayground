@@ -1,5 +1,5 @@
 import * as ex from "excalibur";
-import {Food} from "./Food";
+import {Item} from "./Item";
 import {AbstractPlayer} from "./AbstractPlayer";
 import {Cassa} from "./Cassa";
 import {MoneyEffect} from "./Effects";
@@ -8,7 +8,7 @@ import {Config} from "./config/Config";
 import {Resources} from "./config/Resources";
 
 export class Customer extends AbstractPlayer {
-  public wants: Food;
+  public desiredItem: Item;
   public name: string;
   private _hasDecided: boolean;
   private _hasReceivedItem: boolean;
@@ -44,24 +44,24 @@ export class Customer extends AbstractPlayer {
     let goal = this._cassa.getLastPositionInQueue();
     
     this.actions
-    .moveTo(goal.x, goal.y, this._speed)
-    .callMethod(() => {
-      // Leave Queue if it's full
-      if (this._cassa.addToQueue(this)) {
-        this._decideOnProduct();
-      } else {
-        this.leaveStore();
-      }
-    });
+      .moveTo(goal.x, goal.y, this._speed)
+      .callMethod(() => {
+        // Leave Queue if it's full
+        if (this._cassa.addToQueue(this)) {
+          this._decideOnProduct();
+        } else {
+          this.leaveStore();
+        }
+      });
   }
   
   private _decideOnProduct(): void {
-    this.wants = this._getRandomFood();
+    this.desiredItem = this._getRandomFood();
     this._hasDecided = true;
     let conf = Config.CUSTOMER.THINKBUBBLE;
     
     this._patienceIndicator = new PatienceIndicator(0, 0, this._patience);
-    this._thinkBubble = new ThinkBubble(conf.OFFSET_X, conf.OFFSET_Y, this.wants);
+    this._thinkBubble = new ThinkBubble(conf.OFFSET_X, conf.OFFSET_Y, this.desiredItem);
 
     this.add(this._patienceIndicator);
     this.add(this._thinkBubble);
@@ -135,7 +135,7 @@ export class Customer extends AbstractPlayer {
   getPlayerColor(): string {
     // Disallow chosen player color for customers
     let availablePlayers = Config.PLAYER.TYPES.filter(type => type.color !== Storage.get("playerColor"));
-    let randomIndex = Math.floor(Math.random() * availablePlayers.length);
+    let randomIndex = ex.Util.randomIntInRange(0, availablePlayers.length - 1);
 
     return availablePlayers[randomIndex].color;
   }
@@ -144,25 +144,25 @@ export class Customer extends AbstractPlayer {
     this.setDrawing("idle");
   }
 
-  private _getRandomFood(): Food {
-    let foods = this._setup.FOODS;
-    let randomFood = foods[Math.floor(Math.random() * foods.length)];
-
-    return new Food(randomFood);
+  private _getRandomFood(): Item {
+    let potentialItems = this._setup.DESIREDITEMS,
+        randomIndex = ex.Util.randomIntInRange(0, potentialItems.length - 1);
+    
+    return new Item(potentialItems[randomIndex]);
   }
 }
 
 class ThinkBubble extends ex.Actor {
-  private _wants: Food;
-  constructor(x, y, wants: Food) {
+  private _desiredItem: Item;
+  constructor(x, y, wants: Item) {
     super(x, y, Config.CUSTOMER.THINKBUBBLE.WIDTH, Config.CUSTOMER.THINKBUBBLE.HEIGHT);
-    this._wants = wants;
+    this._desiredItem = wants;
   }
 
   onInitialize(engine: ex.Engine): void {
     super.onInitialize(engine);
 
-    let conf = Config.CUSTOMER.THINKBUBBLE.SPRITE[this._wants.name];
+    let conf = Config.CUSTOMER.THINKBUBBLE.SPRITE[this._desiredItem.getType()];
     let tex = Resources.TextureBubbles;
     let sprite = new ex.Sprite(tex, conf.x, conf.y, conf.w, conf.h);
 

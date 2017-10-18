@@ -5,7 +5,6 @@ import { Inventory } from "../Inventory";
 import { Clock, Timer, ScoreCounter } from "../Timer";
 import { Blob } from "../Blob";
 import { ItemSourceFactory, ItemSource, AnimalCage } from "../ItemSource";
-import { Food } from "../Food";
 import { Customer } from "../Customer";
 import { LevelMap } from "../LevelMap";
 import { Door } from "../Door";

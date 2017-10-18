@@ -29,7 +29,7 @@ export class Levels {
             TIMER: Levels.TIMERS.CLOCK,
             CASSA: {X: 250, Y: 500},
             DOOR:  {X: 800, Y: 595, SPAWN_TIME_S: 5},
-            FOODS: ["rabbit", "elephant", "giraffe"],
+            DESIREDITEMS: ["rabbit", "elephant", "giraffe"],
             ITEMSOURCES: {
                 PLACEMENTS: [
                     {X: 700, Y: 500, T: "rabbit",   DECAY: false},
@@ -138,7 +138,7 @@ export class Levels {
             H: 560,
             CASSA: {X: 250, Y: 500},
             DOOR:  {X: 800, Y: 595, SPAWN_TIME_S: 5},
-            FOODS: ["rabbit"],
+            DESIREDITEMS: ["rabbit"],
             ITEMSOURCES: {
                 PLACEMENTS: [
                     {X: 700, Y: 400, T: "rabbit",   DECAY: false}
@@ -148,9 +148,9 @@ export class Levels {
             BLOB: false,
             DURATION_S: 60,
             INTRO: [
-                "Welcome to your new Rabbit Food Store!",
+                "Welcome to your new Rabbit Store!",
                 "Make your customers happy and sell them",
-                "all the rabbit food they need!",
+                "all the rabbits they need!",
                 "(and don't forget to open the door)"
             ],
             OUTRO: ["Well done!"],
@@ -163,7 +163,7 @@ export class Levels {
             H: 560,
             CASSA: {X: 250, Y: 500},
             DOOR:  {X: 800, Y: 595, SPAWN_TIME_S: 5},
-            FOODS: ["rabbit", "elephant", "giraffe"],
+            DESIREDITEMS: ["rabbit", "elephant", "giraffe"],
             ITEMSOURCES: {
                 PLACEMENTS: [
                     {X: 700, Y: 500, T: "rabbit",   DECAY: false},
@@ -192,7 +192,7 @@ export class Levels {
             H: 560,
             CASSA: {X: 250, Y: 500},
             DOOR:  {X: 800, Y: 595, SPAWN_TIME_S: 5},
-            FOODS: ["rabbit", "elephant", "giraffe"],
+            DESIREDITEMS: ["rabbit", "elephant", "giraffe"],
             ITEMSOURCES: {
                 PLACEMENTS: [
                     {X: 700, Y: 500, T: "rabbit",   DECAY: true},
