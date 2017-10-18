@@ -117,12 +117,12 @@ export class LevelScene extends ex.Scene {
 
         this._itemSources = [];
 
-        if (!setup.ITEMSOURCES || !setup.ITEMSOURCES.PLACEMENTS) {
+        if (!setup.ITEMSOURCES) {
             return;
         }
         let breakableSources = [];
 
-        setup.ITEMSOURCES.PLACEMENTS.forEach(placement => {
+        setup.ITEMSOURCES.forEach(placement => {
             let itemSource = ItemSourceFactory.make(placement, this._player);
             this.add(itemSource);
             this._itemSources.push(itemSource);

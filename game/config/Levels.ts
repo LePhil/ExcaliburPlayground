@@ -30,13 +30,11 @@ export class Levels {
             CASSA: {X: 250, Y: 500},
             DOOR:  {X: 800, Y: 595, SPAWN_TIME_S: 5},
             DESIREDITEMS: ["rabbit", "elephant", "giraffe"],
-            ITEMSOURCES: {
-                PLACEMENTS: [
-                    {X: 700, Y: 500, T: "rabbit",   DECAY: false},
-                    {X: 300, Y: 300, T: "elephant", DECAY: true},
-                    {X: 600, Y: 300, T: "giraffe",  DECAY: true}
-                ]
-            },
+            ITEMSOURCES: [
+                {X: 700, Y: 500, T: "rabbit",   DECAY: false},
+                {X: 300, Y: 300, T: "elephant", DECAY: true},
+                {X: 600, Y: 300, T: "giraffe",  DECAY: true}
+            ],
             TOOLS: [
                 {X: 500, Y: 500, T: "hammer"}
             ],
@@ -137,11 +135,9 @@ export class Levels {
             CASSA: {X: 250, Y: 500},
             DOOR:  {X: 800, Y: 595, SPAWN_TIME_S: 5},
             DESIREDITEMS: ["rabbit"],
-            ITEMSOURCES: {
-                PLACEMENTS: [
-                    {X: 700, Y: 400, T: "rabbit",   DECAY: false}
-                ]
-            },
+            ITEMSOURCES: [
+                {X: 700, Y: 400, T: "rabbit",   DECAY: false}
+            ],
             TOOLS: [],
             BLOB: false,
             DURATION_S: 60,
@@ -162,13 +158,11 @@ export class Levels {
             CASSA: {X: 250, Y: 500},
             DOOR:  {X: 800, Y: 595, SPAWN_TIME_S: 5},
             DESIREDITEMS: ["rabbit", "elephant", "giraffe"],
-            ITEMSOURCES: {
-                PLACEMENTS: [
-                    {X: 700, Y: 500, T: "rabbit",   DECAY: false},
-                    {X: 300, Y: 300, T: "elephant", DECAY: false},
-                    {X: 600, Y: 300, T: "giraffe",  DECAY: false}
-                ]
-            },
+            ITEMSOURCES: [
+                {X: 700, Y: 500, T: "rabbit",   DECAY: false},
+                {X: 300, Y: 300, T: "elephant", DECAY: false},
+                {X: 600, Y: 300, T: "giraffe",  DECAY: false}
+            ],
             TOOLS: [
                 {X: 200, Y: 200, T: "cup"},
                 {X: 200, Y: 250, T: "hammer"},
@@ -189,13 +183,11 @@ export class Levels {
             CASSA: {X: 250, Y: 500},
             DOOR:  {X: 800, Y: 595, SPAWN_TIME_S: 5},
             DESIREDITEMS: ["rabbit", "elephant", "giraffe"],
-            ITEMSOURCES: {
-                PLACEMENTS: [
-                    {X: 700, Y: 500, T: "rabbit",   DECAY: true},
-                    {X: 300, Y: 300, T: "elephant", DECAY: true},
-                    {X: 600, Y: 300, T: "giraffe",  DECAY: true}
-                ]
-            },
+            ITEMSOURCES: [
+                {X: 700, Y: 500, T: "rabbit",   DECAY: true},
+                {X: 300, Y: 300, T: "elephant", DECAY: true},
+                {X: 600, Y: 300, T: "giraffe",  DECAY: true}
+            ],
             TOOLS: [
                 {X: 500, Y: 500, T: "hammer"}
             ],
