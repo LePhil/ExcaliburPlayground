@@ -56,7 +56,7 @@ export class Customer extends AbstractPlayer {
   }
   
   private _decideOnProduct(): void {
-    this.desiredItem = this._getRandomFood();
+    this.desiredItem = this._getRandomItem();
     this._hasDecided = true;
     let conf = Config.CUSTOMER.THINKBUBBLE;
     
@@ -144,7 +144,7 @@ export class Customer extends AbstractPlayer {
     this.setDrawing("idle");
   }
 
-  private _getRandomFood(): Item {
+  private _getRandomItem(): Item {
     let potentialItems = this._setup.DESIREDITEMS,
         randomIndex = ex.Util.randomIntInRange(0, potentialItems.length - 1);
     

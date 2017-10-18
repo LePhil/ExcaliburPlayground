@@ -1,5 +1,4 @@
 import * as ex from "excalibur";
-import { Food } from "./Food";
 import { Config } from "./config/Config";
 import { Resources } from "./config/Resources";
 

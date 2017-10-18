@@ -37,11 +37,9 @@ export class Levels {
                     {X: 600, Y: 300, T: "giraffe",  DECAY: true}
                 ]
             },
-            TOOLS: {
-                PLACEMENTS: [
-                    {X: 500, Y: 500, T: "hammer"}
-                ]
-            },
+            TOOLS: [
+                {X: 500, Y: 500, T: "hammer"}
+            ],
             BLOB: true,
             DURATION_S: 60,
             INTRO: [{text: "Hello", fontSize: 44, color: ex.Color.Red}],
@@ -124,7 +122,7 @@ export class Levels {
                 {T: 50, S: "oldguy",A: ActionType.Talk, O: {text: "am looking for a successor.", duration: 3} },
                 {T: 53, S: "hime", A: ActionType.Talk, O: {text: "*sob*", duration: 2} },
                 {T: 55, S: "hime", A: ActionType.Talk, O: {text: "... really? Where?", duration: 2} },
-                {T: 57, S: "oldguy",A: ActionType.Talk, O: {text: "At my Rabbit Food Store!", duration: 3} },
+                {T: 57, S: "oldguy",A: ActionType.Talk, O: {text: "At my Rabbit Store!", duration: 3} },
                 {T: 60, S: "hime", A: ActionType.Talk, O: {text: "I don't know...", duration: 3} },
                 {T: 63, S: "oldguy",A: ActionType.Talk, O: {text: "Humbug! You can start tomorrow!", duration: 3} },
                 {T: 66, S: "oldguy",A: ActionType.Move, O: {to: "old_guy_entry"} }
@@ -144,7 +142,7 @@ export class Levels {
                     {X: 700, Y: 400, T: "rabbit",   DECAY: false}
                 ]
             },
-            TOOLS: {},
+            TOOLS: [],
             BLOB: false,
             DURATION_S: 60,
             INTRO: [
@@ -171,13 +169,11 @@ export class Levels {
                     {X: 600, Y: 300, T: "giraffe",  DECAY: false}
                 ]
             },
-            TOOLS: {
-                PLACEMENTS: [
-                    {X: 200, Y: 200, T: "cup"},
-                    {X: 200, Y: 250, T: "hammer"},
-                    {X: 200, Y: 300, T: "bone"}
-                ]
-            },
+            TOOLS: [
+                {X: 200, Y: 200, T: "cup"},
+                {X: 200, Y: 250, T: "hammer"},
+                {X: 200, Y: 300, T: "bone"}
+            ],
             BLOB: true,
             DURATION_S: 10,
             INTRO: ["As a proud owner of your new pet store,",
@@ -200,11 +196,9 @@ export class Levels {
                     {X: 600, Y: 300, T: "giraffe",  DECAY: true}
                 ]
             },
-            TOOLS: {
-                PLACEMENTS: [
-                    {X: 500, Y: 500, T: "hammer"}
-                ]
-            },
+            TOOLS: [
+                {X: 500, Y: 500, T: "hammer"}
+            ],
             BLOB: true,
             DURATION_S: 60,
             INTRO: ["Second level"],

@@ -99,11 +99,11 @@ export class LevelScene extends ex.Scene {
 
         this._tools = [];
 
-        if (!setup.TOOLS || !setup.TOOLS.PLACEMENTS) {
+        if (!setup.TOOLS) {
             return;
         }
 
-        setup.TOOLS.PLACEMENTS.forEach(placement => {
+        setup.TOOLS.forEach(placement => {
             let tool = ToolFactory.create(placement.X, placement.Y, placement.T, this._player);
             this.add(tool);
             this._tools.push(tool);
