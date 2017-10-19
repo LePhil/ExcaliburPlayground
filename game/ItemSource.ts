@@ -71,7 +71,7 @@ export class ItemSource extends ex.Actor {
         this._type = type;
         this._isBreakable = false;
         this._state = ItemSourceState.Normal,
-        this._duration = conf.duration;
+        this._duration = conf.duration || 1000;
     
         this.on("pointerdown", (event) => {
             player.goToItemSource(this, this.onPlayerReached );
