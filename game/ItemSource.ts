@@ -16,6 +16,13 @@ export class ItemSourceFactory {
                 player,
                 3
             );
+        } else if (!!Config.ITEMS[setup.T]) {
+            itemSource = new Crate(
+                setup.X,
+                setup.Y,
+                setup.T,
+                player
+            );
         } else {
             itemSource = new ItemSource(
                 setup.X,
@@ -51,6 +58,7 @@ export class ItemSource extends ex.Actor {
                 player: Player,
                 conf?: any,
                 scale?: number) {
+
         // TODO: unify all possible ItemSources (Stations, Cages, ...) in Config.
         conf = conf || Config.STATIONS[type];
         scale = scale || Config.STATIONS.CONF.SCALE;
@@ -70,7 +78,7 @@ export class ItemSource extends ex.Actor {
         });
     }
     
-    // TODO: effects or something.
+    // Optional: effects or something.
     onPlayerReached(): void {}
   
     onInitialize(engine: ex.Engine): void {
@@ -138,7 +146,7 @@ export class ItemSource extends ex.Actor {
     }
 }
 
-export class Animal extends ex.Actor {
+class Animal extends ex.Actor {
     public name: string;
     private _type: string;
 
@@ -246,5 +254,58 @@ export class AnimalCage extends ItemSource {
             this._animals.push(animal);
             animal.setZIndex(this.getZIndex() - 1 - i);
         }
+    }
+}
+
+class CrateSign extends ex.Actor {
+    private _type: string;
+
+    constructor(x, y, type:string) {
+        let conf = Config.ITEMS.CONF;
+
+        super(x, y, conf.W, conf.H);
+        
+        this.collisionType = ex.CollisionType.Passive;
+        this._type = type;
+    }
+
+    onInitialize(engine: ex.Engine): void {
+        let conf = Config.ITEMS[this._type];
+        let tex = Resources.ItemSpriteSheet;
+        let sprite = new ex.Sprite(tex, conf.x, conf.y, conf.w, conf.h);
+
+        let scale = conf.w > conf.h ? Config.ITEMS.CONF.W / conf.w : Config.ITEMS.CONF.H / conf.h;
+        sprite.scale.setTo(scale, scale);
+
+        this.addDrawing(sprite);
+    }
+}
+
+export class Crate extends ItemSource {
+    constructor(x: number,
+                y: number,
+                type: string,
+                player: Player,
+                amount?: number) {
+
+        let conf = Config.TILES.boxEmpty;
+
+        super(x, y, type, player, conf, 1);
+
+        this._conf = conf;
+        this.add(new CrateSign(0, 0, type));
+    }
+
+    onInitialize(engine: ex.Engine): void {
+        let conf = Config.TILES.boxEmpty;
+        let tex = Resources.TextureTiles;
+
+        let sprite = new ex.Sprite(tex, conf.x, conf.y, conf.w, conf.h);
+
+        this.createDrawings(sprite);
+    }
+
+    reset(): void {
+        // TODO
     }
 }

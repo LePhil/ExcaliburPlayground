@@ -1,4 +1,5 @@
 import * as ex from "excalibur";
+import { Tiles } from "./Tiles";
 
 export class Config {
   static PLAYER = {
@@ -37,7 +38,7 @@ export class Config {
       HEIGHT: 30,
       OFFSET_X: 20,
       OFFSET_Y: -20,
-      SPRITE: {
+      SPRITE: { /* Bubble Animals*/
         giraffe:    {x: 0,    y: 0,     w: 284, h: 285},
         monkey:     {x: 0,    y: 1148,  w: 284, h: 285},
         panda:      {x: 286,  y: 287,   w: 284, h: 285},
@@ -60,6 +61,7 @@ export class Config {
     CONF: {
       SCALE: 0.2
     },
+    /* Outlined Animals */
     rabbit:   {x: 394, y: 344,  w: 284, h: 414, duration:  500},
     elephant: {x: 0,   y: 0,    w: 424, h: 342, duration:  500},
     giraffe:  {x: 0,   y: 963,  w: 382, h: 370, duration: 1000},
