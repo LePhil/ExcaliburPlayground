@@ -84,6 +84,14 @@ export class Config {
       W: 50,
       H: 50
     },
+    CUP:      "cup",
+    HAMMER:   "hammer",
+    REDPILL:  "pill_red",
+    BLUEPILL: "pill_blue",
+    BONE:     "bone",
+    MEDKIT:   "medkit",
+    COFFEE:   "coffee",
+    /* TODO: tile definition should be moved to config/tiles */
     genericItem_color_001: { x: 0, y: 322, w: 162, h: 94 },
     genericItem_color_002: { x: 136, y: 1231, w: 120, h: 110 },
     cup:                    { x: 130, y: 1791, w: 89, h: 45, t: Config.ITEM_TYPES.CONSUMABLE },
@@ -250,6 +258,16 @@ export class Config {
   }
 
   static ANIMALS = {
+    ELEPHANT: "elephant",
+    GIRAFFE:  "giraffe",
+    HIPPO:    "hippo",
+    MONKEY:   "monkey",
+    PANDA:    "panda",
+    PARROT:   "parrot",
+    PENGUIN:  "penguin",
+    PIG:      "pig",
+    RABBIT:   "rabbit",
+    SNAKE:    "snake",
     SCALE: 0.15,
     SPRITE: {
       elephant: {x: 0,    y: 0,     w: 376, h: 310},
@@ -361,6 +379,7 @@ export class Config {
     hud_p3Alt:              {x: 98, y: 98, w: 47, h: 47},
     hud_x:                  {x: 0, y: 239, w: 30, h: 28}
   };
+
   static TILES = { 
     box:                    {x:0, y: 864, w: 70, h: 70},
     boxAlt:                 {x:0, y: 792, w: 70, h: 70},
@@ -580,5 +599,26 @@ export class Config {
       star_silver: 8,
       star_copper: 5
     }
+  };
+
+  static POTENTIALWISHES = {
+    ANIMALS: [
+      Config.ANIMALS.ELEPHANT,
+      Config.ANIMALS.GIRAFFE,
+      Config.ANIMALS.HIPPO,
+      Config.ANIMALS.MONKEY,
+      Config.ANIMALS.PANDA,
+      Config.ANIMALS.PARROT,
+      Config.ANIMALS.PENGUIN,
+      Config.ANIMALS.PIG,
+      Config.ANIMALS.RABBIT,
+      Config.ANIMALS.SNAKE
+    ],
+    ITEMS: [
+      Config.ITEMS.REDPILL,
+      Config.ITEMS.BLUEPILL,
+      Config.ITEMS.BONE,
+      Config.ITEMS.MEDKIT,
+    ]
   };
 }
