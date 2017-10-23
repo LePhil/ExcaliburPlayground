@@ -78,14 +78,16 @@ export class Player extends AbstractPlayer {
     .moveTo(target.x, target.y, this._speed)
     .callMethod(() => {
       callback();
-      if (itemSource.isReady()) {
+      if (!this.inventory.isFull() && itemSource.isReady()) {
         this.getItemFromSource(itemSource);
-      } else if (itemSource.isBroken()) {
+      } else if (itemSource.isBroken() && this.inventory.hasItem("hammer")) {
         if (this.inventory.checkAndRemoveItem("hammer")) {
           this.repairItemSource(itemSource);
-        } else {
-          // TODO: What to do if tool not equipped
         }
+      } else {
+        // no action can be done
+        this._isBusy = false;
+        this._isWorkingOnATask = false;
       }
     });
   }

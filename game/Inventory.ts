@@ -96,7 +96,7 @@ export class Inventory extends ex.Actor {
   }
 
   public addItem(type: string) {
-    if (this.inventory.length >= this._initialSlots) {
+    if (this.isFull()) {
       return;
     }
 
@@ -108,6 +108,10 @@ export class Inventory extends ex.Actor {
 
     this.inventory.push(itemToAdd);
     this.add(itemToAdd);
+  }
+
+  public hasItem(itemType: string): boolean {
+    return this.inventory.filter(item => item.getType() === itemType).length > 0;
   }
 
   public checkAndRemoveItem(itemType: string) {
@@ -164,8 +168,19 @@ export class Inventory extends ex.Actor {
       this._addSlot();
     }
   }
+
+  public isFull(): boolean {
+    return this.inventory.length >= this._initialSlots;
+  }
+
+  public isEmpty(): boolean {
+    return this.inventory.length === 0;
+  }
 }
 
+/**
+ * Graphical indicator of an available or occupied slot in the inventory.
+ */
 class InventorySlot extends ex.UIActor {
   constructor(x, y) {
     super(x, y);

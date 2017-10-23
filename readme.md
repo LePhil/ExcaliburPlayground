@@ -30,7 +30,6 @@ Done!
 * If speed is increased, actions should take less long as well (e.g. pickup)
 * Multiple clicks on Cassa should not stack up/take no time if no customer is there
 * Picking up foods is broken right now, doesn't pause the player
-* if the inventory is full it should not remove an animal from the cage!
 
 # Recently done
 * Re-done buttons with Labels
@@ -62,6 +61,7 @@ Done!
 * Cassa click: Player shouldn't stand on top of it, but beside the cassa. Makes it easier to click it as well!
 * Time should show time (e.g. from 08:00 to 18:00) or at the least count down so it's clear when the time is almost over
 * Animals/Cages with limited amount of items (WIP)
+* if the inventory is full it should not remove an animal from the cage!
 
 # Won't do
 * If inventory is full, clicks on station should not do anything- No. We'd have to check for Tools in Inventory (in case the station is broken) and if there are actions in the queue to remove some items --> let the user make mistakes!
