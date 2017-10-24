@@ -137,7 +137,7 @@ export class Levels {
             DOOR:  {X: 800, Y: 595, SPAWN_TIME_S: 5},
             DESIREDITEMS: ["rabbit"],
             ITEMSOURCES: [
-                {X: 700, Y: 400, T: "rabbit",   DECAY: false}
+                {X: 700, Y: 400, T: "rabbit", DECAY: false}
             ],
             TOOLS: [],
             BLOB: false,

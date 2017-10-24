@@ -83,6 +83,8 @@ export class Player extends AbstractPlayer {
       } else if (itemSource.isBroken() && this.inventory.hasItem("hammer")) {
         if (this.inventory.checkAndRemoveItem("hammer")) {
           this.repairItemSource(itemSource);
+        } else {
+          console.warn("Something went wrong. Schrödinger's item?");
         }
       } else {
         // no action can be done

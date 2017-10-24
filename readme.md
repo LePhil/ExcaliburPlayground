@@ -62,6 +62,8 @@ Done!
 * Time should show time (e.g. from 08:00 to 18:00) or at the least count down so it's clear when the time is almost over
 * Animals/Cages with limited amount of items (WIP)
 * if the inventory is full it should not remove an animal from the cage!
+* first level: Rabbit Cage doesn't have any rabbits!
+* AnimalCages (and/or ItemSources with a finite number of items) should be able to be defined via config (A for Amount) - no amount = infinite = spawn 5 but don't reduce.
 
 # Won't do
 * If inventory is full, clicks on station should not do anything- No. We'd have to check for Tools in Inventory (in case the station is broken) and if there are actions in the queue to remove some items --> let the user make mistakes!

@@ -14,7 +14,7 @@ export class ItemSourceFactory {
                 setup.Y,
                 setup.T,
                 player,
-                3
+                setup.A
             );
         } else if (!!Config.ITEMS[setup.T]) {
             itemSource = new Crate(
@@ -193,6 +193,7 @@ class Animal extends ex.Actor {
 export class AnimalCage extends ItemSource {
     private _animals: Array<Animal>;
     private _initialAmount: number;
+    private _infiniteItems: boolean;
 
     constructor(x: number,
                 y: number,
@@ -206,7 +207,8 @@ export class AnimalCage extends ItemSource {
         this._conf = conf;
 
         this._animals = [];
-        this._initialAmount = amount || 3;
+        this._initialAmount = amount || 5;
+        this._infiniteItems = !amount;
     }
 
     onInitialize(engine: ex.Engine): void {
@@ -218,11 +220,27 @@ export class AnimalCage extends ItemSource {
         this.createDrawings(sprite);
 
         for (var i = 0; i < this._initialAmount; i++) {
-            let animal = new Animal(this.pos.x, this.pos.y, this._type);
-            this.scene.add(animal);
-            this._animals.push(animal);
-            animal.setZIndex(this.getZIndex() - 1 - i);
+            this._addAnimal(i);
         }
+    }
+    
+    private _addAnimal(zIndexFactor) {
+        let animal = new Animal(this.pos.x, this.pos.y, this._type);
+        this.scene.add(animal);
+        this._animals.push(animal);
+        animal.setZIndex(this.getZIndex() - 1 - zIndexFactor);
+    }
+
+    /**
+     * When resetting the zIndex of an itemSource, the children
+     * should be updated too.
+     */
+    setZIndex(newIndex: number): void {
+        super.setZIndex(newIndex);
+
+        this._animals.forEach((animal, i) => {
+            animal.setZIndex(newIndex - 1 - i);
+        });
     }
 
     isEmpty(): boolean {
@@ -235,7 +253,9 @@ export class AnimalCage extends ItemSource {
             return "";
         }
 
-        this._animals.pop().kill();
+        if (!this._infiniteItems) {
+            this._animals.pop().kill();
+        }
 
         return super.getContent();
     }
@@ -249,10 +269,7 @@ export class AnimalCage extends ItemSource {
         super.reset();
 
         for (var i = this._animals.length-1; i < this._initialAmount; i++) {
-            let animal = new Animal(this.pos.x, this.pos.y, this._type);
-            this.scene.add(animal);
-            this._animals.push(animal);
-            animal.setZIndex(this.getZIndex() - 1 - i);
+            this._addAnimal(i);
         }
     }
 }
