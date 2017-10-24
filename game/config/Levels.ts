@@ -134,7 +134,7 @@ export class Levels {
             W: 840,
             H: 560,
             CASSA: {X: 250, Y: 500},
-            DOOR:  {X: 800, Y: 595, SPAWN_TIME_S: 5},
+            DOOR:  {X: 800, Y: 595, SPAWN_TIME_S: 8},
             DESIREDITEMS: ["rabbit"],
             ITEMSOURCES: [
                 {X: 700, Y: 400, T: "rabbit", DECAY: false}

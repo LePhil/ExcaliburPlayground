@@ -1,5 +1,5 @@
 import * as ex from "excalibur";
-import { Tiles } from "./Tiles";
+import { Graphics } from "./Graphics";
 
 export class Config {
   static PLAYER = {
@@ -37,19 +37,7 @@ export class Config {
       WIDTH: 30,
       HEIGHT: 30,
       OFFSET_X: 20,
-      OFFSET_Y: -20,
-      SPRITE: { /* Bubble Animals*/
-        giraffe:    {x: 0,    y: 0,     w: 284, h: 285},
-        monkey:     {x: 0,    y: 1148,  w: 284, h: 285},
-        panda:      {x: 286,  y: 287,   w: 284, h: 285},
-        parrot:     {x: 286,  y: 0,     w: 284, h: 285},
-        penguin:    {x: 0,    y: 1722,  w: 284, h: 285},
-        rabbit:     {x: 0,    y: 1435,  w: 284, h: 285},
-        hippo:      {x: 286,  y: 574,   w: 284, h: 285},
-        pig:        {x: 0,    y: 861,   w: 284, h: 285},
-        elephant:   {x: 0,    y: 574,   w: 284, h: 285},
-        snake:      {x: 0,    y: 287,   w: 284, h: 285}
-      }
+      OFFSET_Y: -20
     },
     INITIAL_PATIENCE: 100,
     PATIENCE_DELTA: 5,

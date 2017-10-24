@@ -1,6 +1,6 @@
 import * as ex from "excalibur";
 
-export class Tiles {
+export class Graphics {
     static ANIMALS = {
         ROUND: {
             elephant:   {x: 0,    y: 574,   w: 284, h: 285},
@@ -27,4 +27,8 @@ export class Tiles {
             snake:      {x: 384,  y: 963,   w: 284, h: 334}
         }
     };
+
+    static ITEMS = {
+
+    }
 }

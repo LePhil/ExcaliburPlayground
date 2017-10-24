@@ -5,6 +5,7 @@ import {Cassa} from "./Cassa";
 import {MoneyEffect} from "./Effects";
 import {Storage} from "./Storage";
 import {Config} from "./config/Config";
+import {Graphics} from "./config/Graphics";
 import {Resources} from "./config/Resources";
 
 export class Customer extends AbstractPlayer {
@@ -162,7 +163,7 @@ class ThinkBubble extends ex.Actor {
   onInitialize(engine: ex.Engine): void {
     super.onInitialize(engine);
 
-    let conf = Config.CUSTOMER.THINKBUBBLE.SPRITE[this._desiredItem.getType()];
+    let conf = Graphics.ANIMALS.ROUND[this._desiredItem.getType()];
     let tex = Resources.TextureBubbles;
     let sprite = new ex.Sprite(tex, conf.x, conf.y, conf.w, conf.h);
 
