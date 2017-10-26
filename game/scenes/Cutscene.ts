@@ -11,10 +11,12 @@ export class Cutscene extends ex.Scene {
     private cutSceneDirector:CutSceneDirector;
     private _levelName: string = "";
     private _game: ex.Engine;
+    private _textDisplay: TextDisplay;
 
     constructor(engine: ex.Engine) {
         super(engine);
         this._game = engine;
+        this._textDisplay = new TextDisplay();
     }
 
     public loadLevelData(levelName: string): void {
@@ -60,7 +62,8 @@ export class Cutscene extends ex.Scene {
                 characterSetup.Name,
                 characterSetup.Color,
                 locations,
-                characterSetup.Opacity
+                characterSetup.Opacity,
+                this._textDisplay
             );
         });
 
@@ -97,6 +100,39 @@ export class Cutscene extends ex.Scene {
 
     onDeactivate () {
         this.cutSceneDirector.resetScene();
+        this._textDisplay.reset();
+    }
+}
+
+class TextDisplay extends ex.UIActor {
+    private _label: ex.Label;
+
+    constructor() {
+        let x = Config.GAME.WIDTH / 2;
+        let y = Config.GAME.HEIGHT - 100;
+
+        super(x, y);
+
+        let label = new ex.Label("Text", 0, 0);
+        label.fontSize = 24;
+        this.add(label);
+        this._label = label;
+    }
+
+    public say(name: string, text: string, duration: number): void {
+        this._label.text = `${name}: "${text}"`;
+
+        if (duration > 0) {
+            // if a manual (and def. optional) duration was set, remove text after said duration
+            // otherwise, the label stays until the next one comes along!
+            setTimeout(() => {
+                this._label.text = "";
+            }, duration * 1000);
+        }
+    }
+
+    public reset(): void {
+        this._label.text = "";
     }
 }
 
@@ -111,16 +147,17 @@ interface Subject {
 class Character extends AbstractPlayer implements Subject {
     private name: string;
     private _locations:any;
-    private _label:ex.Label;
     private _color:string;
     private _initialLocation: Location;
-    private _initialOpacity: number;    
+    private _initialOpacity: number;
+    private _textDisplay: TextDisplay;
 
     constructor(initialLocation: Location,
                 name: string,
                 color: string,
                 locations: any,
-                initialOpacity = 1) {
+                initialOpacity = 1,
+                textDisplay: TextDisplay) {
         super(initialLocation.x, initialLocation.y);
 
         this._initialLocation = initialLocation;
@@ -128,7 +165,7 @@ class Character extends AbstractPlayer implements Subject {
         this._color = color;
         this.name = name;
         this._locations = locations;
-
+        this._textDisplay = textDisplay;
         this.opacity = initialOpacity;        
     }
 
@@ -143,27 +180,7 @@ class Character extends AbstractPlayer implements Subject {
     }
 
     action_talk(text: string, duration = 0) {
-        console.log(`${this.name}: "${text}"`);
-
-        // TODO: for now with labels, later maybe with bigger containers for text. Maybe even html?
-
-        if(this._label) {
-           this.remove(this._label); 
-        }
-
-        let label = new ex.Label(text, 20, 0);        
-        label.fontSize = 24;
-        this.add(label);
-        this._label = label;
-
-        if (duration > 0) {
-            // if a manual (and def. optional) duration was set, remove text after said duration
-            // otherwise, the label stays until the next one comes along!
-            setTimeout(() => {
-                this.remove(this._label);
-                this._label = null;
-            }, duration * 1000);
-        }
+        this._textDisplay.say(this.name, text, duration);
     }
 
     action_show() {
@@ -184,10 +201,6 @@ class Character extends AbstractPlayer implements Subject {
         this.pos.y = this._initialLocation.y;
         this.opacity = this._initialOpacity;
         this.setDrawing("idle");
-        
-        if(this._label) {
-            this.remove(this._label); 
-        }
     }
 
     _handleIdlePlayer(): void {
