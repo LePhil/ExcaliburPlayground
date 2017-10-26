@@ -61,6 +61,14 @@ export class Director {
         }
     }
 
+    public loadCustomLevel(settings: any): void {
+        debugger;
+        this._game.load(settings, () => {
+            this._engine.goToScene("menu");
+        });
+        this._engine.goToScene("game");
+    }
+
     public onIntroDone():void {
         this._game.load(this._levelData, results => this.onGameDone(results));
         this._engine.goToScene("game");

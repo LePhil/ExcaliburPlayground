@@ -25,6 +25,7 @@ Done!
 * much more extended player character with separate eyes (blinking, emotions), mouth ("talking" in cutscenes, frowning) and legs (animated)
 * finish Animals/Animal Cages (similar to FoodStations)
 * FoodStations should serve FOOD, not Animals -> Bones, Cans, etc.
+* Random Mode with difficulty setting
 
 # Bugs
 * If speed is increased, actions should take less long as well (e.g. pickup)

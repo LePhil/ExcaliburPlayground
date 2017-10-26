@@ -51,3 +51,42 @@ export class Button extends ex.UIActor {
         this.on("pointerup", () => this.action());
     }
 }
+
+export class Checkbox extends ex.UIActor {
+    constructor(position: Pos,
+        public text: string,
+        public action: () => void,
+        checked = false,
+        w = Config.GAME.UI.CHECKBOX.W,
+        h = Config.GAME.UI.CHECKBOX.H) {
+
+        super(position.x, position.y, w, h);
+
+        this.anchor.setTo(.5, .5);
+
+        let scaleX = w/Config.GAME.UI.BUTTON_WIDTH,
+            scaleY = h/Config.GAME.UI.BUTTON_HEIGHT;
+
+        let spriteChecked   = Resources.ImgCheckboxChecked.asSprite()
+        let spriteUnchecked = Resources.ImgCheckboxUnchecked.asSprite()
+
+        this.addDrawing("checked", spriteChecked);
+        this.addDrawing("unchecked", spriteUnchecked);
+        let fontSize = 24;
+        let label = new ex.Label(text, w/2, h/2 + fontSize/2);
+        label.fontSize = fontSize;
+        label.color = ex.Color.White;
+        label.textAlign = ex.TextAlign.Left;
+        label.pos.setTo(w/2, h/4);
+        this.add(label);
+
+        this.off("pointerup", this.action);
+        this.on("pointerup", () => this.action());
+
+        if (checked) {
+            this.setDrawing("checked");
+        } else {
+            this.setDrawing("unchecked");
+        }
+    }
+}

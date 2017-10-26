@@ -149,6 +149,40 @@ export class Levels {
                 "(and don't forget to open the door)"
             ],
             OUTRO: ["Well done!"],
+            NEXT: "more_animals"
+        }, {
+            NAME: "more_animals",
+            TYPE: Levels.TYPES.CUTSCENE,
+            IMG: "Map_intro_01",
+            W: 840,
+            H: 560,
+            LOCATIONS: [],
+            CHARACTERS: [],
+            PROPS: [],
+            SCRIPT: [],
+            NEXT: "second_day"
+        }, {
+            NAME: "second_day",
+            TYPE: Levels.TYPES.NORMAL,
+            IMG: "Map_01_first_day",
+            W: 840,
+            H: 560,
+            CASSA: {X: 250, Y: 500},
+            DOOR:  {X: 800, Y: 595, SPAWN_TIME_S: 8},
+            DESIREDITEMS: ["rabbit", "parrot", "pig"],
+            ITEMSOURCES: [
+                {X: 700, Y: 400, T: "rabbit", DECAY: false},
+                {X: 300, Y: 300, T: "parrot", DECAY: false},
+                {X: 600, Y: 300, T: "pig",    DECAY: false}
+            ],
+            TOOLS: [],
+            BLOB: false,
+            DURATION_S: 60,
+            INTRO: [
+                "Welcome back",
+                "Now with 100% more pigs and parrots!"
+            ],
+            OUTRO: ["Well done!"],
             NEXT: "Map_01"
         }, {
             NAME: "Map_01",

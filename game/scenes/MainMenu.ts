@@ -9,7 +9,8 @@ export class MainMenu extends ex.Scene {
 
     private _startButton: Button;
     private _optionsButton: Button;
-    private _creditsButton: Button;  
+    private _creditsButton: Button;
+    private _customButton: Button;
 
     constructor(engine: ex.Engine) {
         super(engine);
@@ -34,9 +35,16 @@ export class MainMenu extends ex.Scene {
             () => {engine.goToScene("credits");}
         )
 
+        this._customButton = new Button(
+            Pos.make(buttonPos.center_4),
+            "Custom Game",
+            () => {engine.goToScene("custom");}
+        );
+
         this.add(this._startButton);
         this.add(this._optionsButton);
         this.add(this._creditsButton);
+        this.add(this._customButton);
 
         if (Config.GAME.DEBUG) {
             Levels.MAPS.forEach((map, index) => {
