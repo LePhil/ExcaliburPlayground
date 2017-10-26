@@ -53,6 +53,8 @@ export class Button extends ex.UIActor {
 }
 
 export class Checkbox extends ex.UIActor {
+    private _isChecked: boolean;
+
     constructor(position: Pos,
         public text: string,
         public action: () => void,
@@ -62,6 +64,7 @@ export class Checkbox extends ex.UIActor {
 
         super(position.x, position.y, w, h);
 
+        this._isChecked = checked;
         this.anchor.setTo(.5, .5);
 
         let scaleX = w/Config.GAME.UI.BUTTON_WIDTH,
@@ -72,6 +75,7 @@ export class Checkbox extends ex.UIActor {
 
         this.addDrawing("checked", spriteChecked);
         this.addDrawing("unchecked", spriteUnchecked);
+
         let fontSize = 24;
         let label = new ex.Label(text, w/2, h/2 + fontSize/2);
         label.fontSize = fontSize;
@@ -81,12 +85,25 @@ export class Checkbox extends ex.UIActor {
         this.add(label);
 
         this.off("pointerup", this.action);
-        this.on("pointerup", () => this.action());
+        this.on("pointerup", () => {
+            this._isChecked = !this._isChecked;
+            this._updateSprite(this._isChecked);
+            this.action();
+        });
 
+        this._updateSprite(checked);
+
+    }
+    
+    private _updateSprite(checked): void {
         if (checked) {
             this.setDrawing("checked");
         } else {
             this.setDrawing("unchecked");
         }
+    }
+
+    public isChecked(): boolean {
+        return this._isChecked;
     }
 }

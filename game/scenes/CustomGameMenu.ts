@@ -47,7 +47,8 @@ export class CustomGameMenu extends ex.Scene {
         this._blobCheckBox = new Checkbox(
             Pos.make(buttonPos.center_2),
             "Blob",
-            () => {}
+            () => { this._settings.BLOB = this._blobCheckBox.isChecked(); },
+            this._settings.BLOB
         );
 
         this._backButton = new Button(
