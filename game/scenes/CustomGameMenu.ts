@@ -40,7 +40,7 @@ export class CustomGameMenu extends ex.Scene {
         };
 
         this._startButton = new Button(
-            Pos.make(buttonPos.center_1),
+            Pos.make(buttonPos.bottom_r),
             "Start",
             () => {globals.customGame(this._settings);}
         );
@@ -62,7 +62,7 @@ export class CustomGameMenu extends ex.Scene {
         );
 
         this._backButton = new Button(
-            Pos.make(buttonPos.center_6),
+            Pos.make(buttonPos.bottom_l),
             "Back",
             () => {engine.goToScene("menu");}
         );

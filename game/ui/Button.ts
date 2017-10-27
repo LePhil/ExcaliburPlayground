@@ -25,30 +25,33 @@ export class Button extends ex.UIActor {
     constructor(position: Pos,
                 public text: string,
                 public action: () => void,
-                w = Config.GAME.UI.BUTTON_WIDTH,
-                h = Config.GAME.UI.BUTTON_HEIGHT,
+                w = Config.GAME.UI.BUTTON.W,
+                h = Config.GAME.UI.BUTTON.H,
                 sprite = Resources.ImgButton.asSprite()) {
 
         super(position.x, position.y, w, h);
 
         this.anchor.setTo(.5, .5);
 
-        let scaleX = w/Config.GAME.UI.BUTTON_WIDTH,
-            scaleY = h/Config.GAME.UI.BUTTON_HEIGHT;
+        let scaleX = w/Config.GAME.UI.BUTTON.W,
+            scaleY = h/Config.GAME.UI.BUTTON.H;
 
         // TODO: doesn't seem to work!
         sprite.scale.setTo(scaleX, scaleY);
         this.addDrawing(sprite);
-        let fontSize = 24;
-        let label = new ex.Label(text, w/2, h/2 + fontSize/2);
+        let fontSize = Config.GAME.UI.FONTSIZE;
+        let label = new ex.Label(text, 0, fontSize/2);
         label.fontSize = fontSize;
         label.color = ex.Color.White;
         label.textAlign = ex.TextAlign.Center;
-        label.pos.setTo(0, h/4);
+        label.anchor.setTo(.5, .5);
         this.add(label);
         
-        this.off("pointerup", this.action);
         this.on("pointerup", () => this.action());
+    }
+
+    public getTotalHeight(): number {
+        return Config.GAME.UI.BUTTON.H;
     }
 }
 
@@ -56,19 +59,19 @@ export class Checkbox extends ex.UIActor {
     private _isChecked: boolean;
 
     constructor(position: Pos,
-        public text: string,
-        public action: () => void,
-        checked = false,
-        w = Config.GAME.UI.CHECKBOX.W,
-        h = Config.GAME.UI.CHECKBOX.H) {
+                public text: string,
+                public action: () => void,
+                checked = false,
+                w = Config.GAME.UI.CHECKBOX.W,
+                h = Config.GAME.UI.CHECKBOX.H) {
 
         super(position.x, position.y, w, h);
 
         this._isChecked = checked;
-        this.anchor.setTo(.5, .5);
+        this.anchor.setTo(0, .5);
 
-        let scaleX = w/Config.GAME.UI.BUTTON_WIDTH,
-            scaleY = h/Config.GAME.UI.BUTTON_HEIGHT;
+        let scaleX = w/Config.GAME.UI.BUTTON.W,
+            scaleY = h/Config.GAME.UI.BUTTON.H;
 
         let spriteChecked   = Resources.ImgCheckboxChecked.asSprite()
         let spriteUnchecked = Resources.ImgCheckboxUnchecked.asSprite()
@@ -76,12 +79,12 @@ export class Checkbox extends ex.UIActor {
         this.addDrawing("checked", spriteChecked);
         this.addDrawing("unchecked", spriteUnchecked);
 
-        let fontSize = 24;
-        let label = new ex.Label(text, w/2, h/2 + fontSize/2);
+        let fontSize = Config.GAME.UI.FONTSIZE;
+        let label = new ex.Label(text, w + Config.GAME.UI.GUTTER, fontSize/2);
         label.fontSize = fontSize;
         label.color = ex.Color.White;
         label.textAlign = ex.TextAlign.Left;
-        label.pos.setTo(w/2, h/4);
+        label.anchor.setTo(0, .5);
         this.add(label);
 
         this.off("pointerup", this.action);
@@ -105,6 +108,10 @@ export class Checkbox extends ex.UIActor {
 
     public isChecked(): boolean {
         return this._isChecked;
+    }
+
+    public getTotalHeight(): number {
+        return Config.GAME.UI.CHECKBOX.H;
     }
 }
 
@@ -130,16 +137,15 @@ export class RadioButtonGroup extends ex.UIActor {
         this._radios = [];
         this._selectedIndex = selectedOption;
 
-        let fontSize = 24;
-        let label = new ex.Label(text);
+        let fontSize = Config.GAME.UI.FONTSIZE;
+        let label = new ex.Label(text, 0, 0);
         label.fontSize = fontSize;
         label.color = ex.Color.White;
         label.textAlign = ex.TextAlign.Left;
-        label.pos.setTo(0, 0);
         this.add(label);
 
         options.forEach((option, index) => {
-            let newRadio = new RadioButton(Pos.make(0, index * 50 + 30),
+            let newRadio = new RadioButton(Pos.make(0, index * (Config.GAME.UI.RADIO.H + Config.GAME.UI.GUTTER) + fontSize + Config.GAME.UI.GUTTER ) ,
                                            option,
                                            () => this._onChange(newRadio),
                                            index === selectedOption);
@@ -162,6 +168,14 @@ export class RadioButtonGroup extends ex.UIActor {
     public getSelection(): number {
         return this._selectedIndex;
     }
+
+    public getTotalHeight(): number {
+        let gutterHeight = Config.GAME.UI.GUTTER;
+        let totalRadioHeight = this._radios.reduce(
+            (sum, radio) => sum + radio.getTotalHeight() + gutterHeight, 0);
+
+        return Config.GAME.UI.CHECKBOX.H + totalRadioHeight;
+    }
 }
 
 // TODO: unify with Checkbox where possible
@@ -176,10 +190,10 @@ class RadioButton extends ex.UIActor {
 
         super(position.x, position.y, w, h);
 
-        this.anchor.setTo(.5, .5);
+        this.anchor.setTo(0, .5);
 
-        let scaleX = w/Config.GAME.UI.BUTTON_WIDTH,
-            scaleY = h/Config.GAME.UI.BUTTON_HEIGHT;
+        let scaleX = w/Config.GAME.UI.BUTTON.W,
+            scaleY = h/Config.GAME.UI.BUTTON.H;
 
         let spriteChecked   = Resources.ImgRadioChecked.asSprite()
         let spriteUnchecked = Resources.ImgRadioUnchecked.asSprite()
@@ -187,12 +201,12 @@ class RadioButton extends ex.UIActor {
         this.addDrawing("checked", spriteChecked);
         this.addDrawing("unchecked", spriteUnchecked);
 
-        let fontSize = 24;
-        let label = new ex.Label(text, w/2, h/2 + fontSize/2);
+        let fontSize = Config.GAME.UI.FONTSIZE;
+        let label = new ex.Label(text, w + Config.GAME.UI.GUTTER, fontSize/2);
         label.fontSize = fontSize;
         label.color = ex.Color.White;
         label.textAlign = ex.TextAlign.Left;
-        label.pos.setTo(w/2, h/4);
+        label.anchor.setTo(0, .5);
         this.add(label);
 
         this.on("pointerup", () => {
@@ -208,5 +222,9 @@ class RadioButton extends ex.UIActor {
 
     public setChecked(newState: boolean) {
         this._updateSprite(newState);
+    }
+
+    public getTotalHeight(): number {
+        return Config.GAME.UI.RADIO.H;
     }
 }

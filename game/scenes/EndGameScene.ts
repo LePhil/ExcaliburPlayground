@@ -62,8 +62,8 @@ export class EndGameScene extends ex.Scene {
             });
         }
         
-        let pos_x = Config.GAME.WIDTH / 2 - Config.GAME.UI.BUTTON_WIDTH / 2;
-        let pos_y = Config.GAME.HEIGHT / 2 - Config.GAME.UI.BUTTON_HEIGHT;
+        let pos_x = Config.GAME.WIDTH / 2 - Config.GAME.UI.BUTTON.W / 2;
+        let pos_y = Config.GAME.HEIGHT / 2 - Config.GAME.UI.BUTTON.H;
 
         let digitStartX = pos_x - 100;
         

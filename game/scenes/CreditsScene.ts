@@ -28,7 +28,7 @@ export class CreditsScene extends ex.Scene {
             "kenney.nl"
         ]);
         
-        let pos_x = Config.GAME.WIDTH / 2 - Config.GAME.UI.BUTTON_WIDTH / 2;
+        let pos_x = Config.GAME.WIDTH / 2 - Config.GAME.UI.BUTTON.W / 2;
         let pos_y = Config.GAME.HEIGHT - 300;
         
         this.add(new Button(

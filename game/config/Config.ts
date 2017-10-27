@@ -301,9 +301,11 @@ export class Config {
     HEIGHT: 768,  // defined by electron wrapper
     DEBUG: true,
     UI: {
+      FONTSIZE: 24,
+      GUTTER: 8,
       CHECKBOX: {W: 38, H: 36},
-      BUTTON_WIDTH: 190,
-      BUTTON_HEIGHT: 49,
+      RADIO: {W: 36, H: 36},
+      BUTTON: {W: 190, H: 49},
       OVERLAY: {W: 600, H: 400},
       BUTTONS: {
         POSITIONS: {

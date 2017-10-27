@@ -49,7 +49,7 @@ export class MainMenu extends ex.Scene {
         if (Config.GAME.DEBUG) {
             Levels.MAPS.forEach((map, index) => {
               this.add(new Button(
-                Pos.make(Config.GAME.UI.BUTTON_WIDTH/2, Config.GAME.UI.BUTTON_HEIGHT/2 + index * 50),
+                Pos.make(Config.GAME.UI.BUTTON.W/2, Config.GAME.UI.BUTTON.H/2 + index * 50),
                 map.NAME,
                 () => globals.loadNextLevel(map.NAME) ));
             });
