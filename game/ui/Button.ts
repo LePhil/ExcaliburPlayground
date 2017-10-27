@@ -107,3 +107,97 @@ export class Checkbox extends ex.UIActor {
         return this._isChecked;
     }
 }
+
+/**
+ * Text
+ * (x) Option 1
+ * ( ) Option 2
+ * ( ) Option n
+ */
+export class RadioButtonGroup extends ex.UIActor {
+    private _label: ex.Label;
+    private _radios: Array<RadioButton>;
+
+    constructor(position: Pos,
+                text: string,
+                options: Array<string>,
+                action: () => void,
+                selectedOption = 0) {
+
+        super(position.x, position.y);
+
+        this._radios = [];
+
+        let fontSize = 24;
+        let label = new ex.Label(text);
+        label.fontSize = fontSize;
+        label.color = ex.Color.White;
+        label.textAlign = ex.TextAlign.Left;
+        label.pos.setTo(this.pos.x, this.pos.y);
+        this.add(label);
+
+        options.forEach((option, index) => {
+            let newRadio = new RadioButton(Pos.make(this.pos.x, this.pos.y + index * 50),
+                                           option,
+                                           this._onChange,
+                                           index === selectedOption);
+
+            this.add(newRadio);
+            this._radios.push(newRadio);
+        });
+    }
+
+    private _onChange(source: RadioButton): void {
+        this._radios.forEach(option => {
+            option.setChecked(option === source);
+        });
+    }
+}
+
+// TODO: unify with Checkbox where possible
+class RadioButton extends ex.UIActor {
+    
+    constructor(position: Pos,
+        text: string,
+        action: (rb: RadioButton) => void,
+        checked = false,
+        w = Config.GAME.UI.CHECKBOX.W,
+        h = Config.GAME.UI.CHECKBOX.H) {
+
+        super(position.x, position.y, w, h);
+
+        this.anchor.setTo(.5, .5);
+
+        let scaleX = w/Config.GAME.UI.BUTTON_WIDTH,
+            scaleY = h/Config.GAME.UI.BUTTON_HEIGHT;
+
+        let spriteChecked   = Resources.ImgRadioChecked.asSprite()
+        let spriteUnchecked = Resources.ImgRadioUnchecked.asSprite()
+
+        this.addDrawing("checked", spriteChecked);
+        this.addDrawing("unchecked", spriteUnchecked);
+
+        let fontSize = 24;
+        let label = new ex.Label(text, w/2, h/2 + fontSize/2);
+        label.fontSize = fontSize;
+        label.color = ex.Color.White;
+        label.textAlign = ex.TextAlign.Left;
+        label.pos.setTo(w/2, h/4);
+        this.add(label);
+
+        //this.off("pointerup", action);
+        this.on("pointerup", () => {
+            action(this);
+        });
+
+        this._updateSprite(checked);
+    }
+    
+    private _updateSprite(checked): void {
+        this.setDrawing(checked ? "checked" : "unchecked");
+    }
+
+    public setChecked(newState: boolean) {
+        this._updateSprite(newState);
+    }
+}

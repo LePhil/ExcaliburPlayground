@@ -11,6 +11,8 @@ export class Resources {
 
     static TextureBubbles       = new ex.Texture("game/assets/textures/animals/bubbles.png");
 
+    static ImgRadioChecked      = new ex.Texture("game/assets/ui/blue_boxTick.png");
+    static ImgRadioUnchecked    = new ex.Texture("game/assets/ui/grey_circle.png");
     static ImgCheckboxChecked   = new ex.Texture("game/assets/ui/blue_boxCheckmark.png");
     static ImgCheckboxUnchecked = new ex.Texture("game/assets/ui/grey_box.png");
     static ImgButton            = new ex.Texture("game/assets/ui/blue_button00.png");

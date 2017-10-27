@@ -1,6 +1,6 @@
 declare var globals: any;
 import * as ex from "excalibur";
-import {Pos, Button, Checkbox} from "../ui/Button";
+import {Pos, Button, Checkbox, RadioButtonGroup} from "../ui/Button";
 import {Config} from "../config/Config";
 import {Resources} from "../config/Resources";
 
@@ -8,7 +8,8 @@ export class CustomGameMenu extends ex.Scene {
 
     private _startButton: Button;
     private _backButton: Button;
-    private _blobCheckBox: Checkbox
+    private _blobCheckBox: Checkbox;
+    private _difficultyRadios: RadioButtonGroup;
 
     private _settings: any;
 

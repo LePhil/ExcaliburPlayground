@@ -113,7 +113,10 @@ class TextDisplay extends ex.UIActor {
 
         super(x, y);
 
-        let label = new ex.Label("Text", 0, 0);
+        this.anchor.setTo(.5, .5);
+
+        let label = new ex.Label("", 0, 0);
+        label.anchor.setTo(.5, .5);
         label.fontSize = 24;
         this.add(label);
         this._label = label;
@@ -360,6 +363,7 @@ class CutSceneDirector extends ex.Actor {
         Object.keys(this._characters).forEach(char => {
             this.add(this._characters[char]);
         });
+        
         // Spawn Props
         Object.keys(this._props).forEach(prop => {
             this.add(this._props[prop]);
