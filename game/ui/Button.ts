@@ -117,29 +117,31 @@ export class Checkbox extends ex.UIActor {
 export class RadioButtonGroup extends ex.UIActor {
     private _label: ex.Label;
     private _radios: Array<RadioButton>;
+    private _selectedIndex: number;
 
     constructor(position: Pos,
                 text: string,
                 options: Array<string>,
-                action: () => void,
+                public action: () => void,
                 selectedOption = 0) {
 
         super(position.x, position.y);
 
         this._radios = [];
+        this._selectedIndex = selectedOption;
 
         let fontSize = 24;
         let label = new ex.Label(text);
         label.fontSize = fontSize;
         label.color = ex.Color.White;
         label.textAlign = ex.TextAlign.Left;
-        label.pos.setTo(this.pos.x, this.pos.y);
+        label.pos.setTo(0, 0);
         this.add(label);
 
         options.forEach((option, index) => {
-            let newRadio = new RadioButton(Pos.make(this.pos.x, this.pos.y + index * 50),
+            let newRadio = new RadioButton(Pos.make(0, index * 50 + 30),
                                            option,
-                                           this._onChange,
+                                           () => this._onChange(newRadio),
                                            index === selectedOption);
 
             this.add(newRadio);
@@ -148,9 +150,17 @@ export class RadioButtonGroup extends ex.UIActor {
     }
 
     private _onChange(source: RadioButton): void {
-        this._radios.forEach(option => {
+        this._radios.forEach((option, index) => {
             option.setChecked(option === source);
+            if( option === source) {
+                this._selectedIndex = index;
+            }
         });
+        this.action();
+    }
+
+    public getSelection(): number {
+        return this._selectedIndex;
     }
 }
 
@@ -185,7 +195,6 @@ class RadioButton extends ex.UIActor {
         label.pos.setTo(w/2, h/4);
         this.add(label);
 
-        //this.off("pointerup", action);
         this.on("pointerup", () => {
             action(this);
         });

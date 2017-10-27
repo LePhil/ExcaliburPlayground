@@ -52,8 +52,17 @@ export class CustomGameMenu extends ex.Scene {
             this._settings.BLOB
         );
 
+        this._difficultyRadios = new RadioButtonGroup(
+            Pos.make(buttonPos.center_3),
+            "Difficulty",
+            ["Easy", "Medium", "Hard"],
+            () => {
+                console.log(this._difficultyRadios.getSelection());
+            }
+        );
+
         this._backButton = new Button(
-            Pos.make(buttonPos.center_4),
+            Pos.make(buttonPos.center_6),
             "Back",
             () => {engine.goToScene("menu");}
         );
@@ -61,5 +70,6 @@ export class CustomGameMenu extends ex.Scene {
         this.add(this._startButton);
         this.add(this._backButton);
         this.add(this._blobCheckBox);
+        this.add(this._difficultyRadios);
     }
 }
