@@ -101,4 +101,10 @@ export class Cassa extends ex.Actor {
         }
         return false;
     }
+
+    public makeCustomersHappy(duration: number): void {
+        this.queue.forEach((customer) => {
+            customer.resetPatience(duration);
+        });
+    }
 }

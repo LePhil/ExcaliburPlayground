@@ -64,7 +64,8 @@ export class Config {
 
   static ITEM_TYPES = {
     CONSUMABLE: "consumable",
-    PICKUPPABLE: "pickuppable"
+    PICKUPPABLE: "pickuppable",
+    CUSTOMERRELATED: "customerrelated"
   };
 
   static ITEMS = {

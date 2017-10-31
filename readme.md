@@ -26,6 +26,7 @@ Done!
 * finish Animals/Animal Cages (similar to FoodStations)
 * FoodStations should serve FOOD, not Animals -> Bones, Cans, etc.
 * Random Mode with difficulty setting
+* Make a Firework Item
 
 # Bugs
 * If speed is increased, actions should take less long as well (e.g. pickup)

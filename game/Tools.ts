@@ -2,17 +2,28 @@ import * as ex from "excalibur";
 import {Config} from "./config/Config";
 import {Resources} from "./config/Resources";
 import {Player} from "./Player";
+import {Cassa} from "./Cassa";
 
 export class ToolFactory {
-    static create(x: number, y: number, type: string, player: Player): Tool {
-        if (Config.ITEMS[type].t === Config.ITEM_TYPES.CONSUMABLE) {
-            return new ConsumableTool(x, y, type, player);
-        } else if (Config.ITEMS[type].t === Config.ITEM_TYPES.PICKUPPABLE) {
-            return new PickuppableTool(x, y, type, player);
-        } else {
-            console.warn(`Tool "${type}" doesn't have a type. Using "Tool".`);
-            return new Tool(x, y, type, player);
+    static create(x: number, y: number, type: string, player: Player, cassa: Cassa): Tool {
+        let tool = null;
+        switch (Config.ITEMS[type].t) {
+            case Config.ITEM_TYPES.CONSUMABLE:
+                tool = new ConsumableTool(x, y, type, player);
+                break;
+            case Config.ITEM_TYPES.PICKUPPABLE:
+                tool = new PickuppableTool(x, y, type, player);
+                break;
+            case Config.ITEM_TYPES.CUSTOMERRELATED:
+                tool = new CustomerRelatedTool(x, y, type, player, cassa);
+                break;
+            default:
+                console.warn(`Tool "${type}" doesn't have a type. Using "Tool".`);
+                tool = new Tool(x, y, type, player);
+                break;
         }
+
+        return tool;
     }
 }
 
@@ -101,6 +112,34 @@ export class ConsumableTool extends Tool {
         switch (this.getType()) {
             case "cup":
                 player.adjustSpeed(1.5, effectDuration);
+                break;
+        }
+    }
+}
+
+// These "Tools" have an instant effect on the customers
+export class CustomerRelatedTool extends Tool {
+    private _cassa: Cassa;
+    constructor(x, y, type:string, player: Player, cassa: Cassa) {
+        super(x, y, type, player);
+        
+        this._cassa = cassa;
+    }
+
+    handlePickup(player: Player):void {
+        // Only handle pickup if active
+        if(!this.isActive()) { return; }
+
+        let effectDuration = 5;        
+        this.setInactive();
+
+        setTimeout(() => {
+            this.setActive();
+        }, effectDuration * 1000);
+
+        switch (this.getType()) {
+            case "fireworks":
+                this._cassa.makeCustomersHappy(effectDuration);
                 break;
         }
     }
