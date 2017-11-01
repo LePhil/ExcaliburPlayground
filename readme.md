@@ -32,6 +32,7 @@ Done!
 * If speed is increased, actions should take less long as well (e.g. pickup)
 * Multiple clicks on Cassa should not stack up/take no time if no customer is there
 * Picking up foods is broken right now, doesn't pause the player
+* Customers not in the Queue don't get reset on Level change
 
 # Recently done
 * Re-done buttons with Labels
@@ -66,6 +67,7 @@ Done!
 * if the inventory is full it should not remove an animal from the cage!
 * first level: Rabbit Cage doesn't have any rabbits!
 * AnimalCages (and/or ItemSources with a finite number of items) should be able to be defined via config (A for Amount) - no amount = infinite = spawn 5 but don't reduce.
+* Level setup is wonky, desiredItems and itemSources don't get changed!
 
 # Won't do
 * If inventory is full, clicks on station should not do anything- No. We'd have to check for Tools in Inventory (in case the station is broken) and if there are actions in the queue to remove some items --> let the user make mistakes!

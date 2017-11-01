@@ -102,6 +102,12 @@ export class Door extends ex.Actor {
         this.pos.x = setup.DOOR.X;
         this.pos.y = setup.DOOR.Y;
 
+        this._setup = setup;
+
+        this.close();
+    }
+
+    public cleanUp(): void {
         this.close();
     }
 }

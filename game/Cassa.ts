@@ -74,10 +74,15 @@ export class Cassa extends ex.Actor {
         this.queue = new Array<Customer>();
     }
 
-    public resetState():void {
+    public cleanUp(): void {
         this.queue.forEach((customer) => {
             customer.kill();
         });
+    }
+
+    public resetState(setup: any):void {
+        this.pos.x = setup.CASSA.X;
+        this.pos.y = setup.CASSA.Y;
 
         this._setup();
     }

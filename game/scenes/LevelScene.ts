@@ -61,8 +61,13 @@ export class LevelScene extends ex.Scene {
 
     onDeactivate() {
         this._player.resetState();
-        this._door.close();
-        this._cassa.resetState();
+        this._door.cleanUp();
+        this._cassa.cleanUp();
+
+        this._itemSources.forEach(station => {
+            station.cleanUp();
+            this.remove(station);
+        });
 
         if (this._decayTimer) {
             this._decayTimer.cancel();
@@ -117,10 +122,6 @@ export class LevelScene extends ex.Scene {
     }
 
     private _setupItemSources(setup: any): void {
-        this._itemSources.forEach(station => {
-            this.remove(station);
-        });
-
         this._itemSources = [];
 
         if (!setup.ITEMSOURCES) {
@@ -192,8 +193,7 @@ export class LevelScene extends ex.Scene {
             this._cassa = new Cassa(setup.CASSA.X, setup.CASSA.Y, this._player);
             this.add(this._cassa);
         } else {
-            this._cassa.pos.x = setup.CASSA.X;
-            this._cassa.pos.y = setup.CASSA.Y;
+            this._cassa.resetState(setup);
         }
     }
 

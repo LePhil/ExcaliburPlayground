@@ -144,6 +144,8 @@ export class ItemSource extends ex.Actor {
         this._state = ItemSourceState.Normal;
         this.setDrawing("normal");
     }
+
+    public cleanUp(): void {}
 }
 
 class Animal extends ex.Actor {
@@ -271,6 +273,12 @@ export class AnimalCage extends ItemSource {
         for (var i = this._animals.length-1; i < this._initialAmount; i++) {
             this._addAnimal(i);
         }
+    }
+
+    public cleanUp(): void {
+        this._animals.forEach((animal, i) => {
+            this.scene.remove(animal);
+        });
     }
 }
 
