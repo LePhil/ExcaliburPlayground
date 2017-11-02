@@ -7,10 +7,11 @@ import {AudioManager} from "./AudioManager";
 
 export class Door extends ex.Actor {
     private _open:boolean;
-
+    
     private _top:ex.Actor;
     private _mid:ex.Actor;
-
+    
+    private _spawnedCustomers: Array<Customer>;
     private _spawnTime: number;
     private _cassa:Cassa;
     private _customerSpawnerTimer: ex.Timer;
@@ -25,6 +26,7 @@ export class Door extends ex.Actor {
             Config.DOOR.W,
             Config.DOOR.H);
 
+        this._spawnedCustomers = [];
         this._cassa = cassa;
         this._open = false;
         this._spawnTime = setup.DOOR.SPAWN_TIME_S;
@@ -96,6 +98,8 @@ export class Door extends ex.Actor {
         this.scene.add(newCustomer);
         newCustomer.setZIndex(this.getZIndex() + 1);
         AudioManager.play("Sound_Doorbell");
+
+        this._spawnedCustomers.push(newCustomer);
     }
 
     public resetState(setup: any): void {
@@ -109,5 +113,13 @@ export class Door extends ex.Actor {
 
     public cleanUp(): void {
         this.close();
+
+        this._spawnedCustomers.forEach((customer) => {
+            if (!customer.isKilled()) {
+                customer.kill();
+            }
+        });
+
+        this._spawnedCustomers = [];
     }
 }
