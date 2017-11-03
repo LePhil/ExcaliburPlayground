@@ -32,6 +32,7 @@ Done!
 * If speed is increased, actions should take less long as well (e.g. pickup)
 * Multiple clicks on Cassa should not stack up/take no time if no customer is there
 * Picking up foods is broken right now, doesn't pause the player
+* Duration_S is not followed anymore
 
 # Recently done
 * Re-done buttons with Labels

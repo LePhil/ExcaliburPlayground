@@ -5,11 +5,13 @@ import {Pos, Button} from "../ui/Button";
 import {Medal} from "../ui/Medal";
 import {Config} from "../config/Config";
 import {Resources} from "../config/Resources";
+import {Storage, SavedLevelData} from "../Storage";
 
 export class EndGameScene extends ex.Scene {
     private _textOverlay: TextOverlay;  
     private _digits:Array<Digit>;
     private _button: Button;
+    private _medal: Medal;
 
     constructor(engine: ex.Engine) {
         super(engine);
@@ -20,7 +22,8 @@ export class EndGameScene extends ex.Scene {
         this._digits = new Array<Digit>();
     
         // TODO: different medal, depending on the score
-        this.add( new Medal(200, 200, "sun_silver") );
+        this._medal = new Medal(200, 200, "sun_silver");
+        this.add( this._medal );
     
         this.add(new Button(
             Pos.make(Config.GAME.UI.BUTTONS.POSITIONS.bottom_l),
@@ -40,9 +43,17 @@ export class EndGameScene extends ex.Scene {
         super.onInitialize(engine);
     }
 
-    onActivate () {}
+    onActivate () {
+    }
 
-    onDeactivate () {}
+    onDeactivate () {
+        // Make sure nothing from the previous level is left over
+        if(this._digits) {
+            this._digits.forEach((digit) => {
+                //digit.kill();
+            });
+        }
+    }
 
     public load(setup: any, results: number, callback: () => void) {
         if (setup.OUTRO) {
@@ -51,16 +62,11 @@ export class EndGameScene extends ex.Scene {
             // TODO: hide instead of showing empty string.
             this._textOverlay.setText([""]);
         }
+
         this._button.action = callback;
+        
         // only show Next button if there's a next level
         this._button.visible = !!setup.NEXT;
-
-        // Make sure nothing from the previous game is left over
-        if(this._digits) {
-            this._digits.forEach((digit) => {
-                digit.kill();
-            });
-        }
         
         let pos_x = Config.GAME.WIDTH / 2 - Config.GAME.UI.BUTTON.W / 2;
         let pos_y = Config.GAME.HEIGHT / 2 - Config.GAME.UI.BUTTON.H;
@@ -72,5 +78,10 @@ export class EndGameScene extends ex.Scene {
             this._digits.push(newDigit);
             this.add(newDigit);
         }
-    }
-}
+
+        let scores = Storage.saveScore(setup.NAME, results);
+
+        scores.getSortedScores().forEach(score => {
+            // TODO: add scores to display
+        });
+    }}
