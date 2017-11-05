@@ -196,6 +196,14 @@ export class Clock extends ex.UIActor {
     onInitialize(engine: ex.Engine): void {
         super.onInitialize(engine);
 
+        // :
+        let colonX = this.pos.x + Config.TIMER.CLOCK.OFFSET_X + 1.65 * Config.DIGIT_WIDTH;
+        let colonY = this.pos.y + Config.TIMER.CLOCK.OFFSET_Y;
+        let colon = new ex.UIActor(colonX, colonY);
+        let colonConf = Config.HUD.hud_colon;
+        colon.addDrawing(new ex.Sprite(Resources.HUDSpriteSheet, colonConf.x, colonConf.y, colonConf.w, colonConf.h));
+        this.scene.add(colon);
+
         for(let i = 0; i < 4; i++ ) {
             let xPos = this.pos.x + Config.TIMER.CLOCK.OFFSET_X + i * Config.DIGIT_WIDTH;
             let yPos = this.pos.y + Config.TIMER.CLOCK.OFFSET_Y;
@@ -209,7 +217,6 @@ export class Clock extends ex.UIActor {
             this.scene.add( digit );
         }
 
-        // TODO: add ":" between 2nd and 3rd digit
         this.updateDisplay();
     }
 

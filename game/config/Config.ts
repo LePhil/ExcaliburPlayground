@@ -81,6 +81,7 @@ export class Config {
     MEDKIT:   "medkit",
     COFFEE:   "coffee",
     /* TODO: tile definition should be moved to config/tiles */
+    fireworks:              { x: 770, y: 0, w: 60, h: 149},
     genericItem_color_001: { x: 0, y: 322, w: 162, h: 94 },
     genericItem_color_002: { x: 136, y: 1231, w: 120, h: 110 },
     cup:                    { x: 130, y: 1791, w: 89, h: 45, t: Config.ITEM_TYPES.CONSUMABLE },
@@ -337,6 +338,7 @@ export class Config {
   };
 
   static HUD = {
+    hud_colon:              {x: 146, y: 229, w: 32, h: 40},
     hud_0:                  {x: 230, y: 0, w: 30, h: 38},
     hud_1:                  {x: 196, y: 41, w: 26, h: 37},
     hud_2:                  {x: 55, y: 98, w: 32, h: 38},

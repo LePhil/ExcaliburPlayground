@@ -69,6 +69,7 @@ Done!
 * AnimalCages (and/or ItemSources with a finite number of items) should be able to be defined via config (A for Amount) - no amount = infinite = spawn 5 but don't reduce.
 * Level setup is wonky, desiredItems and itemSources don't get changed!
 * Customers not in the Queue get reset on Level change now
+* : in timer 
 
 # Won't do
 * If inventory is full, clicks on station should not do anything- No. We'd have to check for Tools in Inventory (in case the station is broken) and if there are actions in the queue to remove some items --> let the user make mistakes!
