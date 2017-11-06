@@ -81,7 +81,21 @@ export class EndGameScene extends ex.Scene {
 
         let scores = Storage.saveScore(setup.NAME, results);
 
+        digitStartX = pos_x;
+        pos_y += 100;
+
         scores.getSortedScores().forEach(score => {
-            // TODO: add scores to display
+            // TODO: Nicer and with an explanation..
+
+            for(let i = 0; i < (""+score).length; i++) {
+                if (score === results) {
+                    //TODO show a medal next to this run's score
+                }
+                let newDigit = new Digit(digitStartX + i*Config.DIGIT_WIDTH, pos_y - 100, +(""+score)[i]);
+                this._digits.push(newDigit);
+                this.add(newDigit);
+            }
+
+            pos_y += Config.DIGIT_HEIGHT;
         });
     }}

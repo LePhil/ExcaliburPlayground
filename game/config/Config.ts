@@ -550,6 +550,7 @@ export class Config {
   };
 
   static DIGIT_WIDTH = 50;
+  static DIGIT_HEIGHT = 45;
   static SCORE = {
     VALUE_OF_SERVING: 20
   };
