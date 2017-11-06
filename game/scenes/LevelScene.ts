@@ -54,7 +54,7 @@ export class LevelScene extends ex.Scene {
 
         if (this._timeDisplay) {
             //this._timeDisplay.setTimer(this._setup.DURATION_S, () => this.onTimerEnded());
-            this._timeDisplay.setTimer("08:00", "17:00", () => this.onTimerEnded());
+            this._timeDisplay.setTimer("08:00", "17:00", this._setup.DURATION_S, () => this.onTimerEnded());
             this._timeDisplay.resetState();
         }
     }

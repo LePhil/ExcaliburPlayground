@@ -163,16 +163,20 @@ class Time {
         this.h += nrOfHours;
 
         if (this.h >= 24) {
-          this.h %= 24;
+            this.h %= 24;
         }
     }
 
     getString(): string {
-      return (this.h < 10 ? "0" : "") + this.h + (this.m < 10 ? "0" : "") + this.m;
+        return (this.h < 10 ? "0" : "") + this.h + (this.m < 10 ? "0" : "") + this.m;
     }
 
     isGreaterOrEqual(other: Time): boolean {
-      return this.h > other.h || (this.h === other.h && this.m >= other.m);
+        return this.h > other.h || (this.h === other.h && this.m >= other.m);
+    }
+
+    inMinutes(): number {
+        return this.h * 60 + this.m;
     }
 }
 
@@ -180,16 +184,21 @@ export class Clock extends ex.UIActor {
     private _startTime:Time;
     private _endTime: Time;
     private _currentTime: Time;
+    private _interval: number;
 
     private _digits:Array<Digit>;
     private _internalTimer: ex.Timer;
     private _callback: () => void;
 
-    constructor(start = "08:00", end = "17:00", callback?: () => void ) {
+    constructor(start = "08:00",
+                end = "17:00",
+                duration = 60,
+                callback?: () => void ) {
+
         super(Config.TIMER.X,
               Config.TIMER.Y);
 
-        this.setTimer(start, end, callback);
+        this.setTimer(start, end, duration, callback);
         this._digits = new Array<Digit>();
     }
 
@@ -232,7 +241,7 @@ export class Clock extends ex.UIActor {
         this._currentTime = this._startTime;
 
         if (this._internalTimer) {
-            this._internalTimer.reset();
+            this._internalTimer.reset(this._interval);
         } else {
             this._internalTimer = new ex.Timer(() => {
                 this._currentTime.addMin(1);
@@ -243,16 +252,37 @@ export class Clock extends ex.UIActor {
                     }
                 }
                 this.updateDisplay();
-          }, 100, true);
+          }, this._interval, true);
 
           this.scene.add(this._internalTimer);
         }
     }
 
-    setTimer(start = "08:00", end = "17:00", callback?: () => void): void {
+    setTimer(start = "08:00",
+             end = "17:00",
+             duration = 60,
+             callback?: () => void): void {
+
         this._startTime = Time.convert(start);
         this._currentTime = Time.convert(start);
         this._endTime = Time.convert(end);
+        this._interval = this._calculateInterval(duration, this._startTime, this._endTime);
         this._callback = callback;
+    }
+
+    /**
+     * Calculate the interval needed for the timer in ms from the provided start and end time
+     * and the duration.
+     * Example: Start = 08:00, End = 12:00
+     * --> 4 hours in total = 240 minutes in game-time.
+     * With a duration of 60 seconds real time that means every real second (240/60) = 4 minutes should pass 
+     * OR we have to update the minute display 240 times in 60 seconds = every 250ms --> interval = 250
+     * @param duration 
+     * @param start 
+     * @param end 
+     */
+    _calculateInterval(duration: number, start: Time, end: Time): number {
+        let gameMinutes = end.inMinutes() - start.inMinutes();
+        return duration / gameMinutes * 1000;
     }
 }
