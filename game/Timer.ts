@@ -246,7 +246,6 @@ export class Clock extends ex.UIActor {
             this._internalTimer = new ex.Timer(() => {
                 this._currentTime.addMin(1);
                 if (this._currentTime.isGreaterOrEqual(this._endTime)) {
-                    console.log("DONE!");
                     if (this._callback) {
                       this._callback();
                     }
@@ -271,12 +270,18 @@ export class Clock extends ex.UIActor {
     }
 
     /**
-     * Calculate the interval needed for the timer in ms from the provided start and end time
-     * and the duration.
+     * Calculate the interval needed for the timer in ms from the provided
+     * start and end time and the duration.
      * Example: Start = 08:00, End = 12:00
      * --> 4 hours in total = 240 minutes in game-time.
      * With a duration of 60 seconds real time that means every real second (240/60) = 4 minutes should pass 
      * OR we have to update the minute display 240 times in 60 seconds = every 250ms --> interval = 250
+     * 
+     * Quick check:
+     * 240 Game Minutes in 60 Seconds
+     * 240 Updates,       once a second => 240 real seconds (Interval = 1000)
+     * 240 Updates,      twice a second => 120 real seconds (Interval = 500)
+     * 240 Updates, four times a second =>  60 real seconds (Interval = 250) Correct.
      * @param duration 
      * @param start 
      * @param end 

@@ -53,8 +53,9 @@ export class LevelScene extends ex.Scene {
         }
 
         if (this._timeDisplay) {
+            // TODO: save timer option in config and store start/end time as well if needed!
             //this._timeDisplay.setTimer(this._setup.DURATION_S, () => this.onTimerEnded());
-            this._timeDisplay.setTimer("08:00", "17:00", this._setup.DURATION_S, () => this.onTimerEnded());
+            this._timeDisplay.setTimer("08:00", "18:00", this._setup.DURATION_S, () => this.onTimerEnded());
             this._timeDisplay.resetState();
         }
     }

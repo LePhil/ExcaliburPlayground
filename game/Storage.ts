@@ -48,6 +48,7 @@ export class SavedLevelData {
         this.scores = scores || [];
     }
 
+    // TODO: nonnonono it's sorted alphabetically, 72 is NOT larger than 145!
     getSortedScores(): Array<number> {
         return this.scores.sort().reverse();
     }
