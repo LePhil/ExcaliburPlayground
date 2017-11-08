@@ -26,7 +26,6 @@ export class Levels {
             TYPE: Levels.TYPES.NORMAL,
             W: 840,
             H: 560,
-            TIMER: Levels.TIMERS.CLOCK,
             CASSA: {X: 250, Y: 500},
             DOOR:  {X: 800, Y: 595, SPAWN_TIME_S: 5},
             DESIREDITEMS: ["rabbit", "elephant", "giraffe"],
@@ -40,7 +39,12 @@ export class Levels {
                 {X: 500, Y: 500, T: "hammer"}
             ],
             BLOB: true,
-            DURATION_S: 60,
+            TIME: {
+                TYPE: Levels.TIMERS.CLOCK,
+                DURATION_S: 60,
+                START: "08:00",
+                END: "18:00"
+            },
             INTRO: [{text: "Hello", fontSize: 44, color: ex.Color.Red}],
             OUTRO: ["Well done!"]
         }, {
@@ -141,7 +145,12 @@ export class Levels {
             ],
             TOOLS: [],
             BLOB: false,
-            DURATION_S: 60,
+            TIME: {
+                TYPE: Levels.TIMERS.CLOCK,
+                DURATION_S: 60,
+                START: "08:00",
+                END: "18:00"
+            },
             INTRO: [
                 "Welcome to your new Rabbit Store!",
                 "Make your customers happy and sell them",
@@ -177,7 +186,12 @@ export class Levels {
             ],
             TOOLS: [],
             BLOB: false,
-            DURATION_S: 60,
+            TIME: {
+                TYPE: Levels.TIMERS.CLOCK,
+                DURATION_S: 60,
+                START: "08:00",
+                END: "18:00"
+            },
             INTRO: [
                 "Welcome back",
                 "Now with 100% more pigs and parrots!"
@@ -204,7 +218,12 @@ export class Levels {
                 {X: 200, Y: 300, T: "bone"}
             ],
             BLOB: true,
-            DURATION_S: 10,
+            TIME: {
+                TYPE: Levels.TIMERS.CLOCK,
+                DURATION_S: 60,
+                START: "08:00",
+                END: "18:00"
+            },
             INTRO: ["As a proud owner of your new pet store,",
             "make sure each customer gets what they want!"],
             OUTRO: ["Well done!"],
@@ -227,7 +246,12 @@ export class Levels {
                 {X: 500, Y: 500, T: "hammer"}
             ],
             BLOB: true,
-            DURATION_S: 60,
+            TIME: {
+                TYPE: Levels.TIMERS.CLOCK,
+                DURATION_S: 60,
+                START: "08:00",
+                END: "18:00"
+            },
             INTRO: ["Second level"],
             OUTRO: ["Well done!"]
         }

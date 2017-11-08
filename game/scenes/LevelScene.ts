@@ -2,7 +2,7 @@ import * as ex from "excalibur";
 import { Levels } from "../config/Levels";
 import { Player } from "../Player";
 import { Inventory } from "../Inventory";
-import { Clock, Timer, ScoreCounter } from "../Timer";
+import { Clock, ScoreCounter } from "../Timer";
 import { Blob } from "../Blob";
 import { ItemSourceFactory, ItemSource, AnimalCage } from "../ItemSource";
 import { Customer } from "../Customer";
@@ -33,8 +33,6 @@ export class LevelScene extends ex.Scene {
         this._scoreDisplay = new ScoreCounter();
         this.add(this._scoreDisplay);
 
-        // TODO: countdown-style timer or Clock-style timer? depends on level config, of course!
-        //this._timeDisplay = new Timer();
         this._timeDisplay = new Clock();
         this.add(this._timeDisplay);
 
@@ -53,9 +51,7 @@ export class LevelScene extends ex.Scene {
         }
 
         if (this._timeDisplay) {
-            // TODO: save timer option in config and store start/end time as well if needed!
-            //this._timeDisplay.setTimer(this._setup.DURATION_S, () => this.onTimerEnded());
-            this._timeDisplay.setTimer("08:00", "18:00", this._setup.DURATION_S, () => this.onTimerEnded());
+            this._timeDisplay.setTimer(this._setup.TIME, () => this.onTimerEnded());
             this._timeDisplay.resetState();
         }
     }
@@ -208,7 +204,7 @@ export class LevelScene extends ex.Scene {
         if (setup.BLOB) {
             setTimeout(() => {
                 this.add(new Blob(setup, results => this.onBlobDied(results)));
-            }, ex.Util.randomIntInRange(0, setup.DURATION_S * 1000 / 2));
+            }, ex.Util.randomIntInRange(0, setup.TIME.DURATION_S * 1000 / 2));
         }
     }
 

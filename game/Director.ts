@@ -1,6 +1,6 @@
 declare var globals: any;
 import * as ex from "excalibur";
-import {ScoreCounter, Timer} from "./Timer";
+import {ScoreCounter, CountdownTimer} from "./Timer";
 import {Levels} from "./config/Levels";
 
 import {PreGameScene} from "./scenes/PreGameScene";

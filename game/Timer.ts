@@ -44,15 +44,13 @@ class DigitDisplay extends ex.UIActor {
   }
 }
 
-export class Timer extends DigitDisplay {
-  private _targetTime:number;
-  private _timer:ex.Timer;
+export class CountdownTimer extends DigitDisplay {
+  private _targetTime: number;
+  private _internalTimer: ex.Timer;
   private _callback: () => void;
 
   constructor(time = 999) {
-    super(Config.TIMER.X,
-          Config.TIMER.Y,
-          Config.TIMER.NROFDIGITS);
+    super(Config.TIMER.X, Config.TIMER.Y, Config.TIMER.NROFDIGITS);
 
     if (time) {
       this._targetTime = time;
@@ -74,17 +72,17 @@ export class Timer extends DigitDisplay {
   }
 
   pause(): void {
-    // this._timer.pause();
+    // this._internalTimer.pause();
   }
 
   unpause(): void {
-    // this._timer.unpause();
+    // this._internalTimer.unpause();
   }
 
   public resetState():void {
     this._display = 0;
-    this.scene.cancelTimer(this._timer);
-    this._timer = new ex.Timer(() => {
+    this.scene.cancelTimer(this._internalTimer);
+    this._internalTimer = new ex.Timer(() => {
       this._display++;
       
       if(this._display >= this._targetTime) {
@@ -98,7 +96,7 @@ export class Timer extends DigitDisplay {
     // Force redraw
     this._updateDigits();
 
-    this.scene.add(this._timer);
+    this.scene.add(this._internalTimer);
   }
 }
 
@@ -186,19 +184,16 @@ export class Clock extends ex.UIActor {
     private _currentTime: Time;
     private _interval: number;
 
-    private _digits:Array<Digit>;
+    private _digits :Array<Digit>;
     private _internalTimer: ex.Timer;
     private _callback: () => void;
 
-    constructor(start = "08:00",
-                end = "17:00",
-                duration = 60,
-                callback?: () => void ) {
+    constructor(setup = {}, callback?: () => void ) {
 
         super(Config.TIMER.X,
               Config.TIMER.Y);
 
-        this.setTimer(start, end, duration, callback);
+        this.setTimer(setup, callback);
         this._digits = new Array<Digit>();
     }
 
@@ -257,11 +252,11 @@ export class Clock extends ex.UIActor {
         }
     }
 
-    setTimer(start = "08:00",
-             end = "17:00",
-             duration = 60,
-             callback?: () => void): void {
-
+    setTimer(setup: any, callback?: () => void): void {
+        let start = !!setup.START ? setup.START : "08:00";
+        let end = !!setup.END ? setup.END : "17:00";
+        let duration = !!setup.DURATION_S ? setup.DURATION_S : 60;
+        
         this._startTime = Time.convert(start);
         this._currentTime = Time.convert(start);
         this._endTime = Time.convert(end);

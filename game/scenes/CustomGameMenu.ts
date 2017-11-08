@@ -3,6 +3,7 @@ import * as ex from "excalibur";
 import {Pos, Button, Checkbox, RadioButtonGroup} from "../ui/Button";
 import {Config} from "../config/Config";
 import {Resources} from "../config/Resources";
+import {Levels} from "../config/Levels";
 
 export class CustomGameMenu extends ex.Scene {
 
@@ -55,7 +56,12 @@ export class CustomGameMenu extends ex.Scene {
                 {X: 200, Y: 300, T: "bone"}
             ],
             BLOB: true,
-            DURATION_S: 10
+            TIME: {
+                TYPE: Levels.TIMERS.CLOCK,
+                DURATION_S: 60,
+                START: "08:00",
+                END: "18:00"
+            },
         };
 
         this._startButton = new Button(
