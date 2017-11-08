@@ -61,7 +61,7 @@ export abstract class AbstractPlayer extends ex.Actor {
     pickUpSprite.scale.setTo(scale, scale);
     this.addDrawing("pickUp", pickUpSprite);
 
-    // TODO: down anim not included in spritesheet :(
+    // down anim not included in spritesheet
     this.addDrawing("walkDown", idleSprite);
 
     this.setDrawing("idle");
@@ -83,7 +83,13 @@ export abstract class AbstractPlayer extends ex.Actor {
       if (yMovement > 0) {
         this.setDrawing("walkUp");
       } else if (yMovement < 0) {
-        this.setDrawing("walkDown");
+        //this.setDrawing("walkDown");
+        // Since there's no down-animation, let's use left/right.
+        if (xMovement > 0) {
+          this.setDrawing("walkLeft");
+        } else {
+          this.setDrawing("walkRight");
+        }
       }
     }
 
