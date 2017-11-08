@@ -325,6 +325,9 @@ export class Config {
         W: 190,
         H: 49
       }
+    },
+    STORAGE: {
+      NROFSCORESSAVED: 5
     }
   };
 

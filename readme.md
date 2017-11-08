@@ -32,7 +32,6 @@ Done!
 * If speed is increased, actions should take less long as well (e.g. pickup)
 * Multiple clicks on Cassa should not stack up/take no time if no customer is there
 * Picking up foods is broken right now, doesn't pause the player
-* Scores are Sorted alphabetically (72 > 123)...
 
 # Recently done
 * Re-done buttons with Labels
@@ -71,6 +70,8 @@ Done!
 * Customers not in the Queue get reset on Level change now
 * : in timer 
 * Duration_S is now followed again
+* Scores are no longer sorted alphabetically (72 > 123)...
+* only a certain amount of scores are kept per level
 
 # Won't do
 * If inventory is full, clicks on station should not do anything- No. We'd have to check for Tools in Inventory (in case the station is broken) and if there are actions in the queue to remove some items --> let the user make mistakes!

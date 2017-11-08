@@ -1,4 +1,5 @@
 import * as ex from "excalibur";
+import {Config} from "./config/Config";
 
 export class Storage {
     static set(key:string, value:any):void {
@@ -48,13 +49,22 @@ export class SavedLevelData {
         this.scores = scores || [];
     }
 
-    // TODO: nonnonono it's sorted alphabetically, 72 is NOT larger than 145!
     getSortedScores(): Array<number> {
-        return this.scores.sort().reverse();
+        return this.scores.sort((a, b) => a - b).reverse();
     }
 
-    addScore(newScore): void {
+    /**
+     * Adds a new score to the scores and removes the worst if there are more
+     * scores than allowed.
+     * 
+     * @param newScore 
+     */
+    addScore(newScore: number): void {
         this.scores.push(newScore);
+        if (this.scores.length > Config.GAME.STORAGE.NROFSCORESSAVED) {
+            let nrOfScoresToRemove = this.scores.length - Config.GAME.STORAGE.NROFSCORESSAVED;
+            this.scores = this.getSortedScores().splice( -nrOfScoresToRemove, nrOfScoresToRemove);
+        }
     }
 
     static make(setup: any): SavedLevelData {
