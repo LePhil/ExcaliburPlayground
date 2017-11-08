@@ -2,7 +2,7 @@ import * as ex from "excalibur";
 import {Player} from "./Player";
 
 export class ItemFactory {
-    static create(setup: any, player: Player): Item {
+    static create(setup: any): Item {
         return new Item("TODO");
     }
 }

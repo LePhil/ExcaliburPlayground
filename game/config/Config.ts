@@ -80,8 +80,10 @@ export class Config {
     BONE:     "bone",
     MEDKIT:   "medkit",
     COFFEE:   "coffee",
+    FIREWORKS:"fireworks",
+    CASH:     "wad_of_cash",
     /* TODO: tile definition should be moved to config/tiles */
-    fireworks:              { x: 770, y: 0, w: 60, h: 149},
+    fireworks:              { x: 770, y: 0, w: 60, h: 149, t: Config.ITEM_TYPES.CUSTOMERRELATED },
     genericItem_color_001: { x: 0, y: 322, w: 162, h: 94 },
     genericItem_color_002: { x: 136, y: 1231, w: 120, h: 110 },
     cup:                    { x: 130, y: 1791, w: 89, h: 45, t: Config.ITEM_TYPES.CONSUMABLE },

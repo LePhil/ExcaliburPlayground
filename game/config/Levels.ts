@@ -1,6 +1,7 @@
 import * as ex from "excalibur";
 import {Config} from "./Config";
 import {Storage} from "../Storage";
+import {Task} from "../Task";
 
 enum ActionType {
     Move = "move",
@@ -10,7 +11,7 @@ enum ActionType {
 };
 
 export class Levels {
-    static ActionType = ActionType;
+    static ActionType = ActionType; // TODO: needed here?
     static TYPES = {
         NORMAL: "normal",       // Normal time management
         CUTSCENE: "cutscene"    // For some story
@@ -38,6 +39,13 @@ export class Levels {
             TOOLS: [
                 {X: 500, Y: 500, T: "hammer"}
             ],
+            TASK: {
+                TYPE: Task.Type.SingleUse,
+                PARAMS: {
+                    AMOUNT: 10,
+                    ITEM: Config.ITEMS.CASH
+                }
+            },
             BLOB: true,
             TIME: {
                 TYPE: Levels.TIMERS.CLOCK,

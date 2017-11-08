@@ -9,9 +9,9 @@ Done!
 * finish CutScene stuff (animations, ...)
 * More sounds!
 * Upgrades/Events/Penalties!
-* * More/less space in inventory
-* * More reward per serving
-* * A way to increase patience of customers
+    * More/less space in inventory
+    * More reward per serving
+    * A way to increase patience of customers
 * saving the scores, show older scores (sorted)
 * Hover-States on Buttons
 * Speech bubbles or Text in its own container outside of the screen. Text on multi-colored bg just can't be read easily.
@@ -27,6 +27,16 @@ Done!
 * FoodStations should serve FOOD, not Animals -> Bones, Cans, etc.
 * Random Mode with difficulty setting
 * Make a Firework Item
+* Minigames for Itemsources
+* Tasks during each level (=passed or failed level!)
+    * many initial items that have to be interacted with
+        * cobwebs
+        * tall grass (outside level)
+    * something that takes a long time and can be done contiuously until stopped
+        * build a cage
+        * make fliers
+        * work on computer
+    * Blob should probably be a task.
 
 # Bugs
 * If speed is increased, actions should take less long as well (e.g. pickup)
