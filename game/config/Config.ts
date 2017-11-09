@@ -303,6 +303,10 @@ export class Config {
   static GAME = {
     WIDTH: 1024,  // defined by electron wrapper
     HEIGHT: 768,  // defined by electron wrapper
+    DEFAULTMAP: {
+      W: 840,
+      H: 560
+    },
     DEBUG: true,
     UI: {
       FONTSIZE: 24,

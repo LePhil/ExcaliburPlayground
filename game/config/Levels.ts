@@ -1,7 +1,7 @@
 import * as ex from "excalibur";
 import {Config} from "./Config";
 import {Storage} from "../Storage";
-import {Task} from "../Task";
+import {Task, TaskItem} from "../Task";
 
 enum ActionType {
     Move = "move",
@@ -41,10 +41,9 @@ export class Levels {
             ],
             TASK: {
                 TYPE: Task.Type.SingleUse,
-                PARAMS: {
-                    AMOUNT: 10,
-                    ITEM: Config.ITEMS.CASH
-                }
+                AMOUNT: 10,
+                ITEM: Config.ITEMS.CASH,
+                MOBILITY: TaskItem.Mobility.Stationary
             },
             BLOB: true,
             TIME: {

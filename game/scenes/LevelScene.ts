@@ -9,6 +9,7 @@ import { Customer } from "../Customer";
 import { LevelMap } from "../LevelMap";
 import { Door } from "../Door";
 import { Cassa } from "../Cassa";
+import { Task } from "../Task";
 import { ToolFactory, Tool, ConsumableTool, PickuppableTool } from "../Tools";
 import { Config } from "../config/Config";
 
@@ -20,6 +21,7 @@ export class LevelScene extends ex.Scene {
     private _scoreDisplay: ScoreCounter;
     private _door: Door;
     private _cassa: Cassa;
+    private _task: Task;
     private _tools: Array<Tool> = [];
     private _itemSources: Array<ItemSource> = [];
     private _decayTimer: ex.Timer;
@@ -208,6 +210,17 @@ export class LevelScene extends ex.Scene {
         }
     }
 
+    private _setupTask(setup: any): void {
+        if (!this._task && setup.TASK) {
+            this._task = new Task(this, this._player, setup.TASK, () => {console.log("task done");});
+        } else {
+            this._task.resetState(setup.TASK, () => {console.log("task done");});
+        }
+        if (setup.TASK) {
+            this._task = Task.Make(this, this._player, setup.TASK,() => {console.log("task done");});
+        }
+    }
+
     public load(setup: any, callback: (results: number) => void) {
         this._setup = setup;
         this._callbackOnTimerEnded = callback;
@@ -218,6 +231,7 @@ export class LevelScene extends ex.Scene {
         this._setupTools(setup);
         this._setupItemSources(setup);
         this._setupBlob(setup);
+        this._setupTask(setup);
         this._setupZIndex();
     }
 
@@ -235,5 +249,9 @@ export class LevelScene extends ex.Scene {
 
     private onBlobDied(results) {
         this.addPoints(results);
+    }
+
+    public getPlayer(): Player {
+        return this._player;
     }
 }
