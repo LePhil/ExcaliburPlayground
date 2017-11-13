@@ -59,8 +59,8 @@ export class Player extends AbstractPlayer {
       });
   }
 
-  public goTo(evt: PointerEvent) {
-    this.actions.moveTo(evt.x, evt.y, this._speed);
+  public goTo(pos: ex.Vector, callback: () => void) {
+    this.actions.moveTo(pos.x, pos.y, this._speed).callMethod(callback);
   }
 
   // TODO: found the bug - click on 2nd foodstations before 1st is reached --> the "waiting" happens while player is moving to the 2nd station already!

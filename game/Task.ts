@@ -53,6 +53,7 @@ class SingleUseTask extends Task {
 
     protected taskItems: Array<TaskItem>;
     protected _player: Player;
+    protected _callback: () => void;
 
     constructor(scene: ex.Scene, player: Player, setup: any, callback: () => void) {
         super(scene, player, setup, callback);
@@ -62,12 +63,14 @@ class SingleUseTask extends Task {
 
         this.taskItems = [];
         this._player = player;
+        this._callback = callback;
 
         for(let i = 0; i < amount; i++) {
             let position = this._generateSpawnPoint(setup, i);
 
             // TODO generate Item from setup
-            let newItem = new SingleUseItem(position, itemType, this.onTaskItemClicked);
+            let newItem = new SingleUseItem(position, itemType);
+            newItem.setCallback( () => this.onTaskItemClicked(newItem) );
             this.taskItems.push(newItem);
             scene.add(newItem);
         }
@@ -95,8 +98,14 @@ class SingleUseTask extends Task {
         }
     }
 
-    protected onTaskItemClicked() {
-        console.log("CLICK!");
+    protected onTaskItemClicked(taskItem: TaskItem) {
+        this._player.goTo(taskItem.pos, () => {
+            taskItem.onPlayerDone();
+            if (this.taskItems.length === 0) {
+                this._callback();
+            }
+            //TODO remove item from taskItems!!!
+        });
     }
 }
 
@@ -116,16 +125,16 @@ export class TaskItem extends ex.Actor {
     static Mobility = ItemMobility;
 
     protected _type: string;
+    protected _callback: (t: TaskItem) => void;
 
-    constructor(position: ex.Vector, type: string, callback: () => void) {
+    constructor(position: ex.Vector, type: string, callback?: (t: TaskItem) => void) {
         let conf = Config.ITEMS[type];
 
         super(position.x, position.y, conf.w, conf.h);
-
         this._type = type;
 
         this.on("pointerdown", (event) => {
-            callback();
+            this._callback.call(this);
         });
     }
 
@@ -138,11 +147,21 @@ export class TaskItem extends ex.Actor {
         sprite.scale.setTo(scale, scale);
 
         this.addDrawing(sprite);
-      }
+    }
+
+    public onPlayerDone(): void {}
+
+    public setCallback(callback: (t: TaskItem) => void): void {
+        this._callback = callback;
+    }
 }
 
 class SingleUseItem extends TaskItem {
     // Click = Item disappears (?), idea is that there are multiple of them
+
+    public onPlayerDone(): void {
+        this.kill();
+    }
 }
 
 class MultiUseItem extends TaskItem {
