@@ -43,7 +43,8 @@ export class Levels {
                 TYPE: Task.Type.SingleUse,
                 AMOUNT: 10,
                 ITEM: Config.ITEMS.CASH,
-                MOBILITY: TaskItem.Mobility.Stationary
+                MOBILITY: TaskItem.Mobility.Stationary,
+                SPAWNING: TaskItem.SpawnBehaviour.AllAtOnce
             },
             BLOB: true,
             TIME: {

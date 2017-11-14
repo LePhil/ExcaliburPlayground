@@ -10,11 +10,22 @@ enum TaskTypes {
 
 enum ItemMobility {
     Stationary = "stationary",
-    Mobile = "mobile"
+    Random = "random",
+    Path = "path"
 };
+
+enum SpawnBehaviour {
+    AllAtOnce = "allatonce",
+    Random = "random",
+    EveryXSeconds = "everyxseconds"
+};
+
+// TODO
+export class TaskIndicator {}
 
 export class Task {
     static Type = TaskTypes;
+
     static Make(scene: ex.Scene,
                 player: Player,
                 setup: any,
@@ -46,6 +57,27 @@ export class Task {
         this.setup = setup;
         this.callback = callback;
     }
+
+    protected _generateSpawnPoint(setup: any, index?: number): ex.Vector {
+        let getRandomX = () => {
+            let minX = (Config.GAME.WIDTH - Config.GAME.DEFAULTMAP.W) / 2;
+            let maxX = Config.GAME.WIDTH - minX;
+            return ex.Util.randomIntInRange(minX, maxX);
+        };
+        let getRandomY = () => {
+            let minY = (Config.GAME.HEIGHT - Config.GAME.DEFAULTMAP.H) / 2;
+            let maxY = Config.GAME.HEIGHT - minY;
+            return ex.Util.randomIntInRange(minY, maxY);
+        };
+
+        if (index && setup.LOCATIONS && setup.LOCATIONS.length >= index) {
+            return new ex.Vector(setup.LOCATIONS[index].X, setup.LOCATIONS[index].Y);
+        } else if (setup.LOCATIONS && setup.LOCATIONS.length === 1) {
+            return new ex.Vector(setup.LOCATIONS[0].X, setup.LOCATIONS[0].Y);
+        } else {
+            return new ex.Vector( getRandomX(), getRandomY());
+        }
+    }
 }
 
 class SingleUseTask extends Task {
@@ -68,66 +100,97 @@ class SingleUseTask extends Task {
         for(let i = 0; i < amount; i++) {
             let position = this._generateSpawnPoint(setup, i);
 
-            // TODO generate Item from setup
             let newItem = new SingleUseItem(position, itemType);
             newItem.setCallback( () => this.onTaskItemClicked(newItem) );
             this.taskItems.push(newItem);
             scene.add(newItem);
         }
-        
     }
-
-    private _generateSpawnPoint(setup: any, index: number): ex.Vector {
-        let getRandomX = () => {
-            let minX = (Config.GAME.WIDTH - Config.GAME.DEFAULTMAP.W) / 2;
-            let maxX = Config.GAME.WIDTH - minX;
-            return ex.Util.randomIntInRange(minX, maxX);
-        };
-        let getRandomY = () => {
-            let minY = (Config.GAME.HEIGHT - Config.GAME.DEFAULTMAP.H) / 2;
-            let maxY = Config.GAME.HEIGHT - minY;
-            return ex.Util.randomIntInRange(minY, maxY);
-        };
-
-        if (index && setup.LOCATIONS && setup.LOCATIONS.length >= index) {
-            return new ex.Vector(setup.LOCATIONS[index].X, setup.LOCATIONS[index].Y);
-        } else if (setup.LOCATIONS && setup.LOCATIONS.length === 1) {
-            return new ex.Vector(setup.LOCATIONS[0].X, setup.LOCATIONS[0].Y);
-        } else {
-            return new ex.Vector( getRandomX(), getRandomY());
+    
+    public cleanup(): void {
+        if(this.taskItems && this.taskItems.length > 0) {
+            this.taskItems.forEach(taskItem => {
+                taskItem.kill();
+                this._removeTaskItem(taskItem);
+            });
         }
     }
 
+    /**
+     * Make the player go to the clicked-on item and interact with it.
+     * Afterwards remove the item from the list and if there's no
+     * more left, the task is done.
+     * 
+     * @param taskItem 
+     */
     protected onTaskItemClicked(taskItem: TaskItem) {
         this._player.goTo(taskItem.pos, () => {
             taskItem.onPlayerDone();
+
+            this._removeTaskItem(taskItem);
+
             if (this.taskItems.length === 0) {
                 this._callback();
             }
-            //TODO remove item from taskItems!!!
         });
+    }
+
+    private _removeTaskItem(taskItem: TaskItem): void {
+        let indexOfItem = this.taskItems.indexOf(taskItem);
+        this.taskItems.splice(indexOfItem, 1);
     }
 }
 
 class MultiUseTask extends Task {
-    // Difference between "having to do an action exactly X times" and "having to do an action for X seconds in total in as many parts as you want"?
+    // Difference between "having to do an action exactly X times"
+    // and "having to do an action for X seconds in total in as many parts as you want"?
     // latter: with/without the "progress bar" going "down", as in "having to constantly be on it"???
+
+    protected taskItem: TaskItem;
+    protected _player: Player;
+    protected _callback: () => void;
+
 
     constructor(scene: ex.Scene, player: Player, setup: any, callback: () => void) {
         super(scene, player, setup, callback);
 
         let item = setup.ITEM;
+        let itemType = setup.ITEM;
+        let amount = setup.AMOUNT;
+
+        this._player = player;
+        this._callback = callback;
+
+        let position = this._generateSpawnPoint(setup);
+
+        this.taskItem = new MultiUseItem(position, itemType);
+        this.taskItem.setCallback( () => this.onTaskItemClicked(this.taskItem) );
+        scene.add(this.taskItem);
     }
+
+    protected onTaskItemClicked(taskItem: TaskItem) {
+        this._player.goTo(taskItem.pos, () => {
+            taskItem.onPlayerDone();
+
+            this.taskItem = null;
+
+            this._callback();
+        });
+    }
+    
 }
 
 
 export class TaskItem extends ex.Actor {
     static Mobility = ItemMobility;
+    static SpawnBehaviour = SpawnBehaviour;
 
     protected _type: string;
     protected _callback: (t: TaskItem) => void;
 
-    constructor(position: ex.Vector, type: string, callback?: (t: TaskItem) => void) {
+    constructor(position: ex.Vector,
+                type: string,
+                callback?: (t: TaskItem) => void) {
         let conf = Config.ITEMS[type];
 
         super(position.x, position.y, conf.w, conf.h);
@@ -151,6 +214,7 @@ export class TaskItem extends ex.Actor {
 
     public onPlayerDone(): void {}
 
+    // TODO: figure out how to pass callback in CTOR
     public setCallback(callback: (t: TaskItem) => void): void {
         this._callback = callback;
     }
@@ -166,4 +230,8 @@ class SingleUseItem extends TaskItem {
 
 class MultiUseItem extends TaskItem {
     // Click = Player should be busy until new target or until a certain amount of time has passed
+
+    public onPlayerDone(): void {
+        // TODO
+    }
 }
