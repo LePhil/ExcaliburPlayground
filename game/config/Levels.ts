@@ -40,11 +40,17 @@ export class Levels {
                 {X: 500, Y: 500, T: "hammer"}
             ],
             TASK: {
+                TYPE: Task.Type.MultiUse,
+                ITEM: Config.ITEMS.MEDKIT,
+                MOBILITY: TaskItem.Mobility.Stationary,
+                REQUIRED_INTERACTIONS: 5
+                /*
                 TYPE: Task.Type.SingleUse,
                 AMOUNT: 10,
                 ITEM: Config.ITEMS.CASH,
                 MOBILITY: TaskItem.Mobility.Stationary,
                 SPAWNING: TaskItem.SpawnBehaviour.AllAtOnce
+                */
             },
             BLOB: true,
             TIME: {

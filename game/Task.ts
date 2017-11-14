@@ -149,13 +149,16 @@ class MultiUseTask extends Task {
     protected _player: Player;
     protected _callback: () => void;
 
+    private _nrOfInteractions: number;
+    private _requiredNrOfInteractions: number;
 
     constructor(scene: ex.Scene, player: Player, setup: any, callback: () => void) {
         super(scene, player, setup, callback);
 
-        let item = setup.ITEM;
         let itemType = setup.ITEM;
-        let amount = setup.AMOUNT;
+        
+        this._nrOfInteractions = 0;
+        this._requiredNrOfInteractions = setup.REQUIRED_INTERACTIONS ? setup.REQUIRED_INTERACTIONS : 5;
 
         this._player = player;
         this._callback = callback;
@@ -168,11 +171,15 @@ class MultiUseTask extends Task {
 
     protected onTaskItemClicked = (taskItem: TaskItem) => {
         this._player.goTo(taskItem.pos, () => {
-            taskItem.onPlayerDone();
+            this._nrOfInteractions++;
 
-            this.taskItem = null;
+            taskItem.onPlayerProgress(this._nrOfInteractions / this._requiredNrOfInteractions * 100);
 
-            this._callback();
+            if (this._nrOfInteractions >= this._requiredNrOfInteractions) {
+                taskItem.onPlayerDone();
+                this.taskItem = null;
+                this._callback();
+            }
         });
     }
     
@@ -209,6 +216,7 @@ export class TaskItem extends ex.Actor {
         this.addDrawing(sprite);
     }
 
+    public onPlayerProgress(progress: number): void {}
     public onPlayerDone(): void {}
 }
 
@@ -223,7 +231,11 @@ class SingleUseItem extends TaskItem {
 class MultiUseItem extends TaskItem {
     // Click = Player should be busy until new target or until a certain amount of time has passed
 
+    public onPlayerProgress(percentageDone: number): void {
+        // TODO: update ProgessBar or similar...
+    }
+
     public onPlayerDone(): void {
-        // TODO
+        this.kill();
     }
 }
