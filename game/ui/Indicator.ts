@@ -5,6 +5,7 @@ import * as ex from "excalibur";
  * Colors can be defined, also when to change it.
  */
 export class ProgressBar extends ex.Actor {
+    private _progressBar: ex.Actor;
     private _currentValue: number;
     private _initialValue: number;
     private _colorRules: any;
@@ -17,31 +18,34 @@ export class ProgressBar extends ex.Actor {
                     "20": ex.Color.Red,
                     "50": ex.Color.Yellow,
                     "100": ex.Color.Green
-                }) {
+                },
+                backgroundColor = ex.Color.White) {
 
-        super(pos.x, pos.y, width, height);
+        super(pos.x, pos.y, width, height, backgroundColor);
 
         this._currentValue = initial;
         this._initialValue = initial;
         this._colorRules = colorRules;
 
+        this._progressBar = new ex.Actor(-width/2, 0, 0, height, ex.Color.White );
+        this._progressBar.anchor.setTo(0, .5);
+        this.add(this._progressBar);
+        
         this._setColor();
     }
 
-    public set(value:number) {
-        this._currentValue = value;
-    }
-
-    public update(engine: ex.Engine, delta: number): void {
-        super.update(engine, delta);
-
+    public set(newPercentage:number) {
+        this._currentValue = newPercentage;
+        this._progressBar.setWidth(newPercentage/100 * this.getWidth());
         this._setColor();
     }
 
     private _setColor():void {
         Object.keys(this._colorRules).forEach(rule => {
             if(this._currentValue <= +rule) {
-                this.color = this._colorRules[rule];
+                this._progressBar.color = this._colorRules[rule];
+                console.log("new color because", rule, this._colorRules[rule]);
+                return false;
             }
         });
     }

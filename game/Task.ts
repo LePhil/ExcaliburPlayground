@@ -2,6 +2,7 @@ import * as ex from "excalibur";
 import {Config} from "./config/Config";
 import {Resources} from "./config/Resources";
 import {Player} from "./Player";
+import {ProgressBar} from "./ui/Indicator";
 
 enum TaskTypes {
     SingleUse = "singleuse",
@@ -228,14 +229,24 @@ class SingleUseItem extends TaskItem {
     }
 }
 
+// Click = Player should be busy until new target or until a certain amount of time has passed
 class MultiUseItem extends TaskItem {
-    // Click = Player should be busy until new target or until a certain amount of time has passed
+    private _bar: ProgressBar;
+
+    onInitialize(engine: ex.Engine): void {
+        super.onInitialize(engine);
+
+        this._bar = new ProgressBar(this.pos, 50, 5);
+        engine.add(this._bar);
+    }
 
     public onPlayerProgress(percentageDone: number): void {
         // TODO: update ProgessBar or similar...
+        this._bar.set(percentageDone);
     }
 
     public onPlayerDone(): void {
+        this._bar.kill();
         this.kill();
     }
 }
