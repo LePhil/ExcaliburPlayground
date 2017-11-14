@@ -100,8 +100,7 @@ class SingleUseTask extends Task {
         for(let i = 0; i < amount; i++) {
             let position = this._generateSpawnPoint(setup, i);
 
-            let newItem = new SingleUseItem(position, itemType);
-            newItem.setCallback( () => this.onTaskItemClicked(newItem) );
+            let newItem = new SingleUseItem(position, itemType, this.onTaskItemClicked);
             this.taskItems.push(newItem);
             scene.add(newItem);
         }
@@ -123,7 +122,7 @@ class SingleUseTask extends Task {
      * 
      * @param taskItem 
      */
-    protected onTaskItemClicked(taskItem: TaskItem) {
+    protected onTaskItemClicked = (taskItem: TaskItem) => {
         this._player.goTo(taskItem.pos, () => {
             taskItem.onPlayerDone();
 
@@ -163,12 +162,11 @@ class MultiUseTask extends Task {
 
         let position = this._generateSpawnPoint(setup);
 
-        this.taskItem = new MultiUseItem(position, itemType);
-        this.taskItem.setCallback( () => this.onTaskItemClicked(this.taskItem) );
+        this.taskItem = new MultiUseItem(position, itemType, this.onTaskItemClicked);
         scene.add(this.taskItem);
     }
 
-    protected onTaskItemClicked(taskItem: TaskItem) {
+    protected onTaskItemClicked = (taskItem: TaskItem) => {
         this._player.goTo(taskItem.pos, () => {
             taskItem.onPlayerDone();
 
@@ -186,18 +184,17 @@ export class TaskItem extends ex.Actor {
     static SpawnBehaviour = SpawnBehaviour;
 
     protected _type: string;
-    protected _callback: (t: TaskItem) => void;
 
     constructor(position: ex.Vector,
                 type: string,
-                callback?: (t: TaskItem) => void) {
+                callback: (t: TaskItem) => void) {
         let conf = Config.ITEMS[type];
 
         super(position.x, position.y, conf.w, conf.h);
         this._type = type;
 
         this.on("pointerdown", (event) => {
-            this._callback.call(this);
+            callback(this);
         });
     }
 
@@ -213,11 +210,6 @@ export class TaskItem extends ex.Actor {
     }
 
     public onPlayerDone(): void {}
-
-    // TODO: figure out how to pass callback in CTOR
-    public setCallback(callback: (t: TaskItem) => void): void {
-        this._callback = callback;
-    }
 }
 
 class SingleUseItem extends TaskItem {

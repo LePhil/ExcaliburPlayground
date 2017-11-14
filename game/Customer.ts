@@ -193,6 +193,7 @@ class ThinkBubble extends ex.Actor {
     }
 }
 
+// TODO: use Progress bar from Indicator.ts
 class PatienceIndicator extends ex.Actor {
     private _patience: number;
     private _patienceInitial: number;
