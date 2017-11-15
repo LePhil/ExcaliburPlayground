@@ -2,7 +2,7 @@ import * as ex from "excalibur";
 import {Item} from "./Item";
 import {AbstractPlayer} from "./AbstractPlayer";
 import {Cassa} from "./Cassa";
-import {MoneyEffect} from "./Effects";
+import {EffectFactory} from "./Effects";
 import {Storage} from "./Storage";
 import {Config} from "./config/Config";
 import {Graphics} from "./config/Graphics";
@@ -120,7 +120,7 @@ export class Customer extends AbstractPlayer {
         this._onGetServedCallback(Config.SCORE.VALUE_OF_SERVING * this._patience / Config.CUSTOMER.INITIAL_PATIENCE);
 
         // Some fancy KA-CHING stuff
-        this.scene.add(new MoneyEffect(this.pos.x, this.pos.y));
+        this.scene.add(EffectFactory.Make(EffectFactory.Type.Money, this.pos));
     }
 
     getPlayerColor(): string {

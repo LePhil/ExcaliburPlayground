@@ -37,7 +37,8 @@ Done!
         * make fliers
         * work on computer
     * Blob should probably be a task.
-* Progress Bar should be it's own thang - For Task items and for customer happiness/patience 
+* Progress Bar should be it's own thang - For Task items and for customer happiness/patience
+* heart/coin effect with sprites
 
 # Bugs
 * If speed is increased, actions should take less long as well (e.g. pickup)

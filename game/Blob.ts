@@ -1,5 +1,5 @@
 import * as ex from "excalibur";
-import {MoneyEffect} from "./Effects";
+import {EffectFactory} from "./Effects";
 import {Config} from "./config/Config";
 import {Resources} from "./config/Resources";
 
@@ -37,7 +37,7 @@ export class Blob extends ex.Actor {
 
     this.on("pointerdown", (event) => {
       this.kill();
-      this.scene.add(new MoneyEffect(this.pos.x, this.pos.y));
+      this.scene.add(EffectFactory.Make(EffectFactory.Type.Money, this.pos));
       callback(Config.BLOB.WORTH);
     });
   }
