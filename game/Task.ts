@@ -3,6 +3,7 @@ import {Config} from "./config/Config";
 import {Resources} from "./config/Resources";
 import {Player} from "./Player";
 import {ProgressBar} from "./ui/Indicator";
+import {EffectFactory} from "./Effects"
 
 enum TaskTypes {
     SingleUse = "singleuse",
@@ -241,11 +242,11 @@ class MultiUseItem extends TaskItem {
     }
 
     public onPlayerProgress(percentageDone: number): void {
-        // TODO: update ProgessBar or similar...
         this._bar.set(percentageDone);
     }
 
     public onPlayerDone(): void {
+        this.scene.add(EffectFactory.Make(EffectFactory.Type.Heart, this.pos));
         this._bar.kill();
         this.kill();
     }

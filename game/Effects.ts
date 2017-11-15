@@ -33,25 +33,21 @@ class HeartEffect extends Effect {
         let tex  = Resources.HUDSpriteSheet;
         let conf = Config.HUD.hud_heartFull;
         let sprite = new ex.Sprite(tex, conf.x, conf.y, conf.w, conf.h);
-        let w = 5;
-        let scale = w/conf.w;
-        sprite.scale.setTo(scale, scale);
-        // TODO: scale heart correctly
+        let emitter = new ex.ParticleEmitter(this.pos.x, this.pos.y);
 
-        let emitter = new ex.ParticleEmitter(this.pos.x, this.pos.y, 0, 0);
         emitter.particleSprite = sprite;
-        emitter.radius = 34;
-        emitter.minVel = 41;
-        emitter.maxVel = 42;
+        emitter.radius = 60;        
+        emitter.minVel = 30;
+        emitter.maxVel = 50;
         emitter.minAngle = 3.6;
         emitter.maxAngle = 5.9;
         emitter.isEmitting = true;
-        emitter.emitRate = 3;
+        emitter.emitRate = 10;
         emitter.opacity = 0.4;
         emitter.fadeFlag = true;
-        emitter.particleLife = 869;
-        emitter.maxSize = 8;
-        emitter.minSize = 6;
+        emitter.particleLife = 1000;
+        emitter.maxSize = .6;
+        emitter.minSize = .3;
         emitter.acceleration = new ex.Vector(0, 0);
 
         emitter.isEmitting = true;
