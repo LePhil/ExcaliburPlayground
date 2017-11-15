@@ -63,23 +63,26 @@ class HeartEffect extends Effect {
 
 class MoneyEffect extends Effect {
     onInitialize(engine: ex.Engine): void {
-        let emitter = new ex.ParticleEmitter(this.pos.x, this.pos.y, 0, 0);
+        let tex  = Resources.HUDSpriteSheet;
+        let conf = Config.HUD.hud_coins;
+        let sprite = new ex.Sprite(tex, conf.x, conf.y, conf.w, conf.h);
+        let emitter = new ex.ParticleEmitter(this.pos.x, this.pos.y);
+
+        emitter.particleSprite = sprite;
         emitter.emitterType = ex.EmitterType.Circle;
-        emitter.radius = 34;
-        emitter.minVel = 41;
-        emitter.maxVel = 42;
+        emitter.radius = 60;        
+        emitter.minVel = 20;
+        emitter.maxVel = 60;
         emitter.minAngle = 3.6;
         emitter.maxAngle = 5.9;
         emitter.isEmitting = true;
-        emitter.emitRate = 10;
+        emitter.emitRate = 15;
         emitter.opacity = 0.4;
         emitter.fadeFlag = true;
-        emitter.particleLife = 869;
-        emitter.maxSize = 8;
-        emitter.minSize = 6;
+        emitter.particleLife = 1000;
+        emitter.maxSize = .6;
+        emitter.minSize = .3;
         emitter.acceleration = new ex.Vector(0, 0);
-        emitter.beginColor = ex.Color.Yellow;
-        emitter.endColor = ex.Color.Yellow;
 
         emitter.isEmitting = true;
         this.scene.add(emitter);
