@@ -41,13 +41,11 @@ export class ProgressBar extends ex.Actor {
     }
 
     private _setColor():void {
-        Object.keys(this._colorRules).forEach(rule => {
-            if(this._currentValue <= +rule) {
-                this._progressBar.color = this._colorRules[rule];
-                console.log("new color because", rule, this._colorRules[rule]);
-                return false;
-            }
-        });
+        let fittingColorRules = Object.keys(this._colorRules).filter(rule => this._currentValue <= +rule);
+
+        if (fittingColorRules.length > 0) {
+            this._progressBar.color = this._colorRules[fittingColorRules[0]];
+        }
     }
 
     public reset(): void {
