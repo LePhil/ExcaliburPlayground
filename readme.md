@@ -12,11 +12,9 @@ Done!
     * More/less space in inventory
     * More reward per serving
     * A way to increase patience of customers
-* saving the scores, show older scores (sorted)
 * Hover-States on Buttons
 * Speech bubbles or Text in its own container outside of the screen. Text on multi-colored bg just can't be read easily.
 * move away from electron...
-* rate of interest in a food/animal/item should depend on the worth/duration/amount available. Expensive items should take a long time or be very limited or be only rarely asked for (or a combination/all of them)
 * maybe (MAYBE) a small minigame with direct input - it's more fun anyway :)
 * customers via LevelScene, not via door. Too far away!
 * Pagination on textoverlay, if content is too long.
@@ -84,6 +82,8 @@ Done!
 * only a certain amount of scores are kept per level
 * heart/coin effect with sprites
 * Progress Bar is now its own thang - For Task items and for customer happiness/patience
+* saving the scores, show older scores (sorted)
 
 # Won't do
 * If inventory is full, clicks on station should not do anything- No. We'd have to check for Tools in Inventory (in case the station is broken) and if there are actions in the queue to remove some items --> let the user make mistakes!
+* rate of interest in a food/animal/item should depend on the worth/duration/amount available. Expensive items should take a long time or be very limited or be only rarely asked for (or a combination/all of them)

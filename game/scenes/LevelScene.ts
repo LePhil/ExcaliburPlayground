@@ -211,13 +211,12 @@ export class LevelScene extends ex.Scene {
     }
 
     private _setupTask(setup: any): void {
-        if (!this._task && setup.TASK) {
-            this._task = new Task(this, this._player, setup.TASK, () => {console.log("task done");});
-        } else {
-            this._task.resetState(setup.TASK, () => {console.log("task done");});
-        }
         if (setup.TASK) {
-            this._task = Task.Make(this, this._player, setup.TASK,() => {console.log("task done");});
+            if (this._task) {
+                this._task.resetState(setup.TASK, () => {console.log("task done");});
+            } else {
+                this._task = Task.Make(this, this._player, setup.TASK,() => {console.log("task done");});
+            }
         }
     }
 
