@@ -23,6 +23,7 @@ export class CreditsScene extends ex.Scene {
             "",
             "Sound Effects",
             "soundbible.com",
+            "maisonsonique ( https://freesound.org/people/maisonsonique/ )",
             "",
             "Graphics",
             "kenney.nl"

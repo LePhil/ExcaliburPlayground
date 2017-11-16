@@ -35,4 +35,16 @@ export class Resources {
     static Sound_ChaChing       = new ex.Sound("game/assets/sounds/cha_ching.mp3", "game/assets/sounds/cha_ching.wav");
     static Sound_Intro          = new ex.Sound("game/assets/sounds/Whimsical-Popsicle.mp3");
     static Sound_Doorbell       = new ex.Sound("game/assets/sounds/doorbell.mp3", "game/assets/sounds/doorbell.wav");
+
+    static Sound_Doorbell_01    = new ex.Sound("game/assets/sounds/doorbell_sounds/01.mp3", "game/assets/sounds/doorbell_sounds/01.wav");
+    static Sound_Doorbell_02    = new ex.Sound("game/assets/sounds/doorbell_sounds/02.mp3", "game/assets/sounds/doorbell_sounds/02.wav");
+    static Sound_Doorbell_03    = new ex.Sound("game/assets/sounds/doorbell_sounds/03.mp3", "game/assets/sounds/doorbell_sounds/03.wav");
+    static Sound_Doorbell_04    = new ex.Sound("game/assets/sounds/doorbell_sounds/04.mp3", "game/assets/sounds/doorbell_sounds/04.wav");
+    static Sound_Doorbell_05    = new ex.Sound("game/assets/sounds/doorbell_sounds/05.mp3", "game/assets/sounds/doorbell_sounds/05.wav");
+    static Sound_Doorbell_06    = new ex.Sound("game/assets/sounds/doorbell_sounds/06.mp3", "game/assets/sounds/doorbell_sounds/06.wav");
+    static Sound_Doorbell_07    = new ex.Sound("game/assets/sounds/doorbell_sounds/07.mp3", "game/assets/sounds/doorbell_sounds/07.wav");
+    static Sound_Doorbell_08    = new ex.Sound("game/assets/sounds/doorbell_sounds/08.mp3", "game/assets/sounds/doorbell_sounds/08.wav");
+    static Sound_Doorbell_09    = new ex.Sound("game/assets/sounds/doorbell_sounds/09.mp3", "game/assets/sounds/doorbell_sounds/09.wav");
+    static Sound_Doorbell_10    = new ex.Sound("game/assets/sounds/doorbell_sounds/10.mp3", "game/assets/sounds/doorbell_sounds/10.wav");
+    static Sound_Doorbell_11    = new ex.Sound("game/assets/sounds/doorbell_sounds/11.mp3", "game/assets/sounds/doorbell_sounds/11.wav");
 }

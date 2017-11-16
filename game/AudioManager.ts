@@ -44,7 +44,7 @@ export class AudioManager {
 
     static playRandom(audios: Array<string>, looped: boolean = false): void {
         if(!AudioManager.isMuted) {
-            let audio = audios[ex.Util.randomInRange(0, audios.length-1)];
+            let audio = audios[ex.Util.randomIntInRange(0, audios.length-1)];
             AudioManager.play(audio, looped);
         }
     }

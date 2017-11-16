@@ -97,7 +97,19 @@ export class Door extends ex.Actor {
             this._onGetServedCallback);
         this.scene.add(newCustomer);
         newCustomer.setZIndex(this.getZIndex() + 1);
-        AudioManager.play("Sound_Doorbell");
+        AudioManager.playRandom([
+            "Sound_Doorbell_01",
+            "Sound_Doorbell_02",
+            "Sound_Doorbell_03",
+            "Sound_Doorbell_04",
+            "Sound_Doorbell_05",
+            "Sound_Doorbell_06",
+            "Sound_Doorbell_07",
+            "Sound_Doorbell_08",
+            "Sound_Doorbell_09",
+            "Sound_Doorbell_10",
+            "Sound_Doorbell_11"
+        ]);
 
         this._spawnedCustomers.push(newCustomer);
     }

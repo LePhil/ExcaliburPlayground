@@ -18,7 +18,6 @@ Done!
 * maybe (MAYBE) a small minigame with direct input - it's more fun anyway :)
 * customers via LevelScene, not via door. Too far away!
 * Pagination on textoverlay, if content is too long.
-* more doorbell sounds, play at random (https://freesound.org/people/maisonsonique/packs/12501/)
 * some ambient sounds for cutscenes etc., play one at random
 * much more extended player character with separate eyes (blinking, emotions), mouth ("talking" in cutscenes, frowning) and legs (animated)
 * finish Animals/Animal Cages (similar to FoodStations)
@@ -83,6 +82,7 @@ Done!
 * heart/coin effect with sprites
 * Progress Bar is now its own thang - For Task items and for customer happiness/patience
 * saving the scores, show older scores (sorted)
+* more doorbell sounds, play at random (https://freesound.org/people/maisonsonique/packs/12501/)
 
 # Won't do
 * If inventory is full, clicks on station should not do anything- No. We'd have to check for Tools in Inventory (in case the station is broken) and if there are actions in the queue to remove some items --> let the user make mistakes!
