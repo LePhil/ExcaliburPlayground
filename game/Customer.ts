@@ -62,7 +62,14 @@ export class Customer extends AbstractPlayer {
         this._hasDecided = true;
         let conf = Config.CUSTOMER.THINKBUBBLE;
         
-        this._patienceIndicator = new ProgressBar(new ex.Vector(0,0), 20, 5, 100, {"15": ex.Color.Red, "30": ex.Color.Yellow, "100": ex.Color.Green}, ex.Color.Transparent);
+        this._patienceIndicator = new ProgressBar(
+            new ex.Vector(0,0),
+            20,
+            5,
+            100,
+            {"15": ex.Color.Red, "30": ex.Color.Yellow, "100": ex.Color.Green},
+            ex.Color.Transparent,
+            ProgressBar.Mode.StayFilled);
         this._thinkBubble = new ThinkBubble(conf.OFFSET_X, conf.OFFSET_Y, this.desiredItem);
 
         this.add(this._patienceIndicator);
