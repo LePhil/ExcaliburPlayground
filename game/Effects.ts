@@ -11,20 +11,26 @@ enum EffectTypes {
 export class EffectFactory {
     static Type = EffectTypes;
 
-    static Make(type: EffectTypes, pos: ex.Vector): Effect {
+    static Make(type: EffectTypes,
+                pos: ex.Vector,
+                duration_s = 1): Effect {
+
         switch (type) {
             case EffectTypes.Heart:
-                return new HeartEffect(pos);
+                return new HeartEffect(pos, duration_s);
             case EffectTypes.Money:
             default:
-                return new MoneyEffect(pos);
+                return new MoneyEffect(pos, duration_s);
         }
     }
 }
 
 export class Effect extends ex.Actor {
-    constructor(pos: ex.Vector) {
+    protected _duration: number;
+
+    constructor(pos: ex.Vector, duration: number) {
         super(pos.x, pos.y, 0, 0);
+        this._duration = duration;
     }
 }
 
@@ -57,7 +63,7 @@ class HeartEffect extends Effect {
             emitter.isEmitting = false;
             emitter.kill();
             this.kill();
-        }, 1500);
+        }, this._duration * 1000);
     }
 }
 
@@ -92,6 +98,6 @@ class MoneyEffect extends Effect {
         setTimeout(() => {
             emitter.kill();
             this.kill();
-        }, 500);
+        }, this._duration * 1000);
     }
 }

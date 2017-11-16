@@ -15,6 +15,7 @@ import {LevelScene} from "./scenes/LevelScene";
 import {PreGameScene} from "./scenes/PreGameScene";
 import {EndGameScene} from "./scenes/EndGameScene";
 import {Cutscene} from "./scenes/Cutscene";
+import {DebugScene} from "./scenes/DebugScene";
 
 import {Director} from "./Director";
 
@@ -27,6 +28,7 @@ game.add("options", new OptionsScene(game));
 game.add("credits", new CreditsScene(game));
 game.add("menu", new MainMenu(game));
 game.add("custom", new CustomGameMenu(game));
+game.add("debug", new DebugScene(game));
 
 let introScene = new PreGameScene(game);
 game.add("pre", introScene);

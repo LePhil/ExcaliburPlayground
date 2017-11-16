@@ -53,6 +53,12 @@ export class MainMenu extends ex.Scene {
                 map.NAME,
                 () => globals.loadNextLevel(map.NAME) ));
             });
+
+            this.add(new Button(
+                Pos.make(900, 100),
+                "Debug Level",
+                () => {engine.goToScene("debug");}
+            ));
         }
     }
 

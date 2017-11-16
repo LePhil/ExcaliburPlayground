@@ -30,7 +30,7 @@ export class ProgressBar extends ex.Actor {
                     "50": ex.Color.Yellow,
                     "100": ex.Color.Green
                 },
-                backgroundColor = ex.Color.White,
+                backgroundColor = ex.Color.Transparent,
                 fillMode = ProgressBar.Mode.FillFromLeft ) {
 
         super(pos.x, pos.y, width, height, backgroundColor);
@@ -39,8 +39,9 @@ export class ProgressBar extends ex.Actor {
         this._initialValue = initial;
         this._colorRules = colorRules;
         this._fillMode = fillMode;
+        this.color = backgroundColor;
 
-        this._progressBar = new ex.Actor(-width/2, 0, 0, height, ex.Color.Transparent );
+        this._progressBar = new ex.Actor(-width/2, 0, 0, height, ex.Color.White );
 
         // TODO: fillmodes don't work as intended yet.
         switch (fillMode) {
@@ -53,6 +54,7 @@ export class ProgressBar extends ex.Actor {
                 this._progressBar.anchor.setTo(.5, .5);
                 break;
             case ProgressBar.Mode.StayFilled:
+                this._progressBar.pos.x = 0;
                 this._progressBar.setWidth(width);
                 break;
             case ProgressBar.Mode.FillFromLeft:
