@@ -14,7 +14,7 @@ export class ProgressBar extends ex.Actor {
                 width = 20,
                 height = 5,
                 initial = 0,
-                colorRules = {
+                colorRules: any = {
                     "20": ex.Color.Red,
                     "50": ex.Color.Yellow,
                     "100": ex.Color.Green

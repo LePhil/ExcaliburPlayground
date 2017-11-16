@@ -3,6 +3,7 @@ import {Item} from "./Item";
 import {AbstractPlayer} from "./AbstractPlayer";
 import {Cassa} from "./Cassa";
 import {EffectFactory} from "./Effects";
+import {ProgressBar} from "./ui/Indicator";
 import {Storage} from "./Storage";
 import {Config} from "./config/Config";
 import {Graphics} from "./config/Graphics";
@@ -17,7 +18,7 @@ export class Customer extends AbstractPlayer {
     private _cassa: Cassa;
     private _patience: number;
     private _patienceDecreaseTimer: ex.Timer;
-    private _patienceIndicator: PatienceIndicator;
+    private _patienceIndicator: ProgressBar;
     private _initialX:number;
     private _initialY:number;
     private _setup: any;
@@ -61,7 +62,7 @@ export class Customer extends AbstractPlayer {
         this._hasDecided = true;
         let conf = Config.CUSTOMER.THINKBUBBLE;
         
-        this._patienceIndicator = new PatienceIndicator(0, 0, this._patience);
+        this._patienceIndicator = new ProgressBar(new ex.Vector(0,0), 20, 5, 100, {"15": ex.Color.Red, "30": ex.Color.Yellow, "100": ex.Color.Green}, ex.Color.Transparent);
         this._thinkBubble = new ThinkBubble(conf.OFFSET_X, conf.OFFSET_Y, this.desiredItem);
 
         this.add(this._patienceIndicator);
@@ -162,7 +163,7 @@ export class Customer extends AbstractPlayer {
                 this._cassa.ranOutOfPatience(this);
                 this.leaveStore();
             } else {
-                this._patienceIndicator.setPatience(this._patience);
+                this._patienceIndicator.set(this._patience);
             }
         }, Config.CUSTOMER.PATIENCE_DECREASE_INTERVAL, true);
 
@@ -190,44 +191,5 @@ class ThinkBubble extends ex.Actor {
 
         sprite.scale.setTo(scale_x, scale_y);
         this.addDrawing( sprite );
-    }
-}
-
-// TODO: use Progress bar from Indicator.ts
-class PatienceIndicator extends ex.Actor {
-    private _patience: number;
-    private _patienceInitial: number;
-    private _colors: any;
-
-    constructor(x, y, initialPatience: number) {
-        super(x, y, 20, 5);
-
-        this._patience = initialPatience;
-        this._patienceInitial = initialPatience;
-
-        this._setColor();
-    }
-
-    public setPatience(patience:number) {
-        this._patience = patience;
-    }
-
-    public update(engine: ex.Engine, delta: number): void {
-        super.update(engine, delta);
-
-        this._setColor();
-    }
-
-    private _setColor():void {
-        // 50%+ Green
-        // 25%+ Orange
-        //  0%+ Red
-        if (this._patience >= this._patienceInitial/2) {
-            this.color = ex.Color.Green;
-        } else if (this._patience >= this._patienceInitial/4) {
-            this.color = ex.Color.Orange;
-        } else {
-            this.color = ex.Color.Red;
-        }
     }
 }

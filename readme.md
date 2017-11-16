@@ -37,7 +37,6 @@ Done!
         * make fliers
         * work on computer
     * Blob should probably be a task.
-* Progress Bar should be it's own thang - For Task items and for customer happiness/patience
 
 # Bugs
 * If speed is increased, actions should take less long as well (e.g. pickup)
@@ -84,6 +83,7 @@ Done!
 * Scores are no longer sorted alphabetically (72 > 123)...
 * only a certain amount of scores are kept per level
 * heart/coin effect with sprites
+* Progress Bar is now its own thang - For Task items and for customer happiness/patience
 
 # Won't do
 * If inventory is full, clicks on station should not do anything- No. We'd have to check for Tools in Inventory (in case the station is broken) and if there are actions in the queue to remove some items --> let the user make mistakes!
