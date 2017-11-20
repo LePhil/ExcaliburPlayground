@@ -62,7 +62,6 @@ export class Director {
     }
 
     public loadCustomLevel(settings: any): void {
-        debugger;
         this._game.load(settings, () => {
             this._engine.goToScene("menu");
         });

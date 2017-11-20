@@ -23,7 +23,6 @@ Done!
 * finish Animals/Animal Cages (similar to FoodStations)
 * FoodStations should serve FOOD, not Animals -> Bones, Cans, etc.
 * Random Mode with difficulty setting
-* Make a Firework Item
 * Minigames for Itemsources
 * Tasks during each level (=passed or failed level!)
     * many initial items that have to be interacted with
@@ -34,6 +33,12 @@ Done!
         * make fliers
         * work on computer
     * Blob should probably be a task.
+* weather effects
+    * snowy borders/corners
+    * rain overlay
+* Level selection map with different areas (see mappack --> ice, desert, ... - the classics.)
+* maybe it would be easier to remove a scene completely and re-create it instead of resetting and keeping track of everything?
+* unify tools and items? Should be possible to have a Tool from an ItemSource (e.g. crate)
 
 # Bugs
 * If speed is increased, actions should take less long as well (e.g. pickup)
@@ -83,6 +88,7 @@ Done!
 * Progress Bar is now its own thang - For Task items and for customer happiness/patience
 * saving the scores, show older scores (sorted)
 * more doorbell sounds, play at random (https://freesound.org/people/maisonsonique/packs/12501/)
+* Make a Firework -Item- Tool
 
 # Won't do
 * If inventory is full, clicks on station should not do anything- No. We'd have to check for Tools in Inventory (in case the station is broken) and if there are actions in the queue to remove some items --> let the user make mistakes!

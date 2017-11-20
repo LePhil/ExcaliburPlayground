@@ -37,7 +37,8 @@ export class Levels {
                 {X: 300, Y: 600, T: "hammer",   DECAY: false}
             ],
             TOOLS: [
-                {X: 500, Y: 500, T: "hammer"}
+                {X: 500, Y: 500, T: "hammer"},
+                {X: 400, Y: 400, T: Config.ITEMS.FIREWORKS}
             ],
             TASK: {
                 TYPE: Task.Type.MultiUse,
