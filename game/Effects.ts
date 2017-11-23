@@ -135,35 +135,60 @@ class FireworkEffect extends Effect {
 
         let emitter = new ex.ParticleEmitter(this.pos.x, this.pos.y);
         emitter.emitterType = ex.EmitterType.Circle;
-        emitter.radius = 6;
-        emitter.minVel = 90;
-        emitter.maxVel = 200;
+
+        if (this._size === FireworkSize.Big) {
+            emitter.radius = 6;
+            emitter.minVel = 90;
+            emitter.maxVel = 200;
+            emitter.maxSize = 9;
+            emitter.minSize = 3;
+            emitter.startSize = 9;
+            emitter.endSize = 8;
+            emitter.emitRate = 179;
+        } else {
+            emitter.radius = 3;
+            emitter.minVel = 60;
+            emitter.maxVel = 170;
+            emitter.maxSize = 7;
+            emitter.minSize = 2;
+            emitter.startSize = 7;
+            emitter.endSize = 6;
+            emitter.emitRate = 150;
+        }
+
         emitter.minAngle = 0;
         emitter.maxAngle = 6.2;
         emitter.isEmitting = true;
-        emitter.emitRate = 179;
         emitter.opacity = 0.5;
         emitter.fadeFlag = true;
         emitter.particleLife = 1000;
-        emitter.maxSize = 9;
-        emitter.minSize = 3;
-        emitter.startSize = 9;
-        emitter.endSize = 8;
         emitter.acceleration = new ex.Vector(0, 0);
         emitter.beginColor = colors[ex.Util.randomIntInRange(0, colors.length - 1)];
         emitter.endColor = ex.Color.Transparent;
         
-        emitter.isEmitting = true;
         this.scene.add(emitter);
+        this.setZIndex(Config.ZINDICES.EFFECTS);
 
         if (this._size === FireworkSize.Big) {
             AudioManager.play("Sound_Fireworks");
 
-            let nrOfTinyFireworks = ex.Util.randomIntInRange(3, 10);
+            // create a random number of smaller fireworks that get
+            // created after a random delay at a random position
+            // with a random duration that's short than the big ones.
+            let nrOfTinyFireworks = ex.Util.randomIntInRange(3, 8);
             for(let i = 0; i < nrOfTinyFireworks; i++) {
                 let randomPos = Config.GetRandomPosition();
-                let tinyOne = new FireworkEffect( randomPos, this._duration, FireworkSize.Small);
-                this.scene.add(tinyOne);
+                let randomDuration = ex.Util.randomInRange(.4 * this._duration, .8 * this._duration);
+                let randomStart = ex.Util.randomInRange(0, .4 * this._duration);
+
+                setTimeout(() => {
+                    let tinyOne = new FireworkEffect(
+                        randomPos,
+                        randomDuration,
+                        FireworkSize.Small
+                    );
+                    this.scene.add(tinyOne);
+                }, randomStart * 1000);
             }
         }
 

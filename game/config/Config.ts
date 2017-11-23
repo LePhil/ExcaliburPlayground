@@ -626,6 +626,10 @@ export class Config {
     ]
   };
 
+  static ZINDICES = {
+    EFFECTS: 20
+  };
+
   static GetRandomPosition(): ex.Vector {
     let getRandomX = () => {
       let minX = (Config.GAME.WIDTH - Config.GAME.DEFAULTMAP.W) / 2;
