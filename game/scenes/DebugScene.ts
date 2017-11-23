@@ -1,7 +1,7 @@
 import * as ex from "excalibur";
 import {Config} from "../config/Config";
 import {Resources} from "../config/Resources";
-import {ProgressBar} from "../ui/Indicator";
+import {ProgressBar, FancyProgressBar} from "../ui/Indicator";
 import {EffectFactory} from "../Effects";
 
 export class DebugScene extends ex.Scene {
@@ -26,12 +26,13 @@ export class DebugScene extends ex.Scene {
         let right  = new ProgressBar( new ex.Vector(200, 200), 100, 10, 0, colorRules, ex.Color.White, ProgressBar.Mode.FillFromRight);
         let center = new ProgressBar( new ex.Vector(200, 300), 100, 10, 0, colorRules, ex.Color.White, ProgressBar.Mode.FillFromCenter);
         let filled = new ProgressBar( new ex.Vector(200, 400), 100, 10, 0, colorRules, ex.Color.White, ProgressBar.Mode.StayFilled);
+        let fancy  = new FancyProgressBar(new ex.Vector(200, 500), 100, 10, 10);
 
         this.add(left);
         this.add(right);
         this.add(center);
         this.add(filled);
-
+        this.add(fancy);
 
         let val = 0;
         let timer = new ex.Timer(() => {
@@ -39,6 +40,7 @@ export class DebugScene extends ex.Scene {
             right.set(val);
             center.set(val);
             filled.set(val);
+            fancy.set(val);
 
             val += 10;
             if(val > 100) {

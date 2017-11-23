@@ -39,6 +39,7 @@ Done!
 * Level selection map with different areas (see mappack --> ice, desert, ... - the classics.)
 * maybe it would be easier to remove a scene completely and re-create it instead of resetting and keeping track of everything?
 * unify tools and items? Should be possible to have a Tool from an ItemSource (e.g. crate)
+* Progressbar with Graphics from UIPack RPG
 
 # Bugs
 * If speed is increased, actions should take less long as well (e.g. pickup)

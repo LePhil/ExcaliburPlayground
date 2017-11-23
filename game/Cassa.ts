@@ -45,15 +45,15 @@ export class Cassa extends ex.Actor {
      */
     public handleClick(player: Player) {
         player.sendToCassa(this, () => {
-        let customersToRemove = player.serveItems(this.queue);
+            let customersToRemove = player.serveItems(this.queue);
 
-        // remove all customers that were served with a small delay
-        customersToRemove.forEach((customerToRemove, index) => {
-            setTimeout(() => {
-            customerToRemove.giveItem();
-            this._removeFromQueue(customerToRemove);
-            }, index * 500);
-        });
+            // remove all customers that were served with a small delay
+            customersToRemove.forEach((customerToRemove, index) => {
+                setTimeout(() => {
+                customerToRemove.giveItem();
+                this._removeFromQueue(customerToRemove);
+                }, index * 500);
+            });
 
         });
     }
