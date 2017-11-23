@@ -1,6 +1,7 @@
 import * as ex from "excalibur";
 import {Customer} from "./Customer";
 import {Player} from "./Player";
+import {EffectFactory} from "./Effects";
 import {Resources} from "./config/Resources";
 import {Config} from "./config/Config";
 
@@ -108,6 +109,7 @@ export class Cassa extends ex.Actor {
     }
 
     public makeCustomersHappy(duration: number): void {
+        this.scene.add(EffectFactory.Make(EffectFactory.Type.Firework, this.pos, duration));
         this.queue.forEach((customer) => {
             customer.resetPatience(duration);
         });

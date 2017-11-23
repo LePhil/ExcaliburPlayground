@@ -36,6 +36,8 @@ export class Resources {
     static Sound_Intro          = new ex.Sound("game/assets/sounds/Whimsical-Popsicle.mp3");
     static Sound_Doorbell       = new ex.Sound("game/assets/sounds/doorbell.mp3", "game/assets/sounds/doorbell.wav");
 
+    static Sound_Fireworks      = new ex.Sound("game/assets/sounds/fireworks.mp3", "game/assets/sounds/fireworks.wav");
+
     static Sound_Doorbell_01    = new ex.Sound("game/assets/sounds/doorbell_sounds/01.mp3", "game/assets/sounds/doorbell_sounds/01.wav");
     static Sound_Doorbell_02    = new ex.Sound("game/assets/sounds/doorbell_sounds/02.mp3", "game/assets/sounds/doorbell_sounds/02.wav");
     static Sound_Doorbell_03    = new ex.Sound("game/assets/sounds/doorbell_sounds/03.mp3", "game/assets/sounds/doorbell_sounds/03.wav");

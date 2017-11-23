@@ -625,4 +625,19 @@ export class Config {
       Config.ITEMS.MEDKIT,
     ]
   };
+
+  static GetRandomPosition(): ex.Vector {
+    let getRandomX = () => {
+      let minX = (Config.GAME.WIDTH - Config.GAME.DEFAULTMAP.W) / 2;
+      let maxX = Config.GAME.WIDTH - minX;
+      return ex.Util.randomIntInRange(minX, maxX);
+    };
+    let getRandomY = () => {
+      let minY = (Config.GAME.HEIGHT - Config.GAME.DEFAULTMAP.H) / 2;
+      let maxY = Config.GAME.HEIGHT - minY;
+      return ex.Util.randomIntInRange(minY, maxY);
+    };
+
+    return new ex.Vector( getRandomX(), getRandomY() );
+  };
 }
