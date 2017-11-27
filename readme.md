@@ -36,7 +36,7 @@ Done!
 * weather effects
     * snowy borders/corners
     * rain overlay
-* Level selection map with different areas (see mappack --> ice, desert, ... - the classics.)
+* Level selection map with different areas (see mappack --> ice, desert, ... - the classics.) Each area with a different customer type (Desert = yellow, Woods = green, Ice = blue...) - Outdoor party as last level each.
 * maybe it would be easier to remove a scene completely and re-create it instead of resetting and keeping track of everything?
 * unify tools and items? Should be possible to have a Tool from an ItemSource (e.g. crate)
 * Progressbar with Graphics from UIPack RPG
