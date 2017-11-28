@@ -26,7 +26,7 @@ export class DebugScene extends ex.Scene {
         let right  = new ProgressBar( new ex.Vector(200, 200), 100, 10, 0, colorRules, ex.Color.White, ProgressBar.Mode.FillFromRight);
         let center = new ProgressBar( new ex.Vector(200, 300), 100, 10, 0, colorRules, ex.Color.White, ProgressBar.Mode.FillFromCenter);
         let filled = new ProgressBar( new ex.Vector(200, 400), 100, 10, 0, colorRules, ex.Color.White, ProgressBar.Mode.StayFilled);
-        let fancy  = new FancyProgressBar(new ex.Vector(200, 500), 100, 10, 10);
+        let fancy  = new FancyProgressBar(new ex.Vector(200, 500), 100, 10, 0);
 
         this.add(left);
         this.add(right);

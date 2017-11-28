@@ -108,12 +108,12 @@ export class FancyProgressBar extends ex.Actor {
         constructor(pos: ex.Vector,
                     width = 20,
                     height = 5,
-                    initial = 0) {
+                    initialPercentage = 0) {
     
             super(pos.x, pos.y, width, height);
 
-            this._currentValue = initial;
-            this._initialValue = initial;
+            this._currentValue = initialPercentage;
+            this._initialValue = initialPercentage;
 
             this.anchor.setTo(.5, .5);
 
@@ -127,24 +127,23 @@ export class FancyProgressBar extends ex.Actor {
             this.add(this.createRightBG(rightPosX, posY));
     
 
-            this._middlePart = this.createMiddleBar(midPosX, posY, this.calcWidthFromValue(initial), width);
+            this._middlePart = this.createMiddleBar(leftPosX, posY, width);
             this._leftPart = this.createLeftBar(leftPosX, posY);
-            this._rightPart = this.createRightBar(this.calcXfromValue(initial), posY);
+            this._rightPart = this.createRightBar(this.calcXfromPercentage(initialPercentage), posY);
 
             this.add(this._middlePart);
             this.add(this._leftPart);
             this.add(this._rightPart);
+
+            this.set(initialPercentage);
         }
 
-        calcXfromValue(newPercentage: number): number {
+        calcXfromPercentage(newPercentage: number): number {
             return (newPercentage/100 * this.getWidth()) - this.getWidth()/2;
         }
 
-        calcWidthFromValue(newPercentage: number): number {
+        calcWidthFromPercentage(newPercentage: number): number {
             return (newPercentage/100 * this.getWidth());
-        }
-
-        onInitialize(engine: ex.Engine): void {
         }
 
         createLeftBG(x, y): ex.Actor {
@@ -194,11 +193,11 @@ export class FancyProgressBar extends ex.Actor {
             elem.anchor.setTo(1, .5);
             return elem;
         }
-        createMiddleBar(x, y, initialWidth, maxWidth): ex.Actor {
+        createMiddleBar(x, y, maxWidth): ex.Actor {
             let conf = Graphics.UI.barRed_horizontalMid;
             let tex = Resources.UIRPGSpriteSheet;
 
-            let elem = new ex.Actor(x, y, initialWidth, conf.h);
+            let elem = new ex.Actor(x, y, maxWidth, conf.h);
     
             let sprite = new ex.Sprite(tex, conf.x, conf.y, conf.w, conf.h);
             let scaleX = maxWidth/conf.w;
@@ -224,9 +223,9 @@ export class FancyProgressBar extends ex.Actor {
    
             let width = this.getWidth();
 
-            this._middlePart.setWidth(this.calcWidthFromValue(newPercentage));
-            this._middlePart.currentDrawing.scale.setTo(this.calcWidthFromValue(newPercentage)/18, 1);
-            this._rightPart.pos.x = this.calcXfromValue(newPercentage);
+            this._middlePart.setWidth(this.calcWidthFromPercentage(newPercentage));
+            this._middlePart.currentDrawing.scale.setTo(this.calcWidthFromPercentage(newPercentage)/18, 1);
+            this._rightPart.pos.x = this.calcXfromPercentage(newPercentage);
         }
     
         public reset(): void {
