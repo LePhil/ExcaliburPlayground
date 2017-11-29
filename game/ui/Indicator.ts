@@ -122,14 +122,14 @@ export class FancyProgressBar extends ex.Actor {
             let midPosX = 0;
             let posY = 0;
     
-            this.add(this.createMiddleBG(midPosX, posY, width));
-            this.add(this.createLeftBG(leftPosX, posY));
-            this.add(this.createRightBG(rightPosX, posY));
+            this.add(this.createMiddleBG(midPosX, posY, width, height));
+            this.add(this.createLeftBG(leftPosX, posY, height));
+            this.add(this.createRightBG(rightPosX, posY, height));
     
 
-            this._middlePart = this.createMiddleBar(leftPosX, posY, width);
-            this._leftPart = this.createLeftBar(leftPosX, posY);
-            this._rightPart = this.createRightBar(this.calcXfromPercentage(initialPercentage), posY);
+            this._middlePart = this.createMiddleBar(leftPosX, posY, width, height);
+            this._leftPart = this.createLeftBar(leftPosX, posY, height);
+            this._rightPart = this.createRightBar(this.calcXfromPercentage(initialPercentage), posY, height);
 
             this.add(this._middlePart);
             this.add(this._leftPart);
@@ -146,73 +146,83 @@ export class FancyProgressBar extends ex.Actor {
             return (newPercentage/100 * this.getWidth());
         }
 
-        createLeftBG(x, y): ex.Actor {
+        createLeftBG(x, y, h): ex.Actor {
             let conf = Graphics.UI.barBack_horizontalLeft;
             let tex = Resources.UIRPGSpriteSheet;
 
-            let elem = new ex.Actor(x, y, conf.w, conf.h);
+            let elem = new ex.Actor(x, y, conf.w, h);
     
             let sprite = new ex.Sprite(tex, conf.x, conf.y, conf.w, conf.h);
+            let scale = h/conf.h;
+            sprite.scale.setTo(scale, scale);
             elem.addDrawing(sprite);
             elem.anchor.setTo(1, .5);
             return elem;
         }
-        createMiddleBG(x, y, w): ex.Actor {
+        createMiddleBG(x, y, w, h): ex.Actor {
             let conf = Graphics.UI.barBack_horizontalMid;
             let tex = Resources.UIRPGSpriteSheet;
 
-            let elem = new ex.Actor(x, y, w, conf.h);
+            let elem = new ex.Actor(x, y, w, h);
     
             let sprite = new ex.Sprite(tex, conf.x, conf.y, conf.w, conf.h);
             let scaleX = w/conf.w;
-            sprite.scale.setTo(scaleX, 1);
+            let scaleY = h/conf.h;
+            sprite.scale.setTo(scaleX, scaleY);
             elem.addDrawing(sprite);
             elem.anchor.setTo(.5, .5);
             return elem;
         }
-        createRightBG(x, y): ex.Actor {
+        createRightBG(x, y, h): ex.Actor {
             let conf = Graphics.UI.barBack_horizontalRight;
             let tex = Resources.UIRPGSpriteSheet;
 
-            let elem = new ex.Actor(x, y, conf.w, conf.h);
+            let elem = new ex.Actor(x, y, conf.w, h);
     
             let sprite = new ex.Sprite(tex, conf.x, conf.y, conf.w, conf.h);
+            let scale = h/conf.h;
+            sprite.scale.setTo(scale, scale);
             elem.addDrawing(sprite);
             elem.anchor.setTo(0, .5);
             return elem;
         }
 
-        createLeftBar(x, y): ex.Actor {
+        createLeftBar(x, y, h): ex.Actor {
             let conf = Graphics.UI.barRed_horizontalLeft;
             let tex = Resources.UIRPGSpriteSheet;
 
-            let elem = new ex.Actor(x, y, conf.w, conf.h);
+            let elem = new ex.Actor(x, y, conf.w, h);
     
             let sprite = new ex.Sprite(tex, conf.x, conf.y, conf.w, conf.h);
+            let scale = h/conf.h;
+            sprite.scale.setTo(scale, scale);
             elem.addDrawing(sprite);
             elem.anchor.setTo(1, .5);
             return elem;
         }
-        createMiddleBar(x, y, maxWidth): ex.Actor {
+        createMiddleBar(x, y, maxWidth, h): ex.Actor {
             let conf = Graphics.UI.barRed_horizontalMid;
             let tex = Resources.UIRPGSpriteSheet;
 
-            let elem = new ex.Actor(x, y, maxWidth, conf.h);
+            let elem = new ex.Actor(x, y, maxWidth, h);
     
             let sprite = new ex.Sprite(tex, conf.x, conf.y, conf.w, conf.h);
             let scaleX = maxWidth/conf.w;
-            sprite.scale.setTo(scaleX, 1);
+            let scaleY = h/conf.h;
+            sprite.scale.setTo(scaleX, scaleY);
             elem.addDrawing(sprite);
             elem.anchor.setTo(0, .5);
             return elem;
         }
-        createRightBar(x, y): ex.Actor {
+        createRightBar(x, y, h): ex.Actor {
             let conf = Graphics.UI.barRed_horizontalRight;
             let tex = Resources.UIRPGSpriteSheet;
 
-            let elem = new ex.Actor(x, y, conf.w, conf.h);
+            let elem = new ex.Actor(x, y, conf.w, h);
     
             let sprite = new ex.Sprite(tex, conf.x, conf.y, conf.w, conf.h);
+            let scale = h/conf.h;
+            sprite.scale.setTo(scale, scale);
             elem.addDrawing(sprite);
             elem.anchor.setTo(0, .5);
             return elem;
@@ -224,12 +234,12 @@ export class FancyProgressBar extends ex.Actor {
             let width = this.getWidth();
 
             this._middlePart.setWidth(this.calcWidthFromPercentage(newPercentage));
-            this._middlePart.currentDrawing.scale.setTo(this.calcWidthFromPercentage(newPercentage)/18, 1);
+            let scaleY = this._middlePart.currentDrawing.scale.y;
+            this._middlePart.currentDrawing.scale.setTo(this.calcWidthFromPercentage(newPercentage)/18, scaleY);
             this._rightPart.pos.x = this.calcXfromPercentage(newPercentage);
         }
     
         public reset(): void {
             this._currentValue = this._initialValue;
-
         }
 }

@@ -39,7 +39,6 @@ Done!
 * Level selection map with different areas (see mappack --> ice, desert, ... - the classics.) Each area with a different customer type (Desert = yellow, Woods = green, Ice = blue...) - Outdoor party as last level each.
 * maybe it would be easier to remove a scene completely and re-create it instead of resetting and keeping track of everything?
 * unify tools and items? Should be possible to have a Tool from an ItemSource (e.g. crate)
-* Progressbar with Graphics from UIPack RPG
 
 # Bugs
 * If speed is increased, actions should take less long as well (e.g. pickup)
@@ -90,6 +89,8 @@ Done!
 * saving the scores, show older scores (sorted)
 * more doorbell sounds, play at random (https://freesound.org/people/maisonsonique/packs/12501/)
 * Make a Firework -Item- Tool
+* Progressbar with Graphics from UIPack RPG
+* fix fancy progressbar with height != original height...
 
 # Won't do
 * If inventory is full, clicks on station should not do anything- No. We'd have to check for Tools in Inventory (in case the station is broken) and if there are actions in the queue to remove some items --> let the user make mistakes!

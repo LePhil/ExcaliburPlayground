@@ -26,13 +26,17 @@ export class DebugScene extends ex.Scene {
         let right  = new ProgressBar( new ex.Vector(200, 200), 100, 10, 0, colorRules, ex.Color.White, ProgressBar.Mode.FillFromRight);
         let center = new ProgressBar( new ex.Vector(200, 300), 100, 10, 0, colorRules, ex.Color.White, ProgressBar.Mode.FillFromCenter);
         let filled = new ProgressBar( new ex.Vector(200, 400), 100, 10, 0, colorRules, ex.Color.White, ProgressBar.Mode.StayFilled);
-        let fancy  = new FancyProgressBar(new ex.Vector(200, 500), 100, 10, 0);
+        let fancy  = new FancyProgressBar(new ex.Vector(200, 500), 100, 18, 0);
+        let tiny   = new FancyProgressBar(new ex.Vector(200, 520), 40, 5, 0);
+        let hjuge  = new FancyProgressBar(new ex.Vector(200, 560), 300, 50, 0);
 
         this.add(left);
         this.add(right);
         this.add(center);
         this.add(filled);
         this.add(fancy);
+        this.add(tiny);
+        this.add(hjuge);
 
         let val = 0;
         let timer = new ex.Timer(() => {
@@ -41,6 +45,8 @@ export class DebugScene extends ex.Scene {
             center.set(val);
             filled.set(val);
             fancy.set(val);
+            tiny.set(val);
+            hjuge.set(val);
 
             val += 10;
             if(val > 100) {
