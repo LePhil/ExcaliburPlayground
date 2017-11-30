@@ -46,7 +46,6 @@ export class ProgressBar extends ex.Actor {
 
         this._progressBar = new ex.Actor(-width/2, 0, 0, height, ex.Color.White );
 
-        // TODO: fillmodes don't work as intended yet.
         switch (fillMode) {
             case ProgressBar.Mode.FillFromRight:
                 this._progressBar.pos.x = width/2;
@@ -93,153 +92,181 @@ export class ProgressBar extends ex.Actor {
     }
 }
 
+enum ProgressBarColors {
+    Blue    = "Blue",
+    Green   = "Green",
+    Red     = "Red",
+    Yellow  = "Yellow",
+}
+
 export class FancyProgressBar extends ex.Actor {
-    static Mode = ProgressBarFillMode;
+    static Color = ProgressBarColors;
+    private _colorRules: any;
     
-        private _leftPart: ex.Actor;
-        private _middlePart: ex.Actor;
-        private _rightPart: ex.Actor;
+    private _leftPart: ex.Actor;
+    private _progressBar: ex.Actor;
+    private _rightPart: ex.Actor;
 
-        private _currentValue: number;
-        private _initialValue: number;
-        private _fillMode: ProgressBarFillMode;
-    
-        // Maybe a object parameter would be easier with > 5 parameters...
-        constructor(pos: ex.Vector,
-                    width = 20,
-                    height = 5,
-                    initialPercentage = 0) {
-    
-            super(pos.x, pos.y, width, height);
+    private _currentValue: number;
+    private _initialValue: number;
 
-            this._currentValue = initialPercentage;
-            this._initialValue = initialPercentage;
+    // Maybe a object parameter would be easier with > 5 parameters...
+    constructor(pos: ex.Vector,
+                width = 20,
+                height = 5,
+                initialPercentage = 0,
+                colorRules: any = {
+                    "20": ProgressBarColors.Red,
+                    "50": ProgressBarColors.Yellow,
+                    "100": ProgressBarColors.Green
+                }) {
 
-            this.anchor.setTo(.5, .5);
+        super(pos.x, pos.y, width, height);
 
-            let leftPosX = -width/2;
-            let rightPosX =  width/2;
-            let midPosX = 0;
-            let posY = 0;
-    
-            this.add(this.createMiddleBG(midPosX, posY, width, height));
-            this.add(this.createLeftBG(leftPosX, posY, height));
-            this.add(this.createRightBG(rightPosX, posY, height));
-    
+        this._currentValue = initialPercentage;
+        this._initialValue = initialPercentage;
+        this._colorRules = colorRules;
 
-            this._middlePart = this.createMiddleBar(leftPosX, posY, width, height);
-            this._leftPart = this.createLeftBar(leftPosX, posY, height);
-            this._rightPart = this.createRightBar(this.calcXfromPercentage(initialPercentage), posY, height);
+        this.anchor.setTo(.5, .5);
 
-            this.add(this._middlePart);
-            this.add(this._leftPart);
-            this.add(this._rightPart);
+        let leftPosX = -width/2;
+        let rightPosX =  width/2;
+        let barPartEndWidth = height/2;
+        let midPosX = 0;
+        let posY = 0;
 
-            this.set(initialPercentage);
+        this.add(this.createMiddleBG(midPosX, posY, width, height));
+        this.add(this.createLeftBG(leftPosX, posY, barPartEndWidth, height));
+        this.add(this.createRightBG(rightPosX, posY, barPartEndWidth, height));
+
+        this._progressBar = this.createMiddleBar(leftPosX, posY, width, height);
+        this._leftPart = this.createLeftBar(leftPosX, posY, barPartEndWidth, height);
+        this._rightPart = this.createRightBar(this.calcXfromPercentage(initialPercentage), posY, width, height);
+
+        this.add(this._progressBar);
+        this.add(this._leftPart);
+        this.add(this._rightPart);
+
+        this.set(initialPercentage);
+    }
+
+    calcXfromPercentage(newPercentage: number): number {
+        return (newPercentage/100 * this.getWidth()) - this.getWidth()/2;
+    }
+
+    calcWidthFromPercentage(newPercentage: number): number {
+        return (newPercentage/100 * this.getWidth());
+    }
+
+    createLeftBG(x, y, w, h): ex.Actor {
+        let conf = Graphics.UI.barBack_horizontalLeft;
+        let tex = Resources.UIRPGSpriteSheet;
+
+        let elem = new ex.Actor(x, y, w, h);
+
+        let sprite = new ex.Sprite(tex, conf.x, conf.y, conf.w, conf.h);
+        let scale = h/conf.h;
+        sprite.scale.setTo(scale, scale);
+        elem.addDrawing(sprite);
+        elem.anchor.setTo(1, .5);
+        return elem;
+    }
+    createMiddleBG(x, y, w, h): ex.Actor {
+        let conf = Graphics.UI.barBack_horizontalMid;
+        let tex = Resources.UIRPGSpriteSheet;
+
+        let elem = new ex.Actor(x, y, w, h);
+
+        let sprite = new ex.Sprite(tex, conf.x, conf.y, conf.w, conf.h);
+        let scaleX = w/conf.w;
+        let scaleY = h/conf.h;
+        sprite.scale.setTo(scaleX, scaleY);
+        elem.addDrawing(sprite);
+        elem.anchor.setTo(.5, .5);
+        return elem;
+    }
+    createRightBG(x, y, w, h): ex.Actor {
+        let conf = Graphics.UI.barBack_horizontalRight;
+        let tex = Resources.UIRPGSpriteSheet;
+
+        let elem = new ex.Actor(x, y, w, h);
+
+        let sprite = new ex.Sprite(tex, conf.x, conf.y, conf.w, conf.h);
+        let scale = h/conf.h;
+        sprite.scale.setTo(scale, scale);
+        elem.addDrawing(sprite);
+        elem.anchor.setTo(0, .5);
+        return elem;
+    }
+
+    addDrawingByColorAndPart(elem: ex.Actor, colorName: string, partName: string, h: number, w?: number): void {
+        let conf = Graphics.UI[`bar${colorName}_horizontal${partName}`];
+        let tex = Resources.UIRPGSpriteSheet;
+        let sprite = new ex.Sprite(tex, conf.x, conf.y, conf.w, conf.h);
+        let scaleY = h/conf.h;
+        let scaleX = scaleY;
+        if (w) {
+            scaleX = w/conf.w;
+        }
+        sprite.scale.setTo(scaleX, scaleY);
+        elem.addDrawing(colorName, sprite);
+    }
+
+    createLeftBar(x, y, w, h): ex.Actor {
+        let elem = new ex.Actor(x, y, w, h);
+        elem.anchor.setTo(1, .5);
+        
+        for (let colorName in ProgressBarColors) {
+            this.addDrawingByColorAndPart(elem, colorName, "Left", h);
         }
 
-        calcXfromPercentage(newPercentage: number): number {
-            return (newPercentage/100 * this.getWidth()) - this.getWidth()/2;
+        return elem;
+    }
+    createMiddleBar(x, y, w, h): ex.Actor {
+        let elem = new ex.Actor(x, y, w, h);
+        elem.anchor.setTo(0, .5);
+
+        for (let colorName in ProgressBarColors) {
+            this.addDrawingByColorAndPart(elem, colorName, "Mid", h, w);
+        }
+        return elem;
+    }
+    createRightBar(x, y, w, h): ex.Actor {
+        let elem = new ex.Actor(x, y, w, h);
+        elem.anchor.setTo(0, .5);
+        
+        for (let colorName in ProgressBarColors) {
+            this.addDrawingByColorAndPart(elem, colorName, "Right", h);
         }
 
-        calcWidthFromPercentage(newPercentage: number): number {
-            return (newPercentage/100 * this.getWidth());
+        return elem;
+    }
+
+    public set(newPercentage:number) {
+        this._currentValue = newPercentage;
+        this._setColor();
+
+        let width = this.getWidth();
+
+        this._progressBar.setWidth(this.calcWidthFromPercentage(newPercentage));
+        let scaleY = this._progressBar.currentDrawing.scale.y;
+        this._progressBar.currentDrawing.scale.setTo(this.calcWidthFromPercentage(newPercentage)/18, scaleY);
+        this._rightPart.pos.x = this.calcXfromPercentage(newPercentage);
+
+    }
+
+    private _setColor():void {
+        let fittingColorRules = Object.keys(this._colorRules).filter(rule => this._currentValue <= +rule);
+
+        if (fittingColorRules.length > 0) {
+            this._leftPart.setDrawing(this._colorRules[fittingColorRules[0]]);
+            this._progressBar.setDrawing(this._colorRules[fittingColorRules[0]]);
+            this._rightPart.setDrawing(this._colorRules[fittingColorRules[0]]);
         }
-
-        createLeftBG(x, y, h): ex.Actor {
-            let conf = Graphics.UI.barBack_horizontalLeft;
-            let tex = Resources.UIRPGSpriteSheet;
-
-            let elem = new ex.Actor(x, y, conf.w, h);
+    }
     
-            let sprite = new ex.Sprite(tex, conf.x, conf.y, conf.w, conf.h);
-            let scale = h/conf.h;
-            sprite.scale.setTo(scale, scale);
-            elem.addDrawing(sprite);
-            elem.anchor.setTo(1, .5);
-            return elem;
-        }
-        createMiddleBG(x, y, w, h): ex.Actor {
-            let conf = Graphics.UI.barBack_horizontalMid;
-            let tex = Resources.UIRPGSpriteSheet;
-
-            let elem = new ex.Actor(x, y, w, h);
-    
-            let sprite = new ex.Sprite(tex, conf.x, conf.y, conf.w, conf.h);
-            let scaleX = w/conf.w;
-            let scaleY = h/conf.h;
-            sprite.scale.setTo(scaleX, scaleY);
-            elem.addDrawing(sprite);
-            elem.anchor.setTo(.5, .5);
-            return elem;
-        }
-        createRightBG(x, y, h): ex.Actor {
-            let conf = Graphics.UI.barBack_horizontalRight;
-            let tex = Resources.UIRPGSpriteSheet;
-
-            let elem = new ex.Actor(x, y, conf.w, h);
-    
-            let sprite = new ex.Sprite(tex, conf.x, conf.y, conf.w, conf.h);
-            let scale = h/conf.h;
-            sprite.scale.setTo(scale, scale);
-            elem.addDrawing(sprite);
-            elem.anchor.setTo(0, .5);
-            return elem;
-        }
-
-        createLeftBar(x, y, h): ex.Actor {
-            let conf = Graphics.UI.barRed_horizontalLeft;
-            let tex = Resources.UIRPGSpriteSheet;
-
-            let elem = new ex.Actor(x, y, conf.w, h);
-    
-            let sprite = new ex.Sprite(tex, conf.x, conf.y, conf.w, conf.h);
-            let scale = h/conf.h;
-            sprite.scale.setTo(scale, scale);
-            elem.addDrawing(sprite);
-            elem.anchor.setTo(1, .5);
-            return elem;
-        }
-        createMiddleBar(x, y, maxWidth, h): ex.Actor {
-            let conf = Graphics.UI.barRed_horizontalMid;
-            let tex = Resources.UIRPGSpriteSheet;
-
-            let elem = new ex.Actor(x, y, maxWidth, h);
-    
-            let sprite = new ex.Sprite(tex, conf.x, conf.y, conf.w, conf.h);
-            let scaleX = maxWidth/conf.w;
-            let scaleY = h/conf.h;
-            sprite.scale.setTo(scaleX, scaleY);
-            elem.addDrawing(sprite);
-            elem.anchor.setTo(0, .5);
-            return elem;
-        }
-        createRightBar(x, y, h): ex.Actor {
-            let conf = Graphics.UI.barRed_horizontalRight;
-            let tex = Resources.UIRPGSpriteSheet;
-
-            let elem = new ex.Actor(x, y, conf.w, h);
-    
-            let sprite = new ex.Sprite(tex, conf.x, conf.y, conf.w, conf.h);
-            let scale = h/conf.h;
-            sprite.scale.setTo(scale, scale);
-            elem.addDrawing(sprite);
-            elem.anchor.setTo(0, .5);
-            return elem;
-        }
-    
-        public set(newPercentage:number) {
-            this._currentValue = newPercentage;
-   
-            let width = this.getWidth();
-
-            this._middlePart.setWidth(this.calcWidthFromPercentage(newPercentage));
-            let scaleY = this._middlePart.currentDrawing.scale.y;
-            this._middlePart.currentDrawing.scale.setTo(this.calcWidthFromPercentage(newPercentage)/18, scaleY);
-            this._rightPart.pos.x = this.calcXfromPercentage(newPercentage);
-        }
-    
-        public reset(): void {
-            this._currentValue = this._initialValue;
-        }
+    public reset(): void {
+        this._currentValue = this._initialValue;
+        this._setColor();
+    }
 }

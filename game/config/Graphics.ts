@@ -48,7 +48,7 @@ export class Graphics {
         barBack_verticalBottom: {x: 290, y: 189, w: 18, h: 9},
         barBack_verticalMid: {x: 338, y: 404, w: 18, h: 18},
         barBack_verticalTop: {x: 338, y: 440, w: 18, h: 9},
-        barBlue_horizontalBlue: {x: 356, y: 431, w: 18, h: 18},
+        barBlue_horizontalMid: {x: 356, y: 431, w: 18, h: 18},
         barBlue_horizontalLeft: {x: 372, y: 294, w: 9, h: 18},
         barBlue_horizontalRight: {x: 372, y: 312, w: 9, h: 18},
         barBlue_verticalBottom: {x: 344, y: 189, w: 18, h: 9},
