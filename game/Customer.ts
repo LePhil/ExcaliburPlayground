@@ -3,7 +3,7 @@ import {Item} from "./Item";
 import {AbstractPlayer} from "./AbstractPlayer";
 import {Cassa} from "./Cassa";
 import {EffectFactory} from "./Effects";
-import {ProgressBar} from "./ui/Indicator";
+import {FancyProgressBar} from "./ui/Indicator";
 import {Storage} from "./Storage";
 import {Config} from "./config/Config";
 import {Graphics} from "./config/Graphics";
@@ -18,7 +18,7 @@ export class Customer extends AbstractPlayer {
     private _cassa: Cassa;
     private _patience: number;
     private _patienceDecreaseTimer: ex.Timer;
-    private _patienceIndicator: ProgressBar;
+    private _patienceIndicator: FancyProgressBar;
     private _initialX:number;
     private _initialY:number;
     private _setup: any;
@@ -62,14 +62,16 @@ export class Customer extends AbstractPlayer {
         this._hasDecided = true;
         let conf = Config.CUSTOMER.THINKBUBBLE;
         
-        this._patienceIndicator = new ProgressBar(
-            new ex.Vector(0,0),
-            20,
-            5,
+        this._patienceIndicator = new FancyProgressBar(
+            new ex.Vector(0,-8),
+            30,
+            9,
             100,
-            {"15": ex.Color.Red, "30": ex.Color.Yellow, "100": ex.Color.Green},
-            ex.Color.Transparent,
-            ProgressBar.Mode.StayFilled);
+            {
+                "15": FancyProgressBar.Color.Red,
+                "30": FancyProgressBar.Color.Yellow,
+                "100": FancyProgressBar.Color.Green
+            });
         this._thinkBubble = new ThinkBubble(conf.OFFSET_X, conf.OFFSET_Y, this.desiredItem);
 
         this.add(this._patienceIndicator);
