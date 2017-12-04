@@ -35,9 +35,9 @@ export class CustomGameMenu extends ex.Scene {
             hard: {
                 items: ["rabbit", "elephant", "giraffe"],
                 sources: [
-                    {X: 700, Y: 500, T: "rabbit",   DECAY: true},
-                    {X: 300, Y: 300, T: "elephant", DECAY: true},
-                    {X: 600, Y: 300, T: "giraffe",  DECAY: true}
+                    {X: 700, Y: 500, T: "rabbit",   DECAY: false},
+                    {X: 300, Y: 300, T: "elephant", DECAY: false},
+                    {X: 600, Y: 300, T: "giraffe",  DECAY: false}
                 ]
             }
         };

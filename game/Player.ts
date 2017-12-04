@@ -12,9 +12,6 @@ import { Storage } from "./Storage";
 export class Player extends AbstractPlayer {
   inventory: Inventory;
   private _isBusy: boolean = false;
-  // Used temporarily to disable chaining of actions due to not being able to splice the actionQueue
-  // Can be removed once actionQueue-splicing works...
-  private _isWorkingOnATask: boolean = false;
 
   constructor(inventory: Inventory) {
     super(Config.PLAYER.START.X,
@@ -38,11 +35,6 @@ export class Player extends AbstractPlayer {
 
   // TODO: very similar to sendToFoodStation...
   public pickupTool(tool: Tool, callback: any) {
-    if (this._isWorkingOnATask) {
-      return;
-    } else {
-      this._isWorkingOnATask = true;
-    }
 
     this.actions
       .moveTo(tool.pos.x, tool.pos.y, this._speed)
@@ -55,7 +47,6 @@ export class Player extends AbstractPlayer {
         this._isBusy = false;
         this.setDrawing("idle");
         callback();
-        this._isWorkingOnATask = false;
       });
   }
 
@@ -66,68 +57,42 @@ export class Player extends AbstractPlayer {
   // TODO: found the bug - click on 2nd foodstations before 1st is reached --> the "waiting" happens while player is moving to the 2nd station already!
   // See https://github.com/excaliburjs/Excalibur/issues/292
   public goToItemSource(itemSource: ItemSource, callback: () => void) {
-    if (this._isWorkingOnATask) {
-      return;
-    } else {
-      this._isWorkingOnATask = true;
-    }
 
     let target = itemSource.getPositionToStand();
 
     this.actions
-    .moveTo(target.x, target.y, this._speed)
-    .callMethod(() => {
-      callback();
-      if (!this.inventory.isFull() && itemSource.isReady()) {
-        this.getItemFromSource(itemSource);
-      } else if (itemSource.isBroken() && this.inventory.hasItem("hammer")) {
-        if (this.inventory.checkAndRemoveItem("hammer")) {
-          this.repairItemSource(itemSource);
-        } else {
-          console.warn("Something went wrong. Schrödinger's item?");
+      .moveTo(target.x, target.y, this._speed)
+      .callMethod(() => {
+        this._isBusy = true;
+        this.setDrawing("pickUp");
+      })
+      .delay(itemSource.getDuration())
+      .callMethod(() => {
+        callback();
+        if (!this.inventory.isFull() && itemSource.isReady()) {
+          this.getItemFromSource(itemSource);
+        } else if (itemSource.isBroken() && this.inventory.hasItem("hammer")) {
+          if (this.inventory.checkAndRemoveItem("hammer")) {
+            this.repairItemSource(itemSource);
+          } else {
+            console.warn("Something went wrong. Schrödinger's item?");
+          }
         }
-      } else {
-        // no action can be done
+        
         this._isBusy = false;
-        this._isWorkingOnATask = false;
-      }
-    });
+        this.setDrawing("idle");
+      });
   }
 
   public getItemFromSource(itemSource: ItemSource): void {
-    this._isBusy = true;
-    this.setDrawing("pickUp");
-    this.actions
-      .delay(itemSource.getDuration())
-      .callMethod(() => {
-        this.addToInventory(itemSource.getContent());
-        this._isBusy = false;
-        this.setDrawing("idle");
-        this._isWorkingOnATask = false;
-      });
+    this.addToInventory(itemSource.getContent());
   }
 
   public repairItemSource(itemSource: ItemSource): void {
-    // TODO: maybe different duration, depending on tool and/or station?
-    this._isBusy = true;
-    this.setDrawing("pickUp");
-    this.actions
-      .delay(itemSource.getDuration())
-      .callMethod(() => {
-        itemSource.fix();
-        this._isBusy = false;
-        this.setDrawing("idle");
-        this._isWorkingOnATask = false;
-      });
+    itemSource.fix();
   }
 
   public sendToCassa(cassa: Cassa, callback: any) {
-    if (this._isWorkingOnATask) {
-      return;
-    } else {
-      this._isWorkingOnATask = true;
-    }
-
     let target = cassa.getTargetLocation();
 
     this.actions
@@ -135,7 +100,6 @@ export class Player extends AbstractPlayer {
       .delay(1000)
       .callMethod(() => {
         callback();
-        this._isWorkingOnATask = false;
       });
   }
 
@@ -182,7 +146,6 @@ export class Player extends AbstractPlayer {
     this.pos.y = Config.PLAYER.START.Y;
     this.setDrawing("idle");
     this._isBusy = false;
-    this._isWorkingOnATask = false;
   }
 
   public checkDrawings(): void {

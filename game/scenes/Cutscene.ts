@@ -150,7 +150,7 @@ interface Subject {
 class Character extends AbstractPlayer implements Subject {
     private name: string;
     private _locations:any;
-    private _color:string;
+    private _charColor:string;
     private _initialLocation: Location;
     private _initialOpacity: number;
     private _textDisplay: TextDisplay;
@@ -165,7 +165,7 @@ class Character extends AbstractPlayer implements Subject {
 
         this._initialLocation = initialLocation;
         this._initialOpacity = initialOpacity;
-        this._color = color;
+        this._charColor = color;
         this.name = name;
         this._locations = locations;
         this._textDisplay = textDisplay;
@@ -195,7 +195,7 @@ class Character extends AbstractPlayer implements Subject {
     }
 
     getPlayerColor(): string {
-        return this._color;
+        return this._charColor;
     }
 
     reset(): void {

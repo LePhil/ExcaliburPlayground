@@ -7,7 +7,6 @@ import {Config} from "./config/Config";
 export class ItemSourceFactory {
     static make(setup: any, player: Player): ItemSource {
         let itemSource;
-        // TODO: create different types of Sources, depending on the setup
         if (!!Config.ANIMALS.SPRITE[setup.T]) {
             itemSource = new AnimalCage(
                 setup.X,
@@ -33,6 +32,7 @@ export class ItemSourceFactory {
         }
 
         if (setup.DECAY && setup.DECAY === true) {
+            console.warn("DO NOT USE DECAYING ITEMSOURCES AS LONG AS THE QUEUE BUG ISN'T FIXED!!!");
             itemSource.setBreakable(true);
         }
 

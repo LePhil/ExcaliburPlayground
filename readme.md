@@ -11,7 +11,6 @@ Done!
 * Upgrades/Events/Penalties!
     * More/less space in inventory
     * More reward per serving
-    * A way to increase patience of customers
 * Hover-States on Buttons
 * Speech bubbles or Text in its own container outside of the screen. Text on multi-colored bg just can't be read easily.
 * move away from electron...
@@ -39,11 +38,10 @@ Done!
 * Level selection map with different areas (see mappack --> ice, desert, ... - the classics.) Each area with a different customer type (Desert = yellow, Woods = green, Ice = blue...) - Outdoor party as last level each.
 * maybe it would be easier to remove a scene completely and re-create it instead of resetting and keeping track of everything?
 * unify tools and items? Should be possible to have a Tool from an ItemSource (e.g. crate)
+* Passed/Failed on LevelEnd (indication + maybe only be able to continue if passed?)
 
 # Bugs
-* If speed is increased, actions should take less long as well (e.g. pickup)
-* Multiple clicks on Cassa should not stack up/take no time if no customer is there
-* Picking up foods is broken right now, doesn't pause the player
+
 
 # Recently done
 * Re-done buttons with Labels
@@ -90,7 +88,14 @@ Done!
 * more doorbell sounds, play at random (https://freesound.org/people/maisonsonique/packs/12501/)
 * Make a Firework -Item- Tool
 * Progressbar with Graphics from UIPack RPG
+* workaround for #292 :(
 
 # Won't do
 * If inventory is full, clicks on station should not do anything- No. We'd have to check for Tools in Inventory (in case the station is broken) and if there are actions in the queue to remove some items --> let the user make mistakes!
 * rate of interest in a food/animal/item should depend on the worth/duration/amount available. Expensive items should take a long time or be very limited or be only rarely asked for (or a combination/all of them)
+
+
+# Depending on https://github.com/excaliburjs/Excalibur/issues/292
+* If speed is increased, actions should take less long as well (e.g. pickup)
+* Multiple clicks on Cassa should not stack up/take no time if no customer is there
+* Picking up foods is broken right now, doesn't pause the player
