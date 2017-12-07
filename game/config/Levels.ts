@@ -22,7 +22,7 @@ export class Levels {
     };
     
     static MAPS = [
-        {
+        { /* TEST */
             NAME: "Test",
             TYPE: Levels.TYPES.NORMAL,
             W: 840,
@@ -62,7 +62,7 @@ export class Levels {
             },
             INTRO: [{text: "Hello", fontSize: 44, color: ex.Color.Red}],
             OUTRO: ["Well done!"]
-        }, {
+        }, { /* School's out */
             NAME: "schools_out",
             TYPE: Levels.TYPES.CUTSCENE,
             IMG: "Map_intro_01",
@@ -99,7 +99,7 @@ export class Levels {
             ],
             OUT: "fade",
             NEXT: "uncle_to_the_rescue"
-        }, {
+        }, { /* Uncle to the rescue */
             NAME: "uncle_to_the_rescue",
             TYPE: Levels.TYPES.CUTSCENE,
             IMG: "Map_forest",
@@ -146,7 +146,7 @@ export class Levels {
                 {T: 66, S: "oldguy",A: ActionType.Move, O: {to: "old_guy_entry"} }
             ],
             NEXT: "first_day"
-        }, {
+        }, { /* NORMAL: First day */
             NAME: "first_day",
             TYPE: Levels.TYPES.NORMAL,
             IMG: "Map_01_first_day",
@@ -174,7 +174,7 @@ export class Levels {
             ],
             OUTRO: ["Well done!"],
             NEXT: "more_animals"
-        }, {
+        }, { /* CUTSCENE: More animals */
             NAME: "more_animals",
             TYPE: Levels.TYPES.CUTSCENE,
             IMG: "Map_intro_01",
@@ -185,7 +185,7 @@ export class Levels {
             PROPS: [],
             SCRIPT: [],
             NEXT: "second_day"
-        }, {
+        }, { /* NORMAL: Second day */
             NAME: "second_day",
             TYPE: Levels.TYPES.NORMAL,
             IMG: "Map_01_first_day",
@@ -212,6 +212,121 @@ export class Levels {
                 "Now with 100% more pigs and parrots!"
             ],
             OUTRO: ["Well done!"],
+            NEXT: "third_day"
+        }, { /* NORMAL: Third day */
+            NAME: "third_day",
+            TYPE: Levels.TYPES.NORMAL,
+            IMG: "Map_01_first_day",
+            W: 840,
+            H: 560,
+            CASSA: {X: 250, Y: 500},
+            DOOR:  {X: 800, Y: 595, SPAWN_TIME_S: 5},
+            DESIREDITEMS: ["rabbit", "parrot", "pig"],
+            ITEMSOURCES: [
+                {X: 700, Y: 400, T: "rabbit", DECAY: false},
+                {X: 300, Y: 300, T: "parrot", DECAY: false},
+                {X: 600, Y: 300, T: "pig",    DECAY: false}
+            ],
+            TOOLS: [],
+            BLOB: false,
+            TIME: {
+                TYPE: Levels.TIMERS.CLOCK,
+                DURATION_S: 60,
+                START: "08:00",
+                END: "18:00"
+            },
+            INTRO: [
+                "Word has reached more",
+                "people, it seems!"
+            ],
+            OUTRO: ["Well done again!"],
+            NEXT: "trash_everywhere"
+        }, { /* CUTSCENE: Trash everywhere */
+            NAME: "trash_everywhere",
+            TYPE: Levels.TYPES.CUTSCENE,
+            IMG: "Map_01_first_day",
+            W: 840,
+            H: 560,
+            LOCATIONS: [
+                {Name: "player_entry",X:   0, Y: 530},
+                {Name: "player_main", X: 500, Y: 530}
+            ],
+            CHARACTERS: [
+                {Id: "hime", Name: "Player",  Color: "red",  Initial: "player_entry"}
+            ],
+            PROPS: [],
+            SCRIPT: [
+                {T: 2,  S: "hime", A: ActionType.Move, O: {to: "player_main"} },
+                {T: 6,  S: "hime", A: ActionType.Talk, O: {text: "Gasp!", duration: 4} },
+                {T: 10, S: "hime", A: ActionType.Talk, O: {text: ""} },
+                {T: 12, S: "hime", A: ActionType.Talk, O: {text: "What a mess!", duration: 2} },
+                {T: 14, S: "hime", A: ActionType.Talk, O: {text: "Trash everywhere!", duration: 4} },
+                {T: 18, S: "hime", A: ActionType.Talk, O: {text: "No time to clean up before,", duration: 4} },
+                {T: 22, S: "hime", A: ActionType.Talk, O: {text: "I'll have to clean while serving.", duration: 4} },
+            ],
+            NEXT: "fourth_day_trash"
+        }, { /* NORMAL: Fourth day - cleanup */
+            NAME: "fourth_day_trash",
+            TYPE: Levels.TYPES.NORMAL,
+            IMG: "Map_01_first_day",
+            W: 840,
+            H: 560,
+            CASSA: {X: 250, Y: 500},
+            DOOR:  {X: 800, Y: 595, SPAWN_TIME_S: 6},
+            DESIREDITEMS: ["rabbit", "parrot", "pig"],
+            ITEMSOURCES: [
+                {X: 700, Y: 400, T: "rabbit", DECAY: false},
+                {X: 300, Y: 300, T: "parrot", DECAY: false},
+                {X: 600, Y: 300, T: "pig",    DECAY: false}
+            ],
+            TOOLS: [],
+            TASK: {
+                TYPE: Task.Type.SingleUse,
+                AMOUNT: 10,
+                ITEM: Config.ITEMS.CASH,
+                MOBILITY: TaskItem.Mobility.Stationary,
+                SPAWNING: TaskItem.SpawnBehaviour.AllAtOnce
+            },
+            BLOB: false,
+            TIME: {
+                TYPE: Levels.TIMERS.CLOCK,
+                DURATION_S: 60,
+                START: "08:00",
+                END: "18:00"
+            },
+            INTRO: [
+                "Clean up all pieces of trash",
+                "while handling the store."
+            ],
+            OUTRO: ["Much clean! Very undirty!"],
+            NEXT: "introducing_blobs"
+        }, { /* CUTSCENE: Introducing Blobs */
+            NAME: "introducing_blobs",
+            TYPE: Levels.TYPES.CUTSCENE,
+            IMG: "Map_01_first_day",
+            W: 840,
+            H: 560,
+            LOCATIONS: [
+                {Name: "player_entry",   X: 100, Y: 530},
+                {Name: "old_guy_entry",  X: 900, Y: 530},
+                {Name: "player_main",    X: 380, Y: 530},
+                {Name: "player_main_2",  X: 250, Y: 530},
+                {Name: "old_guy_main",   X: 460, Y: 530}
+            ],
+            CHARACTERS: [
+                {Id: "hime",   Name: "Player",  Color: "red",  Initial: "player_entry"},
+                {Id: "oldguy", Name: "Old Guy", Color: "yellow", Initial: "old_guy_entry", Opacity: 0}
+            ],
+            PROPS: [],
+            SCRIPT: [
+                {T: 2,  S: "hime", A: ActionType.Move, O: {to: "player_main"} },
+                {T: 6,  S: "hime", A: ActionType.Talk, O: {text: "Gasp!", duration: 4} },
+                {T: 10, S: "hime", A: ActionType.Talk, O: {text: ""} },
+                {T: 12, S: "hime", A: ActionType.Talk, O: {text: "What a mess!", duration: 2} },
+                {T: 14, S: "hime", A: ActionType.Talk, O: {text: "Trash everywhere!", duration: 4} },
+                {T: 18, S: "hime", A: ActionType.Talk, O: {text: "No time to clean up before,", duration: 4} },
+                {T: 22, S: "hime", A: ActionType.Talk, O: {text: "I'll have to clean while serving.", duration: 4} },
+            ],
             NEXT: "Map_01"
         }, {
             NAME: "Map_01",
