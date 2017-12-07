@@ -56,13 +56,14 @@ export class Levels {
             BLOB: true,
             TIME: {
                 TYPE: Levels.TIMERS.CLOCK,
-                DURATION_S: 60,
+                DURATION_S: 20,
                 START: "08:00",
                 END: "18:00"
             },
             INTRO: [{text: "Hello", fontSize: 44, color: ex.Color.Red}],
-            OUTRO: ["Well done!"]
-        }, { /* School's out */
+            OUTRO: ["Well done!"],
+            OUTRO_FAILED: ["You failed the Task :("]
+        }, { /* CUTSCENE: School's out */
             NAME: "schools_out",
             TYPE: Levels.TYPES.CUTSCENE,
             IMG: "Map_intro_01",
@@ -99,7 +100,7 @@ export class Levels {
             ],
             OUT: "fade",
             NEXT: "uncle_to_the_rescue"
-        }, { /* Uncle to the rescue */
+        }, { /* CUTSCENE: Uncle to the rescue */
             NAME: "uncle_to_the_rescue",
             TYPE: Levels.TYPES.CUTSCENE,
             IMG: "Map_forest",

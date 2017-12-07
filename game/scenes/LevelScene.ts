@@ -25,7 +25,8 @@ export class LevelScene extends ex.Scene {
     private _tools: Array<Tool> = [];
     private _itemSources: Array<ItemSource> = [];
     private _decayTimer: ex.Timer;
-    private _callbackOnTimerEnded: (results: number) => void;
+    private _gameDoneCallback: (results: number, passed: boolean) => void;
+    private _passed: boolean;
 
     private _levelMap: LevelMap;
 
@@ -212,17 +213,20 @@ export class LevelScene extends ex.Scene {
 
     private _setupTask(setup: any): void {
         if (setup.TASK) {
+            this._passed = false;
             if (this._task) {
-                this._task.resetState(setup.TASK, () => {console.log("task done");});
+                this._task.resetState(setup.TASK, () => this.onTaskCompleted());
             } else {
-                this._task = Task.Make(this, this._player, setup.TASK,() => {console.log("task done");});
+                this._task = Task.Make(this, this._player, setup.TASK, () => this.onTaskCompleted());
             }
+        } else {
+            this._passed = true;    // generally, always pass a level. If there's a task --> only passed when task completed.
         }
     }
 
-    public load(setup: any, callback: (results: number) => void) {
+    public load(setup: any, callback: (results: number, passed: boolean) => void) {
         this._setup = setup;
-        this._callbackOnTimerEnded = callback;
+        this._gameDoneCallback = callback;
         this._setupLevelMap(setup);
         this._setupDisplays(setup);
         this._setupCassa(setup);
@@ -242,8 +246,12 @@ export class LevelScene extends ex.Scene {
         }
     }
 
+    private onTaskCompleted() {
+        this._passed = true;
+    }
+
     private onTimerEnded() {
-        this._callbackOnTimerEnded(this._currentScore);
+        this._gameDoneCallback(this._currentScore, this._passed);
     }
 
     private onBlobDied(results) {

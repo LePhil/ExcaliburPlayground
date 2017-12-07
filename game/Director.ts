@@ -69,12 +69,18 @@ export class Director {
     }
 
     public onIntroDone():void {
-        this._game.load(this._levelData, results => this.onGameDone(results));
+        this._game.load(this._levelData, (results, passed) => this.onGameDone(results, passed));
         this._engine.goToScene("game");
     }
     
-    public onGameDone(result): void {
-        this._outro.load(this._levelData, result, () => this.onEndSceneDone());
+    public onGameDone(result: number, passed: boolean): void {
+        let callback = () => this.onEndSceneDone();
+
+        if (!passed) {
+            callback = () => this.onEndSceneRetry();
+        }
+
+        this._outro.load(this._levelData, result, passed, callback);
         this._engine.goToScene("end");
     }
 
@@ -84,6 +90,10 @@ export class Director {
         } else {
             this._engine.goToScene("menu");
         }
+    }
+
+    public onEndSceneRetry(): void {
+        globals.loadNextLevel(this._levelData.NAME);
     }
 
 

@@ -55,18 +55,21 @@ export class EndGameScene extends ex.Scene {
         }
     }
 
-    public load(setup: any, results: number, callback: () => void) {
-        if (setup.OUTRO) {
-            this._textOverlay.setText(setup.OUTRO);
+    public load(setup: any, results: number, passed: boolean, callback: () => void) {
+        let outroText = [""];
+
+        if (passed) {
+            outroText = setup.OUTRO;
         } else {
-            // TODO: hide instead of showing empty string.
-            this._textOverlay.setText([""]);
+            outroText = setup.OUTRO_FAILED;
         }
+
+        this._textOverlay.setText(outroText);
 
         this._button.action = callback;
         
-        // only show Next button if there's a next level
-        this._button.visible = !!setup.NEXT;
+        // only show Next button if there's a next level or the user can retry
+        this._button.visible = !!setup.NEXT || !passed;
         
         let pos_x = Config.GAME.WIDTH / 2 - Config.GAME.UI.BUTTON.W / 2;
         let pos_y = Config.GAME.HEIGHT / 2 - Config.GAME.UI.BUTTON.H;
