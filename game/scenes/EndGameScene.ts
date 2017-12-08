@@ -46,21 +46,22 @@ export class EndGameScene extends ex.Scene {
     onActivate () {
     }
 
-    onDeactivate () {
+    _clearDigits () {
         // Make sure nothing from the previous level is left over
-        if(this._digits) {
+        if(this._digits.length > 0) {
             this._digits.forEach((digit) => {
-                //digit.kill();
+                digit.kill();
             });
         }
+        this._digits = [];
     }
 
     public load(setup: any, results: number, passed: boolean, callback: () => void) {
         let outroText = [""];
 
-        if (passed) {
+        if (passed && setup.OUTRO) {
             outroText = setup.OUTRO;
-        } else {
+        } else if (setup.OUTRO_FAILED) {
             outroText = setup.OUTRO_FAILED;
         }
 
@@ -70,6 +71,8 @@ export class EndGameScene extends ex.Scene {
         
         // only show Next button if there's a next level or the user can retry
         this._button.visible = !!setup.NEXT || !passed;
+
+        this._clearDigits();
         
         let pos_x = Config.GAME.WIDTH / 2 - Config.GAME.UI.BUTTON.W / 2;
         let pos_y = Config.GAME.HEIGHT / 2 - Config.GAME.UI.BUTTON.H;
