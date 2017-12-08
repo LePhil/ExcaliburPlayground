@@ -21,9 +21,9 @@ export class EndGameScene extends ex.Scene {
     
         this._digits = new Array<Digit>();
     
-        // TODO: different medal, depending on the score
-        this._medal = new Medal(200, 200, "sun_silver");
+        this._medal = new Medal(200, 200);
         this.add( this._medal );
+        this._medal.visible = false;
     
         this.add(new Button(
             Pos.make(Config.GAME.UI.BUTTONS.POSITIONS.bottom_l),
@@ -67,6 +67,8 @@ export class EndGameScene extends ex.Scene {
 
         this._textOverlay.setText(outroText);
 
+        this._medal.visible = false;
+
         this._button.action = callback;
         
         // only show Next button if there's a next level or the user can retry
@@ -88,20 +90,32 @@ export class EndGameScene extends ex.Scene {
         let scores = Storage.saveScore(setup.NAME, results);
 
         digitStartX = pos_x;
-        pos_y += 100;
+        pos_y += 200;
 
-        scores.getSortedScores().forEach(score => {
-            // TODO: Nicer and with an explanation..
+        // TODO: Nicer and with an explanation..
+        let sortedScores = scores.getSortedScores();
+        for(let scoreCounter = 0; scoreCounter < sortedScores.length; scoreCounter++) {
+            let score = sortedScores[scoreCounter];
 
+            // Draw score
             for(let i = 0; i < (""+score).length; i++) {
-                if (score === results) {
-                    //TODO show a medal next to this run's score
-                }
-                let newDigit = new Digit(digitStartX + i*Config.DIGIT_WIDTH, pos_y - 100, +(""+score)[i]);
+                let pos_x = digitStartX + i*Config.DIGIT_WIDTH;
+
+                let newDigit = new Digit(pos_x, pos_y, +(""+score)[i]);
                 this._digits.push(newDigit);
                 this.add(newDigit);
             }
 
+            // If this run's score is under the top 3, show the medal
+            if (score === results && scoreCounter < 3) {
+                this._medal.pos.setTo(digitStartX - 100, pos_y - 30);
+                this._medal.visible = true;
+
+
+                this._medal.setValueByNumber(scoreCounter);
+            }
+
             pos_y += Config.DIGIT_HEIGHT;
-        });
-    }}
+        }
+    }
+}

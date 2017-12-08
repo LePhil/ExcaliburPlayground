@@ -30,13 +30,13 @@ export class Storage {
      * @param score number
      */
     static saveScore(levelID: string, score: number): SavedLevelData {
-        let oldData = Storage.getLevelData(levelID);
+        let storedData = Storage.getLevelData(levelID);
 
-        oldData.addScore(score);
+        storedData.addScore(score);
 
-        Storage.set(levelID, oldData);
+        Storage.set(levelID, storedData);
 
-        return oldData;
+        return storedData;
     }
 }
 
@@ -56,11 +56,15 @@ export class SavedLevelData {
     /**
      * Adds a new score to the scores and removes the worst if there are more
      * scores than allowed.
+     * Only new scores are saved, it won't be saved if it's the same score!
      * 
      * @param newScore 
      */
     addScore(newScore: number): void {
-        this.scores.push(newScore);
+        if (this.scores.indexOf(newScore) < 0) {
+            this.scores.push(newScore);
+        }
+
         if (this.scores.length > Config.GAME.STORAGE.NROFSCORESSAVED) {
             let nrOfScoresToRemove = this.scores.length - Config.GAME.STORAGE.NROFSCORESSAVED;
             this.scores = this.getSortedScores().splice( -nrOfScoresToRemove, nrOfScoresToRemove);
