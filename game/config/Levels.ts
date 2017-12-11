@@ -56,7 +56,7 @@ export class Levels {
             BLOB: true,
             TIME: {
                 TYPE: Levels.TIMERS.CLOCK,
-                DURATION_S: 20,
+                DURATION_S: 15,
                 START: "08:00",
                 END: "18:00"
             },
@@ -75,7 +75,7 @@ export class Levels {
                 {Name: "phone_initial", X: 350, Y: 480},
             ],
             CHARACTERS: [
-                {Id: "hime", Name: "Player", Color: "red", Initial: "player_entry"}
+                {Id: "hime", Name: "Player", Color: "HIME", Initial: "player_entry"}
             ],
             PROPS: [
                 {Id: "phone",   Type: "mobile_phone", Initial: "phone_initial", Opacity: 0}
@@ -114,8 +114,8 @@ export class Levels {
                 {Name: "old_guy_main",   X: 460, Y: 530}
             ],
             CHARACTERS: [
-                {Id: "hime",   Name: "Player",  Color: "red",  Initial: "player_entry"},
-                {Id: "oldguy", Name: "Old Guy", Color: "yellow", Initial: "old_guy_entry", Opacity: 0}
+                {Id: "hime",   Name: "Player",  Color: "HIME",  Initial: "player_entry"},
+                {Id: "oldguy", Name: "Old Guy", Color: "UNCLE", Initial: "old_guy_entry", Opacity: 0}
             ],
             PROPS: [],
             SCRIPT: [
@@ -253,7 +253,7 @@ export class Levels {
                 {Name: "player_main", X: 500, Y: 530}
             ],
             CHARACTERS: [
-                {Id: "hime", Name: "Player",  Color: "red",  Initial: "player_entry"}
+                {Id: "hime", Name: "Player",  Color: "HIME",  Initial: "player_entry"}
             ],
             PROPS: [],
             SCRIPT: [
@@ -315,8 +315,8 @@ export class Levels {
                 {Name: "old_guy_main",   X: 460, Y: 530}
             ],
             CHARACTERS: [
-                {Id: "hime",   Name: "Player",  Color: "red",  Initial: "player_entry"},
-                {Id: "oldguy", Name: "Old Guy", Color: "yellow", Initial: "old_guy_entry", Opacity: 0}
+                {Id: "hime",   Name: "Player",  Color: "HIME",  Initial: "player_entry"},
+                {Id: "oldguy", Name: "Old Guy", Color: "UNCLE", Initial: "old_guy_entry", Opacity: 0}
             ],
             PROPS: [],
             SCRIPT: [

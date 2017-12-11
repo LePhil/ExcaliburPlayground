@@ -1,6 +1,7 @@
 import * as ex from "excalibur";
 import {Config} from "./config/Config";
 import {Resources} from "./config/Resources";
+import {Graphics} from "./config/Graphics";
 
 export abstract class AbstractPlayer extends ex.Actor {
   _speed: number;
@@ -28,43 +29,35 @@ export abstract class AbstractPlayer extends ex.Actor {
     this.setDrawings(this.characterColor);
   }
 
-  public setDrawings(playerColor: string): void {
-    this.characterColor = playerColor;
-    let spriteSheet = new ex.SpriteSheet(Resources.TexturePlayers, 7, 8, 128, 256);
+  protected getSprite(alienType: string, spriteType: string): ex.Sprite {
+    let tex = Graphics.ALIENS[alienType].spritesheet;
+    let spriteConf = Graphics.ALIENS[alienType][spriteType];
+    return new ex.Sprite(tex, spriteConf.x, spriteConf.y, spriteConf.w, spriteConf.h)
+  }
 
-    let colorIndex = Config.PLAYER.TYPES.indexOf(Config.PLAYER.TYPES.filter( type => type.color === playerColor )[0]);
-    let scale = Config.PLAYER.SPRITE_SCALE;
-    let speed = Config.PLAYER.SPRITE_ANIM_SPEED;
-    let coords = Config.PLAYER.TYPES[colorIndex].coords;
+  public setDrawings(alienType: string): void {
+    if(!Graphics.ALIENS[alienType]) {
+      console.warn(`No graphics available for Alien ${alienType}!`);
+      return;
+    }
 
-    let walkRightAnim = spriteSheet.getAnimationByIndices(this._engine, coords.walkR, speed);
-    walkRightAnim.loop = true;
-    walkRightAnim.scale.setTo(scale, scale);
-    this.addDrawing("walkRight", walkRightAnim);
+    let conf = Graphics.ALIENS[alienType];
+    let tex = conf.spritesheet;
 
-    let walkLeftAnim = spriteSheet.getAnimationByIndices(this._engine, coords.walkR, speed);
-    walkLeftAnim.loop = true;
+    let idleSprite = this.getSprite(alienType, "stand");
+    let pickUpSprite = this.getSprite(alienType, "duck");
+
+    let walkRightAnim = new ex.Animation(this._engine, [this.getSprite(alienType, "walk1"), this.getSprite(alienType, "walk2")], this._speed, true);
+    let walkLeftAnim = new ex.Animation(this._engine, [this.getSprite(alienType, "walk1"), this.getSprite(alienType, "walk2")], this._speed, true);
     walkLeftAnim.flipHorizontal = true;
-    walkLeftAnim.scale.setTo(scale, scale);
+    let walkUpAnim = new ex.Animation(this._engine, [this.getSprite(alienType, "climb1"), this.getSprite(alienType, "climb2")], this._speed, true);
+    
+    this.addDrawing("walkRight", walkRightAnim);
     this.addDrawing("walkLeft", walkLeftAnim);
-
-    let idleSprite = spriteSheet.getSprite(coords.idle);
-    idleSprite.scale.setTo(scale, scale);
     this.addDrawing("idle", idleSprite);
-
-    let walkUpAnim = spriteSheet.getAnimationByIndices(this._engine, coords.walkUp, speed);
-    walkUpAnim.loop = true;
-    walkUpAnim.scale.setTo(scale, scale);
     this.addDrawing("walkUp", walkUpAnim);
-
-    let pickUpSprite = spriteSheet.getSprite(coords.pick);
-    pickUpSprite.scale.setTo(scale, scale);
     this.addDrawing("pickUp", pickUpSprite);
-
-    // down anim not included in spritesheet
     this.addDrawing("walkDown", idleSprite);
-
-    this.setDrawing("idle");
   }
 
   public update(engine: ex.Engine, delta: number): void {
@@ -101,7 +94,12 @@ export abstract class AbstractPlayer extends ex.Actor {
     this._lastPosY = this.pos.y;
   }
 
-  abstract getPlayerColor ():string
+  getPlayerColor ():string {
+    let types = Config.CUSTOMER.COLORS;
+    let randomIndex = ex.Util.randomIntInRange(0, types.length-1);
+
+    return types[randomIndex];
+  }
 
   abstract _handleIdlePlayer():void
 }

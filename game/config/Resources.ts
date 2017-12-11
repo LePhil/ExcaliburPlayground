@@ -3,6 +3,9 @@ import * as ex from "excalibur";
 export class Resources {
     static TexturePlayers       = new ex.Texture("game/assets/textures/players.png");
 
+    static PlayerSheetHime      = new ex.Texture("game/assets/textures/aliens/alienHime.png");
+    static PlayerSheetUncle     = new ex.Texture("game/assets/textures/aliens/alienUncle.png");
+
     static TextureInventory     = new ex.Texture("game/assets/textures/animals/inventory.png");
     static TextureStations      = new ex.Texture("game/assets/textures/animals/stations.png");
     static TextureRabbit        = new ex.Texture("game/assets/textures/animals/rabbit.png");

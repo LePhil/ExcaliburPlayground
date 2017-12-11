@@ -33,6 +33,7 @@ export class Config {
       "Frieda",
       "Polly"
     ],
+    COLORS: ["BEIGE", "BLUE", "GREEN", "PINK", "YELLOW"],
     THINKBUBBLE: {
       WIDTH: 30,
       HEIGHT: 30,

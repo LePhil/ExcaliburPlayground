@@ -133,14 +133,6 @@ export class Customer extends AbstractPlayer {
         this.scene.add(EffectFactory.Make(EffectFactory.Type.Money, this.pos));
     }
 
-    getPlayerColor(): string {
-        // Disallow chosen player color for customers
-        let availablePlayers = Config.PLAYER.TYPES.filter(type => type.color !== Storage.get("playerColor"));
-        let randomIndex = ex.Util.randomIntInRange(0, availablePlayers.length - 1);
-
-        return availablePlayers[randomIndex].color;
-    }
-
     _handleIdlePlayer(): void {
         this.setDrawing("idle");
     }

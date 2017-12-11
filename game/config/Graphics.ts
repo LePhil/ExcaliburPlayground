@@ -1,6 +1,38 @@
 import * as ex from "excalibur";
+import {Resources} from "./Resources";
 
 export class Graphics {
+    static ALIENS = {
+        HIME: {
+            spritesheet: Resources.PlayerSheetHime,
+            frontal: {x: 70, y: 92, w: 66, h: 92},
+            climb1: {x: 70, y: 0, w: 66, h: 92},
+            climb2: {x: 135, y: 379, w: 66, h: 92},
+            duck: {x: 0, y: 380, w: 69, h: 71},
+            hurt: {x: 0, y: 288, w: 69, h: 92},
+            jump: {x: 69, y: 286, w: 67, h: 93},
+            stand: {x: 69, y: 379, w: 66, h: 92},
+            swim1: {x: 0, y: 193, w: 69, h: 95},
+            swim2: {x: 0, y: 96, w: 70, h: 97},
+            walk1: {x: 69, y: 193, w: 68, h: 93},
+            walk2: {x: 0, y: 0, w: 70, h: 96}
+        },
+        UNCLE: {
+            spritesheet: Resources.PlayerSheetUncle,
+            frontal: {x: 69, y: 255, w: 66, h: 82},
+            climb1: {x: 69, y: 173, w: 66, h: 82},
+            climb2: {x: 70, y: 0, w: 66, h: 82},
+            duck: {x: 0, y: 422, w: 68, h: 67},
+            hurt: {x: 0, y: 258, w: 69, h: 81},
+            jump: {x: 68, y: 339, w: 67, h: 83},
+            stand: {x: 68, y: 422, w: 66, h: 82},
+            swim1: {x: 0, y: 173, w: 69, h: 85},
+            swim2: {x: 0, y: 86, w: 70, h: 87},
+            walk1: {x: 0, y: 339, w: 68, h: 83},
+            walk2: {x: 0, y: 0, w: 70, h: 86}
+        }
+    };
+
     static ANIMALS = {
         ROUND: {
             elephant:   {x: 0,    y: 574,   w: 284, h: 285},

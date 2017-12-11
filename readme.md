@@ -41,7 +41,7 @@ Done!
 * Passed/Failed on LevelEnd (indication + maybe only be able to continue if passed?)
 
 # Bugs
-
+* cutscenes: background image covers the text (zIndex, probably)
 
 # Recently done
 * Re-done buttons with Labels
@@ -93,7 +93,7 @@ Done!
 # Won't do
 * If inventory is full, clicks on station should not do anything- No. We'd have to check for Tools in Inventory (in case the station is broken) and if there are actions in the queue to remove some items --> let the user make mistakes!
 * rate of interest in a food/animal/item should depend on the worth/duration/amount available. Expensive items should take a long time or be very limited or be only rarely asked for (or a combination/all of them)
-
+* unique sprites for main characters (2 so far)
 
 # Depending on https://github.com/excaliburjs/Excalibur/issues/292
 * If speed is increased, actions should take less long as well (e.g. pickup)

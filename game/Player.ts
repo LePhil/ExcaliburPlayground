@@ -24,13 +24,7 @@ export class Player extends AbstractPlayer {
   }
 
   getPlayerColor(): string {
-    let playerColor = Config.PLAYER.INITIAL_TYPE; //start with green guy if no color was chosen
-
-    if (Storage.get("playerColor")) {
-      playerColor = Storage.get("playerColor");
-    }
-
-    return playerColor;
+    return "HIME";
   }
 
   // TODO: very similar to sendToFoodStation...
