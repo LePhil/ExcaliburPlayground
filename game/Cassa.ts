@@ -11,6 +11,8 @@ export class Cassa extends ex.Actor {
     constructor(x, y, player: Player) {
         super(x, y, Config.CASSA.W, Config.CASSA.H);
 
+        this.anchor.setTo(.5, .5);
+
         this.on("pointerdown", (event) => {
             this.handleClick(player);
         });
@@ -30,8 +32,8 @@ export class Cassa extends ex.Actor {
         this.queue.forEach((cust, index) => {
             setTimeout(() => {
                 cust.moveInQueue(new ex.Vector(
-                    this.pos.x + (index+1) * (Config.CUSTOMER.WIDTH + 2),
-                    this.pos.y - this.getHeight() / 2
+                    this.pos.x + (index+1) * (Config.PLAYER.WIDTH + 2),
+                    this.pos.y
                 ));
             }, index * 200);
         });
@@ -59,7 +61,10 @@ export class Cassa extends ex.Actor {
     }
 
     public getTargetLocation(): ex.Vector {
-        return new ex.Vector(this.pos.x - Config.PLAYER.WIDTH, this.pos.y - 30);
+        return new ex.Vector(
+            this.pos.x - Config.PLAYER.WIDTH,
+            this.pos.y
+        );
     }
 
     private _removeFromQueue(customerToRemove: Customer):void {
@@ -94,8 +99,8 @@ export class Cassa extends ex.Actor {
 
     public getLastPositionInQueue():ex.Vector {
         return new ex.Vector(
-            this.pos.x + (this.queue.length + 1) * (Config.CUSTOMER.WIDTH + 2),
-            this.pos.y - this.getHeight() / 2
+            this.pos.x + (this.queue.length + 1) * (Config.PLAYER.WIDTH + 2),
+            this.pos.y
         );
     }
 

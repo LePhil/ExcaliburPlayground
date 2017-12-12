@@ -90,7 +90,7 @@ export class EndGameScene extends ex.Scene {
         let scores = Storage.saveScore(setup.NAME, results);
 
         digitStartX = pos_x;
-        pos_y += 200;
+        pos_y += 100;
 
         // TODO: Nicer and with an explanation..
         let sortedScores = scores.getSortedScores();

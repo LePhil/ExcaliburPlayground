@@ -70,8 +70,8 @@ export class Levels {
             W: 840,
             H: 560,
             LOCATIONS: [
-                {Name: "player_entry",  X: 900, Y: 460},
-                {Name: "player_main",   X: 380, Y: 460},
+                {Name: "player_entry",  X: 900, Y: 480},
+                {Name: "player_main",   X: 380, Y: 480},
                 {Name: "phone_initial", X: 350, Y: 480},
             ],
             CHARACTERS: [
@@ -107,11 +107,11 @@ export class Levels {
             W: 840,
             H: 560,
             LOCATIONS: [
-                {Name: "player_entry",   X: 100, Y: 530},
-                {Name: "old_guy_entry",  X: 900, Y: 530},
-                {Name: "player_main",    X: 380, Y: 530},
-                {Name: "player_main_2",  X: 250, Y: 530},
-                {Name: "old_guy_main",   X: 460, Y: 530}
+                {Name: "player_entry",   X: 100, Y: 550},
+                {Name: "old_guy_entry",  X: 900, Y: 550},
+                {Name: "player_main",    X: 380, Y: 550},
+                {Name: "player_main_2",  X: 250, Y: 550},
+                {Name: "old_guy_main",   X: 460, Y: 550}
             ],
             CHARACTERS: [
                 {Id: "hime",   Name: "Player",  Color: "HIME",  Initial: "player_entry"},
@@ -249,8 +249,8 @@ export class Levels {
             W: 840,
             H: 560,
             LOCATIONS: [
-                {Name: "player_entry",X:   0, Y: 530},
-                {Name: "player_main", X: 500, Y: 530}
+                {Name: "player_entry",X:   0, Y: 550},
+                {Name: "player_main", X: 500, Y: 550}
             ],
             CHARACTERS: [
                 {Id: "hime", Name: "Player",  Color: "HIME",  Initial: "player_entry"}
@@ -308,11 +308,11 @@ export class Levels {
             W: 840,
             H: 560,
             LOCATIONS: [
-                {Name: "player_entry",   X: 100, Y: 530},
-                {Name: "old_guy_entry",  X: 900, Y: 530},
-                {Name: "player_main",    X: 380, Y: 530},
-                {Name: "player_main_2",  X: 250, Y: 530},
-                {Name: "old_guy_main",   X: 460, Y: 530}
+                {Name: "player_entry",   X: 100, Y: 550},
+                {Name: "old_guy_entry",  X: 900, Y: 550},
+                {Name: "player_main",    X: 380, Y: 550},
+                {Name: "player_main_2",  X: 250, Y: 550},
+                {Name: "old_guy_main",   X: 460, Y: 550}
             ],
             CHARACTERS: [
                 {Id: "hime",   Name: "Player",  Color: "HIME",  Initial: "player_entry"},

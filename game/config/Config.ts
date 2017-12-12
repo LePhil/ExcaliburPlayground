@@ -4,10 +4,9 @@ import { Graphics } from "./Graphics";
 export class Config {
   static PLAYER = {
     START: {X: 500, Y: 200},
-    WIDTH: 50,
-    HEIGHT: 50,
+    WIDTH: 66,
+    HEIGHT: 92,
     SPEED: 200,
-    INITIAL_TYPE: "green",
     TYPES: [
       {color: "green",  coords: {walkR: [11,18], walkUp: [19,26], idle:  5, pick: 12} },
       {color: "yellow", coords: {walkR: [29,36], walkUp: [30,37], idle: 16, pick: 30} },
@@ -20,25 +19,13 @@ export class Config {
   };
 
   static CUSTOMER = {
-    WIDTH: 128/2,
-    HEIGHT: 256/2,
     SPEED: 200,
-    NAMES: [
-      "Thomas",
-      "Gimli",
-      "James",
-      "Mr. Man",
-      "Albert",
-      "Stephanie",
-      "Frieda",
-      "Polly"
-    ],
     COLORS: ["BEIGE", "BLUE", "GREEN", "PINK", "YELLOW"],
     THINKBUBBLE: {
       WIDTH: 30,
       HEIGHT: 30,
-      OFFSET_X: 20,
-      OFFSET_Y: -20
+      OFFSET_X: 25,
+      OFFSET_Y: -50
     },
     INITIAL_PATIENCE: 100,
     PATIENCE_DELTA: 5,
@@ -309,6 +296,7 @@ export class Config {
       H: 560
     },
     DEBUG: true,
+    DEBUG_PLAYERS: false,
     UI: {
       FONTSIZE: 24,
       GUTTER: 8,

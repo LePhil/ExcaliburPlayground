@@ -11,7 +11,6 @@ import {Resources} from "./config/Resources";
 
 export class Customer extends AbstractPlayer {
     public desiredItem: Item;
-    public name: string;
     private _hasDecided: boolean;
     private _hasReceivedItem: boolean;
     private _thinkBubble: ThinkBubble;
@@ -26,15 +25,14 @@ export class Customer extends AbstractPlayer {
 
     constructor(x, y, cassa: Cassa, setup: any, onGetServedCallback: (results:number) => void) {
         super(x, y,
-            Config.CUSTOMER.WIDTH,
-            Config.CUSTOMER.HEIGHT,
+            Config.PLAYER.WIDTH,
+            Config.PLAYER.HEIGHT,
             Config.CUSTOMER.SPEED);
 
         this._initialX = x;
         this._initialY = y;
         this._onGetServedCallback = onGetServedCallback;
 
-        this.name = Config.CUSTOMER.NAMES[Math.floor(Math.random() * Config.CUSTOMER.NAMES.length)];
         this._hasDecided = false;
         this._hasReceivedItem = false;
         this._setup = setup;
@@ -63,7 +61,7 @@ export class Customer extends AbstractPlayer {
         let conf = Config.CUSTOMER.THINKBUBBLE;
         
         this._patienceIndicator = new FancyProgressBar(
-            new ex.Vector(0,-8),
+            new ex.Vector(0,-this.getWidth()/2),
             30,
             9,
             100,

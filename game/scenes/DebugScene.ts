@@ -3,6 +3,8 @@ import {Config} from "../config/Config";
 import {Resources} from "../config/Resources";
 import {ProgressBar, FancyProgressBar} from "../ui/Indicator";
 import {EffectFactory} from "../Effects";
+import {Inventory} from "../Inventory";
+import {Player} from "../Player";
 
 export class DebugScene extends ex.Scene {
 
@@ -13,6 +15,7 @@ export class DebugScene extends ex.Scene {
     onInitialize(engine: ex.Engine): void {
         this.testProgressBars();
         this.testEffects();
+        this.testPlayerPlacement();
     }
 
     testProgressBars() {
@@ -69,5 +72,25 @@ export class DebugScene extends ex.Scene {
             new ex.Vector(400, 500),
             10
         ));
+    }
+
+    testPlayerPlacement() {
+        let square = new ex.Actor(500, 500, Config.PLAYER.WIDTH, Config.PLAYER.HEIGHT, ex.Color.Red);
+        square.anchor.setTo(.5, .5);
+        this.add(square);
+
+        let inv = new Inventory();
+        let player = new Player(inv);
+        this.add(player);
+        player.pos.setTo(500, 500);
+
+    }
+
+    update(engine: ex.Engine, delta: number) {
+        super.update(engine, delta);
+
+        if ( engine.input.keyboard.wasReleased(ex.Input.Keys.Esc) ) {
+            engine.goToScene("menu");
+        }
     }
 }

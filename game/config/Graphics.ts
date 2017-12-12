@@ -30,6 +30,76 @@ export class Graphics {
             swim2: {x: 0, y: 86, w: 70, h: 87},
             walk1: {x: 0, y: 339, w: 68, h: 83},
             walk2: {x: 0, y: 0, w: 70, h: 86}
+        },
+        BEIGE: {
+            spritesheet: Resources.PlayerSheetBeige,
+            frontal: {x: 70, y: 95, w: 66, h: 92},
+            climb1: {x: 70, y: 0, w: 66, h: 95},
+            climb2: {x: 134, y: 289, w: 66, h: 95},
+            duck: {x: 67, y: 387, w: 67, h: 72},
+            hurt: {x: 0, y: 387, w: 67, h: 92},
+            jump: {x: 69, y: 196, w: 66, h: 93},
+            stand: {x: 68, y: 294, w: 66, h: 92},
+            swim1: {x: 0, y: 196, w: 69, h: 98},
+            swim2: {x: 0, y: 0, w: 70, h: 100},
+            walk1: {x: 0, y: 294, w: 68, h: 93},
+            walk2: {x: 0, y: 100, w: 70, h: 96}
+        },
+        BLUE: {
+            spritesheet: Resources.PlayerSheetBlue,
+            frontal: {x: 70, y: 0, w: 66, h: 92},
+            climb1: {x: 69, y: 97, w: 66, h: 92},
+            climb2: {x: 133, y: 189, w: 66, h: 92},
+            duck: {x: 0, y: 284, w: 67, h: 72},
+            hurt: {x: 0, y: 192, w: 67, h: 92},
+            jump: {x: 67, y: 192, w: 66, h: 93},
+            stand: {x: 67, y: 378, w: 66, h: 92},
+            swim1: {x: 0, y: 97, w: 69, h: 95},
+            swim2: {x: 0, y: 0, w: 70, h: 97},
+            walk1: {x: 67, y: 285, w: 66, h: 93},
+            walk2: {x: 0, y: 356, w: 67, h: 96}
+        },
+        GREEN: {
+            spritesheet: Resources.PlayerSheetGreen,
+            frontal: {x: 70, y: 92, w: 66, h: 92},
+            climb1: {x: 70, y: 0, w: 66, h: 92},
+            climb2: {x: 135, y: 379, w: 66, h: 92},
+            duck: {x: 0, y: 380, w: 69, h: 71},
+            hurt: {x: 0, y: 288, w: 69, h: 92},
+            jump: {x: 69, y: 286, w: 67, h: 93},
+            stand: {x: 69, y: 379, w: 66, h: 92},
+            swim1: {x: 0, y: 193, w: 69, h: 95},
+            swim2: {x: 0, y: 96, w: 70, h: 97},
+            walk1: {x: 69, y: 193, w: 68, h: 93},
+            walk2: {x: 0, y: 0, w: 70, h: 96}
+        },
+        PINK: {
+            spritesheet: Resources.PlayerSheetPink,
+            frontal: {x: 70, y: 92, w: 66, h: 92},
+            climb1: {x: 70, y: 0, w: 66, h: 92},
+            climb2: {x: 135, y: 379, w: 66, h: 92},
+            duck: {x: 0, y: 380, w: 69, h: 71},
+            hurt: {x: 0, y: 288, w: 69, h: 92},
+            jump: {x: 69, y: 286, w: 67, h: 93},
+            stand: {x: 69, y: 379, w: 66, h: 92},
+            swim1: {x: 0, y: 193, w: 69, h: 95},
+            swim2: {x: 0, y: 96, w: 70, h: 97},
+            walk1: {x: 69, y: 193, w: 68, h: 93},
+            walk2: {x: 0, y: 0, w: 70, h: 96}
+        },
+        YELLOW: {
+            spritesheet: Resources.PlayerSheetYellow,
+            frontal: {x: 69, y: 255, w: 66, h: 82},
+            climb1: {x: 69, y: 173, w: 66, h: 82},
+            climb2: {x: 70, y: 0, w: 66, h: 82},
+            duck: {x: 0, y: 422, w: 68, h: 67},
+            hurt: {x: 0, y: 258, w: 69, h: 81},
+            jump: {x: 68, y: 339, w: 67, h: 83},
+            stand: {x: 68, y: 422, w: 66, h: 82},
+            swim1: {x: 0, y: 173, w: 69, h: 85},
+            swim2: {x: 0, y: 86, w: 70, h: 87},
+            walk1: {x: 0, y: 339, w: 68, h: 83},
+            walk2: {x: 0, y: 0, w: 70, h: 86}
         }
     };
 

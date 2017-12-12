@@ -18,6 +18,7 @@ export abstract class AbstractPlayer extends ex.Actor {
     super(x, y, w, h);
 
     this._speed = s;
+    this.anchor.setTo(.5, .5);
 
     this._lastPosX = this.pos.x;
     this._lastPosY = this.pos.y;
@@ -27,6 +28,13 @@ export abstract class AbstractPlayer extends ex.Actor {
     this.characterColor = this.getPlayerColor();
     this._engine = engine;
     this.setDrawings(this.characterColor);
+
+    if (Config.GAME.DEBUG_PLAYERS) {
+      let s = new ex.Actor(0, 0, this.getWidth()-2, this.getHeight()-2, ex.Color.Blue);
+      s.opacity = .25;
+      s.anchor.setTo(.5, .5);
+      this.add(s);
+    }
   }
 
   protected getSprite(alienType: string, spriteType: string): ex.Sprite {
@@ -44,13 +52,20 @@ export abstract class AbstractPlayer extends ex.Actor {
     let conf = Graphics.ALIENS[alienType];
     let tex = conf.spritesheet;
 
+    let x = 0;
+    let y = 0;
     let idleSprite = this.getSprite(alienType, "stand");
+    idleSprite.anchor.setTo(x, y);
     let pickUpSprite = this.getSprite(alienType, "duck");
+    pickUpSprite.anchor.setTo(x, y);
 
     let walkRightAnim = new ex.Animation(this._engine, [this.getSprite(alienType, "walk1"), this.getSprite(alienType, "walk2")], this._speed, true);
+    walkRightAnim.anchor.setTo(x, y);
     let walkLeftAnim = new ex.Animation(this._engine, [this.getSprite(alienType, "walk1"), this.getSprite(alienType, "walk2")], this._speed, true);
     walkLeftAnim.flipHorizontal = true;
+    walkLeftAnim.anchor.setTo(x, y);
     let walkUpAnim = new ex.Animation(this._engine, [this.getSprite(alienType, "climb1"), this.getSprite(alienType, "climb2")], this._speed, true);
+    walkUpAnim.anchor.setTo(x, y);
     
     this.addDrawing("walkRight", walkRightAnim);
     this.addDrawing("walkLeft", walkLeftAnim);

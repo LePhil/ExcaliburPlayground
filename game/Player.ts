@@ -19,6 +19,7 @@ export class Player extends AbstractPlayer {
       Config.PLAYER.WIDTH,
       Config.PLAYER.HEIGHT);
 
+    this.anchor.setTo(.5, .5);
     this.inventory = inventory;
     this.collisionType = ex.CollisionType.Active;
   }
