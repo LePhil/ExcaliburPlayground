@@ -11,12 +11,17 @@ export class Cutscene extends ex.Scene {
     private cutSceneDirector:CutSceneDirector;
     private _levelName: string = "";
     private _game: ex.Engine;
-    private _textDisplay: TextDisplay;
+    private _textLabel: ex.Label;
 
     constructor(engine: ex.Engine) {
         super(engine);
         this._game = engine;
-        this._textDisplay = new TextDisplay();
+
+        this._textLabel = new ex.Label("", Config.GAME.WIDTH/2, Config.GAME.HEIGHT - 100);
+        this._textLabel.anchor.setTo(.5, .5);
+        this._textLabel.fontSize = 24;
+        this._textLabel.color = ex.Color.White;
+        this.add(this._textLabel);
     }
 
     public loadLevelData(levelName: string): void {
@@ -27,7 +32,7 @@ export class Cutscene extends ex.Scene {
 
         let setup = Levels.getLevel(levelName);
         
-        this.add( new LevelMap(setup) );
+        //this.add( new LevelMap(setup) );
 
         let locations = {};
         setup.LOCATIONS.forEach(locationSetup => {
@@ -60,10 +65,11 @@ export class Cutscene extends ex.Scene {
             characters[characterSetup.Id] = new Character(
                 locations[characterSetup.Initial],
                 characterSetup.Name,
+                characterSetup.Type,
                 characterSetup.Color,
                 locations,
                 characterSetup.Opacity,
-                this._textDisplay
+                this._textLabel
             );
         });
 
@@ -100,42 +106,7 @@ export class Cutscene extends ex.Scene {
 
     onDeactivate () {
         this.cutSceneDirector.resetScene();
-        this._textDisplay.reset();
-    }
-}
-
-class TextDisplay extends ex.UIActor {
-    private _label: ex.Label;
-
-    constructor() {
-        let x = Config.GAME.WIDTH / 2;
-        let y = Config.GAME.HEIGHT - 100;
-
-        super(x, y);
-
-        this.anchor.setTo(.5, .5);
-
-        let label = new ex.Label("", 0, 0);
-        label.anchor.setTo(.5, .5);
-        label.fontSize = 24;
-        this.add(label);
-        this._label = label;
-    }
-
-    public say(name: string, text: string, duration: number): void {
-        this._label.text = `${name}: "${text}"`;
-
-        if (duration > 0) {
-            // if a manual (and def. optional) duration was set, remove text after said duration
-            // otherwise, the label stays until the next one comes along!
-            setTimeout(() => {
-                this._label.text = "";
-            }, duration * 1000);
-        }
-    }
-
-    public reset(): void {
-        this._label.text = "";
+        this._textLabel.text = "";
     }
 }
 
@@ -150,26 +121,29 @@ interface Subject {
 class Character extends AbstractPlayer implements Subject {
     private name: string;
     private _locations:any;
-    private _charColor:string;
+    private _charType:string;    
+    private _charColor:ex.Color;
     private _initialLocation: Location;
     private _initialOpacity: number;
-    private _textDisplay: TextDisplay;
+    private _label: ex.Label;
 
     constructor(initialLocation: Location,
                 name: string,
-                color: string,
+                type: string,
+                color: ex.Color,
                 locations: any,
                 initialOpacity = 1,
-                textDisplay: TextDisplay) {
+                label: ex.Label) {
         super(initialLocation.x, initialLocation.y);
 
         this._initialLocation = initialLocation;
         this._initialOpacity = initialOpacity;
+        this._charType = type;
         this._charColor = color;
         this.name = name;
         this._locations = locations;
-        this._textDisplay = textDisplay;
-        this.opacity = initialOpacity;        
+        this.opacity = initialOpacity;
+        this._label = label;
     }
 
     action_move(to: string) {
@@ -183,7 +157,19 @@ class Character extends AbstractPlayer implements Subject {
     }
 
     action_talk(text: string, duration = 0) {
-        this._textDisplay.say(this.name, text, duration);
+        console.log(`${this.name} says ${text} for ${duration} seconds`);
+
+        this._label.color = this._charColor;
+        this._label.text = `"${text}"`;
+        
+        if (duration > 0) {
+            // if a manual (and def. optional) duration was set, remove text after said duration
+            // otherwise, the label stays until the next one comes along!
+            setTimeout(() => {
+                this._label.text = "";
+                this._label.color = ex.Color.White;
+            }, duration * 1000);
+        }
     }
 
     action_show() {
@@ -195,7 +181,7 @@ class Character extends AbstractPlayer implements Subject {
     }
 
     getPlayerColor(): string {
-        return this._charColor;
+        return this._charType;
     }
 
     reset(): void {

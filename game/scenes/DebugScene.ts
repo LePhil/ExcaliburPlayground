@@ -16,6 +16,7 @@ export class DebugScene extends ex.Scene {
         this.testProgressBars();
         this.testEffects();
         this.testPlayerPlacement();
+        this.testColors();
     }
 
     testProgressBars() {
@@ -84,6 +85,35 @@ export class DebugScene extends ex.Scene {
         this.add(player);
         player.pos.setTo(500, 500);
 
+    }
+
+    testColors() {
+        let colors = [
+            ex.Color.Azure,
+            ex.Color.Black,
+            ex.Color.Blue,
+            ex.Color.Chartreuse,
+            ex.Color.Cyan,
+            ex.Color.DarkGray,
+            ex.Color.Gray,
+            ex.Color.Green,
+            ex.Color.LightGray,
+            ex.Color.Magenta,
+            ex.Color.Orange,
+            ex.Color.Red,
+            ex.Color.Rose,
+            ex.Color.Transparent,
+            ex.Color.Vermillion,
+            ex.Color.Violet,
+            ex.Color.Viridian,
+            ex.Color.White,
+            ex.Color.Yellow
+        ];
+
+        colors.forEach((color, index) => {
+            let square = new ex.Actor(10 + index*10, 10, 10, 10, color);
+            this.add(square);
+        });
     }
 
     update(engine: ex.Engine, delta: number) {
