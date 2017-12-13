@@ -21,6 +21,7 @@ export class Cutscene extends ex.Scene {
         this._textLabel.anchor.setTo(.5, .5);
         this._textLabel.fontSize = 24;
         this._textLabel.color = ex.Color.White;
+        this._textLabel.textAlign = ex.TextAlign.Center;        
         this.add(this._textLabel);
     }
 
@@ -32,7 +33,7 @@ export class Cutscene extends ex.Scene {
 
         let setup = Levels.getLevel(levelName);
         
-        //this.add( new LevelMap(setup) );
+        this.add( new LevelMap(setup) );
 
         let locations = {};
         setup.LOCATIONS.forEach(locationSetup => {
