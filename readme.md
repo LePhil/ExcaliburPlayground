@@ -12,7 +12,6 @@ Done!
     * More/less space in inventory
     * More reward per serving
 * Hover-States on Buttons
-* Speech bubbles or Text in its own container outside of the screen. Text on multi-colored bg just can't be read easily.
 * move away from electron...
 * maybe (MAYBE) a small minigame with direct input - it's more fun anyway :)
 * customers via LevelScene, not via door. Too far away!
@@ -41,7 +40,7 @@ Done!
 * Passed/Failed on LevelEnd (indication + maybe only be able to continue if passed?)
 
 # Bugs
-* cutscenes: background image covers the text (zIndex, probably)
+
 
 # Recently done
 * Re-done buttons with Labels
@@ -89,6 +88,8 @@ Done!
 * Make a Firework -Item- Tool
 * Progressbar with Graphics from UIPack RPG
 * workaround for #292 :(
+* cutscenes: background image covers the text (zIndex, probably) (--> text is now at the bottom of the screen.)
+* Speech bubbles or Text in its own container outside of the screen. Text on multi-colored bg just can't be read easily.
 
 # Won't do
 * If inventory is full, clicks on station should not do anything- No. We'd have to check for Tools in Inventory (in case the station is broken) and if there are actions in the queue to remove some items --> let the user make mistakes!
