@@ -115,7 +115,7 @@ export class Levels {
             ],
             CHARACTERS: [
                 {Id: "hime",   Name: "Player",  Type: "HIME", Color: ex.Color.Rose,  Initial: "player_entry"},
-                {Id: "oldguy", Name: "Old Guy", Type: "UNCLE", Color: ex.Color.Yellow, Initial: "old_guy_entry", Opacity: 0}
+                {Id: "uncle", Name: "Uncle", Type: "UNCLE", Color: ex.Color.Yellow, Initial: "old_guy_entry", Opacity: 0}
             ],
             PROPS: [],
             SCRIPT: [
@@ -126,8 +126,7 @@ export class Levels {
                 {T: 12, S: "hime", A: ActionType.Talk, O: {text: "My dream, destroyed!", duration: 2} },
                 {T: 14, S: "hime", A: ActionType.Move, O: {to: "player_main"} },
                 {T: 16, S: "hime", A: ActionType.Talk, O: {text: "*sob*", duration: 2} },
-                {T: 22, S: "oldguy",A: ActionType.Show},
-                {T: 22, S: "oldguy",A: ActionType.Move, O: {to: "old_guy_main"} },
+                {T: 22, S: "uncle",A: ActionType.Move, O: {to: "old_guy_main"} },
                 {T: 24, S: "oldguy",A: ActionType.Talk, O: {text: "..."} },
                 {T: 26, S: "hime", A: ActionType.Talk, O: {text: "*sob*", duration: 2} },
                 {T: 28, S: "oldguy",A: ActionType.Talk, O: {text: "Oh noes! What happened?", duration: 3 } },
@@ -308,26 +307,60 @@ export class Levels {
             W: 840,
             H: 560,
             LOCATIONS: [
-                {Name: "player_entry",   X: 100, Y: 550},
                 {Name: "old_guy_entry",  X: 900, Y: 550},
                 {Name: "player_main",    X: 380, Y: 550},
                 {Name: "player_main_2",  X: 250, Y: 550},
                 {Name: "old_guy_main",   X: 460, Y: 550}
             ],
             CHARACTERS: [
-                {Id: "hime",   Name: "Player",  Type: "HIME", Color: ex.Color.Rose,  Initial: "player_entry"},
-                {Id: "oldguy", Name: "Old Guy", Type: "UNCLE", Color: ex.Color.Yellow, Initial: "old_guy_entry", Opacity: 0}
+                {Id: "hime",    Name: "Player", Type: "HIME",   Color: ex.Color.Rose,   Initial: "player_main"},
+                {Id: "uncle",   Name: "Uncle",  Type: "UNCLE",  Color: ex.Color.Yellow, Initial: "old_guy_entry", Opacity: 0}
             ],
             PROPS: [],
             SCRIPT: [
-                {T: 2,  S: "hime", A: ActionType.Move, O: {to: "player_main"} },
-                {T: 6,  S: "hime", A: ActionType.Talk, O: {text: "Gasp!", duration: 4} },
-                {T: 10, S: "hime", A: ActionType.Talk, O: {text: ""} },
-                {T: 12, S: "hime", A: ActionType.Talk, O: {text: "What a mess!", duration: 2} },
-                {T: 14, S: "hime", A: ActionType.Talk, O: {text: "Trash everywhere!", duration: 4} },
-                {T: 18, S: "hime", A: ActionType.Talk, O: {text: "No time to clean up before,", duration: 4} },
-                {T: 22, S: "hime", A: ActionType.Talk, O: {text: "I'll have to clean while serving.", duration: 4} },
+                {T: 2,  S: "uncle", A: ActionType.Move, O: {to: "old_guy_main"} },
+                {T: 6,  S: "uncle", A: ActionType.Talk, O: {text: "Hello kiddo!"} },
+                {T: 10, S: "uncle", A: ActionType.Talk, O: {text: "Have you heard the news?"} },
+                {T: 12, S: "uncle", A: ActionType.Talk, O: {text: "The blobs are loose!"} },
+                {T: 14, S: "hime", A: ActionType.Talk, O: {text: "... what?"} },
+                {T: 18, S: "uncle", A: ActionType.Talk, O: {text: "What 'What'? The blobs are loose!"} },
+                {T: 22, S: "hime", A: ActionType.Talk, O: {text: "What are ...blobs?"} },
+                {T: 26, S: "uncle", A: ActionType.Talk, O: {text: "Blobs are the worst! An invasive species!"} },
+                {T: 30, S: "hime", A: ActionType.Talk, O: {text: "Are they.. dangerous?"} },
+                {T: 34, S: "uncle", A: ActionType.Talk, O: {text: "Well... no, they're just icky and annoy the customers."} },
+                {T: 38, S: "uncle", A: ActionType.Talk, O: {text: "So maybe catch them quickly if you see one!"} },
+                {T: 42, S: "uncle", A: ActionType.Talk, O: {text: "Alright, I have to go. Good luck!"} },
+                {T: 46, S: "uncle", A: ActionType.Move, O: {to: "old_guy_main"} }
             ],
+            NEXT: "fifth_day_blob"
+        }, { /* NORMAL: Fifth day - Blob! */
+            NAME: "fifth_day_blob",
+            TYPE: Levels.TYPES.NORMAL,
+            IMG: "Map_01_first_day",
+            W: 840,
+            H: 560,
+            CASSA: {X: 250, Y: 500},
+            DOOR:  {X: 800, Y: 595, SPAWN_TIME_S: 6},
+            DESIREDITEMS: ["rabbit", "parrot", "pig"],
+            ITEMSOURCES: [
+                {X: 700, Y: 400, T: "rabbit", DECAY: false},
+                {X: 300, Y: 300, T: "parrot", DECAY: false},
+                {X: 600, Y: 300, T: "pig",    DECAY: false}
+            ],
+            TOOLS: [],
+            TASK: {},
+            BLOB: true,
+            TIME: {
+                TYPE: Levels.TIMERS.CLOCK,
+                DURATION_S: 60,
+                START: "08:00",
+                END: "18:00"
+            },
+            INTRO: [
+                "If you see a blob",
+                "make it go away!"
+            ],
+            OUTRO: ["Well done!"],
             NEXT: "Map_01"
         }, {
             NAME: "Map_01",
