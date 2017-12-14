@@ -38,6 +38,7 @@ Done!
 * maybe it would be easier to remove a scene completely and re-create it instead of resetting and keeping track of everything?
 * unify tools and items? Should be possible to have a Tool from an ItemSource (e.g. crate)
 * Passed/Failed on LevelEnd (indication + maybe only be able to continue if passed?)
+* Create remaining sprite for the dude
 
 # Bugs
 

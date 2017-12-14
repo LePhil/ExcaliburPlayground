@@ -20,13 +20,45 @@ export class Levels {
         CLOCK: "clock",         // HH:MM style clock
         COUNTDOWN: "countdown"  // Counting down seconds
     };
+    static SETTINGS = {
+        HOME: {
+            IMG: "Map_intro_01",
+            W: 840,
+            H: 560
+        },
+        FOREST: {
+            IMG: "Map_forest",
+            W: 840,
+            H: 560
+        },
+        STORE_GREY: {
+            IMG: "Map_01_first_day",
+            W: 840,
+            H: 560
+        }
+    };
+    static CHARS = {
+        HIME: {
+            Name: "Hime",
+            Type: "HIME",
+            Color: ex.Color.Rose
+        },
+        UNCLE: {
+            Name: "Uncle",
+            Type: "UNCLE",
+            Color: ex.Color.Yellow
+        },
+        UMATO: {
+            Name: "Umato",
+            Type: "UMATO",
+            Color: ex.Color.Blue
+        }
+    };
     
     static MAPS = [
         { /* TEST */
             NAME: "Test",
             TYPE: Levels.TYPES.NORMAL,
-            W: 840,
-            H: 560,
             CASSA: {X: 250, Y: 500},
             DOOR:  {X: 800, Y: 595, SPAWN_TIME_S: 5},
             DESIREDITEMS: ["rabbit", "elephant", "giraffe"],
@@ -66,16 +98,14 @@ export class Levels {
         }, { /* CUTSCENE: School's out */
             NAME: "schools_out",
             TYPE: Levels.TYPES.CUTSCENE,
-            IMG: "Map_intro_01",
-            W: 840,
-            H: 560,
+            CONF: Levels.SETTINGS.HOME,
             LOCATIONS: [
                 {Name: "player_entry",  X: 900, Y: 480},
                 {Name: "player_main",   X: 380, Y: 480},
                 {Name: "phone_initial", X: 350, Y: 480},
             ],
             CHARACTERS: [
-                {Id: "hime", Name: "Player", Type: "HIME", Color: ex.Color.Rose, Initial: "player_entry"}
+                {Id: "hime", Char: Levels.CHARS.HIME, Initial: "player_entry"}
             ],
             PROPS: [
                 {Id: "phone",   Type: "mobile_phone", Initial: "phone_initial", Opacity: 0}
@@ -103,9 +133,7 @@ export class Levels {
         }, { /* CUTSCENE: Uncle to the rescue */
             NAME: "uncle_to_the_rescue",
             TYPE: Levels.TYPES.CUTSCENE,
-            IMG: "Map_forest",
-            W: 840,
-            H: 560,
+            CONF: Levels.SETTINGS.FOREST,
             LOCATIONS: [
                 {Name: "player_entry",   X: 100, Y: 550},
                 {Name: "old_guy_entry",  X: 900, Y: 550},
@@ -114,8 +142,8 @@ export class Levels {
                 {Name: "old_guy_main",   X: 460, Y: 550}
             ],
             CHARACTERS: [
-                {Id: "hime",   Name: "Player",  Type: "HIME", Color: ex.Color.Rose,  Initial: "player_entry"},
-                {Id: "uncle", Name: "Uncle", Type: "UNCLE", Color: ex.Color.Yellow, Initial: "old_guy_entry", Opacity: 0}
+                {Id: "hime", Char: Levels.CHARS.HIME, Initial: "player_entry"},
+                {Id: "uncle", Char: Levels.CHARS.UNCLE, Initial: "old_guy_entry", Opacity: 0}
             ],
             PROPS: [],
             SCRIPT: [
@@ -149,9 +177,7 @@ export class Levels {
         }, { /* NORMAL: First day */
             NAME: "first_day",
             TYPE: Levels.TYPES.NORMAL,
-            IMG: "Map_01_first_day",
-            W: 840,
-            H: 560,
+            CONF: Levels.SETTINGS.STORE_GREY,
             CASSA: {X: 250, Y: 500},
             DOOR:  {X: 800, Y: 595, SPAWN_TIME_S: 8},
             DESIREDITEMS: ["rabbit"],
@@ -174,12 +200,10 @@ export class Levels {
             ],
             OUTRO: ["Well done!"],
             NEXT: "more_animals"
-        }, { /* CUTSCENE: More animals */
+        }, { /* CUTSCENE: More animals TODO!!! */
             NAME: "more_animals",
             TYPE: Levels.TYPES.CUTSCENE,
-            IMG: "Map_intro_01",
-            W: 840,
-            H: 560,
+            CONF: Levels.SETTINGS.STORE_GREY,
             LOCATIONS: [],
             CHARACTERS: [],
             PROPS: [],
@@ -188,9 +212,7 @@ export class Levels {
         }, { /* NORMAL: Second day */
             NAME: "second_day",
             TYPE: Levels.TYPES.NORMAL,
-            IMG: "Map_01_first_day",
-            W: 840,
-            H: 560,
+            CONF: Levels.SETTINGS.STORE_GREY,
             CASSA: {X: 250, Y: 500},
             DOOR:  {X: 800, Y: 595, SPAWN_TIME_S: 8},
             DESIREDITEMS: ["rabbit", "parrot", "pig"],
@@ -216,9 +238,7 @@ export class Levels {
         }, { /* NORMAL: Third day */
             NAME: "third_day",
             TYPE: Levels.TYPES.NORMAL,
-            IMG: "Map_01_first_day",
-            W: 840,
-            H: 560,
+            CONF: Levels.SETTINGS.STORE_GREY,
             CASSA: {X: 250, Y: 500},
             DOOR:  {X: 800, Y: 595, SPAWN_TIME_S: 5},
             DESIREDITEMS: ["rabbit", "parrot", "pig"],
@@ -244,15 +264,13 @@ export class Levels {
         }, { /* CUTSCENE: Trash everywhere */
             NAME: "trash_everywhere",
             TYPE: Levels.TYPES.CUTSCENE,
-            IMG: "Map_01_first_day",
-            W: 840,
-            H: 560,
+            CONF: Levels.SETTINGS.STORE_GREY,
             LOCATIONS: [
                 {Name: "player_entry",X:   0, Y: 550},
                 {Name: "player_main", X: 500, Y: 550}
             ],
             CHARACTERS: [
-                {Id: "hime", Name: "Player",  Type: "HIME", Color: ex.Color.Rose,  Initial: "player_entry"}
+                {Id: "hime", Char: Levels.CHARS.HIME, Initial: "player_entry"}
             ],
             PROPS: [],
             SCRIPT: [
@@ -268,9 +286,7 @@ export class Levels {
         }, { /* NORMAL: Fourth day - cleanup */
             NAME: "fourth_day_trash",
             TYPE: Levels.TYPES.NORMAL,
-            IMG: "Map_01_first_day",
-            W: 840,
-            H: 560,
+            CONF: Levels.SETTINGS.STORE_GREY,
             CASSA: {X: 250, Y: 500},
             DOOR:  {X: 800, Y: 595, SPAWN_TIME_S: 6},
             DESIREDITEMS: ["rabbit", "parrot", "pig"],
@@ -303,9 +319,7 @@ export class Levels {
         }, { /* CUTSCENE: Introducing Blobs */
             NAME: "introducing_blobs",
             TYPE: Levels.TYPES.CUTSCENE,
-            IMG: "Map_01_first_day",
-            W: 840,
-            H: 560,
+            CONF: Levels.SETTINGS.STORE_GREY,
             LOCATIONS: [
                 {Name: "old_guy_entry",  X: 900, Y: 550},
                 {Name: "player_main",    X: 380, Y: 550},
@@ -313,13 +327,14 @@ export class Levels {
                 {Name: "old_guy_main",   X: 460, Y: 550}
             ],
             CHARACTERS: [
-                {Id: "hime",    Name: "Player", Type: "HIME",   Color: ex.Color.Rose,   Initial: "player_main"},
-                {Id: "uncle",   Name: "Uncle",  Type: "UNCLE",  Color: ex.Color.Yellow, Initial: "old_guy_entry", Opacity: 0}
+                {Id: "hime", Char: Levels.CHARS.HIME, Initial: "player_main"},
+                {Id: "uncle", Char: Levels.CHARS.UNCLE, Initial: "old_guy_entry", Opacity: 0}
             ],
             PROPS: [],
             SCRIPT: [
                 {T: 2,  S: "uncle", A: ActionType.Move, O: {to: "old_guy_main"} },
                 {T: 6,  S: "uncle", A: ActionType.Talk, O: {text: "Hello kiddo!"} },
+                {T: 8,  S: "uncle", A: ActionType.Talk, O: {text: "Very clean!"} },
                 {T: 10, S: "uncle", A: ActionType.Talk, O: {text: "Have you heard the news?"} },
                 {T: 12, S: "uncle", A: ActionType.Talk, O: {text: "The blobs are loose!"} },
                 {T: 14, S: "hime", A: ActionType.Talk, O: {text: "... what?"} },
@@ -329,16 +344,15 @@ export class Levels {
                 {T: 30, S: "hime", A: ActionType.Talk, O: {text: "Are they.. dangerous?"} },
                 {T: 34, S: "uncle", A: ActionType.Talk, O: {text: "Well... no, they're just icky and annoy the customers."} },
                 {T: 38, S: "uncle", A: ActionType.Talk, O: {text: "So maybe catch them quickly if you see one!"} },
-                {T: 42, S: "uncle", A: ActionType.Talk, O: {text: "Alright, I have to go. Good luck!"} },
-                {T: 46, S: "uncle", A: ActionType.Move, O: {to: "old_guy_main"} }
+                {T: 42, S: "uncle", A: ActionType.Talk, O: {text: "If you catch one the city will reward you."} },
+                {T: 46, S: "uncle", A: ActionType.Talk, O: {text: "Alright, I have to go. Good luck!"} },
+                {T: 50, S: "uncle", A: ActionType.Move, O: {to: "old_guy_main"} }
             ],
             NEXT: "fifth_day_blob"
         }, { /* NORMAL: Fifth day - Blob! */
             NAME: "fifth_day_blob",
             TYPE: Levels.TYPES.NORMAL,
-            IMG: "Map_01_first_day",
-            W: 840,
-            H: 560,
+            CONF: Levels.SETTINGS.STORE_GREY,
             CASSA: {X: 250, Y: 500},
             DOOR:  {X: 800, Y: 595, SPAWN_TIME_S: 6},
             DESIREDITEMS: ["rabbit", "parrot", "pig"],
@@ -352,22 +366,39 @@ export class Levels {
             BLOB: true,
             TIME: {
                 TYPE: Levels.TIMERS.CLOCK,
-                DURATION_S: 60,
+                DURATION_S: 70,
                 START: "08:00",
                 END: "18:00"
             },
             INTRO: [
-                "If you see a blob",
-                "make it go away!"
+                "Collect the bounty",
+                "for catching a blob!"
             ],
             OUTRO: ["Well done!"],
+            NEXT: "weekend_stroll"
+        }, { /* CUTSCENE: Weekend Stroll */
+            NAME: "weekend_stroll",
+            TYPE: Levels.TYPES.CUTSCENE,
+            CONF: Levels.SETTINGS.FOREST,
+            LOCATIONS: [
+                {Name: "player_entry",  X: 0, Y: 550},
+                {Name: "umato_entry",   X: 900, Y: 550},
+                {Name: "player_main",   X: 380, Y: 550},
+                {Name: "umato_main",    X: 450, Y: 550}
+            ],
+            CHARACTERS: [
+                {Id: "hime", Char: Levels.CHARS.HIME, Initial: "player_main"},
+                {Id: "umato", Char: Levels.CHARS.UMATO, Initial: "umato_entry", Opacity: 0}
+            ],
+            PROPS: [],
+            SCRIPT: [
+                {T: 2,  S: "uncle", A: ActionType.Move, O: {to: "old_guy_main"} },
+            ],
             NEXT: "Map_01"
         }, {
             NAME: "Map_01",
             TYPE: Levels.TYPES.NORMAL,
-            IMG: "Map_01_first_day",
-            W: 840,
-            H: 560,
+            CONF: Levels.SETTINGS.STORE_GREY,
             CASSA: {X: 250, Y: 500},
             DOOR:  {X: 800, Y: 595, SPAWN_TIME_S: 5},
             DESIREDITEMS: ["rabbit", "elephant", "giraffe"],
@@ -395,9 +426,7 @@ export class Levels {
         }, {
             NAME: "Map_02",
             TYPE: Levels.TYPES.NORMAL,
-            IMG: "Map_01_first_day",
-            W: 840,
-            H: 560,
+            CONF: Levels.SETTINGS.STORE_GREY,
             CASSA: {X: 250, Y: 500},
             DOOR:  {X: 800, Y: 595, SPAWN_TIME_S: 5},
             DESIREDITEMS: ["rabbit", "elephant", "giraffe"],

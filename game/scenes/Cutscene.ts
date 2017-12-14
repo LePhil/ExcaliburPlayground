@@ -17,7 +17,7 @@ export class Cutscene extends ex.Scene {
         super(engine);
         this._game = engine;
 
-        this._textLabel = new ex.Label("", Config.GAME.WIDTH/2, Config.GAME.HEIGHT - 100);
+        this._textLabel = new ex.Label("", Config.GAME.WIDTH/2, Config.GAME.HEIGHT - 50);
         this._textLabel.anchor.setTo(.5, .5);
         this._textLabel.fontSize = 24;
         this._textLabel.color = ex.Color.White;
@@ -33,7 +33,7 @@ export class Cutscene extends ex.Scene {
 
         let setup = Levels.getLevel(levelName);
         
-        this.add( new LevelMap(setup) );
+        this.add( new LevelMap(setup.CONF) );
 
         let locations = {};
         setup.LOCATIONS.forEach(locationSetup => {
@@ -63,11 +63,12 @@ export class Cutscene extends ex.Scene {
                 console.warn(`Location ${characterSetup.Initial} doesn't exist!`);
                 return;
             }
+
             characters[characterSetup.Id] = new Character(
                 locations[characterSetup.Initial],
-                characterSetup.Name,
-                characterSetup.Type,
-                characterSetup.Color,
+                characterSetup.Char.Name,
+                characterSetup.Char.Type,
+                characterSetup.Char.Color,
                 locations,
                 characterSetup.Opacity,
                 this._textLabel
