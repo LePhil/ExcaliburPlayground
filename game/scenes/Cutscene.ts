@@ -4,7 +4,7 @@ import {Config} from "../config/Config";
 import {AbstractPlayer} from "../AbstractPlayer";
 import {LevelMap} from "../LevelMap";
 import {Storage} from "../Storage";
-import {Levels} from "../config/Levels";
+import {ActionType, Levels} from "../config/Levels";
 import {Resources} from "../config/Resources";
 
 export class Cutscene extends ex.Scene {
@@ -260,13 +260,6 @@ class Prop extends ex.Actor implements Subject {
         this.pos.y = this._initialLocation.y;
     }
 }
-
-enum ActionType {
-    Move = "move",
-    Talk = "talk",
-    Hide = "hide",
-    Show = "show"
-};
 
 class Action {
     private timepoint: number;

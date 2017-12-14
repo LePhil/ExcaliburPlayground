@@ -3,7 +3,7 @@ import {Config} from "./Config";
 import {Storage} from "../Storage";
 import {Task, TaskItem} from "../Task";
 
-enum ActionType {
+export enum ActionType {
     Move = "move",
     Talk = "talk",
     Hide = "hide",
@@ -11,7 +11,6 @@ enum ActionType {
 };
 
 export class Levels {
-    static ActionType = ActionType; // TODO: needed here?
     static TYPES = {
         NORMAL: "normal",       // Normal time management
         CUTSCENE: "cutscene"    // For some story
