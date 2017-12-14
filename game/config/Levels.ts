@@ -40,7 +40,7 @@ export class Levels {
         HIME: {
             Name: "Hime",
             Type: "HIME",
-            Color: ex.Color.Rose
+            Color: ex.Color.fromHex("#F09BB5")
         },
         UNCLE: {
             Name: "Uncle",
@@ -120,8 +120,8 @@ export class Levels {
                 {T: 28, S: "hime", A: ActionType.Talk, O: {text: "Hihi! Silly cats..."} },
                 {T: 34, S: "hime", A: ActionType.Talk, O: {text: "Oh?"} },
                 {T: 36, S: "hime", A: ActionType.Talk, O: {text: "..."} },
-                {T: 40, S: "hime", A: ActionType.Talk, O: {text: "'Psyche completely researched.'"} },
-                {T: 44, S: "hime", A: ActionType.Talk, O: {text: "'No more psych studies.'"} },
+                {T: 40, S: "hime", A: ActionType.Talk, O: {text: "«Psyche completely researched.»"} },
+                {T: 44, S: "hime", A: ActionType.Talk, O: {text: "«No more psych studies.»"} },
                 {T: 46, S: "phone",A: ActionType.Hide},
                 {T: 50, S: "hime", A: ActionType.Talk, O: {text: "Poop! What do I do now?", duration: 4} },
                 {T: 54, S: "hime", A: ActionType.Move, O: {to: "player_entry"} },
@@ -327,7 +327,7 @@ export class Levels {
             ],
             CHARACTERS: [
                 {Id: "hime", Char: Levels.CHARS.HIME, Initial: "player_main"},
-                {Id: "uncle", Char: Levels.CHARS.UNCLE, Initial: "old_guy_entry", Opacity: 0}
+                {Id: "uncle", Char: Levels.CHARS.UNCLE, Initial: "old_guy_entry"}
             ],
             PROPS: [],
             SCRIPT: [
@@ -381,17 +381,30 @@ export class Levels {
             CONF: Levels.SETTINGS.FOREST,
             LOCATIONS: [
                 {Name: "player_entry",  X: 0, Y: 550},
-                {Name: "umato_entry",   X: 900, Y: 550},
+                {Name: "player_first",  X: 100, Y: 550},
                 {Name: "player_main",   X: 380, Y: 550},
-                {Name: "umato_main",    X: 450, Y: 550}
+                {Name: "umato_main",    X: 450, Y: 550},
+                {Name: "loc_telescope", X: 500, Y: 550}
             ],
             CHARACTERS: [
                 {Id: "hime", Char: Levels.CHARS.HIME, Initial: "player_main"},
-                {Id: "umato", Char: Levels.CHARS.UMATO, Initial: "umato_entry", Opacity: 0}
+                {Id: "umato", Char: Levels.CHARS.UMATO, Initial: "umato_main"}
             ],
-            PROPS: [],
+            PROPS: [
+                {Id: "telescope", Type: "telescope", Initial: "loc_telescope", Opacity: 1}
+            ],
             SCRIPT: [
-                {T: 2,  S: "uncle", A: ActionType.Move, O: {to: "old_guy_main"} },
+                {T: 2,  S: "hime", A: ActionType.Move, O: {to: "player_first"} },
+                {T: 4,  S: "hime", A: ActionType.Talk, O: {text: "Finally some peace and quiet after this week."} },
+                {T: 8,  S: "hime", A: ActionType.Talk, O: {text: "I can't believe this all happened."} },
+                {T: 12, S: "hime", A: ActionType.Talk, O: {text: "The store and everything...", duration: 4} },
+                {T: 18, S: "hime", A: ActionType.Talk, O: {text: "Still feeling bad about my dream...", duration: 4} },
+                {T: 24, S: "hime", A: ActionType.Talk, O: {text: "Ah, I'm sure a walk will be nice!", duration: 2} },
+                {T: 26, S: "hime", A: ActionType.Move, O: {to: "player_main"} },
+                {T: 28, S: "umato", A: ActionType.Talk, O: {text: "Aaah!"} },
+                {T: 30, S: "umato", A: ActionType.Talk, O: {text: "What?"} },
+                {T: 32, S: "umato", A: ActionType.Talk, O: {text: "Who?!"} },
+                {T: 36, S: "hime", A: ActionType.Talk, O: {text: "Oh no! Sorry!"} },
             ],
             NEXT: "Map_01"
         }, {

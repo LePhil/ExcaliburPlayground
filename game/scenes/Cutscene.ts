@@ -175,10 +175,12 @@ class Character extends AbstractPlayer implements Subject {
     }
 
     action_show() {
+        console.log(`Showing ${this.name}`);
         this.opacity = 1;
     }
 
     action_hide() {
+        console.log(`Hiding ${this.name}`);
         this.opacity = 0;
     }
 
