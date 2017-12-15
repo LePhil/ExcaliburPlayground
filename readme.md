@@ -41,7 +41,7 @@ Done!
 * Telescope sprite too small
 
 # Bugs
-
+* when restarting a level, levelMap has a higher z-index than task Items...
 
 # Recently done
 * Re-done buttons with Labels
