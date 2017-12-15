@@ -5,6 +5,7 @@ export class Resources {
 
     static PlayerSheetHime      = new ex.Texture("game/assets/textures/aliens/alienHime.png");
     static PlayerSheetUncle     = new ex.Texture("game/assets/textures/aliens/alienUncle.png");
+    static PlayerSheetUmato     = new ex.Texture("game/assets/textures/aliens/alienUmato.png");
     static PlayerSheetBeige     = new ex.Texture("game/assets/textures/aliens/alienBeige.png");
     static PlayerSheetBlue      = new ex.Texture("game/assets/textures/aliens/alienBlue.png");
     static PlayerSheetGreen     = new ex.Texture("game/assets/textures/aliens/alienGreen.png");
