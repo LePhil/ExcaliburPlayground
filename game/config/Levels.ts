@@ -73,13 +73,13 @@ export class Levels {
             ],
             TASK: {
                 TYPE: Task.Type.MultiUse,
-                ITEM: Config.ITEMS.MEDKIT,
+                ITEMS: [Config.ITEMS.MEDKIT],
                 MOBILITY: TaskItem.Mobility.Stationary,
                 REQUIRED_INTERACTIONS: 5
                 /*
                 TYPE: Task.Type.SingleUse,
                 AMOUNT: 10,
-                ITEM: Config.ITEMS.CASH,
+                ITEMS: [Config.ITEMS.CASH],
                 MOBILITY: TaskItem.Mobility.Stationary,
                 SPAWNING: TaskItem.SpawnBehaviour.AllAtOnce
                 */
@@ -298,7 +298,7 @@ export class Levels {
             TASK: {
                 TYPE: Task.Type.SingleUse,
                 AMOUNT: 10,
-                ITEM: Config.ITEMS.CASH,
+                ITEMS: ["ticket_stub", "oven_glove", "clipboard", "book", "book_red"],
                 MOBILITY: TaskItem.Mobility.Stationary,
                 SPAWNING: TaskItem.SpawnBehaviour.AllAtOnce
             },
@@ -387,7 +387,7 @@ export class Levels {
                 {Name: "loc_telescope", X: 500, Y: 550}
             ],
             CHARACTERS: [
-                {Id: "hime", Char: Levels.CHARS.HIME, Initial: "player_main"},
+                {Id: "hime", Char: Levels.CHARS.HIME, Initial: "player_entry"},
                 {Id: "umato", Char: Levels.CHARS.UMATO, Initial: "umato_main"}
             ],
             PROPS: [
@@ -405,7 +405,46 @@ export class Levels {
                 {T: 30, S: "umato", A: ActionType.Talk, O: {text: "What?"} },
                 {T: 32, S: "umato", A: ActionType.Talk, O: {text: "Who?!"} },
                 {T: 36, S: "hime", A: ActionType.Talk, O: {text: "Oh no! Sorry!"} },
+                {T: 39, S: "hime", A: ActionType.Talk, O: {text: "I didn't mean to startle you!"} },
+                {T: 39, S: "hime", A: ActionType.Talk, O: {text: "Who are you... and what are you doing, anyway?"} },
+                {T: 43, S: "umato", A: ActionType.Talk, O: {text: "I'm Umato and I'm trying to see BLU-42."} },
+                {T: 47, S: "umato", A: ActionType.Talk, O: {text: "What about you?"} },
+                {T: 47, S: "hime", A: ActionType.Talk, O: {text: "I'm Hime and I work at a Pet Store."} },
+                {T: 51, S: "umato", A: ActionType.Talk, O: {text: ""} },
             ],
+            NEXT: "w2d1_cleanup"
+        }, {
+            NAME: "w2d1_cleanup",
+            TYPE: Levels.TYPES.NORMAL,
+            CONF: Levels.SETTINGS.STORE_GREY,
+            CASSA: {X: 250, Y: 500},
+            DOOR:  {X: 800, Y: 595, SPAWN_TIME_S: 6},
+            DESIREDITEMS: ["rabbit", "parrot", "pig"],
+            ITEMSOURCES: [
+                {X: 700, Y: 400, T: "rabbit", DECAY: false},
+                {X: 300, Y: 300, T: "parrot", DECAY: false},
+                {X: 600, Y: 300, T: "pig",    DECAY: false}
+            ],
+            TOOLS: [],
+            TASK: {
+                TYPE: Task.Type.SingleUse,
+                AMOUNT: 10,
+                ITEMS: [Config.ITEMS.COBWEBS],
+                MOBILITY: TaskItem.Mobility.Stationary,
+                SPAWNING: TaskItem.SpawnBehaviour.AllAtOnce
+            },
+            BLOB: true,
+            TIME: {
+                TYPE: Levels.TIMERS.CLOCK,
+                DURATION_S: 70,
+                START: "08:00",
+                END: "18:00"
+            },
+            INTRO: [
+                "Collect the bounty",
+                "for catching a blob!"
+            ],
+            OUTRO: ["Well done!"],
             NEXT: "Map_01"
         }, {
             NAME: "Map_01",

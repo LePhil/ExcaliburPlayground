@@ -92,7 +92,7 @@ class SingleUseTask extends Task {
     constructor(scene: ex.Scene, player: Player, setup: any, callback: () => void) {
         super(scene, player, setup, callback);
         
-        let itemType = setup.ITEM;
+        let itemTypes = setup.ITEMS;
         let amount = setup.AMOUNT;
 
         this.taskItems = [];
@@ -101,6 +101,7 @@ class SingleUseTask extends Task {
 
         for(let i = 0; i < amount; i++) {
             let position = this._generateSpawnPoint(setup, i);
+            let itemType = itemTypes[ex.Util.randomIntInRange(0, itemTypes.length-1)];
 
             let newItem = new SingleUseItem(position, itemType, this.onTaskItemClicked);
             this.taskItems.push(newItem);
