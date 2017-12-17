@@ -168,6 +168,7 @@ export class LevelScene extends ex.Scene {
         this._cassa && this._cassa.setZIndex(mapZIndex + 1);
         this._door && this._door.setZIndex(mapZIndex + 1);
         this._player && this._player.setZIndex(mapZIndex + 30);
+        this._task && this._task.setZIndex(mapZIndex + 5);
     }
 
     private _setupDisplays(setup: any): void {

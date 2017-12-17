@@ -162,7 +162,7 @@ class Character extends AbstractPlayer implements Subject {
         console.log(`${this.name} says ${text} for ${duration} seconds`);
 
         this._label.color = this._charColor;
-        this._label.text = `"${text}"`;
+        this._label.text = `${text}`;
         
         if (duration > 0) {
             // if a manual (and def. optional) duration was set, remove text after said duration

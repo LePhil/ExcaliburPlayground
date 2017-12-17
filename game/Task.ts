@@ -60,6 +60,8 @@ export class Task {
         this.callback = callback;
     }
 
+    public setZIndex(newIndex: number): void {}
+
     protected _generateSpawnPoint(setup: any, index?: number): ex.Vector {
         let getRandomX = () => {
             let minX = (Config.GAME.WIDTH - Config.GAME.DEFAULTMAP.W) / 2;
@@ -118,6 +120,12 @@ class SingleUseTask extends Task {
         }
     }
 
+    public setZIndex(newIndex: number): void {
+        this.taskItems.forEach(item => {
+            item.setZIndex(newIndex);
+        });
+    }
+
     /**
      * Make the player go to the clicked-on item and interact with it.
      * Afterwards remove the item from the list and if there's no
@@ -158,7 +166,7 @@ class MultiUseTask extends Task {
     constructor(scene: ex.Scene, player: Player, setup: any, callback: () => void) {
         super(scene, player, setup, callback);
 
-        let itemType = setup.ITEM;
+        let itemTypes = setup.ITEMS;
         
         this._nrOfInteractions = 0;
         this._requiredNrOfInteractions = setup.REQUIRED_INTERACTIONS ? setup.REQUIRED_INTERACTIONS : 5;
@@ -167,6 +175,7 @@ class MultiUseTask extends Task {
         this._callback = callback;
 
         let position = this._generateSpawnPoint(setup);
+        let itemType = itemTypes[ex.Util.randomIntInRange(0, itemTypes.length-1)];
 
         this.taskItem = new MultiUseItem(position, itemType, this.onTaskItemClicked);
         scene.add(this.taskItem);
@@ -186,6 +195,9 @@ class MultiUseTask extends Task {
         });
     }
     
+    public setZIndex(newIndex: number): void {
+        this.taskItem.setZIndex(newIndex);
+    }
 }
 
 
