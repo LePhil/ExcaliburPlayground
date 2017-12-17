@@ -204,11 +204,26 @@ export class Levels {
         }, { /* CUTSCENE: More animals TODO!!! */
             NAME: "more_animals",
             TYPE: Levels.TYPES.CUTSCENE,
-            CONF: Levels.SETTINGS.STORE_GREY,
-            LOCATIONS: [],
-            CHARACTERS: [],
+            CONF: Levels.SETTINGS.HOME,
+            LOCATIONS: [
+                {Name: "player_entry",  X: 900, Y: 480},
+                {Name: "player_main",   X: 410, Y: 480},
+                {Name: "uncle_main",    X: 380, Y: 480}
+            ],
+            CHARACTERS: [
+                {Id: "hime", Char: Levels.CHARS.HIME, Initial: "player_entry", Opacity: 0},
+                {Id: "uncle", Char: Levels.CHARS.UNCLE, Initial: "uncle_main"}
+            ],
             PROPS: [],
-            SCRIPT: [],
+            SCRIPT: [
+                {T: 1, S: "hime", A: ActionType.Show},
+                {T: 2, S: "hime", A: ActionType.Move, O: {to: "player_main"} },
+                {T: 5, S: "uncle",A: ActionType.Talk, O: {text: "Hello! How did it go?"} },
+                {T: 8, S: "hime", A: ActionType.Talk, O: {text: "Oh Uncle! Thanks for letting me try it out."} },
+                {T:12, S: "hime", A: ActionType.Talk, O: {text: "Not a lot of people showed up..."} },
+                {T:16, S: "hime", A: ActionType.Talk, O: {text: "I'm not sure if I should continue..."} },
+                {T:20, S: "uncle",A: ActionType.Talk, O: {text: ""} },
+            ],
             NEXT: "second_day"
         }, { /* NORMAL: Second day */
             NAME: "second_day",
