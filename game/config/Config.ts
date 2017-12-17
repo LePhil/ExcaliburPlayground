@@ -77,7 +77,7 @@ export class Config {
     cobweb_1:               { x: 791, y: 229, w: 85, h: 101 },
     cobweb_2:               { x: 888, y: 242, w: 93, h: 95 },
     fireworks:              { x: 770, y: 0, w: 60, h: 149, t: Config.ITEM_TYPES.CUSTOMERRELATED },
-    telescope:              { x: 839, y: 0, w: 146, h: 210, scale: .5 },
+    telescope:              { x: 839, y: 0, w: 146, h: 210, scale: .4 },
     genericItem_color_001: { x: 0, y: 322, w: 162, h: 94 },
     genericItem_color_002: { x: 136, y: 1231, w: 120, h: 110 },
     cup:                    { x: 130, y: 1791, w: 89, h: 45, t: Config.ITEM_TYPES.CONSUMABLE },

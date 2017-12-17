@@ -207,7 +207,7 @@ export class Levels {
             CONF: Levels.SETTINGS.HOME,
             LOCATIONS: [
                 {Name: "player_entry",  X: 900, Y: 480},
-                {Name: "player_main",   X: 410, Y: 480},
+                {Name: "player_main",   X: 460, Y: 480},
                 {Name: "uncle_main",    X: 380, Y: 480}
             ],
             CHARACTERS: [
@@ -222,10 +222,13 @@ export class Levels {
                 {T: 8, S: "hime", A: ActionType.Talk, O: {text: "Oh Uncle! Thanks for letting me try it out."} },
                 {T:12, S: "hime", A: ActionType.Talk, O: {text: "Not a lot of people showed up..."} },
                 {T:16, S: "hime", A: ActionType.Talk, O: {text: "I'm not sure if I should continue..."} },
-                {T:20, S: "uncle",A: ActionType.Talk, O: {text: ""} },
+                {T:20, S: "uncle",A: ActionType.Talk, O: {text: "Nonsense, child! Give it another couple of days."} },
+                {T:24, S: "uncle",A: ActionType.Talk, O: {text: "I actually have some more animals you could have at the shop!"} },
+                {T:28, S: "uncle",A: ActionType.Talk, O: {text: "Parrots and Pigs! I'm sure that attracts more people."} },
+                {T:32, S: "uncle",A: ActionType.Talk, O: {text: "Now off you go, tomorrow will be a long day.", duration: 4} },
             ],
             NEXT: "second_day"
-        }, { /* NORMAL: Second day */
+        }, { /* NORMAL: Second day with Parrots and Pigs */
             NAME: "second_day",
             TYPE: Levels.TYPES.NORMAL,
             CONF: Levels.SETTINGS.STORE_GREY,
@@ -403,7 +406,7 @@ export class Levels {
                 {Name: "player_first",  X: 100, Y: 550},
                 {Name: "player_main",   X: 380, Y: 550},
                 {Name: "umato_main",    X: 450, Y: 550},
-                {Name: "loc_telescope", X: 500, Y: 550}
+                {Name: "loc_telescope", X: 520, Y: 550}
             ],
             CHARACTERS: [
                 {Id: "hime", Char: Levels.CHARS.HIME, Initial: "player_entry"},
