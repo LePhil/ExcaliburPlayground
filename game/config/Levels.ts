@@ -51,6 +51,11 @@ export class Levels {
             Name: "Umato",
             Type: "UMATO",
             Color: ex.Color.Blue
+        },
+        GAIA: {
+            Name: "Gaia",
+            Type: "Green",
+            Color: ex.Color.White
         }
     };
     
@@ -201,7 +206,7 @@ export class Levels {
             ],
             OUTRO: ["Well done!"],
             NEXT: "more_animals"
-        }, { /* CUTSCENE: More animals TODO!!! */
+        }, { /* CUTSCENE: More animals */
             NAME: "more_animals",
             TYPE: Levels.TYPES.CUTSCENE,
             CONF: Levels.SETTINGS.HOME,
@@ -406,11 +411,13 @@ export class Levels {
                 {Name: "player_first",  X: 100, Y: 550},
                 {Name: "player_main",   X: 380, Y: 550},
                 {Name: "umato_main",    X: 450, Y: 550},
-                {Name: "loc_telescope", X: 520, Y: 550}
+                {Name: "loc_telescope", X: 520, Y: 550},
+                {Name: "umato_exit",    X: 900, Y: 480},
             ],
             CHARACTERS: [
                 {Id: "hime", Char: Levels.CHARS.HIME, Initial: "player_entry"},
-                {Id: "umato", Char: Levels.CHARS.UMATO, Initial: "umato_main"}
+                {Id: "umato", Char: Levels.CHARS.UMATO, Initial: "umato_main"},
+                {Id: "phone", Char: Levels.CHARS.GAIA, Initial: "umato_main", Opacity: 0}
             ],
             PROPS: [
                 {Id: "telescope", Type: "telescope", Initial: "loc_telescope", Opacity: 1}
@@ -432,7 +439,18 @@ export class Levels {
                 {T: 43, S: "umato", A: ActionType.Talk, O: {text: "I'm Umato and I'm trying to see BLU-42."} },
                 {T: 47, S: "umato", A: ActionType.Talk, O: {text: "What about you?"} },
                 {T: 47, S: "hime", A: ActionType.Talk, O: {text: "I'm Hime and I work at a Pet Store."} },
-                {T: 51, S: "umato", A: ActionType.Talk, O: {text: ""} },
+                {T: 51, S: "umato", A: ActionType.Talk, O: {text: "Oh cool! I've always dreamed about working in one!"} },
+                {T: 55, S: "umato", A: ActionType.Talk, O: {text: "Is it yours?"} },
+                {T: 57, S: "hime", A: ActionType.Talk, O: {text: "My uncle's. And I've only worked there a week."} },
+                {T: 61, S: "hime", A: ActionType.Talk, O: {text: "What do you do?"} },
+                {T: 64, S: "umato", A: ActionType.Talk, O: {text: "I'm a pilot... but I really want to go to space."} },
+                {T: 68, S: "hime" , A: ActionType.Talk, O: {text: "That's interesting! Is BLU-42 a plane?"} },
+                {T: 72, S: "umato", A: ActionType.Talk, O: {text: "No, it's a planet they discovered -"} },
+                {T: 75, S: "phone", A: ActionType.Talk, O: {text: "*ring* *ring*"} },
+                {T: 77, S: "umato", A: ActionType.Talk, O: {text: "Oh. I have to go! But I'll check out that pet store!"} },
+                {T: 80, S: "telescope" , A: ActionType.Hide},
+                {T: 82, S: "umato", A: ActionType.Talk, O: {text: "It was nice meeting you!"} },
+                {T: 86, S: "umato", A: ActionType.Move, O: {to: "umato_exit"} }                
             ],
             NEXT: "w2d1_cleanup"
         }, {
@@ -492,8 +510,10 @@ export class Levels {
                 START: "08:00",
                 END: "18:00"
             },
-            INTRO: ["As a proud owner of your new pet store,",
-            "make sure each customer gets what they want!"],
+            INTRO: [
+                "As a proud owner of your new pet store,",
+                "make sure each customer gets what they want!"
+            ],
             OUTRO: ["Well done!"],
             NEXT: "Map_02"
         }, {
