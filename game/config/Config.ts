@@ -620,6 +620,9 @@ export class Config {
   };
 
   static ZINDICES = {
+    LEVELMAP: 1,
+    DOOR: 2,
+    CUSTOMERS: 3,
     EFFECTS: 20
   };
 

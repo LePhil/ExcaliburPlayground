@@ -58,6 +58,7 @@ export class Levels {
         { /* TEST */
             NAME: "Test",
             TYPE: Levels.TYPES.NORMAL,
+            CONF: Levels.SETTINGS.STORE_GREY,
             CASSA: {X: 250, Y: 500},
             DOOR:  {X: 800, Y: 595, SPAWN_TIME_S: 5},
             DESIREDITEMS: ["rabbit", "elephant", "giraffe"],
@@ -135,14 +136,14 @@ export class Levels {
             CONF: Levels.SETTINGS.FOREST,
             LOCATIONS: [
                 {Name: "player_entry",   X: 100, Y: 550},
-                {Name: "old_guy_entry",  X: 900, Y: 550},
+                {Name: "uncle_entry",    X: 900, Y: 550},
                 {Name: "player_main",    X: 380, Y: 550},
                 {Name: "player_main_2",  X: 250, Y: 550},
-                {Name: "old_guy_main",   X: 460, Y: 550}
+                {Name: "uncle_main",     X: 460, Y: 550}
             ],
             CHARACTERS: [
                 {Id: "hime", Char: Levels.CHARS.HIME, Initial: "player_entry"},
-                {Id: "uncle", Char: Levels.CHARS.UNCLE, Initial: "old_guy_entry", Opacity: 0}
+                {Id: "uncle", Char: Levels.CHARS.UNCLE, Initial: "uncle_entry", Opacity: 0}
             ],
             PROPS: [],
             SCRIPT: [
@@ -153,24 +154,25 @@ export class Levels {
                 {T: 12, S: "hime", A: ActionType.Talk, O: {text: "My dream, destroyed!", duration: 2} },
                 {T: 14, S: "hime", A: ActionType.Move, O: {to: "player_main"} },
                 {T: 16, S: "hime", A: ActionType.Talk, O: {text: "*sob*", duration: 2} },
-                {T: 22, S: "uncle",A: ActionType.Move, O: {to: "old_guy_main"} },
-                {T: 24, S: "oldguy",A: ActionType.Talk, O: {text: "..."} },
+                {T: 18, S: "uncle",A: ActionType.Show},
+                {T: 20, S: "uncle",A: ActionType.Move, O: {to: "uncle_main"} },
+                {T: 24, S: "uncle",A: ActionType.Talk, O: {text: "..."} },
                 {T: 26, S: "hime", A: ActionType.Talk, O: {text: "*sob*", duration: 2} },
-                {T: 28, S: "oldguy",A: ActionType.Talk, O: {text: "Oh noes! What happened?", duration: 3 } },
+                {T: 28, S: "uncle",A: ActionType.Talk, O: {text: "Oh noes! What happened?", duration: 3 } },
                 {T: 32, S: "hime", A: ActionType.Talk, O: {text: "Uncle!"} },
                 {T: 34, S: "hime", A: ActionType.Talk, O: {text: "I don't know what to do!"} },
                 {T: 37, S: "hime", A: ActionType.Talk, O: {text: "My future is doomed!", duration: 3} },
-                {T: 40, S: "oldguy",A: ActionType.Talk, O: {text: "Oh dear! What a pickle.", duration: 3} },
+                {T: 40, S: "uncle",A: ActionType.Talk, O: {text: "Oh dear! What a pickle.", duration: 3} },
                 {T: 43, S: "hime", A: ActionType.Talk, O: {text: "*sob*", duration: 2} },
-                {T: 44, S: "oldguy",A: ActionType.Talk, O: {text: "But you're in luck!"} },
-                {T: 47, S: "oldguy",A: ActionType.Talk, O: {text: "I'm retiring tomorrow and"} },
-                {T: 50, S: "oldguy",A: ActionType.Talk, O: {text: "am looking for a successor.", duration: 3} },
+                {T: 44, S: "uncle",A: ActionType.Talk, O: {text: "But you're in luck!"} },
+                {T: 47, S: "uncle",A: ActionType.Talk, O: {text: "I'm retiring tomorrow and"} },
+                {T: 50, S: "uncle",A: ActionType.Talk, O: {text: "am looking for a successor.", duration: 3} },
                 {T: 53, S: "hime", A: ActionType.Talk, O: {text: "*sob*", duration: 2} },
                 {T: 55, S: "hime", A: ActionType.Talk, O: {text: "... really? Where?", duration: 2} },
-                {T: 57, S: "oldguy",A: ActionType.Talk, O: {text: "At my Rabbit Store!", duration: 3} },
+                {T: 57, S: "uncle",A: ActionType.Talk, O: {text: "At my Rabbit Store!", duration: 3} },
                 {T: 60, S: "hime", A: ActionType.Talk, O: {text: "I don't know...", duration: 3} },
-                {T: 63, S: "oldguy",A: ActionType.Talk, O: {text: "Humbug! You can start tomorrow!", duration: 3} },
-                {T: 66, S: "oldguy",A: ActionType.Move, O: {to: "old_guy_entry"} }
+                {T: 63, S: "uncle",A: ActionType.Talk, O: {text: "Humbug! You can start tomorrow!", duration: 3} },
+                {T: 66, S: "uncle",A: ActionType.Move, O: {to: "uncle_entry"} }
             ],
             NEXT: "first_day"
         }, { /* NORMAL: First day */
@@ -320,18 +322,19 @@ export class Levels {
             TYPE: Levels.TYPES.CUTSCENE,
             CONF: Levels.SETTINGS.STORE_GREY,
             LOCATIONS: [
-                {Name: "old_guy_entry",  X: 900, Y: 550},
+                {Name: "uncle_entry",  X: 900, Y: 550},
                 {Name: "player_main",    X: 380, Y: 550},
                 {Name: "player_main_2",  X: 250, Y: 550},
-                {Name: "old_guy_main",   X: 460, Y: 550}
+                {Name: "uncle_main",   X: 460, Y: 550}
             ],
             CHARACTERS: [
                 {Id: "hime", Char: Levels.CHARS.HIME, Initial: "player_main"},
-                {Id: "uncle", Char: Levels.CHARS.UNCLE, Initial: "old_guy_entry"}
+                {Id: "uncle", Char: Levels.CHARS.UNCLE, Initial: "uncle_entry", Opacity: 0}
             ],
             PROPS: [],
             SCRIPT: [
-                {T: 2,  S: "uncle", A: ActionType.Move, O: {to: "old_guy_main"} },
+                {T: 1,  S: "uncle", A: ActionType.Show},
+                {T: 2,  S: "uncle", A: ActionType.Move, O: {to: "uncle_main"} },
                 {T: 6,  S: "uncle", A: ActionType.Talk, O: {text: "Hello kiddo!"} },
                 {T: 8,  S: "uncle", A: ActionType.Talk, O: {text: "Very clean!"} },
                 {T: 10, S: "uncle", A: ActionType.Talk, O: {text: "Have you heard the news?"} },
@@ -345,7 +348,8 @@ export class Levels {
                 {T: 38, S: "uncle", A: ActionType.Talk, O: {text: "So maybe catch them quickly if you see one!"} },
                 {T: 42, S: "uncle", A: ActionType.Talk, O: {text: "If you catch one the city will reward you."} },
                 {T: 46, S: "uncle", A: ActionType.Talk, O: {text: "Alright, I have to go. Good luck!"} },
-                {T: 50, S: "uncle", A: ActionType.Move, O: {to: "old_guy_main"} }
+                {T: 50, S: "uncle", A: ActionType.Move, O: {to: "uncle_entry"} },
+                {T: 52, S: "uncle", A: ActionType.Hide},
             ],
             NEXT: "fifth_day_blob"
         }, { /* NORMAL: Fifth day - Blob! */
