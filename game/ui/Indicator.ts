@@ -103,6 +103,10 @@ export class FancyProgressBar extends ex.Actor {
     static Color = ProgressBarColors;
     private _colorRules: any;
     
+    private _leftPartBG: ex.Actor;
+    private _progressBarBG: ex.Actor;
+    private _rightPartBG: ex.Actor;
+
     private _leftPart: ex.Actor;
     private _progressBar: ex.Actor;
     private _rightPart: ex.Actor;
@@ -135,13 +139,17 @@ export class FancyProgressBar extends ex.Actor {
         let midPosX = 0;
         let posY = 0;
 
-        this.add(this.createMiddleBG(midPosX, posY, width, height));
-        this.add(this.createLeftBG(leftPosX, posY, barPartEndWidth, height));
-        this.add(this.createRightBG(rightPosX, posY, barPartEndWidth, height));
+        this._progressBarBG = this.createMiddleBG(midPosX, posY, width, height);
+        this._leftPartBG = this.createLeftBG(leftPosX, posY, barPartEndWidth, height);
+        this._rightPartBG = this.createRightBG(rightPosX, posY, barPartEndWidth, height);
 
         this._progressBar = this.createMiddleBar(leftPosX, posY, width, height);
         this._leftPart = this.createLeftBar(leftPosX, posY, barPartEndWidth, height);
         this._rightPart = this.createRightBar(this.calcXfromPercentage(initialPercentage), posY, width, height);
+
+        this.add(this._progressBarBG);
+        this.add(this._leftPartBG);
+        this.add(this._rightPartBG);
 
         this.add(this._progressBar);
         this.add(this._leftPart);
@@ -268,5 +276,15 @@ export class FancyProgressBar extends ex.Actor {
     public reset(): void {
         this._currentValue = this._initialValue;
         this._setColor();
+    }
+
+    public setZIndex(newIndex: number): void {
+        this._progressBarBG.setZIndex(newIndex);
+        this._leftPartBG.setZIndex(newIndex);
+        this._rightPartBG.setZIndex(newIndex);
+
+        this._progressBar.setZIndex(newIndex+1);
+        this._leftPart.setZIndex(newIndex+1);
+        this._rightPart.setZIndex(newIndex+1);
     }
 }

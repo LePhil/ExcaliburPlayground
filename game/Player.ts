@@ -45,6 +45,21 @@ export class Player extends AbstractPlayer {
       });
   }
 
+  public goToAndDoTask(pos: ex.Vector, duration: number, callback: any) {
+    this.actions
+      .moveTo(pos.x, pos.y, this._speed)
+      .callMethod(() => {
+        this._isBusy = true;
+        this.setDrawing("pickUp");
+      })
+      .delay(duration)
+      .callMethod(() => {
+        this._isBusy = false;
+        this.setDrawing("idle");
+        callback();
+      });
+  }
+
   public goTo(pos: ex.Vector, callback: () => void) {
     this.actions.moveTo(pos.x, pos.y, this._speed).callMethod(callback);
   }

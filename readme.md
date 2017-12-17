@@ -41,7 +41,7 @@ Done!
 * Telescope sprite too small
 
 # Bugs
-* multiUseTask can be solved easily by clicking X times on the TaskItem
+* "solved" taskItems re-appear when changing a level.
 
 # Recently done
 * Re-done buttons with Labels
@@ -92,6 +92,7 @@ Done!
 * cutscenes: background image covers the text (zIndex, probably) (--> text is now at the bottom of the screen.)
 * Speech bubbles or Text in its own container outside of the screen. Text on multi-colored bg just can't be read easily.
 * when restarting a level, levelMap has a higher z-index than task Items...
+* TaskItems now take some time and multiTaskItems have a nicer progressbar
 
 # Won't do
 * If inventory is full, clicks on station should not do anything- No. We'd have to check for Tools in Inventory (in case the station is broken) and if there are actions in the queue to remove some items --> let the user make mistakes!

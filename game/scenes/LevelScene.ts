@@ -216,10 +216,10 @@ export class LevelScene extends ex.Scene {
         if (setup.TASK) {
             this._passed = false;
             if (this._task) {
-                this._task.resetState(setup.TASK, () => this.onTaskCompleted());
-            } else {
-                this._task = Task.Make(this, this._player, setup.TASK, () => this.onTaskCompleted());
+                this._task.cleanup();
+                //this._task.resetState(setup.TASK, () => this.onTaskCompleted());
             }
+            this._task = Task.Make(this, this._player, setup.TASK, () => this.onTaskCompleted());
         } else {
             this._passed = true;    // generally, always pass a level. If there's a task --> only passed when task completed.
         }

@@ -2,7 +2,7 @@ import * as ex from "excalibur";
 import {Config} from "./config/Config";
 import {Resources} from "./config/Resources";
 import {Player} from "./Player";
-import {ProgressBar} from "./ui/Indicator";
+import {ProgressBar, FancyProgressBar} from "./ui/Indicator";
 import {EffectFactory} from "./Effects"
 
 enum TaskTypes {
@@ -134,7 +134,10 @@ class SingleUseTask extends Task {
      * @param taskItem 
      */
     protected onTaskItemClicked = (taskItem: TaskItem) => {
-        this._player.goTo(taskItem.pos, () => {
+        let targetPos = taskItem.pos.clone();
+        targetPos.x -= Config.PLAYER.WIDTH;
+
+        this._player.goToAndDoTask(targetPos, 1000, () => {
             taskItem.onPlayerDone();
 
             this._removeTaskItem(taskItem);
@@ -182,7 +185,10 @@ class MultiUseTask extends Task {
     }
 
     protected onTaskItemClicked = (taskItem: TaskItem) => {
-        this._player.goTo(taskItem.pos, () => {
+        let targetPos = taskItem.pos.clone();
+        targetPos.x -= Config.PLAYER.WIDTH;
+
+        this._player.goToAndDoTask(targetPos, 1000, () => {
             this._nrOfInteractions++;
 
             taskItem.onPlayerProgress(this._nrOfInteractions / this._requiredNrOfInteractions * 100);
@@ -197,6 +203,13 @@ class MultiUseTask extends Task {
     
     public setZIndex(newIndex: number): void {
         this.taskItem.setZIndex(newIndex);
+    }
+
+    public cleanup(): void {
+        if(this.taskItem) {
+            this.taskItem.kill();
+            this.taskItem = null;
+        }
     }
 }
 
@@ -245,13 +258,19 @@ class SingleUseItem extends TaskItem {
 
 // Click = Player should be busy until new target or until a certain amount of time has passed
 class MultiUseItem extends TaskItem {
-    private _bar: ProgressBar;
+    private _bar: FancyProgressBar;
 
     onInitialize(engine: ex.Engine): void {
         super.onInitialize(engine);
 
-        this._bar = new ProgressBar(this.pos, 50, 5);
-        engine.add(this._bar);
+        this._bar = new FancyProgressBar(
+            new ex.Vector(0, this.getHeight()/4), 30, 9, 0, {
+                "15": FancyProgressBar.Color.Red,
+                "30": FancyProgressBar.Color.Yellow,
+                "100": FancyProgressBar.Color.Green
+            }
+        );
+        this.add(this._bar);
     }
 
     public onPlayerProgress(percentageDone: number): void {
@@ -262,5 +281,11 @@ class MultiUseItem extends TaskItem {
         this.scene.add(EffectFactory.Make(EffectFactory.Type.Heart, this.pos));
         this._bar.kill();
         this.kill();
+    }
+
+    public setZIndex(newIndex: number): void {
+        super.setZIndex(newIndex);
+
+        this._bar && this._bar.setZIndex(newIndex+1);
     }
 }
