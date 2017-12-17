@@ -233,6 +233,10 @@ class Prop extends ex.Actor implements Subject {
         let sprite = new ex.Sprite(tex, conf.x, conf.y, conf.w, conf.h);
 
         let scale = conf.w > conf.h ? Config.ITEMS.CONF.W / conf.w : Config.ITEMS.CONF.H / conf.h;
+        if (conf.scale) {
+            scale = conf.scale;
+        }
+
         sprite.scale.setTo(scale, scale);
 
         let darkSprite = sprite.clone();

@@ -433,7 +433,7 @@ export class Levels {
             TASK: {
                 TYPE: Task.Type.SingleUse,
                 AMOUNT: 10,
-                ITEMS: [Config.ITEMS.COBWEBS],
+                ITEMS: [Config.ITEMS.COBWEB_1, Config.ITEMS.COBWEB_2],
                 MOBILITY: TaskItem.Mobility.Stationary,
                 SPAWNING: TaskItem.SpawnBehaviour.AllAtOnce
             },
