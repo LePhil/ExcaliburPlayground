@@ -63,23 +63,12 @@ export class Task {
     public setZIndex(newIndex: number): void {}
 
     protected _generateSpawnPoint(setup: any, index?: number): ex.Vector {
-        let getRandomX = () => {
-            let minX = (Config.GAME.WIDTH - Config.GAME.DEFAULTMAP.W) / 2;
-            let maxX = Config.GAME.WIDTH - minX;
-            return ex.Util.randomIntInRange(minX, maxX);
-        };
-        let getRandomY = () => {
-            let minY = (Config.GAME.HEIGHT - Config.GAME.DEFAULTMAP.H) / 2;
-            let maxY = Config.GAME.HEIGHT - minY;
-            return ex.Util.randomIntInRange(minY, maxY);
-        };
-
         if (index && setup.LOCATIONS && setup.LOCATIONS.length >= index) {
             return new ex.Vector(setup.LOCATIONS[index].X, setup.LOCATIONS[index].Y);
         } else if (setup.LOCATIONS && setup.LOCATIONS.length === 1) {
             return new ex.Vector(setup.LOCATIONS[0].X, setup.LOCATIONS[0].Y);
         } else {
-            return new ex.Vector( getRandomX(), getRandomY());
+            return Config.GetRandomPosition();
         }
     }
 }
