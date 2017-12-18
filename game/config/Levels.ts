@@ -54,7 +54,7 @@ export class Levels {
         },
         GAIA: {
             Name: "Gaia",
-            Type: "Green",
+            Type: "GREEN",
             Color: ex.Color.White
         }
     };
@@ -412,7 +412,7 @@ export class Levels {
                 {Name: "player_main",   X: 380, Y: 550},
                 {Name: "umato_main",    X: 450, Y: 550},
                 {Name: "loc_telescope", X: 520, Y: 550},
-                {Name: "umato_exit",    X: 900, Y: 480},
+                {Name: "umato_exit",    X: 900, Y: 550},
             ],
             CHARACTERS: [
                 {Id: "hime", Char: Levels.CHARS.HIME, Initial: "player_entry"},
@@ -450,7 +450,8 @@ export class Levels {
                 {T: 77, S: "umato", A: ActionType.Talk, O: {text: "Oh. I have to go! But I'll check out that pet store!"} },
                 {T: 80, S: "telescope" , A: ActionType.Hide},
                 {T: 82, S: "umato", A: ActionType.Talk, O: {text: "It was nice meeting you!"} },
-                {T: 86, S: "umato", A: ActionType.Move, O: {to: "umato_exit"} }                
+                {T: 86, S: "umato", A: ActionType.Move, O: {to: "umato_exit"} },
+                {T: 88, S: "umato", A:ActionType.Hide}               
             ],
             NEXT: "w2d1_cleanup"
         }, {
