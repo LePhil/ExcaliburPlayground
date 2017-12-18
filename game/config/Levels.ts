@@ -238,7 +238,7 @@ export class Levels {
             TYPE: Levels.TYPES.NORMAL,
             CONF: Levels.SETTINGS.STORE_GREY,
             CASSA: {X: 250, Y: 500},
-            DOOR:  {X: 800, Y: 595, SPAWN_TIME_S: 8},
+            DOOR:  {X: 800, Y: 595, SPAWN_TIME_S: 6},
             DESIREDITEMS: ["rabbit", "parrot", "pig"],
             ITEMSOURCES: [
                 {X: 700, Y: 400, T: "rabbit", DECAY: false},
@@ -280,8 +280,8 @@ export class Levels {
                 END: "18:00"
             },
             INTRO: [
-                "Word has reached more",
-                "people, it seems!"
+                "Word has reached even",
+                "more people, it seems!"
             ],
             OUTRO: ["Well done again!"],
             NEXT: "trash_everywhere"
@@ -380,7 +380,7 @@ export class Levels {
             TYPE: Levels.TYPES.NORMAL,
             CONF: Levels.SETTINGS.STORE_GREY,
             CASSA: {X: 250, Y: 500},
-            DOOR:  {X: 800, Y: 595, SPAWN_TIME_S: 6},
+            DOOR:  {X: 800, Y: 595, SPAWN_TIME_S: 5},
             DESIREDITEMS: ["rabbit", "parrot", "pig"],
             ITEMSOURCES: [
                 {X: 700, Y: 400, T: "rabbit", DECAY: false},
@@ -446,12 +446,13 @@ export class Levels {
                 {T: 64, S: "umato", A: ActionType.Talk, O: {text: "I'm a pilot... but I really want to go to space."} },
                 {T: 68, S: "hime" , A: ActionType.Talk, O: {text: "That's interesting! Is BLU-42 a plane?"} },
                 {T: 72, S: "umato", A: ActionType.Talk, O: {text: "No, it's a planet they discovered -"} },
-                {T: 75, S: "phone", A: ActionType.Talk, O: {text: "*ring* *ring*"} },
+                {T: 75, S: "phone", A: ActionType.Talk, O: {text: "*buzz* *buzz*"} },
                 {T: 77, S: "umato", A: ActionType.Talk, O: {text: "Oh. I have to go! But I'll check out that pet store!"} },
                 {T: 80, S: "telescope" , A: ActionType.Hide},
-                {T: 82, S: "umato", A: ActionType.Talk, O: {text: "It was nice meeting you!"} },
+                {T: 82, S: "umato", A: ActionType.Talk, O: {text: "It was very nice meeting you!"} },
                 {T: 86, S: "umato", A: ActionType.Move, O: {to: "umato_exit"} },
-                {T: 88, S: "umato", A:ActionType.Hide}               
+                {T: 88, S: "umato", A:ActionType.Hide},
+                {T: 90, S: "hime" , A: ActionType.Talk, O: {text: "Huh. What a handsome guy. Will he really come by?", duration: 4} }
             ],
             NEXT: "w2d1_cleanup"
         }, {
@@ -459,7 +460,7 @@ export class Levels {
             TYPE: Levels.TYPES.NORMAL,
             CONF: Levels.SETTINGS.STORE_GREY,
             CASSA: {X: 250, Y: 500},
-            DOOR:  {X: 800, Y: 595, SPAWN_TIME_S: 6},
+            DOOR:  {X: 800, Y: 595, SPAWN_TIME_S: 5},
             DESIREDITEMS: ["rabbit", "parrot", "pig"],
             ITEMSOURCES: [
                 {X: 700, Y: 400, T: "rabbit", DECAY: false},
@@ -468,6 +469,7 @@ export class Levels {
             ],
             TOOLS: [],
             TASK: {
+                /* TODO: get some good locations, set manually */
                 TYPE: Task.Type.SingleUse,
                 AMOUNT: 10,
                 ITEMS: [Config.ITEMS.COBWEB_1, Config.ITEMS.COBWEB_2],
@@ -482,10 +484,29 @@ export class Levels {
                 END: "18:00"
             },
             INTRO: [
-                "Collect the bounty",
-                "for catching a blob!"
+                "Clean up the store before",
+                "the handsome stranger arrives"
             ],
-            OUTRO: ["Well done!"],
+            OUTRO: [
+                "Well done, and so clean!",
+                "All ready for a visit!"
+            ],
+            NEXT: "off_her_feet"
+        }, { /* CUTSCENE: Swept off her feet */
+            NAME: "off_her_feet",
+            TYPE: Levels.TYPES.CUTSCENE,
+            CONF: Levels.SETTINGS.STORE_GREY,
+            LOCATIONS: [
+                {Name: "door", X: 800, Y: 595},
+                {Name: "cassa", X: 250, Y: 500}
+            ],
+            CHARACTERS: [
+                {Id: "hime", Char: Levels.CHARS.HIME, Initial: "cassa"},
+                {Id: "umato", Char: Levels.CHARS.UMATO, Initial: "cassa", Opacity: 0}
+            ],
+            PROPS: [/* HEART EFFECT IN SCRIPTS? */],
+            SCRIPT: [
+            ],
             NEXT: "Map_01"
         }, {
             NAME: "Map_01",
