@@ -3,7 +3,7 @@ import {AudioManager} from "./AudioManager";
 import {Resources} from "./config/Resources";
 import {Config} from "./config/Config";
 
-enum EffectTypes {
+export enum EffectTypes {
     Heart = "heart",
     Money = "money",
     Firework = "firework"

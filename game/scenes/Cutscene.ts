@@ -4,6 +4,7 @@ import {Config} from "../config/Config";
 import {AbstractPlayer} from "../AbstractPlayer";
 import {LevelMap} from "../LevelMap";
 import {Storage} from "../Storage";
+import {EffectTypes, EffectFactory} from "../Effects";
 import {ActionType, Levels} from "../config/Levels";
 import {Resources} from "../config/Resources";
 
@@ -71,7 +72,8 @@ export class Cutscene extends ex.Scene {
                 characterSetup.Char.Color,
                 locations,
                 characterSetup.Opacity,
-                this._textLabel
+                this._textLabel,
+                this
             );
         });
 
@@ -117,6 +119,7 @@ interface Subject {
     action_talk(text: string, duration: number);
     action_show();
     action_hide();
+    action_effect(type: EffectTypes, at: string);
     reset();
 }
 
@@ -128,6 +131,7 @@ class Character extends AbstractPlayer implements Subject {
     private _initialLocation: Location;
     private _initialOpacity: number;
     private _label: ex.Label;
+    private _scene: ex.Scene;
 
     constructor(initialLocation: Location,
                 name: string,
@@ -135,7 +139,8 @@ class Character extends AbstractPlayer implements Subject {
                 color: ex.Color,
                 locations: any,
                 initialOpacity = 1,
-                label: ex.Label) {
+                label: ex.Label,
+                scene: ex.Scene) {
         super(initialLocation.x, initialLocation.y);
 
         this._initialLocation = initialLocation;
@@ -146,6 +151,7 @@ class Character extends AbstractPlayer implements Subject {
         this._locations = locations;
         this.opacity = initialOpacity;
         this._label = label;
+        this._scene = scene;
     }
 
     action_move(to: string) {
@@ -172,6 +178,17 @@ class Character extends AbstractPlayer implements Subject {
                 this._label.color = ex.Color.White;
             }, duration * 1000);
         }
+    }
+
+    action_effect(type: EffectTypes, at: string) {
+        if (!this._locations[at]) {
+            console.warn(`Location ${at} doesn't exist!`);
+            return;
+        }
+        let at_loc:Location = this._locations[at];
+        console.log(`Creating ${type} effect at ${at_loc.x} / ${at_loc.y}`);
+
+        this._scene.add(EffectFactory.Make(type, new ex.Vector(at_loc.x, at_loc.y)));
     }
 
     action_show() {
@@ -258,6 +275,8 @@ class Prop extends ex.Actor implements Subject {
         this.opacity = 0;
     }
 
+    action_effect(type: EffectTypes, at: string) {}
+
     reset(): void {
         this.actions.clearActions();
         this.setDrawing("normal");
@@ -290,6 +309,9 @@ class Action {
                 break;
             case ActionType.Hide:
                 this.subject.action_hide();
+                break;
+            case ActionType.Effect:
+                this.subject.action_effect(this.options.type, this.options.at);
                 break;
             case ActionType.Show:
                 this.subject.action_show();

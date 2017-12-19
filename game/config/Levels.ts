@@ -2,12 +2,14 @@ import * as ex from "excalibur";
 import {Config} from "./Config";
 import {Storage} from "../Storage";
 import {Task, TaskItem} from "../Task";
+import {EffectTypes, EffectFactory} from "../Effects";
 
 export enum ActionType {
     Move = "move",
     Talk = "talk",
     Hide = "hide",
-    Show = "show"
+    Show = "show",
+    Effect = "effect"
 };
 
 export class Levels {
@@ -498,14 +500,28 @@ export class Levels {
             CONF: Levels.SETTINGS.STORE_GREY,
             LOCATIONS: [
                 {Name: "door", X: 800, Y: 595},
-                {Name: "cassa", X: 250, Y: 500}
+                {Name: "cassa", X: 250, Y: 500},
+                {Name: "station_rabbit", X: 700, Y: 400},
+                {Name: "station_parrot", X: 300, Y: 300},
+                {Name: "station_pig",    X: 600, Y: 300},
             ],
             CHARACTERS: [
-                {Id: "hime", Char: Levels.CHARS.HIME, Initial: "cassa"},
-                {Id: "umato", Char: Levels.CHARS.UMATO, Initial: "cassa", Opacity: 0}
+                {Id: "hime",  Char: Levels.CHARS.HIME,  Initial: "cassa"},
+                {Id: "umato", Char: Levels.CHARS.UMATO, Initial: "cassa", Opacity: 0},
+                {Id: "gaia",  Char: Levels.CHARS.GAIA,  Initial: "cassa", Opacity: 0}
             ],
-            PROPS: [/* HEART EFFECT IN SCRIPTS? */],
+            PROPS: [/* HEART EFFECT IN SCRIPTS? */
+                /* OR JUST A HEART ITEM... */
+            ],
             SCRIPT: [
+                {T: 2, S: "gaia", A: ActionType.Talk, O: {text: "Later that evening..."}},
+                {T: 6, S: "hime", A: ActionType.Talk, O: {text: "I don't think he's coming."} },
+                {T: 10,S: "hime", A: ActionType.Talk, O: {text: "Time to close shop, I guess..."} },
+                {T: 14,S: "hime", A: ActionType.Move, O: {to: "station_parrot"}},
+                {T: 16,S: "gaia", A: ActionType.Effect, O: {type: EffectTypes.Heart, at: "station_parrot"}},
+                {T: 17,S: "hime", A: ActionType.Talk, O: {text: "Good night, parrots."} },
+                {T: 16,S: "hime", A: ActionType.Move, O: {to: "station_rabbit"}},
+                {T: 20,S: "hime", A: ActionType.Move, O: {to: "station_pig"}},
             ],
             NEXT: "Map_01"
         }, {
