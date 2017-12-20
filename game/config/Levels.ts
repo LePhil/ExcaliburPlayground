@@ -510,9 +510,7 @@ export class Levels {
                 {Id: "umato", Char: Levels.CHARS.UMATO, Initial: "cassa", Opacity: 0},
                 {Id: "gaia",  Char: Levels.CHARS.GAIA,  Initial: "cassa", Opacity: 0}
             ],
-            PROPS: [/* HEART EFFECT IN SCRIPTS? */
-                /* OR JUST A HEART ITEM... */
-            ],
+            PROPS: [],
             SCRIPT: [
                 {T: 2, S: "gaia", A: ActionType.Talk, O: {text: "Later that evening..."}},
                 {T: 6, S: "hime", A: ActionType.Talk, O: {text: "I don't think he's coming."} },
@@ -520,8 +518,17 @@ export class Levels {
                 {T: 14,S: "hime", A: ActionType.Move, O: {to: "station_parrot"}},
                 {T: 16,S: "gaia", A: ActionType.Effect, O: {type: EffectTypes.Heart, at: "station_parrot"}},
                 {T: 17,S: "hime", A: ActionType.Talk, O: {text: "Good night, parrots."} },
-                {T: 16,S: "hime", A: ActionType.Move, O: {to: "station_rabbit"}},
-                {T: 20,S: "hime", A: ActionType.Move, O: {to: "station_pig"}},
+                {T: 20,S: "hime", A: ActionType.Move, O: {to: "station_rabbit"}},
+                {T: 21,S: "gaia", A: ActionType.Effect, O: {type: EffectTypes.Heart, at: "station_rabbit"}},
+                {T: 22,S: "hime", A: ActionType.Talk, O: {text: "Good night, rabbits."} },
+                {T: 27,S: "hime", A: ActionType.Move, O: {to: "station_pig"}},
+                {T: 29,S: "gaia", A: ActionType.Effect, O: {type: EffectTypes.Heart, at: "station_pig"}},
+                {T: 30,S: "hime", A: ActionType.Talk, O: {text: "And a good night to you, piggies."} },
+                {T: 34,S:"umato", A: ActionType.Show},
+                {T: 36,S: "hime", A: ActionType.Talk, O: {text: "I really would have loved to see him, piggies."}},
+                {T: 40,S:"umato", A: ActionType.Talk, O: {text: "..."}},
+                {T: 42,S: "gaia", A: ActionType.Talk, O: {text: "*oink* *oink*"}},
+                
             ],
             NEXT: "Map_01"
         }, {

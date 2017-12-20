@@ -31,9 +31,6 @@ Done!
         * make fliers
         * work on computer
     * Blob should probably be a task.
-* weather effects
-    * snowy borders/corners
-    * rain overlay
 * Level selection map with different areas (see mappack --> ice, desert, ... - the classics.) Each area with a different customer type (Desert = yellow, Woods = green, Ice = blue...) - Outdoor party as last level each.
 * maybe it would be easier to remove a scene completely and re-create it instead of resetting and keeping track of everything?
 * unify tools and items? Should be possible to have a Tool from an ItemSource (e.g. crate)
@@ -93,6 +90,7 @@ Done!
 * Speech bubbles or Text in its own container outside of the screen. Text on multi-colored bg just can't be read easily.
 * when restarting a level, levelMap has a higher z-index than task Items...
 * TaskItems now take some time and multiTaskItems have a nicer progressbar
+* Some kind of weather effects (snow/rain overlay)
 
 # Won't do
 * If inventory is full, clicks on station should not do anything- No. We'd have to check for Tools in Inventory (in case the station is broken) and if there are actions in the queue to remove some items --> let the user make mistakes!

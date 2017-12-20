@@ -4,6 +4,7 @@ import {Pos, Button} from "../ui/Button";
 import {Config} from "../config/Config";
 import {Levels} from "../config/Levels";
 import {AudioManager} from "../AudioManager";
+import {EffectTypes, EffectFactory, Effect} from "../Effects";
 
 export class MainMenu extends ex.Scene {
 
@@ -11,6 +12,7 @@ export class MainMenu extends ex.Scene {
     private _optionsButton: Button;
     private _creditsButton: Button;
     private _customButton: Button;
+    private _menuEffect: Effect;
 
     constructor(engine: ex.Engine) {
         super(engine);
@@ -64,9 +66,12 @@ export class MainMenu extends ex.Scene {
 
     onActivate () {
         AudioManager.play("Sound_Intro", true);
+        this._menuEffect = EffectFactory.Make(EffectTypes.Snow);
+        this.add(this._menuEffect);
     }
 
     onDeactivate () {
         AudioManager.stop("Sound_Intro");
+        this._menuEffect && this._menuEffect.kill();
     }
 }

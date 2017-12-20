@@ -6,14 +6,16 @@ import {Config} from "./config/Config";
 export enum EffectTypes {
     Heart = "heart",
     Money = "money",
-    Firework = "firework"
+    Firework = "firework",
+    Snow = "snow",
+    Rain = "rain"
 }
 
 export class EffectFactory {
     static Type = EffectTypes;
 
     static Make(type: EffectTypes,
-                pos: ex.Vector,
+                pos: ex.Vector = new ex.Vector(Config.GAME.WIDTH/2, Config.GAME.HEIGHT/2),
                 duration_s = 1): Effect {
 
         switch (type) {
@@ -21,6 +23,10 @@ export class EffectFactory {
                 return new HeartEffect(pos, duration_s);
             case EffectTypes.Firework:
                 return new FireworkEffect(pos, duration_s);
+            case EffectTypes.Snow:
+                return new SnowEffect(pos, duration_s);
+            case EffectTypes.Rain:
+                return new RainEffect(pos, duration_s);
             case EffectTypes.Money:
             default:
                 return new MoneyEffect(pos, duration_s);
@@ -196,5 +202,58 @@ class FireworkEffect extends Effect {
             emitter.kill();
             this.kill();
         }, this._duration * 1000);
+    }
+}
+
+class SnowEffect extends Effect {
+    onInitialize(engine: ex.Engine): void {
+        let emitter = new ex.ParticleEmitter(0, 0, Config.GAME.WIDTH, Config.GAME.HEIGHT);
+        emitter.emitterType = ex.EmitterType.Rectangle;
+        emitter.minVel = 100;
+        emitter.maxVel = 200;
+        emitter.minAngle = 2.6;
+        emitter.maxAngle = 2.6;
+        emitter.isEmitting = true;
+        emitter.emitRate = 173;
+        emitter.opacity = 1;
+        emitter.fadeFlag = true;
+        emitter.particleLife = 2617;
+        emitter.maxSize = 7;
+        emitter.minSize = 1;
+        emitter.startSize = 0;
+        emitter.endSize = 0;
+        emitter.acceleration = new ex.Vector(0, 16);
+        emitter.beginColor = ex.Color.White;
+        emitter.endColor = ex.Color.Transparent;
+
+        emitter.isEmitting = true;
+        this.scene.add(emitter);
+    }
+}
+
+class RainEffect extends Effect {
+    onInitialize(engine: ex.Engine): void {
+        let emitter = new ex.ParticleEmitter(0, 0, Config.GAME.WIDTH, Config.GAME.HEIGHT);
+        emitter.emitterType = ex.EmitterType.Rectangle;
+        emitter.radius = 167;
+        emitter.minVel = 522;
+        emitter.maxVel = 569;
+        emitter.minAngle = 0.9;
+        emitter.maxAngle = 0.9;
+        emitter.isEmitting = true;
+        emitter.emitRate = 173;
+        emitter.opacity = 1;
+        emitter.fadeFlag = true;
+        emitter.particleLife = 2617;
+        emitter.maxSize = 4;
+        emitter.minSize = 1;
+        emitter.startSize = 2;
+        emitter.endSize = 2;
+        emitter.acceleration = new ex.Vector(0, 37);
+        emitter.beginColor = ex.Color.Blue;
+        emitter.endColor = ex.Color.Transparent;
+
+        emitter.isEmitting = true;
+        this.scene.add(emitter);
     }
 }
