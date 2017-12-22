@@ -157,12 +157,4 @@ export class Player extends AbstractPlayer {
     this.setDrawing("idle");
     this._isBusy = false;
   }
-
-  public checkDrawings(): void {
-    // If the playerColor changed between games, re-set the drawings
-    let playerColor = this.getPlayerColor();
-    if (this.characterColor !== playerColor) {
-      this.setDrawings(playerColor);
-    }
-  }
 }

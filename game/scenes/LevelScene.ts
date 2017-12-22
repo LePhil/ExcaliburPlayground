@@ -49,10 +49,6 @@ export class LevelScene extends ex.Scene {
     onActivate() {
         this._currentScore = 0;
 
-        if (this._player) {
-            this._player.checkDrawings();
-        }
-
         if (this._timeDisplay) {
             this._timeDisplay.setTimer(this._setup.TIME, () => this.onTimerEnded());
             this._timeDisplay.resetState();

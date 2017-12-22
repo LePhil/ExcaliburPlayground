@@ -73,11 +73,7 @@ class PlayerPreview extends ex.Actor {
     
         this._playerTypes = Config.PLAYER.TYPES;
     
-        if (Storage.get("playerColor") ) {
-            this._currentPlayerTypeIndex = this._playerTypes.indexOf(this._playerTypes.filter( type => type.color === Storage.get("playerColor") )[0]);
-        } else {
-            this._currentPlayerTypeIndex = 0;
-        }
+        this._currentPlayerTypeIndex = 0;
     
         let scale = Config.PLAYER.SPRITE_SCALE;
         let spriteSheet = new ex.SpriteSheet(Resources.TexturePlayers, 7, 8, 128, 256);
