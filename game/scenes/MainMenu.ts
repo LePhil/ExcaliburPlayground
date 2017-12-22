@@ -61,6 +61,12 @@ export class MainMenu extends ex.Scene {
                 "Debug Level",
                 () => {engine.goToScene("debug");}
             ));
+
+            this.add(new Button(
+                Pos.make(900, 200),
+                "Debug Outro",
+                () => {engine.goToScene("debug_outro");}
+            ));
         }
     }
 

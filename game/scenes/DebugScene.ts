@@ -5,6 +5,16 @@ import {ProgressBar, FancyProgressBar} from "../ui/Indicator";
 import {EffectFactory} from "../Effects";
 import {Inventory} from "../Inventory";
 import {Player} from "../Player";
+import {EndGameScene} from "./EndGameScene";
+
+export class DebugOutroScene extends ex.Scene {
+    constructor(engine: ex.Engine) {
+        super(engine);
+        //let outro = new EndGameScene(engine);
+        //outro.load({}, 100, true, () => {});
+
+    }
+}
 
 export class DebugScene extends ex.Scene {
 
