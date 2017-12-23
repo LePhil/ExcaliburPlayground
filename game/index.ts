@@ -29,9 +29,6 @@ game.add("credits", new CreditsScene(game));
 game.add("menu", new MainMenu(game));
 game.add("custom", new CustomGameMenu(game));
 
-game.add("debug", new DebugScene(game));
-game.add("debug_outro", new DebugOutroScene(game));
-
 let introScene = new PreGameScene(game);
 game.add("pre", introScene);
 
@@ -43,6 +40,9 @@ game.add("game", gameScene );
 
 let cutScene = new Cutscene(game);
 game.add("cutScene", cutScene );
+
+game.add("debug", new DebugScene(game));
+game.add("debug_outro", new DebugOutroScene(game, endgameScene));
 
 let director = new Director(game, introScene, gameScene, endgameScene);
 

@@ -8,11 +8,22 @@ import {Player} from "../Player";
 import {EndGameScene} from "./EndGameScene";
 
 export class DebugOutroScene extends ex.Scene {
-    constructor(engine: ex.Engine) {
-        super(engine);
-        //let outro = new EndGameScene(engine);
-        //outro.load({}, 100, true, () => {});
+    private outro: EndGameScene;
 
+    constructor(engine: ex.Engine, outro: EndGameScene) {
+        super(engine);
+        this.outro = outro;
+    }
+
+    onInitialize(engine: ex.Engine): void {
+        let setup = { /* TEST */
+            NAME: "Test",
+            OUTRO: ["Well done!"],
+            OUTRO_FAILED: ["You failed the Task :("]
+        };
+
+        this.outro.load(setup, 100, true, () => {engine.goToScene("menu")});
+        engine.goToScene("end");
     }
 }
 
