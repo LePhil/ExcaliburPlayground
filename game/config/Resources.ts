@@ -38,10 +38,10 @@ export class Resources {
     static UIRPGSpriteSheet     = new ex.Texture("game/assets/ui/uipack_rpg.png");
     
     static MedalsSheet          = new ex.Texture("game/assets/textures/medals.png");
-
     static Map_01_first_day     = new ex.Texture("game/assets/textures/map_00.png");
     static Map_intro_01         = new ex.Texture("game/assets/maps/intro.png");
     static Map_forest           = new ex.Texture("game/assets/maps/forest.png");
+    static Grey_Store_Filled    = new ex.Texture("game/assets/maps/grey_store_filled.png");
 
     static Sound_ChaChing       = new ex.Sound("game/assets/sounds/cha_ching.mp3", "game/assets/sounds/cha_ching.wav");
     static Sound_Intro          = new ex.Sound("game/assets/sounds/Whimsical-Popsicle.mp3");

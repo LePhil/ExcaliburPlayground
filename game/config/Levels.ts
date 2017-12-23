@@ -36,6 +36,16 @@ export class Levels {
             IMG: "Map_01_first_day",
             W: 840,
             H: 560
+        },
+        STORE_GREY_FILLED: {
+            IMG: "Grey_Store_Filled",
+            W: 840,
+            H: 560
+        },
+        INTERMEZZO: {
+            IMG: "Intermezzo",
+            W: 840,
+            H: 560
         }
     };
     static CHARS = {
@@ -497,17 +507,19 @@ export class Levels {
         }, { /* CUTSCENE: Swept off her feet */
             NAME: "off_her_feet",
             TYPE: Levels.TYPES.CUTSCENE,
-            CONF: Levels.SETTINGS.STORE_GREY,
+            CONF: Levels.SETTINGS.STORE_GREY_FILLED,
             LOCATIONS: [
                 {Name: "door", X: 800, Y: 595},
                 {Name: "cassa", X: 250, Y: 500},
                 {Name: "station_rabbit", X: 700, Y: 400},
                 {Name: "station_parrot", X: 300, Y: 300},
                 {Name: "station_pig",    X: 600, Y: 300},
+                {Name: "umato_main",     X: 700, Y: 300},
+                {Name: "hime_main",      X: 550, Y: 300}
             ],
             CHARACTERS: [
                 {Id: "hime",  Char: Levels.CHARS.HIME,  Initial: "cassa"},
-                {Id: "umato", Char: Levels.CHARS.UMATO, Initial: "cassa", Opacity: 0},
+                {Id: "umato", Char: Levels.CHARS.UMATO, Initial: "door", Opacity: 0},
                 {Id: "gaia",  Char: Levels.CHARS.GAIA,  Initial: "cassa", Opacity: 0}
             ],
             PROPS: [],
@@ -528,9 +540,31 @@ export class Levels {
                 {T: 36,S: "hime", A: ActionType.Talk, O: {text: "I really would have loved to see him, piggies."}},
                 {T: 40,S:"umato", A: ActionType.Talk, O: {text: "..."}},
                 {T: 42,S: "gaia", A: ActionType.Talk, O: {text: "*oink* *oink*"}},
-                
+                {T: 44,S:"umato", A: ActionType.Move, O: {to: "umato_main"}},
+                {T: 46,S:"umato", A: ActionType.Talk, O: {text: "Hi."}},
+                {T: 48,S: "hime", A: ActionType.Talk, O: {text: "Ah!!!"}},
+                {T: 50,S: "hime", A: ActionType.Move, O: {to: "hime_main"}},
+                {T: 51,S: "hime", A: ActionType.Talk, O: {text: "You came! Oh I'm glad you came!"} },
+                {T: 55,S:"umato", A: ActionType.Talk, O: {text: "I'm happy to see you too."}},
+                {T: 59,S:"umato", A: ActionType.Talk, O: {text: "In fact, I've been thinking about you all day.", duration: 4}},
             ],
             NEXT: "Map_01"
+        }, { /* CUTSCENE: INTERMEZZO - END OF PART 1 */
+            NAME: "intermezzo",
+            TYPE: Levels.TYPES.CUTSCENE,
+            CONF: Levels.SETTINGS.INTERMEZZO,
+            LOCATIONS: [
+                {Name: "any", X: 0, Y: 0}
+            ],
+            CHARACTERS: [
+                {Id: "gaia",  Char: Levels.CHARS.GAIA,  Initial: "any", Opacity: 0}
+            ],
+            PROPS: [
+            ],
+            SCRIPT: [
+                {T: 20, S: "gaia", A: ActionType.Talk, O: {text: "Thank you for playing!"}},
+                {T: 50, S: "gaia", A: ActionType.Talk, O: {text: "See you in part 2, hopefully!", duration: 30}}
+            ]
         }, {
             NAME: "Map_01",
             TYPE: Levels.TYPES.NORMAL,
