@@ -301,7 +301,7 @@ export class Config {
       W: 840,
       H: 560
     },
-    DEBUG: true,
+    DEBUG: false,
     DEBUG_PLAYERS: false,
     UI: {
       FONTSIZE: 24,

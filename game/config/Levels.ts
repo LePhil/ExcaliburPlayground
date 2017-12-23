@@ -548,7 +548,7 @@ export class Levels {
                 {T: 55,S:"umato", A: ActionType.Talk, O: {text: "I'm happy to see you too."}},
                 {T: 59,S:"umato", A: ActionType.Talk, O: {text: "In fact, I've been thinking about you all day.", duration: 4}},
             ],
-            NEXT: "Map_01"
+            NEXT: "intermezzo"
         }, { /* CUTSCENE: INTERMEZZO - END OF PART 1 */
             NAME: "intermezzo",
             TYPE: Levels.TYPES.CUTSCENE,

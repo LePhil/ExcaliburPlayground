@@ -42,6 +42,7 @@ export class Resources {
     static Map_intro_01         = new ex.Texture("game/assets/maps/intro.png");
     static Map_forest           = new ex.Texture("game/assets/maps/forest.png");
     static Grey_Store_Filled    = new ex.Texture("game/assets/maps/grey_store_filled.png");
+    static Intermezzo           = new ex.Texture("game/assets/maps/intermezzo.png");
 
     static Sound_ChaChing       = new ex.Sound("game/assets/sounds/cha_ching.mp3", "game/assets/sounds/cha_ching.wav");
     static Sound_Intro          = new ex.Sound("game/assets/sounds/Whimsical-Popsicle.mp3");
