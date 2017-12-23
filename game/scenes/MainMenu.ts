@@ -2,12 +2,12 @@ declare var globals: any;
 import * as ex from "excalibur";
 import {Pos, Button} from "../ui/Button";
 import {Config} from "../config/Config";
+import {Resources} from "../config/Resources";
 import {Levels} from "../config/Levels";
 import {AudioManager} from "../AudioManager";
 import {EffectTypes, EffectFactory, Effect} from "../Effects";
 
 export class MainMenu extends ex.Scene {
-
     private _startButton: Button;
     private _optionsButton: Button;
     private _creditsButton: Button;
@@ -68,6 +68,11 @@ export class MainMenu extends ex.Scene {
                 () => {engine.goToScene("debug_outro");}
             ));
         }
+
+        let logo = new ex.UIActor(Config.GAME.WIDTH/2, 100, 570, 202);
+        logo.addDrawing(Resources.Logo);
+        logo.anchor.setTo(.5, .5);
+        this.add(logo);
     }
 
     onActivate () {
