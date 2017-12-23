@@ -305,6 +305,7 @@ export class Config {
     DEBUG_PLAYERS: false,
     UI: {
       FONTSIZE: 24,
+      TEXTCOLOR: ex.Color.Black,
       GUTTER: 8,
       CHECKBOX: {W: 38, H: 36},
       RADIO: {W: 36, H: 36},

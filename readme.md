@@ -38,6 +38,7 @@ Done!
 * Score Screen overhaul
 * Finish story for Part 1
 * "intermezzo" scene
+* left-looking idle when last walked left (+action for cutscene)
 
 # Bugs
 * "solved" taskItems re-appear when changing a level.

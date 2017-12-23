@@ -16,7 +16,7 @@ export class DebugOutroScene extends ex.Scene {
     }
 
     onInitialize(engine: ex.Engine): void {
-        let setup = { /* TEST */
+        let setup = {
             NAME: "Test",
             OUTRO: ["Well done!"],
             OUTRO_FAILED: ["You failed the Task :("]

@@ -7,19 +7,9 @@ export class Blob extends ex.Actor {
   private _speed: number;
 
   constructor(setup: any, callback: (results: number) => void) {
-    let getRandomX = () => {
-      let minX = (Config.GAME.WIDTH - setup.W) / 2;
-      let maxX = Config.GAME.WIDTH - minX;
-      return ex.Util.randomIntInRange(minX, maxX);
-    };
-    let getRandomY = () => {
-      let minY = (Config.GAME.HEIGHT - setup.H) / 2;
-      let maxY = Config.GAME.HEIGHT - minY;
-      return ex.Util.randomIntInRange(minY, maxY);
-    };
     
-    let initialX = getRandomX(),
-        initialY = getRandomY();
+    let initialX = Config.GetRandomPosition().x,
+        initialY = Config.GetRandomPosition().y;
 
     super(initialX, initialY,
           Config.BLOB.WIDTH,
@@ -30,7 +20,7 @@ export class Blob extends ex.Actor {
 
     let nrOfPoints = ex.Util.randomIntInRange(3, 6);
     for(let i = 0; i < nrOfPoints; i++) {
-      this.actions.moveTo(getRandomX(), getRandomY(), this._speed).delay(500);
+      this.actions.moveTo(Config.GetRandomPosition().x, Config.GetRandomPosition().y, this._speed).delay(500);
     }
     this.actions.moveTo(initialX, initialY, this._speed).delay(500);
     this.actions.repeatForever();
