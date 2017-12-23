@@ -6,6 +6,7 @@ import {Medal} from "../ui/Medal";
 import {Config} from "../config/Config";
 import {Resources} from "../config/Resources";
 import {Storage, SavedLevelData} from "../Storage";
+import {EffectTypes, EffectFactory, Effect} from "../Effects";
 
 export class EndGameScene extends ex.Scene {
     private _textOverlay: TextOverlay;  
@@ -14,6 +15,7 @@ export class EndGameScene extends ex.Scene {
     private _digits:Array<Digit>;
     private _button: Button;
     private _medal: Medal;
+    private effect: Effect;
 
     constructor(engine: ex.Engine) {
         super(engine);
@@ -51,6 +53,9 @@ export class EndGameScene extends ex.Scene {
             () => {}
         );
         this.add(this._button);
+
+        this.effect = EffectFactory.Make(EffectTypes.Firework);
+        this.add(this.effect);
     }
 
     onInitialize(engine: ex.Engine) {
@@ -125,11 +130,18 @@ export class EndGameScene extends ex.Scene {
                 this._medal.pos.setTo(digitStartX + 150, pos_y+20);
                 this._medal.visible = true;
 
-
                 this._medal.setValueByNumber(scoreCounter);
             }
 
             pos_y += Config.DIGIT_HEIGHT;
+        }
+
+        if (this.effect) {
+            if (passed) {
+                this.effect.play();
+            } else {
+                this.effect.pause();
+            }
         }
     }
 }

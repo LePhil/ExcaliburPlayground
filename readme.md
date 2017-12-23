@@ -35,13 +35,13 @@ Done!
 * maybe it would be easier to remove a scene completely and re-create it instead of resetting and keeping track of everything?
 * unify tools and items? Should be possible to have a Tool from an ItemSource (e.g. crate)
 * Passed/Failed on LevelEnd (indication + maybe only be able to continue if passed?)
-* Score Screen overhaul
 * Finish story for Part 1
 * "intermezzo" scene
 * left-looking idle when last walked left (+action for cutscene)
 
 # Bugs
 * "solved" taskItems re-appear when changing a level.
+* pausing the Effect on the EndgameScene doesn't work (init of concrete type happens after pausing...)
 
 # Recently done
 * Re-done buttons with Labels
@@ -96,6 +96,7 @@ Done!
 * Some kind of weather effects (snow/rain overlay)
 * works in Electron now <3
 * added logo
+* Score Screen overhaul
 
 # Won't do
 * If inventory is full, clicks on station should not do anything- No. We'd have to check for Tools in Inventory (in case the station is broken) and if there are actions in the queue to remove some items --> let the user make mistakes!

@@ -24,8 +24,9 @@ export class DebugOutroScene extends ex.Scene {
             OUTRO: ["Well done!"],
             OUTRO_FAILED: ["You failed the Task :("]
         };
+        let passed = false;
 
-        this.outro.load(setup, 90, true, () => {this.engine.goToScene("menu")});
+        this.outro.load(setup, 90, passed, () => {this.engine.goToScene("menu")});
         this.engine.goToScene("end");
     }
 }

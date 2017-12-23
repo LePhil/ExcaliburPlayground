@@ -36,10 +36,23 @@ export class EffectFactory {
 
 export class Effect extends ex.Actor {
     protected _duration: number;
+    protected emitter: ex.ParticleEmitter;
 
     constructor(pos: ex.Vector, duration: number) {
         super(pos.x, pos.y, 0, 0);
         this._duration = duration;
+    }
+
+    public pause():void {
+        if (this.emitter) {
+            this.emitter.isEmitting = false;
+        }
+    }
+
+    public play():void {
+        if (this.emitter) {
+            this.emitter.isEmitting = true;
+        }
     }
 }
 
@@ -48,32 +61,32 @@ class HeartEffect extends Effect {
         let tex  = Resources.HUDSpriteSheet;
         let conf = Config.HUD.hud_heartFull;
         let sprite = new ex.Sprite(tex, conf.x, conf.y, conf.w, conf.h);
-        let emitter = new ex.ParticleEmitter(this.pos.x, this.pos.y);
+        this.emitter = new ex.ParticleEmitter(this.pos.x, this.pos.y);
 
-        emitter.particleSprite = sprite;
-        emitter.radius = 60;        
-        emitter.minVel = 30;
-        emitter.maxVel = 50;
-        emitter.minAngle = 3.6;
-        emitter.maxAngle = 5.9;
-        emitter.isEmitting = true;
-        emitter.emitRate = 10;
-        emitter.opacity = 0.4;
-        emitter.fadeFlag = true;
-        emitter.particleLife = 1000;
-        emitter.maxSize = .6;
-        emitter.minSize = .3;
-        emitter.acceleration = new ex.Vector(0, 0);
+        this.emitter.particleSprite = sprite;
+        this.emitter.radius = 60;        
+        this.emitter.minVel = 30;
+        this.emitter.maxVel = 50;
+        this.emitter.minAngle = 3.6;
+        this.emitter.maxAngle = 5.9;
+        this.emitter.isEmitting = true;
+        this.emitter.emitRate = 10;
+        this.emitter.opacity = 0.4;
+        this.emitter.fadeFlag = true;
+        this.emitter.particleLife = 1000;
+        this.emitter.maxSize = .6;
+        this.emitter.minSize = .3;
+        this.emitter.acceleration = new ex.Vector(0, 0);
 
         // TODO: some kind of bubbly sound for the hearts?
         //AudioManager.play("Sound_Fireworks");
 
-        emitter.isEmitting = true;
-        this.scene.add(emitter);
+        this.emitter.isEmitting = true;
+        this.scene.add(this.emitter);
 
         setTimeout(() => {
-            emitter.isEmitting = false;
-            emitter.kill();
+            this.emitter.isEmitting = false;
+            this.emitter.kill();
             this.kill();
         }, this._duration * 1000);
     }
@@ -84,31 +97,31 @@ class MoneyEffect extends Effect {
         let tex  = Resources.HUDSpriteSheet;
         let conf = Config.HUD.hud_coins;
         let sprite = new ex.Sprite(tex, conf.x, conf.y, conf.w, conf.h);
-        let emitter = new ex.ParticleEmitter(this.pos.x, this.pos.y);
+        this.emitter = new ex.ParticleEmitter(this.pos.x, this.pos.y);
 
-        emitter.particleSprite = sprite;
-        emitter.emitterType = ex.EmitterType.Circle;
-        emitter.radius = 60;        
-        emitter.minVel = 20;
-        emitter.maxVel = 60;
-        emitter.minAngle = 3.6;
-        emitter.maxAngle = 5.9;
-        emitter.isEmitting = true;
-        emitter.emitRate = 15;
-        emitter.opacity = 0.4;
-        emitter.fadeFlag = true;
-        emitter.particleLife = 1000;
-        emitter.maxSize = .6;
-        emitter.minSize = .3;
-        emitter.acceleration = new ex.Vector(0, 0);
+        this.emitter.particleSprite = sprite;
+        this.emitter.emitterType = ex.EmitterType.Circle;
+        this.emitter.radius = 60;        
+        this.emitter.minVel = 20;
+        this.emitter.maxVel = 60;
+        this.emitter.minAngle = 3.6;
+        this.emitter.maxAngle = 5.9;
+        this.emitter.isEmitting = true;
+        this.emitter.emitRate = 15;
+        this.emitter.opacity = 0.4;
+        this.emitter.fadeFlag = true;
+        this.emitter.particleLife = 1000;
+        this.emitter.maxSize = .6;
+        this.emitter.minSize = .3;
+        this.emitter.acceleration = new ex.Vector(0, 0);
 
-        emitter.isEmitting = true;
-        this.scene.add(emitter);
+        this.emitter.isEmitting = true;
+        this.scene.add(this.emitter);
 
         AudioManager.play("Sound_ChaChing");
 
         setTimeout(() => {
-            emitter.kill();
+            this.emitter.kill();
             this.kill();
         }, this._duration * 1000);
     }
@@ -139,40 +152,40 @@ class FireworkEffect extends Effect {
             ex.Color.Violet
         ];
 
-        let emitter = new ex.ParticleEmitter(this.pos.x, this.pos.y);
-        emitter.emitterType = ex.EmitterType.Circle;
+        this.emitter = new ex.ParticleEmitter(this.pos.x, this.pos.y);
+        this.emitter.emitterType = ex.EmitterType.Circle;
 
         if (this._size === FireworkSize.Big) {
-            emitter.radius = 6;
-            emitter.minVel = 90;
-            emitter.maxVel = 200;
-            emitter.maxSize = 9;
-            emitter.minSize = 3;
-            emitter.startSize = 9;
-            emitter.endSize = 8;
-            emitter.emitRate = 179;
+            this.emitter.radius = 6;
+            this.emitter.minVel = 90;
+            this.emitter.maxVel = 200;
+            this.emitter.maxSize = 9;
+            this.emitter.minSize = 3;
+            this.emitter.startSize = 9;
+            this.emitter.endSize = 8;
+            this.emitter.emitRate = 179;
         } else {
-            emitter.radius = 3;
-            emitter.minVel = 60;
-            emitter.maxVel = 170;
-            emitter.maxSize = 7;
-            emitter.minSize = 2;
-            emitter.startSize = 7;
-            emitter.endSize = 6;
-            emitter.emitRate = 150;
+            this.emitter.radius = 3;
+            this.emitter.minVel = 60;
+            this.emitter.maxVel = 170;
+            this.emitter.maxSize = 7;
+            this.emitter.minSize = 2;
+            this.emitter.startSize = 7;
+            this.emitter.endSize = 6;
+            this.emitter.emitRate = 150;
         }
 
-        emitter.minAngle = 0;
-        emitter.maxAngle = 6.2;
-        emitter.isEmitting = true;
-        emitter.opacity = 0.5;
-        emitter.fadeFlag = true;
-        emitter.particleLife = 1000;
-        emitter.acceleration = new ex.Vector(0, 0);
-        emitter.beginColor = colors[ex.Util.randomIntInRange(0, colors.length - 1)];
-        emitter.endColor = ex.Color.Transparent;
+        this.emitter.minAngle = 0;
+        this.emitter.maxAngle = 6.2;
+        this.emitter.isEmitting = true;
+        this.emitter.opacity = 0.5;
+        this.emitter.fadeFlag = true;
+        this.emitter.particleLife = 1000;
+        this.emitter.acceleration = new ex.Vector(0, 0);
+        this.emitter.beginColor = colors[ex.Util.randomIntInRange(0, colors.length - 1)];
+        this.emitter.endColor = ex.Color.Transparent;
         
-        this.scene.add(emitter);
+        this.scene.add(this.emitter);
         this.setZIndex(Config.ZINDICES.EFFECTS);
 
         if (this._size === FireworkSize.Big) {
@@ -199,7 +212,7 @@ class FireworkEffect extends Effect {
         }
 
         setTimeout(() => {
-            emitter.kill();
+            this.emitter.kill();
             this.kill();
         }, this._duration * 1000);
     }
@@ -207,53 +220,53 @@ class FireworkEffect extends Effect {
 
 class SnowEffect extends Effect {
     onInitialize(engine: ex.Engine): void {
-        let emitter = new ex.ParticleEmitter(0, 0, Config.GAME.WIDTH, Config.GAME.HEIGHT);
-        emitter.emitterType = ex.EmitterType.Rectangle;
-        emitter.minVel = 100;
-        emitter.maxVel = 200;
-        emitter.minAngle = 2.6;
-        emitter.maxAngle = 2.6;
-        emitter.isEmitting = true;
-        emitter.emitRate = 173;
-        emitter.opacity = 1;
-        emitter.fadeFlag = true;
-        emitter.particleLife = 2617;
-        emitter.maxSize = 7;
-        emitter.minSize = 1;
-        emitter.startSize = 0;
-        emitter.endSize = 0;
-        emitter.acceleration = new ex.Vector(0, 16);
-        emitter.beginColor = ex.Color.White;
-        emitter.endColor = ex.Color.Transparent;
+        this.emitter = new ex.ParticleEmitter(0, 0, Config.GAME.WIDTH, Config.GAME.HEIGHT);
+        this.emitter.emitterType = ex.EmitterType.Rectangle;
+        this.emitter.minVel = 100;
+        this.emitter.maxVel = 200;
+        this.emitter.minAngle = 2.6;
+        this.emitter.maxAngle = 2.6;
+        this.emitter.isEmitting = true;
+        this.emitter.emitRate = 173;
+        this.emitter.opacity = 1;
+        this.emitter.fadeFlag = true;
+        this.emitter.particleLife = 2617;
+        this.emitter.maxSize = 7;
+        this.emitter.minSize = 1;
+        this.emitter.startSize = 0;
+        this.emitter.endSize = 0;
+        this.emitter.acceleration = new ex.Vector(0, 16);
+        this.emitter.beginColor = ex.Color.White;
+        this.emitter.endColor = ex.Color.Transparent;
 
-        emitter.isEmitting = true;
-        this.scene.add(emitter);
+        this.emitter.isEmitting = true;
+        this.scene.add(this.emitter);
     }
 }
 
 class RainEffect extends Effect {
     onInitialize(engine: ex.Engine): void {
-        let emitter = new ex.ParticleEmitter(0, 0, Config.GAME.WIDTH, Config.GAME.HEIGHT);
-        emitter.emitterType = ex.EmitterType.Rectangle;
-        emitter.radius = 167;
-        emitter.minVel = 522;
-        emitter.maxVel = 569;
-        emitter.minAngle = 0.9;
-        emitter.maxAngle = 0.9;
-        emitter.isEmitting = true;
-        emitter.emitRate = 173;
-        emitter.opacity = 1;
-        emitter.fadeFlag = true;
-        emitter.particleLife = 2617;
-        emitter.maxSize = 4;
-        emitter.minSize = 1;
-        emitter.startSize = 2;
-        emitter.endSize = 2;
-        emitter.acceleration = new ex.Vector(0, 37);
-        emitter.beginColor = ex.Color.Blue;
-        emitter.endColor = ex.Color.Transparent;
+        this.emitter = new ex.ParticleEmitter(0, 0, Config.GAME.WIDTH, Config.GAME.HEIGHT);
+        this.emitter.emitterType = ex.EmitterType.Rectangle;
+        this.emitter.radius = 167;
+        this.emitter.minVel = 522;
+        this.emitter.maxVel = 569;
+        this.emitter.minAngle = 0.9;
+        this.emitter.maxAngle = 0.9;
+        this.emitter.isEmitting = true;
+        this.emitter.emitRate = 173;
+        this.emitter.opacity = 1;
+        this.emitter.fadeFlag = true;
+        this.emitter.particleLife = 2617;
+        this.emitter.maxSize = 4;
+        this.emitter.minSize = 1;
+        this.emitter.startSize = 2;
+        this.emitter.endSize = 2;
+        this.emitter.acceleration = new ex.Vector(0, 37);
+        this.emitter.beginColor = ex.Color.Blue;
+        this.emitter.endColor = ex.Color.Transparent;
 
-        emitter.isEmitting = true;
-        this.scene.add(emitter);
+        this.emitter.isEmitting = true;
+        this.scene.add(this.emitter);
     }
 }
