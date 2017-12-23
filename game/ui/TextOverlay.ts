@@ -5,7 +5,7 @@ export class TextOverlay extends ex.UIActor {
 
     private _labels: Array<ex.Label>;
 
-    constructor() {
+    constructor(color: ex.Color = ex.Color.White ) {
         let w = Config.GAME.UI.OVERLAY.W;
         let h = Config.GAME.UI.OVERLAY.H;
         let x = (Config.GAME.WIDTH - w) / 2;
@@ -13,7 +13,13 @@ export class TextOverlay extends ex.UIActor {
 
         super(x, y, w, h);
 
-        this.color = ex.Color.White;
+        let bg = new ex.UIActor(w/2,h/2,w,h);
+        bg.color = color;
+        bg.anchor.setTo(.5, .5);
+        this.add(bg);
+        if(color === ex.Color.Transparent) {
+            bg.opacity = .4;
+        }
 
         this._labels = [];
     }

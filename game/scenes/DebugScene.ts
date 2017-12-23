@@ -12,18 +12,21 @@ export class DebugOutroScene extends ex.Scene {
 
     constructor(engine: ex.Engine, outro: EndGameScene) {
         super(engine);
+
         this.outro = outro;
     }
 
-    onInitialize(engine: ex.Engine): void {
+    onInitialize(engine: ex.Engine): void {}
+
+    onActivate() {
         let setup = {
             NAME: "Test",
             OUTRO: ["Well done!"],
             OUTRO_FAILED: ["You failed the Task :("]
         };
 
-        this.outro.load(setup, 100, true, () => {engine.goToScene("menu")});
-        engine.goToScene("end");
+        this.outro.load(setup, 90, true, () => {this.engine.goToScene("menu")});
+        this.engine.goToScene("end");
     }
 }
 

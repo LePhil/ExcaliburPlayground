@@ -73,16 +73,17 @@ export class MainMenu extends ex.Scene {
         logo.addDrawing(Resources.Logo);
         logo.anchor.setTo(.5, .5);
         this.add(logo);
-    }
 
-    onActivate () {
-        AudioManager.play("Sound_Intro", true);
+        // JINGLE BELLS JINGLE BELLS JINGLE ALL THE WAY
         this._menuEffect = EffectFactory.Make(EffectTypes.Snow);
         this.add(this._menuEffect);
     }
 
+    onActivate () {
+        AudioManager.play("Sound_Intro", true);
+    }
+
     onDeactivate () {
         AudioManager.stop("Sound_Intro");
-        this._menuEffect && this._menuEffect.kill();
     }
 }

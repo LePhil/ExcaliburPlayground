@@ -554,7 +554,7 @@ export class Config {
     window:                 {x:72, y: 0, w: 70, h: 70}
   };
 
-  static DIGIT_WIDTH = 50;
+  static DIGIT_WIDTH = 45;
   static DIGIT_HEIGHT = 45;
   static SCORE = {
     VALUE_OF_SERVING: 20
