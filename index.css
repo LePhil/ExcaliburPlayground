@@ -7,3 +7,156 @@ body {
 body {
 	font-family: -apple-system, 'Helvetica Neue', Helvetica, sans-serif;
 }
+
+
+.sprite-elem {
+	background-color: transparent;
+    border: none;
+    background-repeat: no-repeat;
+	background-position: center;
+	font-size: 20px;
+}
+
+.sprite-elem--blue {
+	background-image: url("game/assets/ui/sprites/blueSheet.png");
+}
+
+.boxCheckmark--blue{
+	background-position: -380px -36px;
+	width: 38px;
+	height: 36px;
+}
+.boxCross--blue{
+	background-position: -380px -0px;
+	width: 38px;
+	height: 36px;
+}
+.boxTick--blue{
+	background-position: -386px -210px;
+	width: 36px;
+	height: 36px;
+}
+
+.button00--blue{
+	background-position: -0px -94px;
+	width: 190px;
+	height: 49px;
+    line-height: 49px;
+}
+.button00--blue:hover {
+    background-position: -190px -49px;
+    height: 45px;
+    margin-top: 4px;
+}
+
+.button02--blue {
+	background-position: -190px -0px;
+	width: 190px;
+	height: 49px;
+    line-height: 49px;
+}
+.button02--blue:hover {
+	background-position: -0px -49px;
+	height: 45px;
+	margin-top: 4px;
+}
+
+
+
+
+
+.button04--blue{
+	background-position: -0px -0px;
+	width: 190px;
+	height: 49px;
+}
+.button05--blue{
+	background-position: -0px -192px;
+	width: 190px;
+	height: 45px;
+}
+.button06--blue{
+	background-position: -288px -194px;
+	width: 49px;
+	height: 49px;
+}
+.button07--blue{
+	background-position: -239px -194px;
+	width: 49px;
+	height: 49px;
+}
+.button08--blue{
+	background-position: -190px -194px;
+	width: 49px;
+	height: 45px;
+}
+.button09--blue{
+	background-position: -339px -94px;
+	width: 49px;
+	height: 49px;
+}
+.button10--blue{
+	background-position: -290px -94px;
+	width: 49px;
+	height: 45px;
+}
+.button11--blue{
+	background-position: -337px -184px;
+	width: 49px;
+	height: 49px;
+}
+.button12--blue{
+	background-position: -290px -139px;
+	width: 49px;
+	height: 45px;
+}
+.button13--blue{
+	background-position: -0px -143px;
+	width: 190px;
+	height: 49px;
+}
+.checkmark--blue{
+	background-position: -337px -233px;
+	width: 21px;
+	height: 20px;
+}
+.circle--blue{
+	background-position: -386px -174px;
+	width: 36px;
+	height: 36px;
+}
+.cross--blue{
+	background-position: -0px -237px;
+	width: 18px;
+	height: 18px;
+}
+.panel--blue{
+	background-position: -190px -94px;
+	width: 100px;
+	height: 100px;
+}
+.sliderDown--blue{
+	background-position: -416px -72px;
+	width: 28px;
+	height: 42px;
+}
+.sliderLeft--blue{
+	background-position: -339px -143px;
+	width: 39px;
+	height: 31px;
+}
+.sliderRight--blue{
+	background-position: -378px -143px;
+	width: 39px;
+	height: 31px;
+}
+.sliderUp--blue{
+	background-position: -388px -72px;
+	width: 28px;
+	height: 42px;
+}
+.tick--blue{
+	background-position: -18px -239px;
+	width: 17px;
+	height: 17px;
+}
