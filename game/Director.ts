@@ -51,8 +51,9 @@ export class Director {
     // A level set consists of an intro level, a game level and an endgame scene. The director is responsible for creating and switching between these levels.
     public loadLevelSet(mapName: string):void {
         let setup = this.loadLevelData(mapName);
-
+        
         if (setup.INTRO) {
+            (document.getElementsByClassName("dlg--start")[0] as HTMLElement).style.display = "block";
             this._intro.load(setup, () => this.onIntroDone());
             this._engine.goToScene("pre");
         } else {
@@ -69,6 +70,7 @@ export class Director {
     }
 
     public onIntroDone():void {
+        (document.getElementsByClassName("dlg--start")[0] as HTMLElement).style.display = "none";
         this._game.load(this._levelData, (results, passed) => this.onGameDone(results, passed));
         this._engine.goToScene("game");
     }
