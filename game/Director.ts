@@ -54,6 +54,11 @@ export class Director {
         
         if (setup.INTRO) {
             (document.getElementsByClassName("dlg--start")[0] as HTMLElement).style.display = "block";
+            (document.getElementsByClassName("dlg__title")[0] as HTMLElement).innerHTML = setup.NAME;
+            (document.getElementsByClassName("dlg__btn")[0] as HTMLElement).addEventListener("click", () => {
+                this.onIntroDone();
+            });
+
             this._intro.load(setup, () => this.onIntroDone());
             this._engine.goToScene("pre");
         } else {
