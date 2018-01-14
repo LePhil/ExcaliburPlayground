@@ -3,7 +3,6 @@ import * as ex from "excalibur";
 import {ScoreCounter, CountdownTimer} from "./Timer";
 import {Levels} from "./config/Levels";
 
-import {PreGameScene} from "./scenes/PreGameScene";
 import {LevelScene} from "./scenes/LevelScene";
 import {EndGameScene} from "./scenes/EndGameScene";
 import {HTMLDialogue} from "./ui/HTMLDialogue";
@@ -15,13 +14,11 @@ export class Director {
     private _htmlDialogue: HTMLDialogue;
 
     private _engine: ex.Engine;
-    private _intro: PreGameScene;
     private _game: LevelScene;
     private _outro: EndGameScene;
 
-    constructor(game: ex.Engine, introScene: PreGameScene, gameScene: LevelScene, outroScene: EndGameScene) {
+    constructor(game: ex.Engine, gameScene: LevelScene, outroScene: EndGameScene) {
         this._engine = game;
-        this._intro = introScene;
         this._game = gameScene;
         this._outro = outroScene;
         this._htmlDialogue = new HTMLDialogue();
@@ -56,11 +53,14 @@ export class Director {
         let setup = this.loadLevelData(mapName);
         
         if (setup.INTRO) {
-            this._htmlDialogue.setup(setup, () => this.onIntroDone());
+            this._htmlDialogue.setup(
+                setup,
+                () => this.onIntroDone(),
+                () => {
+                    this._htmlDialogue.hide();
+                }
+            );
             this._htmlDialogue.show();
-
-            this._intro.load(setup, () => this.onIntroDone());
-            this._engine.goToScene("pre");
         } else {
             this._game.load(setup, this.onGameDone);
             this._engine.goToScene("game");

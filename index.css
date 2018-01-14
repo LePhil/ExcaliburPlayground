@@ -8,6 +8,50 @@ body {
 	font-family: -apple-system, 'Helvetica Neue', Helvetica, sans-serif;
 }
 
+.dlg--start {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background-color: white;
+}
+
+.dlg__wrapper {
+    height: calc(560px - 32px);
+    width: calc(840px - 32px);
+	padding: 16px;
+	background-color: white;
+	position: absolute;
+	top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+	
+	-webkit-box-shadow: 0px 16px 24px 8px rgba(179,179,179,0.64);
+	-moz-box-shadow: 0px 16px 24px 8px rgba(179,179,179,0.64);
+	box-shadow: 0px 16px 24px 8px rgba(179,179,179,0.64);	
+}
+
+.dlg__btn-wrapper {
+    position: absolute;
+    bottom: 16px;
+    width: calc(100% - 32px);
+}
+
+.dlg__btn {
+    margin-right: 16px;
+}
+
+.dlg__btn--right {
+    float: right;
+    margin-left: 16px;
+    margin-right: 0;
+}
+
+.dlg__title {
+    text-align: center;
+}
+
 
 .sprite-elem {
 	background-color: transparent;
@@ -16,6 +60,8 @@ body {
 	background-position: center;
 	font-size: 20px;
 }
+
+
 
 .sprite-elem--blue {
 	background-image: url("game/assets/ui/sprites/blueSheet.png");
@@ -41,9 +87,9 @@ body {
 	background-position: -0px -94px;
 	width: 190px;
 	height: 49px;
-    line-height: 49px;
 }
-.button00--blue:hover {
+
+.button01--blue {
     background-position: -190px -49px;
     height: 45px;
     margin-top: 4px;
@@ -53,17 +99,13 @@ body {
 	background-position: -190px -0px;
 	width: 190px;
 	height: 49px;
-    line-height: 49px;
 }
-.button02--blue:hover {
+
+.button03--blue {
 	background-position: -0px -49px;
 	height: 45px;
 	margin-top: 4px;
 }
-
-
-
-
 
 .button04--blue{
 	background-position: -0px -0px;
@@ -157,6 +199,144 @@ body {
 }
 .tick--blue{
 	background-position: -18px -239px;
+	width: 17px;
+	height: 17px;
+}
+
+
+
+
+.sprite-elem--red {
+	background-image: url("game/assets/ui/sprites/redSheet.png");
+}
+
+.boxCheckmark--red {
+	background-position: -380px -0px;
+	width: 38px;
+	height: 36px;
+}
+.boxCross--red {
+	background-position: -380px -36px;
+	width: 38px;
+	height: 36px;
+}
+.boxTick--red {
+	background-position: -386px -178px;
+	width: 36px;
+	height: 36px;
+}
+.button00--red {
+	background-position: -0px -0px;
+	width: 190px;
+	height: 45px;
+}
+.button01--red {
+	background-position: -0px -45px;
+	width: 190px;
+	height: 49px;
+}
+.button02--red {
+	background-position: -0px -94px;
+	width: 190px;
+	height: 45px;
+}
+.button03--red {
+	background-position: -337px -188px;
+	width: 49px;
+	height: 49px;
+}
+.button04--red {
+	background-position: -339px -98px;
+	width: 49px;
+	height: 49px;
+}
+.button05--red {
+	background-position: -290px -98px;
+	width: 49px;
+	height: 45px;
+}
+.button06--red {
+	background-position: -288px -198px;
+	width: 49px;
+	height: 49px;
+}
+.button07--red {
+	background-position: -290px -143px;
+	width: 49px;
+	height: 45px;
+}
+.button08--red {
+	background-position: -239px -198px;
+	width: 49px;
+	height: 49px;
+}
+.button09--red {
+	background-position: -190px -198px;
+	width: 49px;
+	height: 45px;
+}
+.button10--red {
+	background-position: -190px -49px;
+	width: 190px;
+	height: 49px;
+}
+.button11--red {
+	background-position: -190px -0px;
+	width: 190px;
+	height: 49px;
+}
+.button12--red {
+	background-position: -0px -188px;
+	width: 190px;
+	height: 45px;
+}
+.button13--red {
+	background-position: -0px -139px;
+	width: 190px;
+	height: 49px;
+}
+.checkmark--red {
+	background-position: -0px -233px;
+	width: 21px;
+	height: 20px;
+}
+.circle--red {
+	background-position: -386px -214px;
+	width: 36px;
+	height: 36px;
+}
+.cross--red {
+	background-position: -21px -233px;
+	width: 18px;
+	height: 18px;
+}
+.panel--red {
+	background-position: -190px -98px;
+	width: 100px;
+	height: 100px;
+}
+.sliderDown--red {
+	background-position: -388px -72px;
+	width: 28px;
+	height: 42px;
+}
+.sliderLeft--red {
+	background-position: -339px -147px;
+	width: 39px;
+	height: 31px;
+}
+.sliderRight--red {
+	background-position: -378px -147px;
+	width: 39px;
+	height: 31px;
+}
+.sliderUp--red {
+	background-position: -416px -72px;
+	width: 28px;
+	height: 42px;
+}
+.tick--red {
+	background-position: -39px -233px;
 	width: 17px;
 	height: 17px;
 }

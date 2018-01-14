@@ -5,17 +5,29 @@ import {Resources} from "../config/Resources";
 export class HTMLDialogue {
     private dlg: HTMLElement;
     private title: HTMLElement;
-    private btn: HTMLElement;
+    private text: HTMLElement;
+    private btnNope: HTMLElement;
+    private btnOkay: HTMLElement;
 
     constructor() {
         this.dlg = document.getElementsByClassName("dlg--start")[0] as HTMLElement;
         this.title = document.getElementsByClassName("dlg__title")[0] as HTMLElement;
-        this.btn = document.getElementsByClassName("dlg__btn")[0] as HTMLElement;
+        this.text = document.getElementsByClassName("dlg__text")[0] as HTMLElement;
+        this.btnNope = document.getElementsByClassName("dlg__btn--nope")[0] as HTMLElement;
+        this.btnOkay = document.getElementsByClassName("dlg__btn--okay")[0] as HTMLElement;
     }
 
-    public setup(setup: any, callback: () => void): void {
+    public setup(setup: any, callback: () => void, callbackNope?: () => void): void {
         this.title.innerHTML = setup.NAME;
-        this.btn.addEventListener("click", callback);
+        this.text.innerHTML = setup.INTRO;
+        this.btnOkay.addEventListener("click", callback);
+
+        if(callbackNope) {
+            this.btnNope.addEventListener("click", callbackNope);
+            this.btnNope.style.display = "";
+        } else {
+            this.btnNope.style.display = "none";
+        }
     }
 
     public show(): void {
