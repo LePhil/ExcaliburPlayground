@@ -6,11 +6,13 @@ import {Levels} from "./config/Levels";
 import {PreGameScene} from "./scenes/PreGameScene";
 import {LevelScene} from "./scenes/LevelScene";
 import {EndGameScene} from "./scenes/EndGameScene";
+import {HTMLDialogue} from "./ui/HTMLDialogue";
 
 
 export class Director {
     private _currentLevelName: string;
     private _levelData: any;
+    private _htmlDialogue: HTMLDialogue;
 
     private _engine: ex.Engine;
     private _intro: PreGameScene;
@@ -22,6 +24,7 @@ export class Director {
         this._intro = introScene;
         this._game = gameScene;
         this._outro = outroScene;
+        this._htmlDialogue = new HTMLDialogue();
     }
 
     loadLevelData(levelIdentifier:string): any {
@@ -53,11 +56,8 @@ export class Director {
         let setup = this.loadLevelData(mapName);
         
         if (setup.INTRO) {
-            (document.getElementsByClassName("dlg--start")[0] as HTMLElement).style.display = "block";
-            (document.getElementsByClassName("dlg__title")[0] as HTMLElement).innerHTML = setup.NAME;
-            (document.getElementsByClassName("dlg__btn")[0] as HTMLElement).addEventListener("click", () => {
-                this.onIntroDone();
-            });
+            this._htmlDialogue.setup(setup, () => this.onIntroDone());
+            this._htmlDialogue.show();
 
             this._intro.load(setup, () => this.onIntroDone());
             this._engine.goToScene("pre");
@@ -75,7 +75,7 @@ export class Director {
     }
 
     public onIntroDone():void {
-        (document.getElementsByClassName("dlg--start")[0] as HTMLElement).style.display = "none";
+        this._htmlDialogue.hide();
         this._game.load(this._levelData, (results, passed) => this.onGameDone(results, passed));
         this._engine.goToScene("game");
     }
@@ -102,6 +102,4 @@ export class Director {
     public onEndSceneRetry(): void {
         globals.loadNextLevel(this._levelData.NAME);
     }
-
-
 }
