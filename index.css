@@ -52,6 +52,28 @@ body {
     text-align: center;
 }
 
+.dlg__scores {
+    display: flex;
+    flex-direction: row;
+}
+
+.dlg__scores--left,
+.dlg__scores--right {
+    flex: 1 1 auto;
+}
+
+.score-list {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+}
+
+.score-list__item {
+    list-style-type: none;
+    margin: 8px 0;
+}
+
 
 .sprite-elem {
 	background-color: transparent;
@@ -339,4 +361,187 @@ body {
 	background-position: -39px -233px;
 	width: 17px;
 	height: 17px;
+}
+
+
+
+/* Numbers */
+.nr-wrapper {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.nr {
+    list-style-type: none;
+	background-image: url("game/assets/ui/hud_spritesheet.png");
+}
+
+.nr--0 {
+	background-position: -230px -0px;
+	width: 30px;
+	height: 38px;
+}
+.nr--1 {
+	background-position: -196px -41px;
+	width: 26px;
+	height: 37px;
+}
+.nr--2 {
+	background-position: -55px -98px;
+	width: 32px;
+	height: 38px;
+}
+.nr--3 {
+	background-position: -239px -80px;
+	width: 28px;
+	height: 38px;
+}
+.nr--4 {
+	background-position: -238px -122px;
+	width: 29px;
+	height: 38px;
+}
+.nr--5 {
+	background-position: -238px -162px;
+	width: 28px;
+	height: 38px;
+}
+.nr--6 {
+	background-position: -230px -40px;
+	width: 30px;
+	height: 38px;
+}
+.nr--7 {
+	background-position: -226px -206px;
+	width: 32px;
+	height: 39px;
+}
+.nr--8 {
+	background-position: -192px -206px;
+	width: 32px;
+	height: 40px;
+}
+.nr--9 {
+	background-position: -196px -0px;
+	width: 32px;
+	height: 39px;
+}
+
+
+.hud_coins {
+	background-position: -55px -0px;
+	width: 47px;
+	height: 47px;
+}
+.hud_gem_blue {
+	background-position: -104px -0px;
+	width: 46px;
+	height: 36px;
+}
+.hud_gem_green {
+	background-position: -98px -185px;
+	width: 46px;
+	height: 36px;
+}
+.hud_gem_red {
+	background-position: -98px -147px;
+	width: 46px;
+	height: 36px;
+}
+.hud_gem_yellow {
+	background-position: -98px -223px;
+	width: 46px;
+	height: 36px;
+}
+.hud_heartEmpty {
+	background-position: -0px -47px;
+	width: 53px;
+	height: 45px;
+}
+.hud_heartFull {
+	background-position: -0px -94px;
+	width: 53px;
+	height: 45px;
+}
+.hud_heartHalf {
+	background-position: -0px -0px;
+	width: 53px;
+	height: 45px;
+}
+.hud_keyBlue {
+	background-position: -146px -147px;
+	width: 44px;
+	height: 40px;
+}
+.hud_keyBlue_disabled {
+	background-position: -150px -38px;
+	width: 44px;
+	height: 40px;
+}
+.hud_keyGreem_disabled {
+	background-position: -104px -38px;
+	width: 44px;
+	height: 40px;
+}
+.hud_keyGreen {
+	background-position: -192px -122px;
+	width: 44px;
+	height: 40px;
+}
+.hud_keyRed {
+	background-position: -193px -80px;
+	width: 44px;
+	height: 40px;
+}
+.hud_keyRed_disabled {
+	background-position: -192px -164px;
+	width: 44px;
+	height: 40px;
+}
+.hud_keyYellow {
+	background-position: -146px -189px;
+	width: 44px;
+	height: 40px;
+}
+.hud_keyYellow_disabled {
+	background-position: -147px -80px;
+	width: 44px;
+	height: 40px;
+}
+.hud_p1 {
+	background-position: -55px -49px;
+	width: 47px;
+	height: 47px;
+}
+.hud_p1Alt {
+	background-position: -0px -141px;
+	width: 47px;
+	height: 47px;
+}
+.hud_p2 {
+	background-position: -49px -141px;
+	width: 47px;
+	height: 47px;
+}
+.hud_p2Alt {
+	background-position: -0px -190px;
+	width: 47px;
+	height: 47px;
+}
+.hud_p3 {
+	background-position: -49px -190px;
+	width: 47px;
+	height: 47px;
+}
+.hud_p3Alt {
+	background-position: -98px -98px;
+	width: 47px;
+	height: 47px;
+}
+.hud_x {
+	background-position: -0px -239px;
+	width: 30px;
+	height: 28px;
 }

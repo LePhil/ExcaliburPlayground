@@ -25,6 +25,19 @@ class HTMLDialogue {
     public hide(): void {
         this.dlg.style.display = "none";
     }
+
+    static createNumber(nr: number): HTMLElement {
+        let nrContainer = document.createElement("ul");
+        nrContainer.classList.add("nr-wrapper");
+
+        for(let i = 0; i < nr.toString().length; i++) {
+            let chiffreElem = document.createElement("li");
+            chiffreElem.classList.add("nr", "nr--"+nr.toString()[i]);
+            nrContainer.appendChild(chiffreElem);
+        }
+
+        return nrContainer;
+    }
 }
 
 export class IntroDialogue extends HTMLDialogue {
@@ -91,18 +104,18 @@ export class OutroDialogue extends HTMLDialogue {
     }
 
     private addScores(setup: any, result: number) {
-        this.scoreDisplay.innerHTML = result.toString();
-
+        this.scoreDisplay.innerHTML = "";
+        this.scoreDisplay.appendChild(HTMLDialogue.createNumber(result));
+        
+        this.scoreList.innerHTML = "";        
         let scores = Storage.saveScore(setup.NAME, result);
         let sortedScores = scores.getSortedScores();
-
-        this.scoreList.innerHTML = "";
 
         for(let scoreCounter = 0; scoreCounter < sortedScores.length; scoreCounter++) {
             let score = sortedScores[scoreCounter];
 
             let newNode = document.createElement("li");
-            newNode.innerHTML = score.toString();
+            newNode.appendChild(HTMLDialogue.createNumber(score));
             newNode.classList.add("score-list__item"); 
             
             // If this run's score is under the top 3, show the medal (but only if it wasn't zero)
