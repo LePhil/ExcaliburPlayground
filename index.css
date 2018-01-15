@@ -8,7 +8,7 @@ body {
 	font-family: -apple-system, 'Helvetica Neue', Helvetica, sans-serif;
 }
 
-.dlg--start {
+.dlg {
     height: 100%;
     width: 100%;
     margin: 0;

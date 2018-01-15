@@ -23,6 +23,7 @@ AudioManager.setup();
 let game = new ex.Engine({ displayMode: ex.DisplayMode.FullScreen });
 globals.game = game;
 
+game.add("loading", new ex.Scene(game));
 game.add("options", new OptionsScene(game));
 game.add("credits", new CreditsScene(game));
 game.add("menu", new MainMenu(game));

@@ -5,23 +5,25 @@ import {Levels} from "./config/Levels";
 
 import {LevelScene} from "./scenes/LevelScene";
 import {EndGameScene} from "./scenes/EndGameScene";
-import {HTMLDialogue} from "./ui/HTMLDialogue";
+import {IntroDialogue, OutroDialogue} from "./ui/HTMLDialogue";
 
 
 export class Director {
     private _currentLevelName: string;
     private _levelData: any;
-    private _htmlDialogue: HTMLDialogue;
-
+    private _introDlg: IntroDialogue;
+    private _outroDlg: OutroDialogue;
+    
     private _engine: ex.Engine;
     private _game: LevelScene;
     private _outro: EndGameScene;
-
+    
     constructor(game: ex.Engine, gameScene: LevelScene, outroScene: EndGameScene) {
         this._engine = game;
         this._game = gameScene;
         this._outro = outroScene;
-        this._htmlDialogue = new HTMLDialogue();
+        this._introDlg = new IntroDialogue();
+        this._outroDlg = new OutroDialogue();
     }
 
     loadLevelData(levelIdentifier:string): any {
@@ -53,14 +55,13 @@ export class Director {
         let setup = this.loadLevelData(mapName);
         
         if (setup.INTRO) {
-            this._htmlDialogue.setup(
+            this._introDlg.setup(
                 setup,
-                () => this.onIntroDone(),
-                () => {
-                    this._htmlDialogue.hide();
-                }
+                () => this.onIntroYes(),
+                () => this.onIntroNope()
             );
-            this._htmlDialogue.show();
+            this._introDlg.show();
+            this._engine.goToScene("loading");
         } else {
             this._game.load(setup, this.onGameDone);
             this._engine.goToScene("game");
@@ -74,10 +75,15 @@ export class Director {
         this._engine.goToScene("game");
     }
 
-    public onIntroDone():void {
-        this._htmlDialogue.hide();
+    public onIntroYes():void {
+        this._introDlg.hide();
         this._game.load(this._levelData, (results, passed) => this.onGameDone(results, passed));
         this._engine.goToScene("game");
+    }
+
+    public onIntroNope():void {
+        this._introDlg.hide();
+        this._engine.goToScene("menu");
     }
     
     public onGameDone(result: number, passed: boolean): void {
@@ -87,8 +93,22 @@ export class Director {
             callback = () => this.onEndSceneRetry();
         }
 
-        this._outro.load(this._levelData, result, passed, callback);
-        this._engine.goToScene("end");
+        this._outroDlg.setup(
+            this._levelData,
+            result,
+            passed,
+            () => {
+                if (passed) {
+                    this.onEndSceneDone();
+                } else {
+                    this.onEndSceneRetry();
+                }
+                this._outroDlg.hide();
+            }
+        );
+        this._outroDlg.show();
+
+        this._engine.goToScene("loading");
     }
 
     public onEndSceneDone(): void {
