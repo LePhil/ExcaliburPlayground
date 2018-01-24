@@ -26,6 +26,17 @@ class HTMLDialogue {
         this.dlg.style.display = "none";
     }
 
+    /**
+     * Returns an <ul> with a <li> for every chiffre in the number.
+     * E.g. 123 would return 
+     * <ul class="nr-wrapper">
+     *  <li class="nr nr--1"></li>
+     *  <li class="nr nr--2"></li>
+     *  <li class="nr nr--3"></li>
+     * </ul>
+     *
+     * @param nr Number
+     */
     static createNumber(nr: number): HTMLElement {
         let nrContainer = document.createElement("ul");
         nrContainer.classList.add("nr-wrapper");
@@ -38,6 +49,22 @@ class HTMLDialogue {
 
         return nrContainer;
     }
+
+    static createBodyText(parentNode: HTMLElement, texts: Array<any>): void {
+        parentNode.innerHTML = "";
+
+        texts.forEach(text => {
+            let paragraph = document.createElement("p");
+
+            // TODO: if it's an object, we can use color and fonz size
+            if (text.text) {
+                paragraph.innerHTML = text.text;
+            } else {
+                paragraph.innerHTML = text;                
+            }
+            parentNode.appendChild(paragraph);
+        });
+    }
 }
 
 export class IntroDialogue extends HTMLDialogue {
@@ -47,7 +74,7 @@ export class IntroDialogue extends HTMLDialogue {
 
     public setup(setup: any, callback: () => void, callbackNope?: () => void): void {
         this.title.innerHTML = setup.NAME;
-        this.text.innerHTML = setup.INTRO;
+        HTMLDialogue.createBodyText(this.text, setup.INTRO);
         this.btnOkay.addEventListener("click", callback);
 
         if(callbackNope) {
@@ -73,16 +100,16 @@ export class OutroDialogue extends HTMLDialogue {
     }
 
     public setup(setup: any, result: number, passed: boolean, callback: () => void, callbackNope?: () => void): void {
-        let outroText = [""];
+        let outroTexts = [""];
         
         if (passed && setup.OUTRO) {
-            outroText = setup.OUTRO;
+            outroTexts = setup.OUTRO;
         } else if (setup.OUTRO_FAILED) {
-            outroText = setup.OUTRO_FAILED;
+            outroTexts = setup.OUTRO_FAILED;
         }
 
         this.title.innerHTML = setup.NAME;
-        this.text.innerHTML = setup.INTRO;
+        HTMLDialogue.createBodyText(this.text, outroTexts);
 
         this.addScores(setup, result);
 
