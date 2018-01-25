@@ -10,10 +10,10 @@ import {Graphics} from "./config/Graphics";
 import {Resources} from "./config/Resources";
 
 export class Customer extends AbstractPlayer {
-    public desiredItem: Item;
+    public desiredItems: Array<Item>;
     private _hasDecided: boolean;
     private _hasReceivedItem: boolean;
-    private _thinkBubble: ThinkBubble;
+    private _thinkBubbles: Array<ThinkBubble>;
     private _cassa: Cassa;
     private _patience: number;
     private _patienceDecreaseTimer: ex.Timer;
@@ -33,6 +33,8 @@ export class Customer extends AbstractPlayer {
         this._initialY = y;
         this._onGetServedCallback = onGetServedCallback;
 
+        this._thinkBubbles = [];
+        this.desiredItems = [];
         this._hasDecided = false;
         this._hasReceivedItem = false;
         this._setup = setup;
@@ -48,17 +50,40 @@ export class Customer extends AbstractPlayer {
             .callMethod(() => {
                 // Leave Queue if it's full
                 if (this._cassa.addToQueue(this)) {
-                    this._decideOnProduct();
+                    this._decideOnProducts();
                 } else {
                     this.leaveStore();
                 }
             });
     }
     
-    private _decideOnProduct(): void {
-        this.desiredItem = this._getRandomItem();
-        this._hasDecided = true;
+    private _getNrOfDesiredProducts(): number {
+        let randomNr = Math.random();
+
+        if(randomNr <= 0.8) {
+            return 1;
+        } else if (randomNr <= 0.95) {
+            return 2;
+        } else {
+            return 3;
+        }
+    }
+
+    private _decideOnProducts(): void {
+        let nrOfItems = this._getNrOfDesiredProducts();
         let conf = Config.CUSTOMER.THINKBUBBLE;
+
+        for(let i = 0; i < nrOfItems; i++) {
+            let desiredItem = this._getRandomItem()
+            this.desiredItems.push(desiredItem);
+
+            let thinkBubble = new ThinkBubble(conf.OFFSET_X + (i*conf.WIDTH), conf.OFFSET_Y, desiredItem);
+            this._thinkBubbles.push(thinkBubble)
+
+            this.add(thinkBubble);
+        }
+
+        this._hasDecided = true;
         
         this._patienceIndicator = new FancyProgressBar(
             new ex.Vector(0,-this.getWidth()/2),
@@ -70,12 +95,39 @@ export class Customer extends AbstractPlayer {
                 "30": FancyProgressBar.Color.Yellow,
                 "100": FancyProgressBar.Color.Green
             });
-        this._thinkBubble = new ThinkBubble(conf.OFFSET_X, conf.OFFSET_Y, this.desiredItem);
 
         this.add(this._patienceIndicator);
-        this.add(this._thinkBubble);
 
         this._startPatienceTimer();
+    }
+
+    private adjustBubblePositions(): void {
+        let conf = Config.CUSTOMER.THINKBUBBLE;
+
+        this._thinkBubbles.forEach((bubble, index) => {
+            bubble.pos.setTo(conf.OFFSET_X + (index*conf.WIDTH), conf.OFFSET_Y);
+        })
+    }
+
+    /**
+     * Removes a number of items from the customers desired items
+     * and removes the thinkbubbles as well.
+     * 
+     * @param itemsToRemove 
+     */
+    public removeItems(itemsToRemove: Array<Item>): void {
+        itemsToRemove.forEach(itemToRemove => {
+            let foundItemIndex = this.desiredItems.findIndex(item => item.getType() === itemToRemove.getType());
+            
+            if (foundItemIndex >= 0) {
+                this.desiredItems.splice(foundItemIndex, 1);
+                let bubbleToKill = this._thinkBubbles.splice(foundItemIndex, 1);
+
+                this.remove(bubbleToKill[0]);
+            }
+        });
+
+        this.adjustBubblePositions();
     }
 
     public kill(): void {
@@ -98,8 +150,11 @@ export class Customer extends AbstractPlayer {
      * Remove the thinkBubble/timer, do the KA-CHING and move to the door and die.
      */
     public leaveStore(): void {
-        if (this._thinkBubble) {
-            this.remove(this._thinkBubble);
+        if (this._thinkBubbles) {
+            this._thinkBubbles.forEach(bubble => {
+                this.remove(bubble);
+            });
+            this._thinkBubbles = [];
         }
 
         if (this._patienceIndicator) {

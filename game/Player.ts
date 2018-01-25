@@ -124,9 +124,19 @@ export class Player extends AbstractPlayer {
   public serveItems(customerQueue: Customer[]) {
     let customersToRemove = new Array<Customer>();
 
-    // check for each customer if we have what they want
+    // check for each customer if we have all that they want
     for (let cust of customerQueue) {
-      if (this.inventory.checkAndRemoveItem(cust.desiredItem.getType())) {
+      let itemsToRemove = new Array<Item>();
+
+      cust.desiredItems.forEach(item => {
+        if (this.inventory.checkAndRemoveItem(item.getType())) {
+          itemsToRemove.push(item);
+        }
+      });
+
+      cust.removeItems(itemsToRemove);
+      
+      if (cust.desiredItems.length === 0) {
         customersToRemove.push(cust);
       }
     }
