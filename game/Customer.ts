@@ -197,12 +197,14 @@ export class Customer extends AbstractPlayer {
         return new Item(potentialItems[randomIndex]);
     }
 
-    // TODO: only start timer again after X seconds
     public resetPatience(duration: number): void {
         this._patienceDecreaseTimer.cancel();
         this._patience = Config.CUSTOMER.INITIAL_PATIENCE;
-
-        this._startPatienceTimer();
+        
+        // only start timer again after X seconds
+        new ex.Timer(() => {
+            this._startPatienceTimer();
+        }, Config.CUSTOMER.PATIENCE_RESUME_TIMER);
     }
 
     private _startPatienceTimer(): void {

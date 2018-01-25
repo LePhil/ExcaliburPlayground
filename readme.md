@@ -11,7 +11,6 @@ Done!
 * Upgrades/Events/Penalties!
     * More/less space in inventory
     * More reward per serving
-* Hover-States on Buttons
 * move away from electron...
 * maybe (MAYBE) a small minigame with direct input - it's more fun anyway :)
 * customers via LevelScene, not via door. Too far away!
@@ -35,8 +34,6 @@ Done!
 * maybe it would be easier to remove a scene completely and re-create it instead of resetting and keeping track of everything?
 * unify tools and items? Should be possible to have a Tool from an ItemSource (e.g. crate)
 * Passed/Failed on LevelEnd (indication + maybe only be able to continue if passed?)
-* Finish story for Part 1
-* "intermezzo" scene
 * left-looking idle when last walked left (+action for cutscene)
 
 # Bugs
@@ -97,6 +94,7 @@ Done!
 * works in Electron now <3
 * added logo
 * Score Screen overhaul
+* Customers can wish for for multiple items now
 
 # Won't do
 * If inventory is full, clicks on station should not do anything- No. We'd have to check for Tools in Inventory (in case the station is broken) and if there are actions in the queue to remove some items --> let the user make mistakes!
