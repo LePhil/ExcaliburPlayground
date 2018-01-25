@@ -8,7 +8,6 @@ import {Storage} from "./Storage";
 
 import {MainMenu} from "./scenes/MainMenu";
 import {OptionsScene} from "./scenes/OptionsScene";
-import {CreditsScene} from "./scenes/CreditsScene";
 import {CustomGameMenu} from "./scenes/CustomGameMenu";
 
 import {LevelScene} from "./scenes/LevelScene";
@@ -25,7 +24,6 @@ globals.game = game;
 
 game.add("loading", new ex.Scene(game));
 game.add("options", new OptionsScene(game));
-game.add("credits", new CreditsScene(game));
 game.add("menu", new MainMenu(game));
 game.add("custom", new CustomGameMenu(game));
 

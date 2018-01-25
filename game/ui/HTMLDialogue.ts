@@ -154,3 +154,13 @@ export class OutroDialogue extends HTMLDialogue {
         }
     }
 }
+
+export class SimpleDialogue extends HTMLDialogue {
+    constructor() {
+        super(".dlg--credits");
+    }
+
+    public setup(callback: () => void): void {
+        this.btnOkay.addEventListener("click", callback);
+    }
+}

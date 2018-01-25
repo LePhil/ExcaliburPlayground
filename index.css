@@ -52,6 +52,11 @@ body {
     text-align: center;
 }
 
+.dlg__text--scrollable {
+	overflow-y: auto;
+	max-height: 385px;
+}
+
 .dlg__scores {
     display: flex;
     flex-direction: row;

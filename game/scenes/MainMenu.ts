@@ -6,6 +6,7 @@ import {Resources} from "../config/Resources";
 import {Levels} from "../config/Levels";
 import {AudioManager} from "../AudioManager";
 import {EffectTypes, EffectFactory, Effect} from "../Effects";
+import {SimpleDialogue} from "../ui/HTMLDialogue";
 
 export class MainMenu extends ex.Scene {
     private _startButton: Button;
@@ -18,6 +19,9 @@ export class MainMenu extends ex.Scene {
         super(engine);
         
         let buttonPos = Config.GAME.UI.BUTTONS.POSITIONS;
+
+        let creditDlg = new SimpleDialogue();
+        creditDlg.setup(() => {creditDlg.hide();})
 
         this._startButton = new Button(
             Pos.make(buttonPos.center_1),
@@ -34,7 +38,9 @@ export class MainMenu extends ex.Scene {
         this._creditsButton = new Button(
             Pos.make(buttonPos.center_3),
             "Credits",
-            () => {engine.goToScene("credits");}
+            () => {
+                creditDlg.show();
+            }
         )
 
         this._customButton = new Button(
