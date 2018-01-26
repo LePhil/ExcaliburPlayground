@@ -206,15 +206,12 @@ class Character extends AbstractPlayer implements Subject {
     }
 
     reset(): void {
+        this._setup();
         this.actions.clearActions();
         this.pos.x = this._initialLocation.x;
         this.pos.y = this._initialLocation.y;
         this.opacity = this._initialOpacity;
-        this.setDrawing("idle");
-    }
-
-    _handleIdlePlayer(): void {
-        this.setDrawing("idle");
+        this._handleIdlePlayer();
     }
 }
 

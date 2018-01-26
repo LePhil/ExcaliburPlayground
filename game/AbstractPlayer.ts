@@ -4,10 +4,13 @@ import {Resources} from "./config/Resources";
 import {Graphics} from "./config/Graphics";
 
 export abstract class AbstractPlayer extends ex.Actor {
+  readonly _initialSpeed: number;
   _speed: number;
   private _lastPosX: number;
   private _lastPosY: number;
   private _engine: ex.Engine;
+
+  protected lookingRight: Boolean;
   characterColor: string;
 
   constructor(x = Config.PLAYER.START.X,
@@ -17,7 +20,7 @@ export abstract class AbstractPlayer extends ex.Actor {
               s = Config.PLAYER.SPEED) {
     super(x, y, w, h);
 
-    this._speed = s;
+    this._initialSpeed = s;
     this.anchor.setTo(.5, .5);
 
     this._lastPosX = this.pos.x;
@@ -27,6 +30,9 @@ export abstract class AbstractPlayer extends ex.Actor {
   onInitialize(engine: ex.Engine): void {
     this.characterColor = this.getPlayerColor();
     this._engine = engine;
+
+    this._setup();
+
     this.setDrawings(this.characterColor);
 
     if (Config.GAME.DEBUG_PLAYERS) {
@@ -40,6 +46,7 @@ export abstract class AbstractPlayer extends ex.Actor {
   protected getSprite(alienType: string, spriteType: string): ex.Sprite {
     let tex = Graphics.ALIENS[alienType].spritesheet;
     let spriteConf = Graphics.ALIENS[alienType][spriteType];
+
     return new ex.Sprite(tex, spriteConf.x, spriteConf.y, spriteConf.w, spriteConf.h)
   }
 
@@ -56,20 +63,27 @@ export abstract class AbstractPlayer extends ex.Actor {
     let y = 0;
     let idleSprite = this.getSprite(alienType, "stand");
     idleSprite.anchor.setTo(x, y);
+    
+    let idleLeftSprite = idleSprite.clone();
+    idleLeftSprite.flipHorizontal = true;
+    
     let pickUpSprite = this.getSprite(alienType, "duck");
     pickUpSprite.anchor.setTo(x, y);
 
     let walkRightAnim = new ex.Animation(this._engine, [this.getSprite(alienType, "walk1"), this.getSprite(alienType, "walk2")], this._speed, true);
     walkRightAnim.anchor.setTo(x, y);
+    
     let walkLeftAnim = new ex.Animation(this._engine, [this.getSprite(alienType, "walk1"), this.getSprite(alienType, "walk2")], this._speed, true);
     walkLeftAnim.flipHorizontal = true;
     walkLeftAnim.anchor.setTo(x, y);
+    
     let walkUpAnim = new ex.Animation(this._engine, [this.getSprite(alienType, "climb1"), this.getSprite(alienType, "climb2")], this._speed, true);
     walkUpAnim.anchor.setTo(x, y);
     
     this.addDrawing("walkRight", walkRightAnim);
     this.addDrawing("walkLeft", walkLeftAnim);
     this.addDrawing("idle", idleSprite);
+    this.addDrawing("idleLeft", idleLeftSprite);
     this.addDrawing("walkUp", walkUpAnim);
     this.addDrawing("pickUp", pickUpSprite);
     this.addDrawing("walkDown", idleSprite);
@@ -80,6 +94,13 @@ export abstract class AbstractPlayer extends ex.Actor {
 
     let xMovement = this._lastPosX - this.pos.x;
     let yMovement = this._lastPosY - this.pos.y
+
+    // Determine which way the player faces when standing still
+    if ( xMovement > 0) {
+      this.lookingRight = true;
+    } else if (xMovement < 0) {
+      this.lookingRight = false;
+    }
 
     if (Math.abs(xMovement) > Math.abs(yMovement) ) {
       if (xMovement > 0) {
@@ -116,5 +137,16 @@ export abstract class AbstractPlayer extends ex.Actor {
     return types[randomIndex];
   }
 
-  abstract _handleIdlePlayer():void
+  _setup(): void {
+    this._speed = this._initialSpeed;
+    this.lookingRight = true;
+  }
+
+  _handleIdlePlayer(): void {
+    if (this.lookingRight) {
+      this.setDrawing("idle");
+    } else {
+      this.setDrawing("idleLeft");
+    }
+  }
 }

@@ -135,7 +135,7 @@ export class Player extends AbstractPlayer {
       });
 
       cust.removeItems(itemsToRemove);
-      
+
       if (cust.desiredItems.length === 0) {
         customersToRemove.push(cust);
       }
@@ -153,18 +153,23 @@ export class Player extends AbstractPlayer {
     }, duration * 1000);
   }
 
+  _setup(): void {
+    this._isBusy = false;
+    super._setup();
+  }
+
   _handleIdlePlayer(): void {
     if (!this._isBusy) {
-      this.setDrawing("idle");
+      super._handleIdlePlayer();
     }
   }
 
   public resetState(): void {
+    this._setup();
     this.inventory.resetState();
     this.actions.clearActions();
     this.pos.x = Config.PLAYER.START.X;
     this.pos.y = Config.PLAYER.START.Y;
-    this.setDrawing("idle");
-    this._isBusy = false;
+    this._handleIdlePlayer();
   }
 }

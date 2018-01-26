@@ -105,7 +105,7 @@ export class Levels {
             BLOB: true,
             TIME: {
                 TYPE: Levels.TIMERS.CLOCK,
-                DURATION_S: 15,
+                DURATION_S: 999,
                 START: "08:00",
                 END: "18:00"
             },

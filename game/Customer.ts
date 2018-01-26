@@ -20,7 +20,7 @@ export class Customer extends AbstractPlayer {
     private _patienceIndicator: FancyProgressBar;
     private _initialX:number;
     private _initialY:number;
-    private _setup: any;
+    private _setupData: any;
     private _onGetServedCallback: (results:number) => void
 
     constructor(x, y, cassa: Cassa, setup: any, onGetServedCallback: (results:number) => void) {
@@ -37,7 +37,7 @@ export class Customer extends AbstractPlayer {
         this.desiredItems = [];
         this._hasDecided = false;
         this._hasReceivedItem = false;
-        this._setup = setup;
+        this._setupData = setup;
         this._cassa = cassa;
         this._patience = Config.CUSTOMER.INITIAL_PATIENCE;
         
@@ -186,12 +186,8 @@ export class Customer extends AbstractPlayer {
         this.scene.add(EffectFactory.Make(EffectFactory.Type.Money, this.pos));
     }
 
-    _handleIdlePlayer(): void {
-        this.setDrawing("idle");
-    }
-
     private _getRandomItem(): Item {
-        let potentialItems = this._setup.DESIREDITEMS,
+        let potentialItems = this._setupData.DESIREDITEMS,
             randomIndex = ex.Util.randomIntInRange(0, potentialItems.length - 1);
         
         return new Item(potentialItems[randomIndex]);
