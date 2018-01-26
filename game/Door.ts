@@ -26,6 +26,10 @@ export class Door extends ex.Actor {
             Config.DOOR.W,
             Config.DOOR.H);
 
+        if (setup.DOOR.RUSH_HOUR) {
+            // TODO - at some point(s?), start a rush hour, where there are many more people coming in than usual 
+        }
+
         this._spawnedCustomers = [];
         this._cassa = cassa;
         this._open = false;

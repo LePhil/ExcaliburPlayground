@@ -77,7 +77,7 @@ export class Levels {
             TYPE: Levels.TYPES.NORMAL,
             CONF: Levels.SETTINGS.STORE_GREY,
             CASSA: {X: 250, Y: 500},
-            DOOR:  {X: 800, Y: 595, SPAWN_TIME_S: 5},
+            DOOR:  {X: 800, Y: 595, SPAWN_TIME_S: 5, RUSH_HOUR: true},
             DESIREDITEMS: ["rabbit", "elephant", "giraffe"],
             ITEMSOURCES: [
                 {X: 700, Y: 500, T: "rabbit",   DECAY: false},

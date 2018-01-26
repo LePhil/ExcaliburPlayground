@@ -37,6 +37,7 @@ Done!
 * Left-/Right-looking action for cutscene
 * longer levels
 * certain nr of points one should get per level
+* Rush hour where the rate of incoming customers increases
 
 # Bugs
 * "solved" taskItems re-appear when changing a level.
