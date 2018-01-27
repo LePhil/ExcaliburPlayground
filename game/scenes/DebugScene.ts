@@ -5,31 +5,6 @@ import {ProgressBar, FancyProgressBar} from "../ui/Indicator";
 import {EffectFactory} from "../Effects";
 import {Inventory} from "../Inventory";
 import {Player} from "../Player";
-import {EndGameScene} from "./EndGameScene";
-
-export class DebugOutroScene extends ex.Scene {
-    private outro: EndGameScene;
-
-    constructor(engine: ex.Engine, outro: EndGameScene) {
-        super(engine);
-
-        this.outro = outro;
-    }
-
-    onInitialize(engine: ex.Engine): void {}
-
-    onActivate() {
-        let setup = {
-            NAME: "Test",
-            OUTRO: ["Well done!"],
-            OUTRO_FAILED: ["You failed the Task :("]
-        };
-        let passed = false;
-
-        this.outro.load(setup, 90, passed, () => {this.engine.goToScene("menu")});
-        this.engine.goToScene("end");
-    }
-}
 
 export class DebugScene extends ex.Scene {
 

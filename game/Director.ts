@@ -4,9 +4,7 @@ import {ScoreCounter, CountdownTimer} from "./Timer";
 import {Levels} from "./config/Levels";
 
 import {LevelScene} from "./scenes/LevelScene";
-import {EndGameScene} from "./scenes/EndGameScene";
 import {IntroDialogue, OutroDialogue} from "./ui/HTMLDialogue";
-
 
 export class Director {
     private _currentLevelName: string;
@@ -16,12 +14,10 @@ export class Director {
     
     private _engine: ex.Engine;
     private _game: LevelScene;
-    private _outro: EndGameScene;
     
-    constructor(game: ex.Engine, gameScene: LevelScene, outroScene: EndGameScene) {
+    constructor(game: ex.Engine, gameScene: LevelScene) {
         this._engine = game;
         this._game = gameScene;
-        this._outro = outroScene;
         this._introDlg = new IntroDialogue();
         this._outroDlg = new OutroDialogue();
     }

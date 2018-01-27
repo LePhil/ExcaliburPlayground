@@ -14,7 +14,6 @@ Done!
 * move away from electron...
 * maybe (MAYBE) a small minigame with direct input - it's more fun anyway :)
 * customers via LevelScene, not via door. Too far away!
-* Pagination on textoverlay, if content is too long.
 * some ambient sounds for cutscenes etc., play one at random
 * much more extended player character with separate eyes (blinking, emotions), mouth ("talking" in cutscenes, frowning) and legs (animated)
 * finish Animals/Animal Cages (similar to FoodStations)
@@ -41,7 +40,6 @@ Done!
 
 # Bugs
 * "solved" taskItems re-appear when changing a level.
-* pausing the Effect on the EndgameScene doesn't work (init of concrete type happens after pausing...)
 * fireworks doesn't seem to work anymore
 
 # Recently done

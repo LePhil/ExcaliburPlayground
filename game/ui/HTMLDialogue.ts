@@ -19,10 +19,12 @@ class HTMLDialogue {
     }
 
     public show(): void {
+        document.querySelector('canvas').style.display = 'none';
         this.dlg.style.display = "block";
     }
 
     public hide(): void {
+        document.querySelector('canvas').style.display = 'block';
         this.dlg.style.display = "none";
     }
 
@@ -162,5 +164,17 @@ export class SimpleDialogue extends HTMLDialogue {
 
     public setup(callback: () => void): void {
         this.btnOkay.addEventListener("click", callback);
+    }
+}
+
+export class CustomGameDialogue extends HTMLDialogue {
+    constructor() {
+        super(".dlg--custom-game");
+    }
+
+    public setup(onGameStart: () => void, onGoBack: () => void): void {
+        
+        this.btnOkay.addEventListener("click", onGameStart);
+        this.btnNope.addEventListener("click", onGoBack);
     }
 }

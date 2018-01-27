@@ -6,7 +6,7 @@ import {Resources} from "../config/Resources";
 import {Levels} from "../config/Levels";
 import {AudioManager} from "../AudioManager";
 import {EffectTypes, EffectFactory, Effect} from "../Effects";
-import {SimpleDialogue} from "../ui/HTMLDialogue";
+import {SimpleDialogue, CustomGameDialogue} from "../ui/HTMLDialogue";
 
 export class MainMenu extends ex.Scene {
     private _startButton: Button;
@@ -22,6 +22,15 @@ export class MainMenu extends ex.Scene {
 
         let creditDlg = new SimpleDialogue();
         creditDlg.setup(() => {creditDlg.hide();})
+
+        let customGameDlg = new CustomGameDialogue();
+        customGameDlg.setup(
+            () => {
+                //TODO: start custom game
+                customGameDlg.hide();
+            },
+            () => { customGameDlg.hide(); }
+        );
 
         this._startButton = new Button(
             Pos.make(buttonPos.center_1),
@@ -41,12 +50,12 @@ export class MainMenu extends ex.Scene {
             () => {
                 creditDlg.show();
             }
-        )
+        );
 
         this._customButton = new Button(
             Pos.make(buttonPos.center_4),
             "Custom Game",
-            () => {engine.goToScene("custom");}
+            () => {customGameDlg.show();}
         );
 
         this.add(this._startButton);

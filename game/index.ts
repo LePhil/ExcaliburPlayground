@@ -11,9 +11,8 @@ import {OptionsScene} from "./scenes/OptionsScene";
 import {CustomGameMenu} from "./scenes/CustomGameMenu";
 
 import {LevelScene} from "./scenes/LevelScene";
-import {EndGameScene} from "./scenes/EndGameScene";
 import {Cutscene} from "./scenes/Cutscene";
-import {DebugScene, DebugOutroScene} from "./scenes/DebugScene";
+import {DebugScene} from "./scenes/DebugScene";
 
 import {Director} from "./Director";
 
@@ -27,9 +26,6 @@ game.add("options", new OptionsScene(game));
 game.add("menu", new MainMenu(game));
 game.add("custom", new CustomGameMenu(game));
 
-let endgameScene = new EndGameScene(game);
-game.add("end", endgameScene);
-
 let gameScene = new LevelScene(game);
 game.add("game", gameScene );
 
@@ -37,9 +33,8 @@ let cutScene = new Cutscene(game);
 game.add("cutScene", cutScene );
 
 game.add("debug", new DebugScene(game));
-game.add("debug_outro", new DebugOutroScene(game, endgameScene));
 
-let director = new Director(game, gameScene, endgameScene);
+let director = new Director(game, gameScene);
 
 globals.customGame = (settings: any) => {
   director.loadCustomLevel(settings);
