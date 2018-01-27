@@ -2,7 +2,6 @@ declare var globals: any;
 import * as ex from "excalibur";
 import {ScoreCounter, CountdownTimer} from "./Timer";
 import {Levels} from "./config/Levels";
-
 import {LevelScene} from "./scenes/LevelScene";
 import {IntroDialogue, OutroDialogue} from "./ui/HTMLDialogue";
 
@@ -36,14 +35,6 @@ export class Director {
         } else {
             return this._levelData;
         }
-    }
-
-    endLevel():void {
-        this._engine.goToScene("end");
-    }
-
-    onTimeLimitReached() {
-        this.endLevel();
     }
 
     // A level set consists of an intro level, a game level and an endgame scene. The director is responsible for creating and switching between these levels.
@@ -82,22 +73,24 @@ export class Director {
         this._engine.goToScene("menu");
     }
     
+    /**
+     * Once the game is over, open the outro dialogue and switch
+     * to a loading scene so that the level scene is not active
+     * anymore.
+     *
+     * @param result Points reached
+     * @param passed Passed or not?
+     */
     public onGameDone(result: number, passed: boolean): void {
-        let callback = () => this.onEndSceneDone();
-
-        if (!passed) {
-            callback = () => this.onEndSceneRetry();
-        }
-
         this._outroDlg.setup(
             this._levelData,
             result,
             passed,
             () => {
                 if (passed) {
-                    this.onEndSceneDone();
+                    this.onContinue();
                 } else {
-                    this.onEndSceneRetry();
+                    this.onRetry();
                 }
                 this._outroDlg.hide();
             }
@@ -107,7 +100,7 @@ export class Director {
         this._engine.goToScene("loading");
     }
 
-    public onEndSceneDone(): void {
+    public onContinue(): void {
         if (this._levelData.NEXT) {
             globals.loadNextLevel(this._levelData.NEXT);
         } else {
@@ -115,7 +108,7 @@ export class Director {
         }
     }
 
-    public onEndSceneRetry(): void {
+    public onRetry(): void {
         globals.loadNextLevel(this._levelData.NAME);
     }
 }

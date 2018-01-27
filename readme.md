@@ -97,7 +97,7 @@ Done!
 * added logo
 * Score Screen overhaul
 * Customers can wish for for multiple items now
-* Credits are in HTML now too
+* Credits are in HTML now too. Options too!
 * left-looking idle when last walked left
 
 # Won't do
