@@ -88,7 +88,16 @@
 		<dialog class="dlg dlg--options">
 			<div class="dlg__wrapper">
 				<h1 class="dlg__title">Options</h1>
-				<div class="dlg__text"></div>
+				<div class="dlg__text">
+					<ul class="options">
+						<li class="option">
+							<div class="option__text">Not muted</div>
+							<input class="toggle-switch" type="checkbox" id="mute_switch" />
+							<label class="toggle-switch--label" for="mute_switch">Audio</label>
+							<div class="option__text">Muted</div>
+						</li>
+					</ul>
+				</div>
 
 				<div class="dlg__btn-wrapper">
 					<button class="dlg__btn dlg__btn--okay dlg__btn--right sprite-elem sprite-elem--blue button00--blue">

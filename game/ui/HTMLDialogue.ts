@@ -2,6 +2,7 @@ import * as ex from "excalibur";
 import {Config} from "../config/Config";
 import {Resources} from "../config/Resources";
 import {Storage, SavedLevelData} from "../Storage";
+import {AudioManager} from "../AudioManager";
 
 class HTMLDialogue {
     protected dlg: HTMLElement;
@@ -180,11 +181,21 @@ export class CustomGameDialogue extends HTMLDialogue {
 }
 
 export class OptionsDialogue extends HTMLDialogue {
+    protected muteToggle: HTMLInputElement;
+
     constructor() {
         super(".dlg--options");
+
+        this.muteToggle = document.querySelector('.dlg--options #mute_switch') as HTMLInputElement;
+
+        this.muteToggle.checked = AudioManager.isMuted;
     }
 
-    public setup(onOkay: () => void): void {
+    public setup(onOkay: () => void, onMuteChange: (boolean) => void): void {
         this.btnOkay.addEventListener("click", onOkay);
+
+        this.muteToggle.addEventListener("change", (event) => {
+            onMuteChange(AudioManager.toggleMute());
+        });
     }
 }

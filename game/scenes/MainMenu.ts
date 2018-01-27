@@ -8,6 +8,8 @@ import {AudioManager} from "../AudioManager";
 import {EffectTypes, EffectFactory, Effect} from "../Effects";
 import {SimpleDialogue, OptionsDialogue, CustomGameDialogue} from "../ui/HTMLDialogue";
 
+const MAIN_SOUND = "Sound_Intro";
+
 export class MainMenu extends ex.Scene {
     private _startButton: Button;
     private _optionsButton: Button;
@@ -30,10 +32,15 @@ export class MainMenu extends ex.Scene {
         });
 
         let optionsDlg = new OptionsDialogue();
-        optionsDlg.setup(() => {
-            optionsDlg.hide();
-            this._toggleButtons(true);
-        });
+        optionsDlg.setup(
+            () => {
+                optionsDlg.hide();
+                this._toggleButtons(true);
+            },
+            (muted) => {
+                this.onMuteChange(muted);
+            }
+        );
 
         let customGameDlg = new CustomGameDialogue();
         customGameDlg.setup(
@@ -111,12 +118,20 @@ export class MainMenu extends ex.Scene {
         this.add(this._menuEffect);
     }
 
+    onMuteChange(muted: boolean): void {
+        if (muted) {
+            AudioManager.stop(MAIN_SOUND);
+        } else {
+            AudioManager.play(MAIN_SOUND, true);        
+        }
+    }
+
     onActivate () {
-        AudioManager.play("Sound_Intro", true);
+        AudioManager.play(MAIN_SOUND, true);
     }
 
     onDeactivate () {
-        AudioManager.stop("Sound_Intro");
+        AudioManager.stop(MAIN_SOUND);
     }
 
     private _addBtn(btn: Button): void {
