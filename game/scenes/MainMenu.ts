@@ -6,7 +6,7 @@ import {Resources} from "../config/Resources";
 import {Levels} from "../config/Levels";
 import {AudioManager} from "../AudioManager";
 import {EffectTypes, EffectFactory, Effect} from "../Effects";
-import {SimpleDialogue, CustomGameDialogue} from "../ui/HTMLDialogue";
+import {SimpleDialogue, OptionsDialogue, CustomGameDialogue} from "../ui/HTMLDialogue";
 
 export class MainMenu extends ex.Scene {
     private _startButton: Button;
@@ -15,13 +15,25 @@ export class MainMenu extends ex.Scene {
     private _customButton: Button;
     private _menuEffect: Effect;
 
+    private _buttons: Array<Button>;
+
     constructor(engine: ex.Engine) {
         super(engine);
         
+        this._buttons = [];
         let buttonPos = Config.GAME.UI.BUTTONS.POSITIONS;
 
         let creditDlg = new SimpleDialogue();
-        creditDlg.setup(() => {creditDlg.hide();})
+        creditDlg.setup(() => {
+            creditDlg.hide();
+            this._toggleButtons(true);
+        });
+
+        let optionsDlg = new OptionsDialogue();
+        optionsDlg.setup(() => {
+            optionsDlg.hide();
+            this._toggleButtons(true);
+        });
 
         let customGameDlg = new CustomGameDialogue();
         customGameDlg.setup(
@@ -29,7 +41,10 @@ export class MainMenu extends ex.Scene {
                 //TODO: start custom game
                 customGameDlg.hide();
             },
-            () => { customGameDlg.hide(); }
+            () => {
+                customGameDlg.hide();
+                this._toggleButtons(true);
+            }
         );
 
         this._startButton = new Button(
@@ -41,7 +56,10 @@ export class MainMenu extends ex.Scene {
         this._optionsButton = new Button(
             Pos.make(buttonPos.center_2),
             "Options",
-            () => {engine.goToScene("options");}
+            () => {
+                optionsDlg.show();
+                this._toggleButtons(false);
+            }
         );
 
         this._creditsButton = new Button(
@@ -49,38 +67,37 @@ export class MainMenu extends ex.Scene {
             "Credits",
             () => {
                 creditDlg.show();
+                this._toggleButtons(false);
             }
         );
 
         this._customButton = new Button(
             Pos.make(buttonPos.center_4),
             "Custom Game",
-            () => {customGameDlg.show();}
+            () => {
+                customGameDlg.show();
+                this._toggleButtons(false);
+            }
         );
 
-        this.add(this._startButton);
-        this.add(this._optionsButton);
-        this.add(this._creditsButton);
-        this.add(this._customButton);
+        this._addBtn(this._startButton);
+        this._addBtn(this._optionsButton);
+        this._addBtn(this._creditsButton);
+        this._addBtn(this._customButton);
 
         if (Config.GAME.DEBUG) {
             Levels.MAPS.forEach((map, index) => {
-              this.add(new Button(
-                Pos.make(Config.GAME.UI.BUTTON.W/2, Config.GAME.UI.BUTTON.H/2 + index * 40),
-                map.NAME,
-                () => globals.loadNextLevel(map.NAME) ));
+                this._addBtn(new Button(
+                    Pos.make(Config.GAME.UI.BUTTON.W/2, Config.GAME.UI.BUTTON.H/2 + index * 40),
+                    map.NAME,
+                    () => globals.loadNextLevel(map.NAME)
+                ));
             });
 
-            this.add(new Button(
+            this._addBtn(new Button(
                 Pos.make(900, 100),
                 "Debug Level",
                 () => {engine.goToScene("debug");}
-            ));
-
-            this.add(new Button(
-                Pos.make(900, 200),
-                "Debug Outro",
-                () => {engine.goToScene("debug_outro");}
             ));
         }
 
@@ -100,5 +117,16 @@ export class MainMenu extends ex.Scene {
 
     onDeactivate () {
         AudioManager.stop("Sound_Intro");
+    }
+
+    private _addBtn(btn: Button): void {
+        this.add(btn);
+        this._buttons.push(btn);
+    }
+
+    private _toggleButtons(on: boolean): void {
+        this._buttons.forEach(button => {
+            button.enableCapturePointer = on;
+        });
     }
 }
