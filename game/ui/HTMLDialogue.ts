@@ -178,3 +178,13 @@ export class CustomGameDialogue extends HTMLDialogue {
         this.btnNope.addEventListener("click", onGoBack);
     }
 }
+
+export class OptionsDialogue extends HTMLDialogue {
+    constructor() {
+        super(".dlg--options");
+    }
+
+    public setup(onOkay: () => void): void {
+        this.btnOkay.addEventListener("click", onOkay);
+    }
+}
