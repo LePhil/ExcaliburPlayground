@@ -224,47 +224,35 @@ export class CustomGameDialogue extends HTMLDialogue {
             },
         };
 
-        this.blobToggle = document.querySelector('.dlg--custom-game #blob_switch') as HTMLInputElement;
-        this.blobToggle.checked = this._settings.BLOB;
-
-        this._setDifficulty(0);
-
-        // TODO: radio buttons for the difficulty
+        this._setDifficulty("easy");
     }
 
     public setup(onGoBack: () => void): void {
+        let radios = Array.prototype.slice.call(document.querySelectorAll('.dlg--custom-game .option--difficulty'));
+        
+        radios.forEach(radio => {
+            radio.addEventListener("change", (event) =>{
+                this._setDifficulty(event.target.value); 
+            });
+        });
 
+        this.blobToggle = document.querySelector('.dlg--custom-game #blob_switch') as HTMLInputElement;
+        this.blobToggle.checked = this._settings.BLOB;
         this.blobToggle.addEventListener("change", (event) => {
             this._settings.BLOB = (event.target as HTMLInputElement).checked;
         });
 
         this.btnOkay.addEventListener("click", () => {
+            this.hide();
             globals.customGame(this._settings);
         });
+
         this.btnNope.addEventListener("click", onGoBack);
     }
 
-    private _setDifficulty(difficultyLevel: number): void {
-        let items = [],
-            sources = [];
-
-        switch (difficultyLevel) {
-            case 0:
-                items = this._difficulties.easy.items;
-                sources = this._difficulties.easy.sources;
-                break;
-            case 1:
-                items = this._difficulties.medium.items;
-                sources = this._difficulties.medium.sources;
-                break;
-            case 2:
-                items = this._difficulties.hard.items;
-                sources = this._difficulties.hard.sources;
-                break;
-        }
-
-        this._settings.ITEMSOURCES = sources;
-        this._settings.DESIREDITEMS = items;
+    private _setDifficulty(difficulty: string): void {
+        this._settings.ITEMSOURCES = this._difficulties[difficulty].sources;
+        this._settings.DESIREDITEMS = this._difficulties[difficulty].items;
     }
 }
 

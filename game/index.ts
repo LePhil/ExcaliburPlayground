@@ -7,7 +7,6 @@ import {AudioManager} from "./AudioManager";
 import {Storage} from "./Storage";
 
 import {MainMenu} from "./scenes/MainMenu";
-import {CustomGameMenu} from "./scenes/CustomGameMenu";
 
 import {LevelScene} from "./scenes/LevelScene";
 import {Cutscene} from "./scenes/Cutscene";
@@ -28,7 +27,6 @@ globals.game = game;
 
 game.add("loading", new ex.Scene(game));
 game.add("menu", new MainMenu(game));
-game.add("custom", new CustomGameMenu(game));
 
 let gameScene = new LevelScene(game);
 game.add("game", gameScene );
