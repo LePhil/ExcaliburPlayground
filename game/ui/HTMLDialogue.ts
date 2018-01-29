@@ -1,5 +1,7 @@
+declare var globals: any;
 import * as ex from "excalibur";
 import {Config} from "../config/Config";
+import {Levels} from "../config/Levels";
 import {Resources} from "../config/Resources";
 import {Storage, SavedLevelData} from "../Storage";
 import {AudioManager} from "../AudioManager";
@@ -169,14 +171,100 @@ export class SimpleDialogue extends HTMLDialogue {
 }
 
 export class CustomGameDialogue extends HTMLDialogue {
+    protected blobToggle: HTMLInputElement;
+    protected _difficultyRadios: HTMLInputElement;
+
+    private _difficulties: any;
+    private _settings: any;
+
     constructor() {
         super(".dlg--custom-game");
+
+        this._difficulties = {
+            easy: {
+                items: ["rabbit"],
+                sources: [{X: 700, Y: 500, T: "rabbit",   DECAY: false}]
+            },
+            medium: {
+                items: ["rabbit", "elephant"],
+                sources: [
+                    {X: 700, Y: 500, T: "rabbit",   DECAY: false},
+                    {X: 300, Y: 300, T: "elephant", DECAY: false},
+                ]
+            },
+            hard: {
+                items: ["rabbit", "elephant", "giraffe"],
+                sources: [
+                    {X: 700, Y: 500, T: "rabbit",   DECAY: false},
+                    {X: 300, Y: 300, T: "elephant", DECAY: false},
+                    {X: 600, Y: 300, T: "giraffe",  DECAY: false}
+                ]
+            }
+        };
+
+        this._settings = {
+            IMG: "Map_01_first_day",
+            W: 840,
+            H: 560,
+            CASSA: {X: 250, Y: 500},
+            DOOR:  {X: 800, Y: 595, SPAWN_TIME_S: 5},
+            DESIREDITEMS: [],
+            ITEMSOURCES: [],
+            TOOLS: [
+                {X: 200, Y: 200, T: "cup"},
+                {X: 200, Y: 250, T: "hammer"},
+                {X: 200, Y: 300, T: "bone"}
+            ],
+            BLOB: true,
+            TIME: {
+                TYPE: Levels.TIMERS.CLOCK,
+                DURATION_S: 60,
+                START: "08:00",
+                END: "18:00"
+            },
+        };
+
+        this.blobToggle = document.querySelector('.dlg--custom-game #blob_switch') as HTMLInputElement;
+        this.blobToggle.checked = this._settings.BLOB;
+
+        this._setDifficulty(0);
+
+        // TODO: radio buttons for the difficulty
     }
 
-    public setup(onGameStart: () => void, onGoBack: () => void): void {
-        
-        this.btnOkay.addEventListener("click", onGameStart);
+    public setup(onGoBack: () => void): void {
+
+        this.blobToggle.addEventListener("change", (event) => {
+            this._settings.BLOB = (event.target as HTMLInputElement).checked;
+        });
+
+        this.btnOkay.addEventListener("click", () => {
+            globals.customGame(this._settings);
+        });
         this.btnNope.addEventListener("click", onGoBack);
+    }
+
+    private _setDifficulty(difficultyLevel: number): void {
+        let items = [],
+            sources = [];
+
+        switch (difficultyLevel) {
+            case 0:
+                items = this._difficulties.easy.items;
+                sources = this._difficulties.easy.sources;
+                break;
+            case 1:
+                items = this._difficulties.medium.items;
+                sources = this._difficulties.medium.sources;
+                break;
+            case 2:
+                items = this._difficulties.hard.items;
+                sources = this._difficulties.hard.sources;
+                break;
+        }
+
+        this._settings.ITEMSOURCES = sources;
+        this._settings.DESIREDITEMS = items;
     }
 }
 

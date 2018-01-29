@@ -45,10 +45,6 @@ export class MainMenu extends ex.Scene {
         let customGameDlg = new CustomGameDialogue();
         customGameDlg.setup(
             () => {
-                //TODO: start custom game
-                customGameDlg.hide();
-            },
-            () => {
                 customGameDlg.hide();
                 this._toggleButtons(true);
             }

@@ -39,7 +39,8 @@ body {
 }
 
 .dlg__btn {
-    margin-right: 16px;
+	margin-right: 16px;
+	cursor: pointer;
 }
 
 .dlg__btn--right {

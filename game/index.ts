@@ -17,7 +17,13 @@ import {Director} from "./Director";
 
 AudioManager.setup();
 
-let game = new ex.Engine({ displayMode: ex.DisplayMode.FullScreen });
+let game = new ex.Engine({
+    canvasElementId: 'game',
+    width: Config.GAME.WIDTH,
+    height: Config.GAME.HEIGHT,
+    pointerScope: ex.Input.PointerScope.Canvas,
+    displayMode: ex.DisplayMode.FullScreen
+});
 globals.game = game;
 
 game.add("loading", new ex.Scene(game));

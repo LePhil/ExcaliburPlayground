@@ -72,7 +72,16 @@
 		<dialog class="dlg dlg--custom-game">
 			<div class="dlg__wrapper">
 				<h1 class="dlg__title">Custom Game</h1>
-				<div class="dlg__text"></div>
+				<div class="dlg__text">
+					<ul class="options">
+						<li class="option">
+							<div class="option__text">No Blobs</div>
+							<input class="toggle-switch" type="checkbox" id="blob_switch" />
+							<label class="toggle-switch--label" for="blob_switch">Audio</label>
+							<div class="option__text">Blobs</div>
+						</li>
+					</ul>
+				</div>
 
 				<div class="dlg__btn-wrapper">
 					<button class="dlg__btn dlg__btn--nope sprite-elem sprite-elem--red button00--red">
@@ -106,6 +115,8 @@
 				</div>
 			</div>
 		</dialog>
+
+		<canvas id="game"></canvas>
 
 		<script>var globals = {};</script>
 		<script src="node_modules/excalibur/dist/excalibur.js"></script>
