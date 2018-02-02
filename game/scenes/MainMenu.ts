@@ -5,6 +5,7 @@ import {Config} from "../config/Config";
 import {Resources} from "../config/Resources";
 import {Levels} from "../config/Levels";
 import {AudioManager} from "../AudioManager";
+import {AreaSetupObject, MapScene} from "./MapScene";
 import {EffectTypes, EffectFactory, Effect} from "../Effects";
 import {SimpleDialogue, OptionsDialogue, CustomGameDialogue} from "../ui/HTMLDialogue";
 
@@ -102,6 +103,16 @@ export class MainMenu extends ex.Scene {
                 "Debug Level",
                 () => {engine.goToScene("debug");}
             ));
+
+            Object.keys(Levels.AREAS).forEach((areaObj, index) => {
+                console.log(areaObj);
+                let area: AreaSetupObject = Levels.AREAS[areaObj];
+                this._addBtn(new Button(
+                    Pos.make(300 + index*150,600),
+                    area.TITLE,
+                    () => {engine.goToScene("AREA_" + areaObj);}
+                ));
+            });
         }
 
         let logo = new ex.UIActor(Config.GAME.WIDTH/2, 100, 570, 202);

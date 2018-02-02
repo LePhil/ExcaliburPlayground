@@ -74,6 +74,7 @@ export class Levels {
 
     static LEVEL = {
         L1_1: {
+            TITLE: "Hello World",
             TYPE: Levels.TYPES.NORMAL,
             CONF: Levels.SETTINGS.STORE_GREY,
             CASSA: {X: 250, Y: 500},
@@ -93,6 +94,7 @@ export class Levels {
             OUTRO: ["Well done!"]
         },
         L1_2: {
+            TITLE: "Another day",
             TYPE: Levels.TYPES.NORMAL,
             CONF: Levels.SETTINGS.STORE_GREY,
             CASSA: {X: 250, Y: 500},

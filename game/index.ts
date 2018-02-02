@@ -9,6 +9,7 @@ import {Storage} from "./Storage";
 import {MainMenu} from "./scenes/MainMenu";
 
 import {LevelScene} from "./scenes/LevelScene";
+import {AreaSetupObject, MapScene} from "./scenes/MapScene";
 import {Cutscene} from "./scenes/Cutscene";
 import {DebugScene} from "./scenes/DebugScene";
 
@@ -35,6 +36,12 @@ let cutScene = new Cutscene(game);
 game.add("cutScene", cutScene );
 
 game.add("debug", new DebugScene(game));
+
+Object.keys(Levels.AREAS).forEach(areaObj => {
+    let area: AreaSetupObject = Levels.AREAS[areaObj];
+    let mapScene = new MapScene(area, game);
+    game.add("AREA_" + areaObj, mapScene);
+});
 
 let director = new Director(game, gameScene);
 

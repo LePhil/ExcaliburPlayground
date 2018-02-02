@@ -35,6 +35,7 @@ export class Resources {
     static HUDSpriteSheet       = new ex.Texture("game/assets/ui/hud_spritesheet.png");
     static TextureTiles         = new ex.Texture("game/assets/textures/tiles_spritesheet.png");
     static ItemSpriteSheet      = new ex.Texture("game/assets/textures/genericItems_spritesheet_colored.png");
+    static MapSpriteSheet       = new ex.Texture("game/assets/textures/mapPack_spritesheet.png");
     static UIRPGSpriteSheet     = new ex.Texture("game/assets/ui/uipack_rpg.png");
     
     static MedalsSheet          = new ex.Texture("game/assets/textures/medals.png");

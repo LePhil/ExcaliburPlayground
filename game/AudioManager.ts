@@ -29,17 +29,29 @@ export class AudioManager {
     }
 
     static play(audio: string, looped: boolean = false): void {
+        if (Resources[audio]) {
+            AudioManager.playAudio(Resources[audio], looped);
+        }
+    }
+
+    static playAudio(audio: ex.Sound, looped: boolean = false): void {
         if(!AudioManager.isMuted) {
-            Resources[audio].play();
+            audio.play();
 
             if (looped) {
-                Resources[audio].setLoop(true);
+                audio.setLoop(true);
             }
         }
     }
 
     static stop(audio: string): void {
-        Resources[audio].stop();
+        if (Resources[audio]) {
+            AudioManager.stopAudio(Resources[audio]);
+        }
+    }
+
+    static stopAudio(audio: ex.Sound): void {
+        audio.stop();
     }
 
     static playRandom(audios: Array<string>, looped: boolean = false): void {

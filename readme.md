@@ -37,10 +37,12 @@ Done!
 * longer levels
 * certain nr of points one should get per level
 * Rush hour where the rate of incoming customers increases
+* update animal icons
 
 # Bugs
 * "solved" taskItems re-appear when changing a level.
 * fireworks doesn't seem to work anymore
+* customers appear on 0|0 and are stuck there
 
 # Recently done
 * Re-done buttons with Labels
