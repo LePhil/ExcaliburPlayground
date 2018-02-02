@@ -146,9 +146,9 @@ body {
 }
 
 .option--radio{
-	-webkit-appearance:button;
-	-moz-appearance:button;
-	appearance:button;
+	-webkit-appearance: button;
+	-moz-appearance: button;
+	appearance: button;
 	border:4px solid #ccc;
 	border-top-color:#bbb;
 	border-left-color:#bbb;

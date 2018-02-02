@@ -1,5 +1,6 @@
 import * as ex from "excalibur";
 import {Config} from "./Config";
+import {Resources} from "./Resources";
 import {Storage} from "../Storage";
 import {Task, TaskItem} from "../Task";
 import {EffectTypes, EffectFactory} from "../Effects";
@@ -70,6 +71,72 @@ export class Levels {
             Color: ex.Color.White
         }
     };
+
+    static LEVEL = {
+        L1_1: {
+            TYPE: Levels.TYPES.NORMAL,
+            CONF: Levels.SETTINGS.STORE_GREY,
+            CASSA: {X: 250, Y: 500},
+            DOOR:  {X: 800, Y: 595, SPAWN_TIME_S: 8},
+            DESIREDITEMS: ["rabbit"],
+            ITEMSOURCES: [
+                {X: 700, Y: 400, T: "rabbit", DECAY: false}
+            ],
+            TOOLS: [],
+            BLOB: false,
+            INTRO: [
+                "Welcome to your new Rabbit Store!",
+                "Make your customers happy and sell them",
+                "all the rabbits they need!",
+                "(and don't forget to open the door)"
+            ],
+            OUTRO: ["Well done!"]
+        },
+        L1_2: {
+            TYPE: Levels.TYPES.NORMAL,
+            CONF: Levels.SETTINGS.STORE_GREY,
+            CASSA: {X: 250, Y: 500},
+            DOOR:  {X: 800, Y: 595, SPAWN_TIME_S: 6},
+            DESIREDITEMS: ["rabbit", "parrot", "pig"],
+            ITEMSOURCES: [
+                {X: 700, Y: 400, T: "rabbit", DECAY: false},
+                {X: 300, Y: 300, T: "parrot", DECAY: false},
+                {X: 600, Y: 300, T: "pig",    DECAY: false}
+            ],
+            TOOLS: [],
+            BLOB: false,
+            INTRO: [
+                "Welcome back",
+                "Now with 100% more pigs and parrots!"
+            ],
+            OUTRO: ["Well done!"]
+        }
+    };
+
+    static AREAS = {
+        GRASS: {
+            TITLE: "Grass",
+            BACKGROUND: Resources.Map_forest,
+            EFFECT: EffectTypes.None,
+            AUDIO: Resources.Sound_Intro,
+            LEVELS: [
+                Levels.LEVEL.L1_1,
+                Levels.LEVEL.L1_2
+            ]
+        },
+        DESERT: {
+            TITLE: "Desert",
+            BACKGROUND: Resources.Map_forest,
+            EFFECT: EffectTypes.None /* maybe some wind/sandstorm */,
+            AUDIO: Resources.Sound_Intro
+        },
+        SNOW: {
+            TITLE: "Snow",
+            BACKGROUND: Resources.Map_forest,
+            EFFECT: EffectTypes.Snow,
+            AUDIO: Resources.Sound_Intro
+        }
+    };
     
     static MAPS = [
         { /* TEST */
@@ -105,7 +172,7 @@ export class Levels {
             BLOB: true,
             TIME: {
                 TYPE: Levels.TIMERS.CLOCK,
-                DURATION_S: 999,
+                DURATION_S: 30,
                 START: "08:00",
                 END: "18:00"
             },
@@ -204,12 +271,6 @@ export class Levels {
             ],
             TOOLS: [],
             BLOB: false,
-            TIME: {
-                TYPE: Levels.TIMERS.CLOCK,
-                DURATION_S: 60,
-                START: "08:00",
-                END: "18:00"
-            },
             INTRO: [
                 "Welcome to your new Rabbit Store!",
                 "Make your customers happy and sell them",
@@ -259,12 +320,6 @@ export class Levels {
             ],
             TOOLS: [],
             BLOB: false,
-            TIME: {
-                TYPE: Levels.TIMERS.CLOCK,
-                DURATION_S: 60,
-                START: "08:00",
-                END: "18:00"
-            },
             INTRO: [
                 "Welcome back",
                 "Now with 100% more pigs and parrots!"
@@ -285,12 +340,6 @@ export class Levels {
             ],
             TOOLS: [],
             BLOB: false,
-            TIME: {
-                TYPE: Levels.TIMERS.CLOCK,
-                DURATION_S: 60,
-                START: "08:00",
-                END: "18:00"
-            },
             INTRO: [
                 "Word has reached even",
                 "more people, it seems!"
@@ -340,12 +389,6 @@ export class Levels {
                 SPAWNING: TaskItem.SpawnBehaviour.AllAtOnce
             },
             BLOB: false,
-            TIME: {
-                TYPE: Levels.TIMERS.CLOCK,
-                DURATION_S: 60,
-                START: "08:00",
-                END: "18:00"
-            },
             INTRO: [
                 "Clean up all pieces of trash",
                 "while handling the store."
@@ -402,12 +445,6 @@ export class Levels {
             TOOLS: [],
             TASK: {},
             BLOB: true,
-            TIME: {
-                TYPE: Levels.TIMERS.CLOCK,
-                DURATION_S: 70,
-                START: "08:00",
-                END: "18:00"
-            },
             INTRO: [
                 "Collect the bounty",
                 "for catching a blob!"
@@ -489,12 +526,6 @@ export class Levels {
                 SPAWNING: TaskItem.SpawnBehaviour.AllAtOnce
             },
             BLOB: true,
-            TIME: {
-                TYPE: Levels.TIMERS.CLOCK,
-                DURATION_S: 70,
-                START: "08:00",
-                END: "18:00"
-            },
             INTRO: [
                 "Clean up the store before",
                 "the handsome stranger arrives"
@@ -583,12 +614,6 @@ export class Levels {
                 {X: 200, Y: 300, T: "bone"}
             ],
             BLOB: true,
-            TIME: {
-                TYPE: Levels.TIMERS.CLOCK,
-                DURATION_S: 60,
-                START: "08:00",
-                END: "18:00"
-            },
             INTRO: [
                 "As a proud owner of your new pet store,",
                 "make sure each customer gets what they want!"
@@ -611,12 +636,6 @@ export class Levels {
                 {X: 500, Y: 500, T: "hammer"}
             ],
             BLOB: true,
-            TIME: {
-                TYPE: Levels.TIMERS.CLOCK,
-                DURATION_S: 60,
-                START: "08:00",
-                END: "18:00"
-            },
             INTRO: ["Second level"],
             OUTRO: ["Well done!"]
         }

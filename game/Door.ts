@@ -15,6 +15,7 @@ export class Door extends ex.Actor {
     private _spawnTime: number;
     private _cassa:Cassa;
     private _customerSpawnerTimer: ex.Timer;
+    private _rushHourTimer: ex.Timer;
 
     private _setup: any;
     private _onGetServedCallback: (results: number) => void;
@@ -27,6 +28,12 @@ export class Door extends ex.Actor {
             Config.DOOR.H);
 
         if (setup.DOOR.RUSH_HOUR) {
+            let levelTime = !!setup.TIME.DURATION_S ? setup.TIME.DURATION_S : Config.GAME.DEFAULT_DURATION_S;
+            let timeForRush = levelTime * 0.8;
+
+            this._rushHourTimer = new ex.Timer(() => {
+                console.log("RUSH HOUR TIME");
+            }, timeForRush * 1000);
             // TODO - at some point(s?), start a rush hour, where there are many more people coming in than usual 
         }
 
@@ -58,6 +65,11 @@ export class Door extends ex.Actor {
         this.add(this._mid);
 
         this._updateDoorParts();
+
+        if (this._rushHourTimer) {
+            this._rushHourTimer.reset();
+            this.scene.add(this._rushHourTimer);
+        }
     }
 
     private _updateDoorParts():void {
@@ -137,5 +149,9 @@ export class Door extends ex.Actor {
         });
 
         this._spawnedCustomers = [];
+
+        if (this._rushHourTimer) {
+            this._rushHourTimer.cancel();
+        }
     }
 }

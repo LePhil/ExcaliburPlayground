@@ -252,10 +252,10 @@ export class Clock extends ex.UIActor {
         }
     }
 
-    setTimer(setup: any, callback?: () => void): void {
-        let start = !!setup.START ? setup.START : "08:00";
-        let end = !!setup.END ? setup.END : "17:00";
-        let duration = !!setup.DURATION_S ? setup.DURATION_S : 60;
+    setTimer(setup?: any, callback?: () => void): void {
+        let start = !!setup && !!setup.START ? setup.START : Config.GAME.DEFAULT_START;
+        let end = !!setup && !!setup.END ? setup.END : Config.GAME.DEFAULT_END;
+        let duration = !!setup && !!setup.DURATION_S ? setup.DURATION_S : Config.GAME.DEFAULT_DURATION_S;
         
         this._startTime = Time.convert(start);
         this._currentTime = Time.convert(start);
