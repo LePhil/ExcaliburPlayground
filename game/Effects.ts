@@ -8,7 +8,8 @@ export enum EffectTypes {
     Money = "money",
     Firework = "firework",
     Snow = "snow",
-    Rain = "rain"
+    Rain = "rain",
+    None = "none"
 }
 
 export class EffectFactory {
@@ -19,6 +20,8 @@ export class EffectFactory {
                 duration_s = 1): Effect {
 
         switch (type) {
+            case EffectTypes.None:
+                return new NoopEffect();
             case EffectTypes.Heart:
                 return new HeartEffect(pos, duration_s);
             case EffectTypes.Firework:
@@ -54,6 +57,13 @@ export class Effect extends ex.Actor {
             this.emitter.isEmitting = true;
         }
     }
+}
+
+class NoopEffect extends Effect {
+    constructor() {
+        super(new ex.Vector(0,0), 0);
+    }
+    public play(): void {};
 }
 
 class HeartEffect extends Effect {
