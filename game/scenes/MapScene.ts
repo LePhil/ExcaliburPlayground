@@ -66,6 +66,12 @@ export class MapScene extends ex.Scene {
                 this.add(lvlBtn);
             });
         }
+
+        this.add(new Button(
+            Pos.make(Config.GAME.UI.BUTTONS.POSITIONS.bottom_r),
+            "Back",
+            () => { engine.goToScene("menu"); }
+        ));
     }
 
     private _getBtnConf(index): any {
