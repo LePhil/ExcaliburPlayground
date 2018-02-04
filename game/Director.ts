@@ -111,4 +111,17 @@ export class Director {
     public onRetry(): void {
         globals.loadNextLevel(this._levelData.NAME);
     }
+
+    public static loadAndCreateLevel(engine: ex.Engine, setup: any): void {
+        let id = setup.TITLE;
+        let newLevel = new LevelScene(engine);
+        engine.addScene(id, newLevel);
+
+        newLevel.load(setup, (results: number, passed: boolean) => {
+            console.log("DONE!");
+            engine.removeScene(id);
+        });
+
+        engine.goToScene(id);
+    }
 }

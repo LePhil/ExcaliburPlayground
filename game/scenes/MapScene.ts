@@ -7,6 +7,7 @@ import {Resources} from "../config/Resources";
 import {Levels} from "../config/Levels";
 import {AudioManager} from "../AudioManager";
 import {LevelMap} from "../LevelMap";
+import {Director} from "../Director";
 import {EffectTypes, EffectFactory, Effect} from "../Effects";
 
 export interface AreaSetupObject {
@@ -62,6 +63,7 @@ export class MapScene extends ex.Scene {
             setup.LEVELS.forEach((level, index) => {
                 let lvlBtn = new LevelButton(new ex.Vector(200 + index*100, 200), this._getBtnConf(index+1), () => {
                     console.log(level.TITLE);
+                    Director.loadAndCreateLevel(engine, level);
                 });
                 this.add(lvlBtn);
             });
