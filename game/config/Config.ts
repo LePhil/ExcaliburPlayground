@@ -304,7 +304,7 @@ export class Config {
     },
     DEFAULT_START: "08:00",
     DEFAULT_END: "18:00",
-    DEFAULT_DURATION_S: 15,
+    DEFAULT_DURATION_S: 240,
     DEBUG: true,
     DEBUG_PLAYERS: false,
     UI: {
