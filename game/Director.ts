@@ -5,6 +5,9 @@ import {Levels} from "./config/Levels";
 import {LevelScene} from "./scenes/LevelScene";
 import {IntroDialogue, OutroDialogue} from "./ui/HTMLDialogue";
 
+const introDlg = new IntroDialogue();
+const outroDlg = new OutroDialogue();
+
 export class Director {
     private _currentLevelName: string;
     private _levelData: any;
@@ -112,16 +115,58 @@ export class Director {
         globals.loadNextLevel(this._levelData.NAME);
     }
 
-    public static loadAndCreateLevel(engine: ex.Engine, setup: any): void {
-        let id = setup.TITLE;
+    public static loadAndCreateLevel(parentMap: string, engine: ex.Engine, setup: any): void {
+        let id = "LVL_" + (setup.TITLE).split(" ").join("_");
         let newLevel = new LevelScene(engine);
         engine.addScene(id, newLevel);
 
+        if (setup.INTRO) {
+            introDlg.setup(setup,
+                () => {
+                    introDlg.hide();
+                    Director.createLevel(id, newLevel, setup, engine, parentMap);
+                    engine.goToScene(id);
+                },
+                () => {
+                    introDlg.hide();
+                    engine.goToScene(parentMap);
+                }
+            );
+            introDlg.show();
+            engine.goToScene("loading");
+        } else {
+            Director.createLevel(id, newLevel, setup, engine, parentMap);
+            engine.goToScene(id);
+        }
+    }
+
+    /**
+     * 
+     * @param id ID of the scene 
+     * @param newLevel the scene itself
+     * @param setup level data 
+     * @param engine
+     * @param parentMap identifier of the parent map's scene
+     */
+    public static createLevel(id: string, newLevel: LevelScene, setup: any, engine: ex.Engine, parentMap: string): void {
         newLevel.load(setup, (results: number, passed: boolean) => {
-            console.log("DONE!");
+
+            if (setup.OUTRO) {
+                outroDlg.setup(setup, results, passed, () => {
+                    if (passed) {
+                        engine.goToScene(parentMap);
+                    } else {
+                        Director.loadAndCreateLevel(parentMap, engine, setup);
+                    }
+                    outroDlg.hide();
+                });
+                outroDlg.show();
+                engine.goToScene("loading");
+            } else {
+                engine.goToScene(parentMap);
+            }
+
             engine.removeScene(id);
         });
-
-        engine.goToScene(id);
     }
 }

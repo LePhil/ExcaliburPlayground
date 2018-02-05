@@ -110,7 +110,7 @@ export class MainMenu extends ex.Scene {
                 this._addBtn(new Button(
                     Pos.make(300 + index*150,600),
                     area.TITLE,
-                    () => {engine.goToScene("AREA_" + areaObj);}
+                    () => {engine.goToScene(MapScene.createSceneName(area));}
                 ));
             });
         }

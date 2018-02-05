@@ -53,6 +53,10 @@ export class MapScene extends ex.Scene {
     private _audio: ex.Sound;
     private _buttons: Array<Button>;
 
+    public static createSceneName(setup: AreaSetupObject): string {
+        return "AREA_" + setup.TITLE;
+    }
+
     constructor(setup: AreaSetupObject, engine: ex.Engine) {
         super(engine);
         this._buttons = [];
@@ -63,7 +67,7 @@ export class MapScene extends ex.Scene {
             setup.LEVELS.forEach((level, index) => {
                 let lvlBtn = new LevelButton(new ex.Vector(200 + index*100, 200), this._getBtnConf(index+1), () => {
                     console.log(level.TITLE);
-                    Director.loadAndCreateLevel(engine, level);
+                    Director.loadAndCreateLevel(MapScene.createSceneName(setup), engine, level);
                 });
                 this.add(lvlBtn);
             });

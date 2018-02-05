@@ -40,7 +40,7 @@ game.add("debug", new DebugScene(game));
 Object.keys(Levels.AREAS).forEach(areaObj => {
     let area: AreaSetupObject = Levels.AREAS[areaObj];
     let mapScene = new MapScene(area, game);
-    game.add("AREA_" + areaObj, mapScene);
+    game.add(MapScene.createSceneName(area), mapScene);
 });
 
 let director = new Director(game, gameScene);
