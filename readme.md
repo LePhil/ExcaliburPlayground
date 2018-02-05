@@ -42,7 +42,6 @@ Done!
 # Bugs
 * "solved" taskItems re-appear when changing a level.
 * fireworks doesn't seem to work anymore
-* customers appear on 0|0 and are stuck there
 
 # Recently done
 * Re-done buttons with Labels
@@ -101,6 +100,7 @@ Done!
 * Customers can wish for for multiple items now
 * Credits are in HTML now too. Options too!
 * left-looking idle when last walked left
+* customers no longer appear on 0|0 and are stuck there
 
 # Won't do
 * If inventory is full, clicks on station should not do anything- No. We'd have to check for Tools in Inventory (in case the station is broken) and if there are actions in the queue to remove some items --> let the user make mistakes!

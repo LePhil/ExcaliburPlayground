@@ -21,6 +21,7 @@ export abstract class AbstractPlayer extends ex.Actor {
     super(x, y, w, h);
 
     this._initialSpeed = s;
+    this._speed = s;
     this.anchor.setTo(.5, .5);
 
     this._lastPosX = this.pos.x;
