@@ -15,7 +15,6 @@ Done!
 * maybe (MAYBE) a small minigame with direct input - it's more fun anyway :)
 * customers via LevelScene, not via door. Too far away!
 * some ambient sounds for cutscenes etc., play one at random
-* much more extended player character with separate eyes (blinking, emotions), mouth ("talking" in cutscenes, frowning) and legs (animated)
 * finish Animals/Animal Cages (similar to FoodStations)
 * FoodStations should serve FOOD, not Animals -> Bones, Cans, etc.
 * Random Mode with difficulty setting
@@ -107,6 +106,7 @@ Done!
 * rate of interest in a food/animal/item should depend on the worth/duration/amount available. Expensive items should take a long time or be very limited or be only rarely asked for (or a combination/all of them)
 * unique sprites for main characters (2 so far)
 * Create remaining sprite for the dude
+* much more extended player character with separate eyes (blinking, emotions), mouth ("talking" in cutscenes, frowning) and legs. --> go away.
 
 # Depending on https://github.com/excaliburjs/Excalibur/issues/292
 * If speed is increased, actions should take less long as well (e.g. pickup)

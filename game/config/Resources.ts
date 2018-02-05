@@ -15,8 +15,6 @@ export class Resources {
 
     static TextureInventory     = new ex.Texture("game/assets/textures/animals/inventory.png");
     static TextureStations      = new ex.Texture("game/assets/textures/animals/stations.png");
-    static TextureRabbit        = new ex.Texture("game/assets/textures/animals/rabbit.png");
-    static TextureElephant      = new ex.Texture("game/assets/textures/animals/elephant.png");
     static TextureBlob          = new ex.Texture("game/assets/textures/animals/sprite_blob_pink.png");
 
     static TextureBubbles       = new ex.Texture("game/assets/textures/animals/bubbles.png");
@@ -30,6 +28,12 @@ export class Resources {
     static ImgInventorySlot     = new ex.Texture("game/assets/ui/grey_button13.png");
 
     static Cassa                = new ex.Texture("game/assets/textures/store/chimneyLow.png");
+
+    // Animal shapes:
+    static Animals_round_nodetails = new ex.Texture("game/assets/textures/animals/round_nodetails.png");
+    static Animals_roundOutline = new ex.Texture("game/assets/textures/animals/roundOutline.png");
+    static Animals_square_nodetailsOutline = new ex.Texture("game/assets/textures/animals/square_nodetailsOutline.png");
+    static Animals_squareOutline = new ex.Texture("game/assets/textures/animals/squareOutline.png");
 
     static AnimalsSprites       = new ex.Texture("game/assets/textures/animals/animals.png");
     static HUDSpriteSheet       = new ex.Texture("game/assets/ui/hud_spritesheet.png");
