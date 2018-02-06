@@ -6,7 +6,7 @@ import {EffectFactory} from "./Effects";
 import {FancyProgressBar} from "./ui/Indicator";
 import {Storage} from "./Storage";
 import {Config} from "./config/Config";
-import {Graphics} from "./config/Graphics";
+import {AnimalSprite, Graphics} from "./config/Graphics";
 import {Resources} from "./config/Resources";
 
 export class Customer extends AbstractPlayer {
@@ -234,14 +234,12 @@ class ThinkBubble extends ex.Actor {
     onInitialize(engine: ex.Engine): void {
         super.onInitialize(engine);
 
-        let conf = Graphics.ANIMALS.ROUND[this._desiredItem.getType()];
-        let tex = Resources.TextureBubbles;
-        let sprite = new ex.Sprite(tex, conf.x, conf.y, conf.w, conf.h);
-
-        let scale_x = Config.CUSTOMER.THINKBUBBLE.WIDTH  / conf.w;
-        let scale_y = Config.CUSTOMER.THINKBUBBLE.HEIGHT / conf.h;
-
-        sprite.scale.setTo(scale_x, scale_y);
-        this.addDrawing( sprite );
+        this.addDrawing(
+            AnimalSprite.getRoundOutlineNoDetails(
+                this._desiredItem.getType(),
+                Config.CUSTOMER.THINKBUBBLE.WIDTH,
+                Config.CUSTOMER.THINKBUBBLE.HEIGHT
+            )
+        );
     }
 }
