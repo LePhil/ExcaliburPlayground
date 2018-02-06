@@ -30,10 +30,11 @@ export class Resources {
     static Cassa                = new ex.Texture("game/assets/textures/store/chimneyLow.png");
 
     // Animal shapes:
-    static Animals_round_nodetails = new ex.Texture("game/assets/textures/animals/round_nodetails.png");
-    static Animals_roundOutline = new ex.Texture("game/assets/textures/animals/roundOutline.png");
-    static Animals_square_nodetailsOutline = new ex.Texture("game/assets/textures/animals/square_nodetailsOutline.png");
-    static Animals_squareOutline = new ex.Texture("game/assets/textures/animals/squareOutline.png");
+    static Animals_round_nodetails_outline = new ex.Texture("game/assets/textures/animals/round_nodetailsOutline.png");
+    static Animals_round_nodetails_nooutline = new ex.Texture("game/assets/textures/animals/round_nodetails.png");
+    static Animals_round_details_outline = new ex.Texture("game/assets/textures/animals/roundOutline.png");
+    static Animals_square_nodetails_outline = new ex.Texture("game/assets/textures/animals/square_nodetailsOutline.png");
+    static Animals_square_details_outline = new ex.Texture("game/assets/textures/animals/squareOutline.png");
 
     static AnimalsSprites       = new ex.Texture("game/assets/textures/animals/animals.png");
     static HUDSpriteSheet       = new ex.Texture("game/assets/ui/hud_spritesheet.png");

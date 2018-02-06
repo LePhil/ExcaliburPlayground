@@ -1,6 +1,53 @@
 import * as ex from "excalibur";
 import {Resources} from "./Resources";
 
+
+export class AnimalSprite {
+    // TODO - get different representations of the same animal
+
+    public static getSquareOutlineDetails(type: string, width?:number, height?:number): ex.Sprite {
+        let tex = Resources.Animals_square_details_outline;
+        let conf = Graphics.ANIMALS.SQUARE_OUTLINE_DETAILS[type];
+        
+        if (!conf) { console.warn(`AnimalSprite: Type ${type} not found.`); }
+        
+        return AnimalSprite.createSprite(tex, conf, width, height);
+    }
+
+    public static getRoundOutlineNoDetails(type: string, width?:number, height?:number): ex.Sprite {
+        let tex = Resources.Animals_round_nodetails_outline;
+        let conf = Graphics.ANIMALS.ROUND_OUTLINE_NODETAILS[type];
+        
+        if (!conf) { console.warn(`AnimalSprite: Type ${type} not found.`); }
+        
+        return AnimalSprite.createSprite(tex, conf, width, height);
+    }
+
+    public static getRoundOutlineDetails(type: string, width?:number, height?:number): ex.Sprite {
+        let tex = Resources.Animals_round_details_outline;
+        let conf = Graphics.ANIMALS.ROUND_OUTLINE_DETAILS[type];
+        
+        if (!conf) { console.warn(`AnimalSprite: Type ${type} not found.`); }
+        
+        return AnimalSprite.createSprite(tex, conf, width, height);
+    }
+
+    private static createSprite(tex: ex.Texture, conf: any, width?:number, height?:number): ex.Sprite {
+        let w = conf.w;
+        let h = conf.h;
+
+        let sprite = new ex.Sprite(tex, conf.x, conf.y, conf.w, conf.h);
+
+        if (height && width) {
+            let scaleX = width/conf.w;
+            let scaleY = height/conf.h;
+            sprite.scale.setTo(scaleX, scaleY);
+        }
+
+        return sprite;
+    }
+}
+
 export class Graphics {
     static ALIENS = {
         HIME: {
@@ -120,6 +167,38 @@ export class Graphics {
 
 
     static ANIMALS = {
+        SQUARE_OUTLINE_DETAILS: {
+            bear:       {x: 194, y: 170, w: 170, h: 136},
+            buffalo:    {x: 0, y: 306, w: 192, h: 162},
+            chick:      {x: 658, y: 760, w: 136, h: 136},
+            chicken:    {x: 658, y: 607, w: 136, h: 153},
+            cow:        {x: 0, y: 170, w: 194, h: 136},
+            crocodile:  {x: 655, y: 471, w: 136, h: 136},
+            dog:        {x: 646, y: 136, w: 136, h: 169},
+            duck:       {x: 582, y: 0, w: 136, h: 136},
+            elephant:   {x: 0, y: 647, w: 192, h: 146},
+            frog:       {x: 364, y: 169, w: 146, h: 136},
+            giraffe:    {x: 276, y: 0, w: 170, h: 169},
+            goat:       {x: 0, y: 468, w: 192, h: 179},
+            gorilla:    {x: 657, y: 305, w: 136, h: 136},
+            hippo:      {x: 192, y: 442, w: 174, h: 136},
+            horse:      {x: 521, y: 320, w: 136, h: 151},
+            monkey:     {x: 186, y: 793, w: 182, h: 136},
+            moose:      {x: 0, y: 0, w: 276, h: 170},
+            narwhal:    {x: 368, y: 743, w: 154, h: 153},
+            owl:        {x: 370, y: 305, w: 136, h: 136},
+            panda:      {x: 0, y: 793, w: 186, h: 136},
+            parrot:     {x: 519, y: 578, w: 136, h: 136},
+            penguin:    {x: 366, y: 442, w: 155, h: 136},
+            pig:        {x: 192, y: 306, w: 178, h: 136},
+            rabbit:     {x: 510, y: 136, w: 136, h: 184},
+            rhino:      {x: 192, y: 578, w: 171, h: 136},
+            sloth:      {x: 446, y: 0, w: 136, h: 136},
+            snake:      {x: 782, y: 153, w: 136, h: 147},
+            walrus:     {x: 522, y: 714, w: 136, h: 142},
+            whale:      {x: 363, y: 578, w: 156, h: 165},
+            zebra:      {x: 782, y: 0, w: 136, h: 153}
+        },
         SQUARE_OUTLINE_NODETAILS: {
             bear:       {x: 272, y: 272, w: 136, h: 136},
             buffalo:    {x: 544, y: 544, w: 136, h: 136},
@@ -151,6 +230,38 @@ export class Graphics {
             walrus:     {x: 0, y: 272, w: 136, h: 136},
             whale:      {x: 0, y: 136, w: 136, h: 136},
             zebra:      {x: 0, y: 0, w: 136, h: 136}
+        },
+        ROUND_NOOUTLINE_NODETAILS: {
+            bear:       {x: 643, y: 513, w: 128, h: 129},
+            buffalo:    {x: 129, y: 263, w: 129, h: 129},
+            chick:      {x: 258, y: 640, w: 129, h: 128},
+            chicken:    {x: 643, y: 257, w: 128, h: 128},
+            cow:        {x: 129, y: 520, w: 129, h: 128},
+            crocodile:  {x: 258, y: 384, w: 129, h: 128},
+            dog:        {x: 261, y: 0, w: 129, h: 128},
+            duck:       {x: 261, y: 128, w: 129, h: 128},
+            elephant:   {x: 387, y: 256, w: 129, h: 128},
+            frog:       {x: 390, y: 0, w: 128, h: 129},
+            giraffe:    {x: 387, y: 640, w: 128, h: 129},
+            goat:       {x: 515, y: 640, w: 128, h: 129},
+            gorilla:    {x: 258, y: 512, w: 129, h: 128},
+            hippo:      {x: 387, y: 384, w: 128, h: 128},
+            horse:      {x: 0, y: 391, w: 129, h: 128},
+            monkey:     {x: 643, y: 642, w: 128, h: 128},
+            moose:      {x: 0, y: 263, w: 129, h: 128},
+            narwhal:    {x: 0, y: 0, w: 132, h: 132},
+            owl:        {x: 515, y: 512, w: 128, h: 128},
+            panda:      {x: 258, y: 256, w: 129, h: 128},
+            parrot:     {x: 132, y: 128, w: 129, h: 128},
+            penguin:    {x: 132, y: 0, w: 129, h: 128},
+            pig:        {x: 387, y: 512, w: 128, h: 128},
+            rabbit:     {x: 129, y: 392, w: 129, h: 128},
+            rhino:      {x: 516, y: 129, w: 128, h: 128},
+            sloth:      {x: 0, y: 519, w: 129, h: 128},
+            snake:      {x: 518, y: 0, w: 128, h: 128},
+            walrus:     {x: 643, y: 385, w: 128, h: 128},
+            whale:      {x: 0, y: 132, w: 132, h: 131},
+            zebra:      {x: 515, y: 384, w: 128, h: 128}
         },
         ROUND_OUTLINE_NODETAILS: {
             bear:       {x: 547, y: 545, w: 136, h: 137},
