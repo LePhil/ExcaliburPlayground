@@ -100,6 +100,8 @@ Done!
 * Credits are in HTML now too. Options too!
 * left-looking idle when last walked left
 * customers no longer appear on 0|0 and are stuck there
+* same origin of different animal sprites
+* customers with n bought items pay for n items now
 
 # Won't do
 * If inventory is full, clicks on station should not do anything- No. We'd have to check for Tools in Inventory (in case the station is broken) and if there are actions in the queue to remove some items --> let the user make mistakes!

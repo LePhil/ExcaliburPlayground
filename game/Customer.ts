@@ -10,6 +10,7 @@ import {AnimalSprite, Graphics} from "./config/Graphics";
 import {Resources} from "./config/Resources";
 
 export class Customer extends AbstractPlayer {
+    private _originalDesiredItems: Array<Item>;
     public desiredItems: Array<Item>;
     private _hasDecided: boolean;
     private _hasReceivedItem: boolean;
@@ -35,6 +36,7 @@ export class Customer extends AbstractPlayer {
 
         this._thinkBubbles = [];
         this.desiredItems = [];
+        this._originalDesiredItems = [];
         this._hasDecided = false;
         this._hasReceivedItem = false;
         this._setupData = setup;
@@ -82,6 +84,9 @@ export class Customer extends AbstractPlayer {
 
             this.add(thinkBubble);
         }
+
+        // Keep a copy of the desired items for later (paying!)
+        this._originalDesiredItems = this.desiredItems.slice(0);
 
         this._hasDecided = true;
         
@@ -180,7 +185,8 @@ export class Customer extends AbstractPlayer {
         }
 
         // earned score per customer depends on the patience they had left
-        this._onGetServedCallback(Config.SCORE.VALUE_OF_SERVING * this._patience / Config.CUSTOMER.INITIAL_PATIENCE);
+        let moneyEarned = Config.SCORE.VALUE_OF_SERVING * this._patience / Config.CUSTOMER.INITIAL_PATIENCE;
+        this._onGetServedCallback(moneyEarned * this._originalDesiredItems.length);
 
         // Some fancy KA-CHING stuff
         this.scene.add(EffectFactory.Make(EffectFactory.Type.Money, this.pos));
