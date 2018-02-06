@@ -245,16 +245,36 @@ export class Config {
   }
 
   static ANIMALS = {
+    BEAR:     "bear",
+    BUFFALO:  "buffalo",
+    CHICK:    "chick",
+    CHICKEN:  "chicken",
+    COW:      "cow",
+    CROCODILE:"crocodile",
+    DOG:      "dog",
+    DUCK:     "duck",
     ELEPHANT: "elephant",
+    FROG:     "frog",
     GIRAFFE:  "giraffe",
+    GOAT:     "goat",
+    GORILLA:  "gorilla",
     HIPPO:    "hippo",
+    HORSE:    "horse",
     MONKEY:   "monkey",
+    MOOSE:    "moose",
+    NARWHAL:  "narwhal",
+    OWL:      "owl",
     PANDA:    "panda",
     PARROT:   "parrot",
     PENGUIN:  "penguin",
     PIG:      "pig",
     RABBIT:   "rabbit",
+    RHINO:    "rhino",
+    SLOTH:    "sloth",
     SNAKE:    "snake",
+    WALRUS:   "walrus",
+    WHALE:    "whale",
+    ZEBRA:    "zebra",
     SCALE: 0.15,
     SPRITE: {
       elephant: {x: 0,    y: 0,     w: 376, h: 310},
@@ -279,18 +299,6 @@ export class Config {
       HEIGHT: 64,
       WIDTH: 64,
       MAX: 6
-    },
-    SPRITE: {      
-      elephant: {x: 0,    y: 1145,  w: 284, h: 284},
-      giraffe:  {x: 286,  y: 859,   w: 284, h: 284},
-      hippo:    {x: 0,    y: 0,     w: 285, h: 285},
-      monkey:   {x: 0,    y: 1717,  w: 284, h: 284},
-      panda:    {x: 0,    y: 1431,  w: 284, h: 284},
-      parrot:   {x: 286,  y: 1145,  w: 284, h: 284},
-      penguin:  {x: 286,  y: 573,   w: 284, h: 284},
-      pig:      {x: 0,    y: 287,   w: 285, h: 284},
-      rabbit:   {x: 0,    y: 859,   w: 284, h: 284},
-      snake:    {x: 0,    y: 573,   w: 284, h: 284}
     },
     SLOT: {W: 49, H: 45}
   };

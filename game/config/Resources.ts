@@ -13,7 +13,6 @@ export class Resources {
     static PlayerSheetPink      = new ex.Texture("game/assets/textures/aliens/alienPink.png");
     static PlayerSheetYellow    = new ex.Texture("game/assets/textures/aliens/alienYellow.png");
 
-    static TextureInventory     = new ex.Texture("game/assets/textures/animals/inventory.png");
     static TextureStations      = new ex.Texture("game/assets/textures/animals/stations.png");
     static TextureBlob          = new ex.Texture("game/assets/textures/animals/sprite_blob_pink.png");
 

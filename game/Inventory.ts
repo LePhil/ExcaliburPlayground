@@ -1,6 +1,7 @@
 import * as ex from "excalibur";
 import { Config } from "./config/Config";
 import { Resources } from "./config/Resources";
+import { AnimalSprite } from "./config/Graphics";
 
 export class InventoryItem extends ex.Actor {
   _inv: Inventory;
@@ -17,27 +18,29 @@ export class InventoryItem extends ex.Actor {
     });
   }
 
-  public draw(ctx: CanvasRenderingContext2D, delta: number) {
-    super.draw(ctx, delta);
-  }
-
   onInitialize(engine: ex.Engine): void {
-    let conf = Config.INVENTORY.SPRITE[this._type];
-    let tex = Resources.TextureInventory;
     
-    // TODO: Unify all items in the Config...
-    if (!conf) {
-      conf = Config.ITEMS[this._type];
-      tex = Resources.ItemSpriteSheet;
+    if (Config.ANIMALS[this._type.toUpperCase()]) {
+      this.addDrawing(
+        AnimalSprite.getSquareOutlineNoDetails(
+          this._type,
+          Config.INVENTORY.ITEMS.WIDTH,
+          Config.INVENTORY.ITEMS.HEIGHT
+        )
+      );
+    } else {
+      // TODO: Unify all items in the Config...
+      let conf = Config.ITEMS[this._type];
+      let tex = Resources.ItemSpriteSheet;
+
+      let sprite = new ex.Sprite(tex, conf.x, conf.y, conf.w, conf.h);
+
+      let scale_x = Config.INVENTORY.ITEMS.WIDTH / conf.w;
+      let scale_y = Config.INVENTORY.ITEMS.HEIGHT / conf.h;
+
+      sprite.scale.setTo(Config.STATIONS.CONF.SCALE, Config.STATIONS.CONF.SCALE);
+      this.addDrawing(sprite);
     }
-
-    let sprite = new ex.Sprite(tex, conf.x, conf.y, conf.w, conf.h);
-
-    let scale_x = Config.INVENTORY.ITEMS.WIDTH / conf.w;
-    let scale_y = Config.INVENTORY.ITEMS.HEIGHT / conf.h;
-
-    sprite.scale.setTo(Config.STATIONS.CONF.SCALE, Config.STATIONS.CONF.SCALE);
-    this.addDrawing(sprite);
   }
 
   public getType() {

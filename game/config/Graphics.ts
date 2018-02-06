@@ -3,7 +3,14 @@ import {Resources} from "./Resources";
 
 
 export class AnimalSprite {
-    // TODO - get different representations of the same animal
+    public static getSquareOutlineNoDetails(type: string, width?:number, height?:number): ex.Sprite {
+        let tex = Resources.Animals_square_nodetails_outline;
+        let conf = Graphics.ANIMALS.SQUARE_OUTLINE_NODETAILS[type];
+        
+        if (!conf) { console.warn(`AnimalSprite: Type ${type} not found.`); }
+        
+        return AnimalSprite.createSprite(tex, conf, width, height);
+    }
 
     public static getSquareOutlineDetails(type: string, width?:number, height?:number): ex.Sprite {
         let tex = Resources.Animals_square_details_outline;
