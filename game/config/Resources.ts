@@ -13,10 +13,7 @@ export class Resources {
     static PlayerSheetPink      = new ex.Texture("game/assets/textures/aliens/alienPink.png");
     static PlayerSheetYellow    = new ex.Texture("game/assets/textures/aliens/alienYellow.png");
 
-    static TextureStations      = new ex.Texture("game/assets/textures/animals/stations.png");
     static TextureBlob          = new ex.Texture("game/assets/textures/animals/sprite_blob_pink.png");
-
-    static TextureBubbles       = new ex.Texture("game/assets/textures/animals/bubbles.png");
 
     static ImgRadioChecked      = new ex.Texture("game/assets/ui/blue_boxTick.png");
     static ImgRadioUnchecked    = new ex.Texture("game/assets/ui/grey_circle.png");
@@ -35,7 +32,6 @@ export class Resources {
     static Animals_square_nodetails_outline = new ex.Texture("game/assets/textures/animals/square_nodetailsOutline.png");
     static Animals_square_details_outline = new ex.Texture("game/assets/textures/animals/squareOutline.png");
 
-    static AnimalsSprites       = new ex.Texture("game/assets/textures/animals/animals.png");
     static HUDSpriteSheet       = new ex.Texture("game/assets/ui/hud_spritesheet.png");
     static TextureTiles         = new ex.Texture("game/assets/textures/tiles_spritesheet.png");
     static ItemSpriteSheet      = new ex.Texture("game/assets/textures/genericItems_spritesheet_colored.png");

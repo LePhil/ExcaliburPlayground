@@ -3,11 +3,12 @@ import {Player} from "./Player";
 import {Item} from "./Item";
 import {Resources} from "./config/Resources";
 import {Config} from "./config/Config";
+import {AnimalSprite, Graphics} from "./config/Graphics";
 
 export class ItemSourceFactory {
     static make(setup: any, player: Player): ItemSource {
         let itemSource;
-        if (!!Config.ANIMALS.SPRITE[setup.T]) {
+        if (!!Config.ANIMALS[setup.T.toUpperCase()]) {
             itemSource = new AnimalCage(
                 setup.X,
                 setup.Y,
@@ -23,12 +24,7 @@ export class ItemSourceFactory {
                 player
             );
         } else {
-            itemSource = new ItemSource(
-                setup.X,
-                setup.Y,
-                setup.T,
-                player
-            );
+            console.warn(`Type ${setup.T} is no Animal or Item, not sure what to do.`)
         }
 
         if (setup.DECAY && setup.DECAY === true) {
@@ -45,7 +41,7 @@ enum ItemSourceState {
     Broken = "broken"
 };
   
-export class ItemSource extends ex.Actor {
+export abstract class ItemSource extends ex.Actor {
     protected _type: string;
     protected _conf: any;
     private _duration: number;
@@ -56,11 +52,10 @@ export class ItemSource extends ex.Actor {
                 y: number,
                 type: string,
                 player: Player,
-                conf?: any,
+                conf: any,
                 scale?: number) {
 
         // TODO: unify all possible ItemSources (Stations, Cages, ...) in Config.
-        conf = conf || Config.STATIONS[type];
         scale = scale || Config.STATIONS.CONF.SCALE;
         let w = conf.w * scale;
         let h = conf.h * scale;
@@ -80,12 +75,6 @@ export class ItemSource extends ex.Actor {
     
     // Optional: effects or something.
     onPlayerReached(): void {}
-  
-    onInitialize(engine: ex.Engine): void {
-        let tex = Resources.TextureStations;
-        let sprite = new ex.Sprite(tex, this._conf.x, this._conf.y, this._conf.w, this._conf.h);
-        sprite.scale.setTo(Config.STATIONS.CONF.SCALE, Config.STATIONS.CONF.SCALE);
-    }
 
     protected createDrawings(sprite: ex.Sprite): void {
         let brokenSprite = sprite.clone();
@@ -153,7 +142,7 @@ class Animal extends ex.Actor {
     private _type: string;
 
     constructor(x: number, y: number, type: string) {
-        let conf = Config.ANIMALS.SPRITE[type];
+        let conf = Graphics.ANIMALS.ROUND_OUTLINE_DETAILS[type];
         let scale = Config.ANIMALS.SCALE;
 
         let w = conf.w * scale;
@@ -178,13 +167,13 @@ class Animal extends ex.Actor {
     }
 
     onInitialize(engine: ex.Engine): void {
-        let conf = Config.ANIMALS.SPRITE[this._type];
-        let tex = Resources.AnimalsSprites;
-
-        let sprite = new ex.Sprite(tex, conf.x, conf.y, conf.w, conf.h);
-        sprite.scale.setTo(Config.ANIMALS.SCALE, Config.ANIMALS.SCALE);
-
-        this.addDrawing(sprite);
+        this.addDrawing(
+            AnimalSprite.getRoundOutlineDetails(
+                this._type,
+                this.getWidth(),
+                this.getHeight()
+            )
+        );
     }
 
     getType(): string {
@@ -328,9 +317,5 @@ export class Crate extends ItemSource {
         let sprite = new ex.Sprite(tex, conf.x, conf.y, conf.w, conf.h);
 
         this.createDrawings(sprite);
-    }
-
-    reset(): void {
-        // TODO
     }
 }

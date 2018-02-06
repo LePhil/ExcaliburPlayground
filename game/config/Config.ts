@@ -37,18 +37,7 @@ export class Config {
   static STATIONS = {
     CONF: {
       SCALE: 0.2
-    },
-    /* Outlined Animals */
-    rabbit:   {x: 394, y: 344,  w: 284, h: 414, duration:  500},
-    elephant: {x: 0,   y: 0,    w: 424, h: 342, duration:  500},
-    giraffe:  {x: 0,   y: 963,  w: 382, h: 370, duration: 1000},
-    hippo:    {x: 0,   y: 1642, w: 333, h: 344, duration: 1000},
-    monkey:   {x: 0,   y: 344,  w: 392, h: 284, duration: 1000},
-    panda:    {x: 0,   y: 630,  w: 392, h: 331, duration: 1000},
-    parrot:   {x: 361, y: 1335, w: 284, h: 284, duration: 1000},
-    penguin:  {x: 335, y: 1642, w: 284, h: 284, duration: 2000},
-    pig:      {x: 0,   y: 1335, w: 359, h: 305, duration: 2000},
-    snake:    {x: 384, y: 963,  w: 284, h: 334, duration: 2000}
+    }
   };
 
   static ITEM_TYPES = {
@@ -275,19 +264,7 @@ export class Config {
     WALRUS:   "walrus",
     WHALE:    "whale",
     ZEBRA:    "zebra",
-    SCALE: 0.15,
-    SPRITE: {
-      elephant: {x: 0,    y: 0,     w: 376, h: 310},
-      giraffe:  {x: 0,    y: 599,   w: 334, h: 350},
-      hippo:    {x: 0,    y: 1525,  w: 294, h: 293},
-      monkey:   {x: 0,    y: 312,   w: 336, h: 285},
-      panda:    {x: 0,    y: 951,   w: 332, h: 285},
-      parrot:   {x: 378,  y: 0,     w: 284, h: 285},
-      penguin:  {x: 296,  y: 1525,  w: 284, h: 285},
-      pig:      {x: 0,    y: 1238,  w: 316, h: 285},
-      rabbit:   {x: 338,  y: 312,   w: 284, h: 370},
-      snake:    {x: 334,  y: 951,   w: 284, h: 321}
-    }
+    SCALE: 0.4
   };
 
   static INVENTORY = {
@@ -611,27 +588,6 @@ export class Config {
       star_silver: 8,
       star_copper: 5
     }
-  };
-
-  static POTENTIALWISHES = {
-    ANIMALS: [
-      Config.ANIMALS.ELEPHANT,
-      Config.ANIMALS.GIRAFFE,
-      Config.ANIMALS.HIPPO,
-      Config.ANIMALS.MONKEY,
-      Config.ANIMALS.PANDA,
-      Config.ANIMALS.PARROT,
-      Config.ANIMALS.PENGUIN,
-      Config.ANIMALS.PIG,
-      Config.ANIMALS.RABBIT,
-      Config.ANIMALS.SNAKE
-    ],
-    ITEMS: [
-      Config.ITEMS.REDPILL,
-      Config.ITEMS.BLUEPILL,
-      Config.ITEMS.BONE,
-      Config.ITEMS.MEDKIT,
-    ]
   };
 
   static ZINDICES = {
