@@ -112,6 +112,29 @@ export class Levels {
                 "Now with 100% more pigs and parrots!"
             ],
             OUTRO: ["Well done!"]
+        },
+        L1_3: {
+            TITLE: "SLOOOTHS",
+            TYPE: Levels.TYPES.NORMAL,
+            CONF: Levels.SETTINGS.STORE_GREY,
+            CASSA: {X: 250, Y: 500},
+            DOOR:  {X: 800, Y: 595, SPAWN_TIME_S: 6},
+            DESIREDITEMS: [
+                Config.ANIMALS.SLOTH,
+                Config.ANIMALS.PENGUIN,
+                Config.ANIMALS.PANDA],
+            ITEMSOURCES: [
+                {X: 700, Y: 400, T: Config.ANIMALS.SLOTH,   DECAY: false},
+                {X: 300, Y: 300, T: Config.ANIMALS.PENGUIN, DECAY: false},
+                {X: 600, Y: 300, T: Config.ANIMALS.PANDA,   DECAY: false}
+            ],
+            TOOLS: [],
+            BLOB: false,
+            INTRO: [
+                "Aw yeah",
+                "Sloths and shit!"
+            ],
+            OUTRO: ["Well done!"]
         }
     };
 
@@ -123,7 +146,8 @@ export class Levels {
             AUDIO: Resources.Sound_Intro,
             LEVELS: [
                 Levels.LEVEL.L1_1,
-                Levels.LEVEL.L1_2
+                Levels.LEVEL.L1_2,
+                Levels.LEVEL.L1_3
             ]
         },
         DESERT: {
