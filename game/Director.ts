@@ -3,6 +3,7 @@ import * as ex from "excalibur";
 import {ScoreCounter, CountdownTimer} from "./Timer";
 import {Levels} from "./config/Levels";
 import {LevelScene} from "./scenes/LevelScene";
+import {Cutscene} from "./scenes/Cutscene";
 import {IntroDialogue, OutroDialogue} from "./ui/HTMLDialogue";
 
 const introDlg = new IntroDialogue();
@@ -115,7 +116,35 @@ export class Director {
         globals.loadNextLevel(this._levelData.NAME);
     }
 
+    /**
+     * Creates a new Cutscene, prepares (loads) it and goes to it.
+     * Callback = going back to the parent map where the player came from.
+     * 
+     * @param parentMap Identifier of the parent map's scene
+     * @param engine Game object
+     * @param setup Setup object for the cutscene
+     */
+    public static loadAndCreateCutscene(parentMap: string, engine: ex.Engine, setup: any): void {
+        let id = "LVL_" + (setup.TITLE).split(" ").join("_");
+        let newLevel = new Cutscene(engine);
+        engine.addScene(id, newLevel);
+        newLevel.load(setup, () => {engine.goToScene(parentMap);});
+        engine.goToScene(id);
+    }
+
+    /**
+     * Loads and creates any kind of level and goes to it directly.
+     * 
+     * @param parentMap Identifier of the parent map's scene
+     * @param engine Game object
+     * @param setup Setup object for the cutscene
+     */
     public static loadAndCreateLevel(parentMap: string, engine: ex.Engine, setup: any): void {
+        if (setup.TYPE === Levels.TYPES.CUTSCENE) {
+            Director.loadAndCreateCutscene(parentMap, engine, setup);
+            return;
+        }
+
         let id = "LVL_" + (setup.TITLE).split(" ").join("_");
         let newLevel = new LevelScene(engine);
         engine.addScene(id, newLevel);
@@ -123,11 +152,13 @@ export class Director {
         if (setup.INTRO) {
             introDlg.setup(setup,
                 () => {
+                    // Retry
                     introDlg.hide();
                     Director.createLevel(id, newLevel, setup, engine, parentMap);
                     engine.goToScene(id);
                 },
                 () => {
+                    // Return to Map
                     introDlg.hide();
                     engine.goToScene(parentMap);
                 }

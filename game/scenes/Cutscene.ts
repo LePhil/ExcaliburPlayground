@@ -26,14 +26,7 @@ export class Cutscene extends ex.Scene {
         this.add(this._textLabel);
     }
 
-    public loadLevelData(levelName: string): void {
-        if(this._levelName !== levelName && this.cutSceneDirector) {
-            // new level to be loaded! Discard of all actors for now
-            this.cutSceneDirector.kill();
-        }
-
-        let setup = Levels.getLevel(levelName);
-        
+    public load(setup: any, callback: () => void): void {
         this.add( new LevelMap(setup.CONF) );
 
         let locations = {};
@@ -89,7 +82,7 @@ export class Cutscene extends ex.Scene {
             actions.push( new Action(action.T, subject, action.A, action.O) );
         });
 
-        this.cutSceneDirector = new CutSceneDirector(setup, locations, characters, actions, props, this._game);
+        this.cutSceneDirector = new CutSceneDirector(setup, locations, characters, actions, props, this._game, callback);
         this.add(this.cutSceneDirector);
     }
 
@@ -101,16 +94,8 @@ export class Cutscene extends ex.Scene {
         }
     }
 
-    onInitialize(engine: ex.Engine) {
-    }
-
     onActivate () {
         this.cutSceneDirector.startScript();
-    }
-
-    onDeactivate () {
-        this.cutSceneDirector.resetScene();
-        this._textLabel.text = "";
     }
 }
 
@@ -337,10 +322,12 @@ class CutSceneDirector extends ex.Actor {
     private _props:any;
     private _actions:Array<Action>;
     private _game: ex.Engine;
+    private _sceneDoneCallback: () => void;    
 
-    constructor(setup, locations, characters, actions, props, game) {
+    constructor(setup, locations, characters, actions, props, game, callback: () => void) {
         super(0,0, Config.GAME.HEIGHT);
 
+        this._sceneDoneCallback = callback;        
         this._setup = setup;
         this._locations = locations;
         this._characters = characters;
@@ -349,6 +336,7 @@ class CutSceneDirector extends ex.Actor {
         this._game = game;
     }
 
+    // TODO: remove, probably
     resetScene(): void {
         this.actions.clearActions();
 
@@ -386,16 +374,12 @@ class CutSceneDirector extends ex.Actor {
             deltaT = action.getTimepoint();
         });
 
+        // Have an extra 3 seconds to not end too abruptly
         this.actions.delay(3000);
-        
-        if (this._setup.OUT === "fade") {
-            // TODO: fade out scene, e.g. fullscreen black actor covering everything with opacity going from 0 to 1 slowly.
-        }
-        
-        // Load next Scene/Level if applicable, otherwise back to the main menu
+    
         this.actions.callMethod(() => {
-            if (this._setup.NEXT) {
-                globals.loadNextLevel(this._setup.NEXT);
+            if (this._sceneDoneCallback) {
+                this._sceneDoneCallback();
             } else {
                 this._game.goToScene("menu");
             }

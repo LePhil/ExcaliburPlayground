@@ -60,16 +60,23 @@ export class MapScene extends ex.Scene {
     constructor(setup: AreaSetupObject, engine: ex.Engine) {
         super(engine);
         this._buttons = [];
-
+        
+        let currentMapName = MapScene.createSceneName(setup);
         this._audio = setup.AUDIO;
 
         if (setup.LEVELS) {
+            let levelCounter = 1;
             setup.LEVELS.forEach((level, index) => {
-                let lvlBtn = new LevelButton(new ex.Vector(200 + index*100, 200), this._getBtnConf(index+1), () => {
-                    console.log(level.TITLE);
-                    Director.loadAndCreateLevel(MapScene.createSceneName(setup), engine, level);
+
+                let lvlBtn = new LevelButton(new ex.Vector(200 + index*100, 200), this._getBtnConf(level.TYPE, levelCounter), () => {
+                    Director.loadAndCreateLevel(name, engine, level);
                 });
                 this.add(lvlBtn);
+
+                // Cutscenes shouldn't count towards level #
+                if (level.TYPE === Levels.TYPES.NORMAL) {
+                    levelCounter++;
+                }
             });
         }
 
@@ -80,17 +87,21 @@ export class MapScene extends ex.Scene {
         ));
     }
 
-    private _getBtnConf(index): any {
-        let nrStr = index.toString();
-
-        if (index <  10) {
-            nrStr = "0" + nrStr;
-        }
-
-        if (Graphics.MAP["level_" + nrStr]) {
-            return Graphics.MAP["level_" + nrStr];
-        } else {
+    private _getBtnConf(type: string, index: number): any {
+        if (type === Levels.TYPES.CUTSCENE) {
             return Graphics.MAP.level_empty;
+        } else {
+            let nrStr = index.toString();
+
+            if (index <  10) {
+                nrStr = "0" + nrStr;
+            }
+
+            if (Graphics.MAP["level_" + nrStr]) {
+                return Graphics.MAP["level_" + nrStr];
+            } else {
+                return Graphics.MAP.level_empty;
+            }
         }
     }
 

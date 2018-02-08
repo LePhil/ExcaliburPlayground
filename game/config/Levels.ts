@@ -93,6 +93,40 @@ export class Levels {
             ],
             OUTRO: ["Well done!"]
         },
+        C1_1: {
+            TITLE: "School's out",
+            TYPE: Levels.TYPES.CUTSCENE,
+            CONF: Levels.SETTINGS.HOME,
+            LOCATIONS: [
+                {Name: "player_entry",  X: 900, Y: 480},
+                {Name: "player_main",   X: 380, Y: 480},
+                {Name: "phone_initial", X: 350, Y: 480},
+            ],
+            CHARACTERS: [
+                {Id: "hime", Char: Levels.CHARS.HIME, Initial: "player_entry"}
+            ],
+            PROPS: [
+                {Id: "phone",   Type: "mobile_phone", Initial: "phone_initial", Opacity: 0}
+            ],
+            SCRIPT: [
+                {T: 2,  S: "hime", A: ActionType.Move, O: {to: "player_main"} },
+                {T: 7,  S: "hime", A: ActionType.Talk, O: {text: "Oh boy!"} },
+                {T: 10, S: "hime", A: ActionType.Talk, O: {text: "Finally done with school."} },
+                {T: 14, S: "hime", A: ActionType.Talk, O: {text: "Can't wait to go to University"} },
+                {T: 18, S: "hime", A: ActionType.Talk, O: {text: "and become a Psychologist!"} },
+                {T: 22, S: "hime", A: ActionType.Talk, O: {text: "But first, let's check SeenIt.", duration: 2} },
+                {T: 24, S: "phone",A: ActionType.Show},
+                {T: 28, S: "hime", A: ActionType.Talk, O: {text: "Hihi! Silly cats..."} },
+                {T: 34, S: "hime", A: ActionType.Talk, O: {text: "Oh?"} },
+                {T: 36, S: "hime", A: ActionType.Talk, O: {text: "..."} },
+                {T: 40, S: "hime", A: ActionType.Talk, O: {text: "«Psyche completely researched.»"} },
+                {T: 44, S: "hime", A: ActionType.Talk, O: {text: "«No more psych studies.»"} },
+                {T: 46, S: "phone",A: ActionType.Hide},
+                {T: 50, S: "hime", A: ActionType.Talk, O: {text: "Poop! What do I do now?", duration: 4} },
+                {T: 54, S: "hime", A: ActionType.Move, O: {to: "player_entry"} },
+                {T: 58, S: "hime", A: ActionType.Hide}                
+            ]
+        },
         L1_2: {
             TITLE: "Another day",
             TYPE: Levels.TYPES.NORMAL,
@@ -146,6 +180,7 @@ export class Levels {
             AUDIO: Resources.Sound_Intro,
             LEVELS: [
                 Levels.LEVEL.L1_1,
+                Levels.LEVEL.C1_1,
                 Levels.LEVEL.L1_2,
                 Levels.LEVEL.L1_3
             ]
@@ -238,7 +273,6 @@ export class Levels {
                 {T: 54, S: "hime", A: ActionType.Move, O: {to: "player_entry"} },
                 {T: 58, S: "hime", A: ActionType.Hide}                
             ],
-            OUT: "fade",
             NEXT: "uncle_to_the_rescue"
         }, { /* CUTSCENE: Uncle to the rescue */
             NAME: "uncle_to_the_rescue",
