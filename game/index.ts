@@ -24,7 +24,6 @@ let game = new ex.Engine({
     pointerScope: ex.Input.PointerScope.Canvas,
     displayMode: ex.DisplayMode.FullScreen
 });
-globals.game = game;
 
 game.add("loading", new ex.Scene(game));
 game.add("menu", new MainMenu(game));
@@ -35,10 +34,6 @@ Object.keys(Levels.AREAS).forEach(areaObj => {
     let mapScene = new MapScene(area, game);
     game.add(MapScene.createSceneName(area), mapScene);
 });
-
-globals.customGame = (settings: any) => {
-    Director.loadAndCreateLevel(game, settings, "menu");
-}
 
 let loader = new ex.Loader();
 

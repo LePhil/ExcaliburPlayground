@@ -105,7 +105,6 @@ interface Subject {
     action_show();
     action_hide();
     action_effect(type: EffectTypes, at: string);
-    reset();
 }
 
 class Character extends AbstractPlayer implements Subject {
@@ -189,15 +188,6 @@ class Character extends AbstractPlayer implements Subject {
     getPlayerColor(): string {
         return this._charType;
     }
-
-    reset(): void {
-        this._setup();
-        this.actions.clearActions();
-        this.pos.x = this._initialLocation.x;
-        this.pos.y = this._initialLocation.y;
-        this.opacity = this._initialOpacity;
-        this._handleIdlePlayer();
-    }
 }
 
 // Very simple character that can basically appear and disappear.
@@ -258,14 +248,6 @@ class Prop extends ex.Actor implements Subject {
     }
 
     action_effect(type: EffectTypes, at: string) {}
-
-    reset(): void {
-        this.actions.clearActions();
-        this.setDrawing("normal");
-        this.opacity = this._initialOpacity;
-        this.pos.x = this._initialLocation.x;
-        this.pos.y = this._initialLocation.y;
-    }
 }
 
 class Action {
@@ -334,19 +316,6 @@ class CutSceneDirector extends ex.Actor {
         this._actions = actions;
         this._props = props;
         this._game = game;
-    }
-
-    // TODO: remove, probably
-    resetScene(): void {
-        this.actions.clearActions();
-
-        // reset all actors that coould have changed
-        Object.keys(this._characters).forEach(char => {
-            this._characters[char].reset();
-        });
-        Object.keys(this._props).forEach(prop => {
-            this._props[prop].reset();
-        });
     }
 
     startScript():void {

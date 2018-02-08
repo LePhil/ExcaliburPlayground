@@ -6,6 +6,7 @@ import {Resources} from "../config/Resources";
 import {Levels} from "../config/Levels";
 import {AudioManager} from "../AudioManager";
 import {AreaSetupObject, MapScene} from "./MapScene";
+import {Director} from "../Director";
 import {EffectTypes, EffectFactory, Effect} from "../Effects";
 import {SimpleDialogue, OptionsDialogue, CustomGameDialogue} from "../ui/HTMLDialogue";
 
@@ -48,13 +49,18 @@ export class MainMenu extends ex.Scene {
             () => {
                 customGameDlg.hide();
                 this._toggleButtons(true);
+            },
+            (settings) => {
+                Director.loadAndCreateLevel(engine, settings, "menu");
             }
         );
 
         this._startButton = new Button(
             Pos.make(buttonPos.center_1),
             "Start",
-            () => {globals.startGame();}
+            () => {
+                console.warn("TODO: go to last available map (or first) --> load from saved data");
+            }
         );
 
         this._optionsButton = new Button(
@@ -90,14 +96,6 @@ export class MainMenu extends ex.Scene {
         this._addBtn(this._customButton);
 
         if (Config.GAME.DEBUG) {
-            Levels.MAPS.forEach((map, index) => {
-                this._addBtn(new Button(
-                    Pos.make(Config.GAME.UI.BUTTON.W/2, Config.GAME.UI.BUTTON.H/2 + index * 40),
-                    map.NAME,
-                    () => globals.loadNextLevel(map.NAME)
-                ));
-            });
-
             this._addBtn(new Button(
                 Pos.make(900, 100),
                 "Debug Level",

@@ -227,7 +227,7 @@ export class CustomGameDialogue extends HTMLDialogue {
         this._setDifficulty("easy");
     }
 
-    public setup(onGoBack: () => void): void {
+    public setup(onGoBack: () => void, onStartGame: (settings: any) => void): void {
         let radios = Array.prototype.slice.call(document.querySelectorAll('.dlg--custom-game .option--difficulty'));
         
         radios.forEach(radio => {
@@ -244,7 +244,7 @@ export class CustomGameDialogue extends HTMLDialogue {
 
         this.btnOkay.addEventListener("click", () => {
             this.hide();
-            globals.customGame(this._settings);
+            onStartGame(this._settings);
         });
 
         this.btnNope.addEventListener("click", onGoBack);
