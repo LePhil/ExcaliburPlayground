@@ -36,7 +36,8 @@ Done!
 * longer levels
 * certain nr of points one should get per level
 * Rush hour where the rate of incoming customers increases
-* update animal icons
+* Cleanup after big level-handling re-write...
+* Locked levels in MapScene
 
 # Bugs
 * "solved" taskItems re-appear when changing a level.

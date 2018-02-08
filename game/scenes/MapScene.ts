@@ -69,7 +69,7 @@ export class MapScene extends ex.Scene {
             setup.LEVELS.forEach((level, index) => {
 
                 let lvlBtn = new LevelButton(new ex.Vector(200 + index*100, 200), this._getBtnConf(level.TYPE, levelCounter), () => {
-                    Director.loadAndCreateLevel(name, engine, level);
+                    Director.loadAndCreateLevel(engine, level, currentMapName);
                 });
                 this.add(lvlBtn);
 

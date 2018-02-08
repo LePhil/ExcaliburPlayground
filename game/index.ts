@@ -28,13 +28,6 @@ globals.game = game;
 
 game.add("loading", new ex.Scene(game));
 game.add("menu", new MainMenu(game));
-
-let gameScene = new LevelScene(game);
-game.add("game", gameScene );
-
-let cutScene = new Cutscene(game);
-game.add("cutScene", cutScene );
-
 game.add("debug", new DebugScene(game));
 
 Object.keys(Levels.AREAS).forEach(areaObj => {
@@ -43,24 +36,9 @@ Object.keys(Levels.AREAS).forEach(areaObj => {
     game.add(MapScene.createSceneName(area), mapScene);
 });
 
-let director = new Director(game, gameScene);
-
 globals.customGame = (settings: any) => {
-  director.loadCustomLevel(settings);
+    Director.loadAndCreateLevel(game, settings, "menu");
 }
-
-globals.startGame = () => {
-    globals.loadNextLevel(Levels.getCurrentLevelName());
-};
-
-globals.loadNextLevel = (levelIdentifier) => {
-    if(Levels.isCutscene(levelIdentifier)) {
-        cutScene.loadLevelData(levelIdentifier);  
-        game.goToScene("cutScene");
-    } else {
-        director.loadLevelSet(levelIdentifier);
-    }
-};
 
 let loader = new ex.Loader();
 
