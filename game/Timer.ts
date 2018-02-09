@@ -26,6 +26,8 @@ class DigitDisplay extends ex.UIActor {
       this._digits.push( digit );
       this.scene.add( digit );
     }
+
+    this._updateDigits();
   }
 
   _updateDigits():void {
@@ -39,8 +41,7 @@ class DigitDisplay extends ex.UIActor {
   }
 
   public resetState():void {
-    this._display = 0;
-    this._updateDigits();
+
   }
 }
 
@@ -64,6 +65,22 @@ export class CountdownTimer extends DigitDisplay {
     let sprite = Resources.ImgClock.asSprite();
     sprite.scale.setTo(conf.CLOCK.W / 70, conf.CLOCK.H / 70);
     this.addDrawing(sprite);
+
+    this._internalTimer = new ex.Timer(() => {
+      this._display++;
+      
+      if(this._display >= this._targetTime) {
+        this._callback();
+        this._display = this._targetTime;
+      }
+      
+      this._updateDigits();
+    }, 1000, true);
+
+    // Force redraw
+    this._updateDigits();
+
+    this.scene.add(this._internalTimer);
   }
 
   setTimer(time, callback: () => void):void {
@@ -80,23 +97,6 @@ export class CountdownTimer extends DigitDisplay {
   }
 
   public resetState():void {
-    this._display = 0;
-    this.scene.cancelTimer(this._internalTimer);
-    this._internalTimer = new ex.Timer(() => {
-      this._display++;
-      
-      if(this._display >= this._targetTime) {
-        this._callback();
-        this._display = this._targetTime;
-      }
-      
-      this._updateDigits();
-    }, 1000, true);
-
-    // Force redraw
-    this._updateDigits();
-
-    this.scene.add(this._internalTimer);
   }
 }
 
@@ -222,6 +222,20 @@ export class Clock extends ex.UIActor {
         }
 
         this.updateDisplay();
+
+        this._currentTime = this._startTime;
+        
+        this._internalTimer = new ex.Timer(() => {
+            this._currentTime.addMin(1);
+            if (this._currentTime.isGreaterOrEqual(this._endTime)) {
+                if (this._callback) {
+                  this._callback();
+                }
+            }
+            this.updateDisplay();
+        }, this._interval, true);
+
+        this.scene.add(this._internalTimer);
     }
 
     updateDisplay(): void {
@@ -233,23 +247,6 @@ export class Clock extends ex.UIActor {
     }
 
     resetState(): void {
-        this._currentTime = this._startTime;
-
-        if (this._internalTimer) {
-            this._internalTimer.reset(this._interval);
-        } else {
-            this._internalTimer = new ex.Timer(() => {
-                this._currentTime.addMin(1);
-                if (this._currentTime.isGreaterOrEqual(this._endTime)) {
-                    if (this._callback) {
-                      this._callback();
-                    }
-                }
-                this.updateDisplay();
-          }, this._interval, true);
-
-          this.scene.add(this._internalTimer);
-        }
     }
 
     setTimer(setup?: any, callback?: () => void): void {

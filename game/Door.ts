@@ -27,16 +27,6 @@ export class Door extends ex.Actor {
             Config.DOOR.W,
             Config.DOOR.H);
 
-        if (setup.DOOR.RUSH_HOUR) {
-            let levelTime = !!setup.TIME.DURATION_S ? setup.TIME.DURATION_S : Config.GAME.DEFAULT_DURATION_S;
-            let timeForRush = levelTime * 0.8;
-
-            this._rushHourTimer = new ex.Timer(() => {
-                console.log("RUSH HOUR TIME");
-            }, timeForRush * 1000);
-            // TODO - at some point(s?), start a rush hour, where there are many more people coming in than usual 
-        }
-
         this._spawnedCustomers = [];
         this._cassa = cassa;
         this._open = false;
@@ -66,10 +56,16 @@ export class Door extends ex.Actor {
 
         this._updateDoorParts();
 
-        if (this._rushHourTimer) {
-            this._rushHourTimer.reset();
-            this.scene.add(this._rushHourTimer);
+        if (this._setup.DOOR.RUSH_HOUR) {
+            let levelTime = !!this._setup.TIME.DURATION_S ? this._setup.TIME.DURATION_S : Config.GAME.DEFAULT_DURATION_S;
+            let timeForRush = levelTime * 0.8;
+
+            this._rushHourTimer = new ex.Timer(() => {
+                console.log("RUSH HOUR TIME");
+            }, timeForRush * 1000);
+            // TODO - at some point(s?), start a rush hour, where there are many more people coming in than usual 
         }
+        this.scene.add(this._rushHourTimer);
     }
 
     private _updateDoorParts():void {
@@ -128,30 +124,5 @@ export class Door extends ex.Actor {
         ]);
 
         this._spawnedCustomers.push(newCustomer);
-    }
-
-    public resetState(setup: any): void {
-        this.pos.x = setup.DOOR.X;
-        this.pos.y = setup.DOOR.Y;
-
-        this._setup = setup;
-
-        this.close();
-    }
-
-    public cleanUp(): void {
-        this.close();
-
-        this._spawnedCustomers.forEach((customer) => {
-            if (!customer.isKilled()) {
-                customer.kill();
-            }
-        });
-
-        this._spawnedCustomers = [];
-
-        if (this._rushHourTimer) {
-            this._rushHourTimer.cancel();
-        }
     }
 }

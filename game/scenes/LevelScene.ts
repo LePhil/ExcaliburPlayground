@@ -32,61 +32,22 @@ export class LevelScene extends ex.Scene {
 
     constructor(engine: ex.Engine) {
         super(engine);
-
-        this._scoreDisplay = new ScoreCounter();
-        this.add(this._scoreDisplay);
-
-        this._timeDisplay = new Clock();
-        this.add(this._timeDisplay);
-
-        let inv = new Inventory();
-        this.add(inv);
-
-        this._player = new Player(inv);
-        this.add(this._player);
     }
 
     onActivate() {
         this._currentScore = 0;
 
-        if (this._timeDisplay) {
-            this._timeDisplay.setTimer(this._setup.TIME, () => this.onTimerEnded());
-            this._timeDisplay.resetState();
-        }
-    }
-
-    onDeactivate() {
-        this._player.resetState();
-        this._door.cleanUp();
-        this._cassa.cleanUp();
-
-        this._itemSources.forEach(station => {
-            station.cleanUp();
-            this.remove(station);
-        });
-
-        if (this._decayTimer) {
-            this._decayTimer.cancel();
-            this.removeTimer(this._decayTimer);
-            this._decayTimer = null;
-        }
+        this._timeDisplay.setTimer(this._setup.TIME, () => this.onTimerEnded());
     }
 
     addPoints(points: number): number {
         this._currentScore += points;
-
-        if (this._scoreDisplay) {
-            this._scoreDisplay.updateScore(this._currentScore);
-        }
+        this._scoreDisplay.updateScore(this._currentScore);
 
         return this._currentScore;
     }
 
     private _setupLevelMap(setup: any) {
-        if (this._levelMap) {
-            this.remove(this._levelMap);
-        }
-
         if (setup.CONF) {
             this._levelMap = new LevelMap(setup.CONF);
             this.add(this._levelMap);
@@ -94,10 +55,6 @@ export class LevelScene extends ex.Scene {
     }
 
     private _setupTools(setup: any): void {
-        this._tools.forEach(tool => {
-            this.remove(tool);
-        });
-
         this._tools = [];
 
         if (!setup.TOOLS) {
@@ -145,58 +102,18 @@ export class LevelScene extends ex.Scene {
         }
     }
 
-    /**
-     * If there's a level map, the z index has to be
-     * fixed after each game because new actors are
-     * spawned on top of it.
-     */
-    private _setupZIndex() {
-        let mapZIndex = 1;
-
-        if (this._levelMap) {
-            mapZIndex = this._levelMap.getZIndex();
-        }
-
-        this._itemSources.forEach(itemSource => {
-            itemSource.setZIndex(mapZIndex + 10);
-        });
-
-        this._cassa && this._cassa.setZIndex(mapZIndex + 1);
-        this._door && this._door.setZIndex(mapZIndex + 1);
-        this._player && this._player.setZIndex(mapZIndex + 30);
-        this._task && this._task.setZIndex(mapZIndex + 5);
-    }
-
-    private _setupDisplays(setup: any): void {
-        if (this._scoreDisplay) {
-            this._scoreDisplay.resetState();
-        }
-        if (this._timeDisplay) {
-            this._timeDisplay.resetState();
-        }
-    }
-
     private _setupDoor(setup: any): void {
-        if (!this._door) {
-            this._door = new Door(setup, this._cassa, results => this.addPoints(results));
-            this.add(this._door);
-        } else {
-            this._door.resetState(setup);
-        }
+        this._door = new Door(setup, this._cassa, results => this.addPoints(results));
+        this.add(this._door);
     }
 
     private _setupCassa(setup: any): void {
-        if (!this._cassa) {
-            this._cassa = new Cassa(setup.CASSA.X, setup.CASSA.Y, this._player);
-            this.add(this._cassa);
-        } else {
-            this._cassa.resetState(setup);
-        }
+        this._cassa = new Cassa(setup.CASSA.X, setup.CASSA.Y, this._player);
+        this.add(this._cassa);
     }
 
     /**
-     * Add a blob after a random time, the latest at half of
-     * the game time is over.
+     * Add a blob after a random time, the latest at half of the game time is over.
      *
      * @param setup 
      */
@@ -211,10 +128,6 @@ export class LevelScene extends ex.Scene {
     private _setupTask(setup: any): void {
         if (setup.TASK) {
             this._passed = false;
-            if (this._task) {
-                this._task.cleanup();
-                //this._task.resetState(setup.TASK, () => this.onTaskCompleted());
-            }
             this._task = Task.Make(this, this._player, setup.TASK, () => this.onTaskCompleted());
         } else {
             this._passed = true;    // generally, always pass a level. If there's a task --> only passed when task completed.
@@ -225,14 +138,25 @@ export class LevelScene extends ex.Scene {
         this._setup = setup;
         this._gameDoneCallback = callback;
         this._setupLevelMap(setup);
-        this._setupDisplays(setup);
+        
+        this._scoreDisplay = new ScoreCounter();
+        this.add(this._scoreDisplay);
+        
+        this._timeDisplay = new Clock();
+        this.add(this._timeDisplay);
+        
+        let inv = new Inventory();
+        this.add(inv);
+        
+        this._player = new Player(inv);
+        this.add(this._player);
+
         this._setupCassa(setup);
         this._setupDoor(setup);
         this._setupTools(setup);
         this._setupItemSources(setup);
         this._setupBlob(setup);
         this._setupTask(setup);
-        this._setupZIndex();
     }
 
     update(engine: ex.Engine, delta: number) {

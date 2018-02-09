@@ -84,7 +84,10 @@ export class Inventory extends ex.Actor {
 
   onInitialize(engine: ex.Engine): void {
     super.onInitialize(engine);
-    this.resetState();
+
+    for (let i = 0; i < this._initialSlots; i++) {
+      this._addSlot();
+    }
   }
 
   private _addSlot() {
@@ -142,24 +145,6 @@ export class Inventory extends ex.Actor {
     this.inventory.forEach((item, index) => {
       item.pos.x = Config.INVENTORY.POS_X + index * (Config.INVENTORY.ITEMS.WIDTH + Config.INVENTORY.SPACING);
     });
-  }
-
-  public resetState(): void {
-    this.inventory.forEach((item) => {
-      this.remove(item);
-    });
-    this.inventory = new Array<InventoryItem>();
-
-    this._slots.forEach((slot) => {
-      this.remove(slot);
-    });
-    this._slots = [];
-
-    this._initialSlots = Config.INVENTORY.ITEMS.MAX;
-
-    for (let i = 0; i < this._initialSlots; i++) {
-      this._addSlot();
-    }
   }
 
   public changeSlotNumber(count: number): void {

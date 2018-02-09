@@ -47,15 +47,6 @@ export class Task {
     protected callback: () => void;
 
     constructor(scene: ex.Scene, player: Player, setup: any, callback: () => void) {
-        this.resetState(setup, callback);
-        // create TaskItems depending on setup
-    }
-
-    public cleanup(): void {
-        // remove all TaskItems
-    }
-
-    public resetState(setup: any, callback: () => void) {
         this.setup = setup;
         this.callback = callback;
     }
@@ -97,15 +88,6 @@ class SingleUseTask extends Task {
             let newItem = new SingleUseItem(position, itemType, this.onTaskItemClicked);
             this.taskItems.push(newItem);
             scene.add(newItem);
-        }
-    }
-    
-    public cleanup(): void {
-        if(this.taskItems && this.taskItems.length > 0) {
-            this.taskItems.forEach(taskItem => {
-                taskItem.kill();
-                this._removeTaskItem(taskItem);
-            });
         }
     }
 
@@ -192,13 +174,6 @@ class MultiUseTask extends Task {
     
     public setZIndex(newIndex: number): void {
         this.taskItem.setZIndex(newIndex);
-    }
-
-    public cleanup(): void {
-        if(this.taskItem) {
-            this.taskItem.kill();
-            this.taskItem = null;
-        }
     }
 }
 

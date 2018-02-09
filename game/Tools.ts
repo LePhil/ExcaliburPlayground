@@ -81,10 +81,6 @@ export class Tool extends ex.Actor{
     }
 
     handlePickup(player: Player):void {}
-
-    resetState(): void {
-        this.setActive();
-    }
 }
 
 // These tools can be picked up and get added to the inventory 
