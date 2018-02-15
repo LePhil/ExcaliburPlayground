@@ -39,10 +39,6 @@ class DigitDisplay extends ex.UIActor {
       digit.setDigit(+timeString[i]);
     });
   }
-
-  public resetState():void {
-
-  }
 }
 
 export class CountdownTimer extends DigitDisplay {
@@ -94,9 +90,6 @@ export class CountdownTimer extends DigitDisplay {
 
   unpause(): void {
     // this._internalTimer.unpause();
-  }
-
-  public resetState():void {
   }
 }
 
@@ -244,9 +237,6 @@ export class Clock extends ex.UIActor {
         this._digits.forEach((digit, i) => {
             digit.setDigit( +(timeStr.charAt(i)) );
         });
-    }
-
-    resetState(): void {
     }
 
     setTimer(setup?: any, callback?: () => void): void {

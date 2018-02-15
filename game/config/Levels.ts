@@ -18,10 +18,12 @@ export class Levels {
         NORMAL: "normal",       // Normal time management
         CUTSCENE: "cutscene"    // For some story
     };
+
     static TIMERS = {
         CLOCK: "clock",         // HH:MM style clock
         COUNTDOWN: "countdown"  // Counting down seconds
     };
+
     static SETTINGS = {
         HOME: {
             IMG: "Map_intro_01",
