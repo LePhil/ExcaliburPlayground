@@ -38,6 +38,13 @@ export class Storage {
 
         return storedData;
     }
+
+    /**
+     * Mainly used for debugging - clears all saved data.
+     */
+    static clearAll(): void {
+        localStorage.clear();
+    }
 }
 
 export class SavedLevelData {

@@ -6,6 +6,7 @@ import {Resources} from "../config/Resources";
 import {Levels} from "../config/Levels";
 import {AudioManager} from "../AudioManager";
 import {AreaSetupObject, MapScene} from "./MapScene";
+import {Storage} from "./../Storage";
 import {Director} from "../Director";
 import {EffectTypes, EffectFactory, Effect} from "../Effects";
 import {SimpleDialogue, OptionsDialogue, CustomGameDialogue} from "../ui/HTMLDialogue";
@@ -111,6 +112,12 @@ export class MainMenu extends ex.Scene {
                     () => {engine.goToScene(MapScene.createSceneName(area));}
                 ));
             });
+
+            this._addBtn(new Button(
+                Pos.make(900, 250),
+                "Clear Data",
+                () => {Storage.clearAll();}
+            ));
         }
 
         let logo = new ex.UIActor(Config.GAME.WIDTH/2, 100, 570, 202);
