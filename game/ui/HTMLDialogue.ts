@@ -60,13 +60,7 @@ class HTMLDialogue {
 
         texts.forEach(text => {
             let paragraph = document.createElement("p");
-
-            // TODO: if it's an object, we can use color and fonz size
-            if (text.text) {
-                paragraph.innerHTML = text.text;
-            } else {
-                paragraph.innerHTML = text;                
-            }
+            paragraph.innerHTML = text.text ? text.text : text;
             parentNode.appendChild(paragraph);
         });
     }

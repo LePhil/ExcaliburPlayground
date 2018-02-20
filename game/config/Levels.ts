@@ -76,6 +76,7 @@ export class Levels {
 
     static LEVEL = {
         L1_1: {
+            ID: "L1_1",
             TITLE: "Hello World",
             TYPE: Levels.TYPES.NORMAL,
             CONF: Levels.SETTINGS.STORE_GREY,
@@ -96,6 +97,7 @@ export class Levels {
             OUTRO: ["Well done!"]
         },
         C1_1: {
+            ID: "C1_1",
             TITLE: "School's out",
             TYPE: Levels.TYPES.CUTSCENE,
             CONF: Levels.SETTINGS.HOME,
@@ -130,6 +132,7 @@ export class Levels {
             ]
         },
         L1_2: {
+            ID: "L1_2",
             TITLE: "Another day",
             TYPE: Levels.TYPES.NORMAL,
             CONF: Levels.SETTINGS.STORE_GREY,
@@ -150,6 +153,7 @@ export class Levels {
             OUTRO: ["Well done!"]
         },
         L1_3: {
+            ID: "L1_3",
             TITLE: "SLOOOTHS",
             TYPE: Levels.TYPES.NORMAL,
             CONF: Levels.SETTINGS.STORE_GREY,

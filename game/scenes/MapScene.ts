@@ -8,6 +8,7 @@ import {Levels} from "../config/Levels";
 import {AudioManager} from "../AudioManager";
 import {LevelMap} from "../LevelMap";
 import {Director} from "../Director";
+import {Storage, SavedLevelData} from "../Storage";
 import {EffectTypes, EffectFactory, Effect} from "../Effects";
 
 export interface AreaSetupObject {
@@ -20,6 +21,7 @@ export interface AreaSetupObject {
 
 interface MapSetupObject {
     // determine how the setup object should look
+    ID: string,
     TITLE: string,
     TYPE: string,
     CONF: {
@@ -51,11 +53,13 @@ export class MapScene extends ex.Scene {
     private _effect: Effect;
     private _background: LevelMap;
     private _audio: ex.Sound;
-    private _buttons: Array<Button>;
+    private _buttons: Array<LevelButton>;
 
     public static createSceneName(setup: AreaSetupObject): string {
         return "AREA_" + setup.TITLE;
     }
+
+    // TODO: on reactivating map scene re-check and unlock buttons that have been unlocked
 
     constructor(setup: AreaSetupObject, engine: ex.Engine) {
         super(engine);
@@ -68,9 +72,24 @@ export class MapScene extends ex.Scene {
             let levelCounter = 1;
             setup.LEVELS.forEach((level, index) => {
 
-                let lvlBtn = new LevelButton(new ex.Vector(200 + index*100, 200), this._getBtnConf(level.TYPE, levelCounter), () => {
-                    Director.loadAndCreateLevel(engine, level, currentMapName);
-                });
+                let lvlBtn = new LevelButton(
+                    new ex.Vector(200 + index*100, 200),
+                    this._getBtnConf(level.TYPE, levelCounter),
+                    () => {
+                        let levelData = Storage.getLevelData(level.ID);
+                        if (!levelData.locked) {
+                            Director.loadAndCreateLevel(engine, level, currentMapName);
+                        }
+                    },
+                    level.ID);
+
+                this._buttons.push(lvlBtn);
+
+                let levelData = Storage.makeSureLevelDataExists(level.ID);
+                if(!levelData.locked) {
+                    lvlBtn.unlock();
+                }
+                
                 this.add(lvlBtn);
 
                 // Cutscenes shouldn't count towards level #
@@ -112,29 +131,32 @@ export class MapScene extends ex.Scene {
     onDeactivate () {
         AudioManager.stopAudio(this._audio);
     }
-
-    private _addBtn(btn: Button): void {
-        this.add(btn);
-        this._buttons.push(btn);
-    }
-
-    private _toggleButtons(on: boolean): void {
-        this._buttons.forEach(button => {
-            button.enableCapturePointer = on;
-        });
-    }
 }
 
 class LevelButton extends ex.UIActor {
-    constructor(position: Pos, conf: any,  action: () => void) {
+    public levelId: string;
+
+    constructor(position: Pos, conf: any,  action: () => void, levelId: string) {
         super(position.x, position.y, conf.w, conf.h);
+
+        this.levelId = levelId;
 
         let tex = Resources.MapSpriteSheet;
         let sprite = new ex.Sprite(tex, conf.x, conf.y, conf.w, conf.h);
 
-        this.anchor.setTo(.5, .5);
-        this.addDrawing(sprite);
+        let brokenSprite = sprite.clone();
+        brokenSprite.darken(.5);
 
+        this.anchor.setTo(.5, .5);
+        this.addDrawing("unlocked", sprite);
+        this.addDrawing("locked", brokenSprite);
+
+        this.setDrawing("locked");
+        
         this.on("pointerup", () => action());
+    }
+
+    public unlock(): void {
+        this.setDrawing("unlocked");
     }
 }

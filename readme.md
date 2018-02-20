@@ -38,6 +38,8 @@ Done!
 * Rush hour where the rate of incoming customers increases
 * Cleanup after big level-handling re-write...
 * Locked levels in MapScene
+* itemsources with multiple interactions
+* update electron
 
 # Bugs
 * "solved" taskItems re-appear when changing a level.
