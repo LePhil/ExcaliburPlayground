@@ -87,6 +87,12 @@ export class Levels {
                 {X: 700, Y: 400, T: "rabbit", DECAY: false}
             ],
             TOOLS: [],
+            TIME: {
+                TYPE: Levels.TIMERS.CLOCK,
+                DURATION_S: 10,
+                START: "08:00",
+                END: "18:00"
+            },
             BLOB: false,
             INTRO: [
                 "Welcome to your new Rabbit Store!",

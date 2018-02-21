@@ -19,7 +19,7 @@ export interface AreaSetupObject {
     LEVELS: Array<MapSetupObject>
 }
 
-interface MapSetupObject {
+export interface MapSetupObject {
     // determine how the setup object should look
     ID: string,
     TITLE: string,
@@ -43,8 +43,9 @@ interface MapSetupObject {
     TOOLS: Array<any>,
     BLOB ?: false,
     TIME ?: any,
-    INTRO: Array<string>,
-    OUTRO: Array<string>
+    INTRO?: Array<string>,
+    OUTRO?: Array<string>,
+    OUTRO_FAILED?: Array<string>
 }
 
 const MAP_AUDIO = "Sound_Intro";
@@ -58,8 +59,6 @@ export class MapScene extends ex.Scene {
     public static createSceneName(setup: AreaSetupObject): string {
         return "AREA_" + setup.TITLE;
     }
-
-    // TODO: on reactivating map scene re-check and unlock buttons that have been unlocked
 
     constructor(setup: AreaSetupObject, engine: ex.Engine) {
         super(engine);
@@ -84,12 +83,6 @@ export class MapScene extends ex.Scene {
                     level.ID);
 
                 this._buttons.push(lvlBtn);
-
-                let levelData = Storage.makeSureLevelDataExists(level.ID);
-                if(!levelData.locked) {
-                    lvlBtn.unlock();
-                }
-                
                 this.add(lvlBtn);
 
                 // Cutscenes shouldn't count towards level #
@@ -126,6 +119,13 @@ export class MapScene extends ex.Scene {
 
     onActivate () {
         AudioManager.playAudio(this._audio, true);
+
+        // check and unlock buttons of levels that have been unlocked
+        this._buttons.forEach(button => {            
+            if(!Storage.isLocked(button.levelId)) {
+                button.unlock();
+            }
+        });
     }
 
     onDeactivate () {

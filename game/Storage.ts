@@ -1,5 +1,6 @@
 import * as ex from "excalibur";
 import {Config} from "./config/Config";
+import {Levels} from "./config/Levels";
 
 /**
  * Responsibility:
@@ -8,6 +9,22 @@ import {Config} from "./config/Config";
  * some point).
  */
 export class Storage {
+    /**
+     * Make sure all levels are in the storage and at least the first
+     * level is unlocked.
+     */
+    static init(): void {
+        let allLevelIDs = Object.keys(Levels.LEVEL);
+        allLevelIDs.forEach((id, index) => {
+            let level = Levels.LEVEL[id];
+
+            Storage.makeSureLevelDataExists(level.ID);
+        });
+
+        let firstLevelID = allLevelIDs[0];
+        Storage.unlock(firstLevelID);
+    }
+
     static set(key:string, value:any):void {
         localStorage.setItem(key, JSON.stringify(value));
     }
@@ -39,6 +56,10 @@ export class Storage {
         return levelData;
     }
 
+    static save(data: SavedLevelData): void {
+        Storage.set(data.levelID, data);
+    }
+
     /**
      * Gets the scores for a specific level, adds a new score and saves it again.
      * 
@@ -59,6 +80,40 @@ export class Storage {
         return Storage.getLevelData(levelID).locked;
     }
 
+    static unlock(levelID: string): void {
+        let storedData = Storage.getLevelData(levelID);
+        storedData.locked = false;
+        Storage.set(levelID, storedData);
+    }
+
+    /**
+     * Unlocks the level following the specified one's.
+     * 
+     * @param levelID ID of the level whose next neighbor should be unlocked
+     */
+    static unlockNextOf(levelID: string): void {
+        let nextLevelID = "";
+
+        let allLevelIDs = Object.keys(Levels.LEVEL);
+        allLevelIDs.forEach((id, index) => {
+            let level = Levels.LEVEL[id];
+
+            if (level.ID === levelID) {
+                if (index+1 < allLevelIDs.length) {
+                    nextLevelID = allLevelIDs[index+1];
+                    return;
+                } else {
+                    // Might be the last leve!
+                    console.warn("Last level reached?!");
+                }
+            }
+        });
+
+        if (nextLevelID) {
+            Storage.unlock(nextLevelID);
+        }
+    }
+
     /**
      * Mainly used for debugging - clears all saved data.
      */
@@ -67,6 +122,14 @@ export class Storage {
     }
 }
 
+export class GameData {
+    public lastPlayedLevelID: string;
+}
+
+/**
+ * Describes what is data about a level that has to be saved
+ * in order to progress in the game.
+ */
 export class SavedLevelData {
     public levelID: string;
     public locked: boolean;

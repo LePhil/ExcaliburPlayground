@@ -35,6 +35,8 @@ Object.keys(Levels.AREAS).forEach(areaObj => {
     game.add(MapScene.createSceneName(area), mapScene);
 });
 
+Storage.init();
+
 let loader = new ex.Loader();
 
 for (let r in Resources) {

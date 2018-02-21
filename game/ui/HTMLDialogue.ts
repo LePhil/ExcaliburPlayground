@@ -5,6 +5,7 @@ import {Levels} from "../config/Levels";
 import {Resources} from "../config/Resources";
 import {Storage, SavedLevelData} from "../Storage";
 import {AudioManager} from "../AudioManager";
+import {MapSetupObject} from "../scenes/MapScene";
 
 class HTMLDialogue {
     protected dlg: HTMLElement;
@@ -98,7 +99,7 @@ export class OutroDialogue extends HTMLDialogue {
         this.scoreList = document.querySelector(`${dialogClass} .score-list`) as HTMLElement;
     }
 
-    public setup(setup: any, result: number, passed: boolean, callback: () => void, callbackNope?: () => void): void {
+    public setup(setup: MapSetupObject, result: number, passed: boolean, callback: () => void, callbackNope?: () => void): void {
         let outroTexts = [""];
         
         if (passed && setup.OUTRO) {
@@ -107,19 +108,13 @@ export class OutroDialogue extends HTMLDialogue {
             outroTexts = setup.OUTRO_FAILED;
         }
 
-        this.title.innerHTML = setup.NAME;
+        this.title.innerHTML = setup.TITLE;
         HTMLDialogue.createBodyText(this.text, outroTexts);
 
         this.addScores(setup, result);
 
         this.btnOkay.addEventListener("click", callback);
-
-        // only show Next button if there's a next level or the user can retry
-        if (!!setup.NEXT || !passed) {
-            this.btnOkay.style.display = "";
-        } else {
-            this.btnOkay.style.display = "none";
-        }
+        this.btnOkay.style.display = "";
 
         if (callbackNope) {
             this.btnNope.addEventListener("click", callbackNope);
@@ -129,12 +124,12 @@ export class OutroDialogue extends HTMLDialogue {
         }
     }
 
-    private addScores(setup: any, result: number) {
+    private addScores(setup: MapSetupObject, result: number) {
         this.scoreDisplay.innerHTML = "";
         this.scoreDisplay.appendChild(HTMLDialogue.createNumber(result));
         
         this.scoreList.innerHTML = "";        
-        let scores = Storage.saveScore(setup.NAME, result);
+        let scores = Storage.saveScore(setup.ID, result);
         let sortedScores = scores.getSortedScores();
 
         for(let scoreCounter = 0; scoreCounter < sortedScores.length; scoreCounter++) {

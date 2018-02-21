@@ -3,8 +3,10 @@ import * as ex from "excalibur";
 import {ScoreCounter, CountdownTimer} from "./Timer";
 import {Levels} from "./config/Levels";
 import {LevelScene} from "./scenes/LevelScene";
+import {MapScene, MapSetupObject} from "./scenes/MapScene";
 import {Cutscene} from "./scenes/Cutscene";
 import {IntroDialogue, OutroDialogue} from "./ui/HTMLDialogue";
+import {Storage} from "./Storage";
 
 const introDlg = new IntroDialogue();
 const outroDlg = new OutroDialogue();
@@ -19,10 +21,15 @@ export class Director {
      * @param parentMap Identifier of the parent map's scene
      */
     public static loadAndCreateCutscene(engine: ex.Engine, setup: any, parentMap: string): void {
-        let id = "LVL_" + (setup.TITLE).split(" ").join("_");
+        let id = "LVL_" + setup.ID;
         let newLevel = new Cutscene(engine);
         engine.addScene(id, newLevel);
-        newLevel.load(setup, () => {engine.goToScene(parentMap);});
+
+        newLevel.load(setup, () => {
+            Storage.unlockNextOf(setup.ID);
+            engine.goToScene(parentMap);
+        });
+
         engine.goToScene(id);
     }
 
@@ -39,17 +46,17 @@ export class Director {
             return;
         }
 
-        let id = "LVL_" + (setup.TITLE).split(" ").join("_");
+        let sceneID = "LVL_" + setup.ID;
         let newLevel = new LevelScene(engine);
-        engine.addScene(id, newLevel);
+        engine.addScene(sceneID, newLevel);
 
         if (setup.INTRO) {
             introDlg.setup(setup,
                 () => {
                     // Retry
                     introDlg.hide();
-                    Director.createLevel(id, newLevel, setup, engine, parentMap);
-                    engine.goToScene(id);
+                    Director.createLevel(sceneID, newLevel, setup, engine, parentMap);
+                    engine.goToScene(sceneID);
                 },
                 () => {
                     // Return to Map
@@ -60,8 +67,8 @@ export class Director {
             introDlg.show();
             engine.goToScene("loading");
         } else {
-            Director.createLevel(id, newLevel, setup, engine, parentMap);
-            engine.goToScene(id);
+            Director.createLevel(sceneID, newLevel, setup, engine, parentMap);
+            engine.goToScene(sceneID);
         }
     }
 
@@ -78,20 +85,25 @@ export class Director {
 
             if (setup.OUTRO) {
                 outroDlg.setup(setup, results, passed, () => {
-                    if (passed) {
-                        engine.goToScene(parentMap);
-                    } else {
-                        Director.loadAndCreateLevel(engine, setup, parentMap);
-                    }
+                    Director.onFinishLevel(engine, setup, parentMap, passed);
                     outroDlg.hide();
                 });
                 outroDlg.show();
                 engine.goToScene("loading");
             } else {
-                engine.goToScene(parentMap);
+                Director.onFinishLevel(engine, setup, parentMap, passed);
             }
 
             engine.removeScene(id);
         });
+    }
+
+    public static onFinishLevel(engine: ex.Engine, setup: any, parentMapSceneID: string, passed: boolean): void {
+        if (passed) {
+            Storage.unlockNextOf(setup.ID);
+            engine.goToScene(parentMapSceneID);
+        } else {
+            Director.loadAndCreateLevel(engine, setup, parentMapSceneID);
+        }
     }
 }

@@ -118,6 +118,18 @@ export class MainMenu extends ex.Scene {
                 "Clear Data",
                 () => {Storage.clearAll();}
             ));
+
+
+            this._addBtn(new Button(
+                Pos.make(900, 400),
+                "Unlock all Levels",
+                () => {
+                    let allLevelIDs = Object.keys(Levels.LEVEL);
+                    allLevelIDs.forEach((id, index) => {
+                        Storage.unlock(Levels.LEVEL[id].ID);
+                    });
+                }
+            ));
         }
 
         let logo = new ex.UIActor(Config.GAME.WIDTH/2, 100, 570, 202);
