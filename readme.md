@@ -44,7 +44,6 @@ Done!
 # Bugs
 * "solved" taskItems re-appear when changing a level.
 * fireworks doesn't seem to work anymore
-* animals don't show up anymore...?
 
 # Recently done
 * Re-done buttons with Labels

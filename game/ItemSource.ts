@@ -128,11 +128,6 @@ export abstract class ItemSource extends ex.Actor {
     public getPositionToStand(): ex.Vector {
         return new ex.Vector(this.pos.x - 70, this.pos.y - 20);
     }
-
-    public reset(): void {
-        this._state = ItemSourceState.Normal;
-        this.setDrawing("normal");
-    }
 }
 
 class Animal extends ex.Actor {
@@ -201,6 +196,8 @@ export class AnimalCage extends ItemSource {
     }
 
     onInitialize(engine: ex.Engine): void {
+        this.setZIndex(Config.ZINDICES.ITEMSOURCES);
+
         let conf = Config.TILES.fence;
         let tex = Resources.TextureTiles;
 
@@ -218,18 +215,6 @@ export class AnimalCage extends ItemSource {
         this.scene.add(animal);
         this._animals.push(animal);
         animal.setZIndex(this.getZIndex() - 1 - zIndexFactor);
-    }
-
-    /**
-     * When resetting the zIndex of an itemSource, the children
-     * should be updated too.
-     */
-    setZIndex(newIndex: number): void {
-        super.setZIndex(newIndex);
-
-        this._animals.forEach((animal, i) => {
-            animal.setZIndex(newIndex - 1 - i);
-        });
     }
 
     isEmpty(): boolean {
@@ -252,14 +237,6 @@ export class AnimalCage extends ItemSource {
     // TODO: define in config!
     public getDuration():number {
         return 1000;
-    }
-
-    reset(): void {
-        super.reset();
-
-        for (var i = this._animals.length-1; i < this._initialAmount; i++) {
-            this._addAnimal(i);
-        }
     }
 }
 

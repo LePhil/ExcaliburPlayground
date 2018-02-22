@@ -594,6 +594,7 @@ export class Config {
     LEVELMAP: 1,
     DOOR: 2,
     CUSTOMERS: 3,
+    ITEMSOURCES: 10,
     EFFECTS: 20
   };
 
