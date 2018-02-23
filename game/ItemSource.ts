@@ -240,6 +240,10 @@ export class AnimalCage extends ItemSource {
     }
 }
 
+export class Aquarium extends AnimalCage {
+    // TODO: requires another interaction to get the animal (e.g. catching it with a net)
+}
+
 class CrateSign extends ex.Actor {
     private _type: string;
 

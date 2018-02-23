@@ -48,7 +48,7 @@ export abstract class AbstractPlayer extends ex.Actor {
     let tex = Graphics.ALIENS[alienType].spritesheet;
     let spriteConf = Graphics.ALIENS[alienType][spriteType];
 
-    return new ex.Sprite(tex, spriteConf.x, spriteConf.y, spriteConf.w, spriteConf.h)
+    return new ex.Sprite(tex, spriteConf.x, spriteConf.y, spriteConf.w, spriteConf.h);
   }
 
   public setDrawings(alienType: string): void {

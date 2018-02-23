@@ -1,6 +1,7 @@
 import * as ex from "excalibur";
 import {Config} from "../config/Config";
 import {Resources} from "../config/Resources";
+import {AnimalSprite, Graphics} from "../config/Graphics";
 import {ProgressBar, FancyProgressBar} from "../ui/Indicator";
 import {EffectFactory} from "../Effects";
 import {Inventory} from "../Inventory";
@@ -17,6 +18,7 @@ export class DebugScene extends ex.Scene {
         this.testEffects();
         this.testPlayerPlacement();
         this.testColors();
+        this.testAquarium();
     }
 
     testProgressBars() {
@@ -113,6 +115,80 @@ export class DebugScene extends ex.Scene {
         colors.forEach((color, index) => {
             let square = new ex.Actor(10 + index*10, 10, 10, 10, color);
             this.add(square);
+        });
+    }
+
+    testAquarium() {
+        let aquarium = new ex.Actor(700, 500, 200, 100, ex.Color.Blue);
+        aquarium.anchor.setTo(.5, .5);
+        this.add(aquarium);
+
+        let interactionBG = new ex.UIActor(700, 500, 150, 150);
+        interactionBG.anchor.setTo(.5, .5);
+        let tex = Resources.UIRPGSpriteSheet;
+        let conf = Graphics.UI.iconCircle_blue;
+        let sprite = new ex.Sprite(tex, conf.x, conf.y, conf.w, conf.h)
+        sprite.scale.setTo(150/conf.w, 150/conf.h);
+        interactionBG.addDrawing(sprite);
+        this.add(interactionBG);
+        interactionBG.opacity = 0;
+
+        let animalArray = [Config.ANIMALS.WHALE, Config.ANIMALS.NARWHAL, Config.ANIMALS.PENGUIN];
+        
+        let waterdweller = new ex.UIActor(700, 500, 40, 40);
+        waterdweller.anchor.setTo(.5, .5);
+        animalArray.forEach(animalName => {
+            let animalsprite = AnimalSprite.getRoundOutlineDetails(animalName, 40, 40);
+            waterdweller.addDrawing(animalName, animalsprite);
+            this.add(waterdweller);
+        });
+        waterdweller.opacity = 0;
+
+        let getRandomAnimal = () => {
+            return animalArray[ex.Util.randomIntInRange(0, animalArray.length - 1)];
+        }
+        let currentAnimal = "";
+        let interactionOpen = false;
+        // until https://github.com/excaliburjs/Excalibur/issues/912 is done
+        let justcought = false;
+
+        aquarium.on("pointerdown", (event) => {
+            if(justcought) {
+                justcought = false;
+                return;
+            }
+            if (interactionOpen) {
+                return;
+            } else {
+                interactionOpen = true;
+            }
+            // show secondary interaction
+            interactionBG.opacity = 1;
+
+            currentAnimal = getRandomAnimal();
+            waterdweller.setDrawing(currentAnimal);
+            waterdweller.opacity = 1;
+            let changeAnimalTimer = new ex.Timer(() => {
+                currentAnimal = getRandomAnimal();
+                waterdweller.setDrawing(currentAnimal);
+                console.log(currentAnimal);
+            }, 1000, true);
+
+            this.addTimer(changeAnimalTimer);
+
+            interactionBG.on("pointerdown", (event) => {
+                if(interactionOpen) {
+                    // add currently shown animal to inventory :)
+                    console.log("Cought a ", currentAnimal);
+                    interactionOpen = false;
+                    interactionBG.off("pointerdown");
+                    waterdweller.opacity = 0;
+                    interactionBG.opacity = 0;
+                    changeAnimalTimer.cancel();
+                    this.removeTimer(changeAnimalTimer);
+                    justcought = true;
+                }
+            });
         });
     }
 
