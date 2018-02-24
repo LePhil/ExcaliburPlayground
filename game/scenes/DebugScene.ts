@@ -135,7 +135,9 @@ export class DebugScene extends ex.Scene {
     }
 
     testAquarium() {
-        let aquarium = new ex.Actor(700, 500, 200, 100, ex.Color.Blue);
+        let aqConf = Graphics.AQUARIUM.BIG;
+        let aquarium = new ex.Actor(700, 500, aqConf.w, aqConf.h);
+        aquarium.addDrawing(Resources.AquariumBig);
         aquarium.anchor.setTo(.5, .5);
         this.add(aquarium);
 

@@ -24,6 +24,8 @@ export class Resources {
     static ImgInventorySlot     = new ex.Texture("game/assets/ui/grey_button13.png");
 
     static Cassa                = new ex.Texture("game/assets/textures/store/chimneyLow.png");
+    static AquariumBig          = new ex.Texture("game/assets/textures/animals/aquarium_big.png");
+    static AquariumSmall        = new ex.Texture("game/assets/textures/animals/aquarium_small.png");
 
     // Animal shapes:
     static Animals_round_nodetails_outline = new ex.Texture("game/assets/textures/animals/round_nodetailsOutline.png");

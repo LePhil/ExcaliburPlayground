@@ -621,4 +621,13 @@ export class Graphics {
         mapTile_187: { x: 0, y: 320, w: 64, h: 64 },
         mapTile_188: { x: 0, y: 256, w: 64, h: 64 }
     };
+
+    static AQUARIUM = {
+        BIG: {
+            w: 226, h: 210
+        },
+        SMALL: {
+            w: 226, h: 146
+        }
+    }
 }
