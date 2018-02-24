@@ -73,8 +73,12 @@ export class IntroDialogue extends HTMLDialogue {
     }
 
     public setup(setup: any, callback: () => void, callbackNope?: () => void): void {
+        setup.TITLE = setup.TITLE ? setup.TITLE : "";
         this.title.innerHTML = setup.TITLE;
+
+        setup.INTRO = setup.INTRO ? setup.INTRO : [""];
         HTMLDialogue.createBodyText(this.text, setup.INTRO);
+
         this.btnOkay.addEventListener("click", callback);
 
         if(callbackNope) {

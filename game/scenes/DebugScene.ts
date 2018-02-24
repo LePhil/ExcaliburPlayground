@@ -6,6 +6,8 @@ import {ProgressBar, FancyProgressBar} from "../ui/Indicator";
 import {EffectFactory} from "../Effects";
 import {Inventory} from "../Inventory";
 import {Player} from "../Player";
+import {Button, Pos} from "../ui/Button";
+import {IntroDialogue} from "../ui/HTMLDialogue";
 
 export class DebugScene extends ex.Scene {
 
@@ -19,6 +21,7 @@ export class DebugScene extends ex.Scene {
         this.testPlayerPlacement();
         this.testColors();
         this.testAquarium();
+        this.testHTMLDialogue();
     }
 
     testProgressBars() {
@@ -116,6 +119,19 @@ export class DebugScene extends ex.Scene {
             let square = new ex.Actor(10 + index*10, 10, 10, 10, color);
             this.add(square);
         });
+    }
+
+    testHTMLDialogue() {
+        let dlg = new IntroDialogue();
+        let btn = new Button(Pos.make(800, 200), "Test Dlg", () => {
+            dlg.setup({
+                TITLE: "Test Dialogue"
+            }, () => {
+                dlg.hide();
+            });
+            dlg.show();
+        });
+        this.add(btn);
     }
 
     testAquarium() {
