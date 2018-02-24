@@ -36,7 +36,8 @@ export class Config {
 
   static STATIONS = {
     CONF: {
-      SCALE: 0.2
+      SCALE: 0.2,
+      ANIMALSCALE: 0.4
     }
   };
 
@@ -263,8 +264,7 @@ export class Config {
     SNAKE:    "snake",
     WALRUS:   "walrus",
     WHALE:    "whale",
-    ZEBRA:    "zebra",
-    SCALE: 0.4
+    ZEBRA:    "zebra"
   };
 
   static INVENTORY = {

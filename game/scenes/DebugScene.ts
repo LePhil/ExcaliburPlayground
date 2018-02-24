@@ -22,6 +22,7 @@ export class DebugScene extends ex.Scene {
         this.testColors();
         this.testAquarium();
         this.testHTMLDialogue();
+        this.testAnimals();
     }
 
     testProgressBars() {
@@ -158,9 +159,9 @@ export class DebugScene extends ex.Scene {
         animalArray.forEach(animalName => {
             let animalsprite = AnimalSprite.getRoundOutlineDetails(animalName, 40, 40);
             waterdweller.addDrawing(animalName, animalsprite);
-            this.add(waterdweller);
         });
         waterdweller.opacity = 0;
+        this.add(waterdweller);
 
         let getRandomAnimal = () => {
             return animalArray[ex.Util.randomIntInRange(0, animalArray.length - 1)];
@@ -189,7 +190,6 @@ export class DebugScene extends ex.Scene {
             let changeAnimalTimer = new ex.Timer(() => {
                 currentAnimal = getRandomAnimal();
                 waterdweller.setDrawing(currentAnimal);
-                console.log(currentAnimal);
             }, 1000, true);
 
             this.addTimer(changeAnimalTimer);
@@ -207,6 +207,16 @@ export class DebugScene extends ex.Scene {
                     justcought = true;
                 }
             });
+        });
+    }
+
+    testAnimals() {
+        let animals = Object.keys(Config.ANIMALS);
+
+        animals.forEach((key, index) => {
+            let animal = new ex.UIActor(10 + index*33, 25, 40, 40);
+            animal.addDrawing(AnimalSprite.getRoundOutlineDetails(Config.ANIMALS[key], 40, 40));
+            this.add(animal);
         });
     }
 

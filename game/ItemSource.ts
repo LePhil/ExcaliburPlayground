@@ -136,7 +136,7 @@ class Animal extends ex.Actor {
 
     constructor(x: number, y: number, type: string) {
         let conf = Graphics.ANIMALS.ROUND_OUTLINE_DETAILS[type];
-        let scale = Config.ANIMALS.SCALE;
+        let scale = Config.STATIONS.CONF.ANIMALSCALE;
 
         let w = conf.w * scale;
         let h = conf.h * scale;
