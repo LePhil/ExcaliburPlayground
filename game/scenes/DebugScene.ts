@@ -142,15 +142,14 @@ export class DebugScene extends ex.Scene {
         aquarium.anchor.setTo(.5, .5);
         this.add(aquarium);
 
-        let interactionBG = new ex.UIActor(700, 500, 150, 150);
-        interactionBG.anchor.setTo(.5, .5);
-        let tex = Resources.UIRPGSpriteSheet;
-        let conf = Graphics.UI.iconCircle_blue;
-        let sprite = new ex.Sprite(tex, conf.x, conf.y, conf.w, conf.h)
-        sprite.scale.setTo(150/conf.w, 150/conf.h);
-        interactionBG.addDrawing(sprite);
-        this.add(interactionBG);
-        interactionBG.opacity = 0;
+        let waterbubbles = EffectFactory.Make(
+            EffectFactory.Type.Water,
+            new ex.Vector(700, 500),
+            0,
+            false
+        );
+        this.add(waterbubbles);
+        waterbubbles.pause();
 
         let animalArray = [Config.ANIMALS.WHALE, Config.ANIMALS.NARWHAL, Config.ANIMALS.PENGUIN];
         
@@ -171,6 +170,14 @@ export class DebugScene extends ex.Scene {
         // until https://github.com/excaliburjs/Excalibur/issues/912 is done
         let justcought = false;
 
+        let changeAnimalTimer = new ex.Timer(() => {
+            currentAnimal = getRandomAnimal();
+            waterdweller.setDrawing(currentAnimal);
+        }, 1000, true);
+
+        this.addTimer(changeAnimalTimer);
+        changeAnimalTimer.pause();
+
         aquarium.on("pointerdown", (event) => {
             if(justcought) {
                 justcought = false;
@@ -181,32 +188,26 @@ export class DebugScene extends ex.Scene {
             } else {
                 interactionOpen = true;
             }
-            // show secondary interaction
-            interactionBG.opacity = 1;
+
+            waterbubbles.play();
 
             currentAnimal = getRandomAnimal();
             waterdweller.setDrawing(currentAnimal);
             waterdweller.opacity = 1;
-            let changeAnimalTimer = new ex.Timer(() => {
-                currentAnimal = getRandomAnimal();
-                waterdweller.setDrawing(currentAnimal);
-            }, 1000, true);
+            changeAnimalTimer.unpause();
+        });
 
-            this.addTimer(changeAnimalTimer);
-
-            interactionBG.on("pointerdown", (event) => {
-                if(interactionOpen) {
-                    // add currently shown animal to inventory :)
-                    console.log("Cought a ", currentAnimal);
-                    interactionOpen = false;
-                    interactionBG.off("pointerdown");
-                    waterdweller.opacity = 0;
-                    interactionBG.opacity = 0;
-                    changeAnimalTimer.cancel();
-                    this.removeTimer(changeAnimalTimer);
-                    justcought = true;
-                }
-            });
+        waterdweller.on("pointerdown", (event) => {
+            if (!interactionOpen) {
+                return;
+            }
+            // add currently shown animal to inventory :)
+            console.log("Cought a ", currentAnimal);
+            interactionOpen = false;
+            waterdweller.opacity = 0;
+            waterbubbles.pause();
+            changeAnimalTimer.pause();
+            justcought = true;
         });
     }
 
