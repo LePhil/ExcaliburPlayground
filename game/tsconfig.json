@@ -3,6 +3,7 @@
         "target": "es5",
         "moduleResolution": "node",
         "module": "commonjs",
-        "sourceMap": true
+        "sourceMap": true,
+        "lib": ["es2015", "es2015.iterable", "dom", "dom.iterable"]
     }
 }

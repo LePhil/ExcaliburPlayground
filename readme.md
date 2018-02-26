@@ -39,7 +39,6 @@ Done!
 * Cleanup after big level-handling re-write...
 * Locked levels in MapScene
 * itemsources with multiple interactions
-* update electron
 
 # Bugs
 * "solved" taskItems re-appear when changing a level.
@@ -105,6 +104,7 @@ Done!
 * customers no longer appear on 0|0 and are stuck there
 * same origin of different animal sprites
 * customers with n bought items pay for n items now
+* update excalibur to 0.15
 
 # Won't do
 * If inventory is full, clicks on station should not do anything- No. We'd have to check for Tools in Inventory (in case the station is broken) and if there are actions in the queue to remove some items --> let the user make mistakes!
