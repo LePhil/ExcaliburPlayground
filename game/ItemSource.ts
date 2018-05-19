@@ -240,8 +240,62 @@ export class AnimalCage extends ItemSource {
     }
 }
 
-export class Aquarium extends AnimalCage {
+export class Aquarium extends ItemSource {
     // TODO: requires another interaction to get the animal (e.g. catching it with a net)
+    private _animals: Array<Animal>;
+    private _initialAmount: number;
+    private _infiniteItems: boolean;
+
+    constructor(x: number,
+                y: number,
+                type: string,
+                player: Player,
+                amount?: number) {
+        // TODO: differentiate between big and small aquarium if necessary
+        let conf = Graphics.AQUARIUM.BIG;
+
+        super(x, y, type, player, conf, 1);
+
+        this.setWidth(conf.w);
+        this.setHeight(conf.h);
+
+        this._conf = conf;
+
+        this._animals = [];
+        this._initialAmount = amount || 5;
+        this._infiniteItems = !amount;
+    }
+
+    onInitialize(engine: ex.Engine): void {
+        this.setZIndex(Config.ZINDICES.ITEMSOURCES);
+        this.createDrawings(Resources.AquariumBig.asSprite());
+    }
+
+    isEmpty(): boolean {
+        return this._animals.length === 0;
+    }
+
+    getContent(): string {
+        if (this.isEmpty()) {
+            console.warn("Cage is empty, can't get another Animal from here!");
+            return "";
+        }
+
+        if (!this._infiniteItems) {
+            this._animals.pop().kill();
+        }
+
+        return super.getContent();
+    }
+
+    public onPlayerReached(): void {
+        
+    }
+
+    // TODO: define in config!
+    public getDuration():number {
+        return 1000;
+    }
 }
 
 class CrateSign extends ex.Actor {
